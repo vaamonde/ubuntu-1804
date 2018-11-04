@@ -103,6 +103,12 @@ echo -e "Aguarde, esse processo demora um pouco..."
 sleep 5
 echo
 #
+echo -e "Adicionando o Repositório Universal do Apt, aguarde..."
+	add-apt-repository universe &>> $LOG
+echo -e "Repositório adicionado com sucesso!!!, continuando com o script..."
+sleep 5
+echo
+#
 echo -e "Atualizando as listas do Apt, aguarde..."
 	apt update &>> $LOG
 echo -e "Listas atualizadas com sucesso!!!, continuando com o script..."
@@ -184,7 +190,7 @@ sleep 5
 echo
 #
 echo -e "Atualizando e editando o arquivo de configuração do PHP, aguarde..."
-	cp -v /etc/php/7.2/apache2/php.ini /etc/php/7.0/apache2/php.ini.old &>> $LOG
+	cp -v /etc/php/7.2/apache2/php.ini /etc/php/7.2/apache2/php.ini.old &>> $LOG
 	cp -v conf/php.ini /etc/php/7.2/apache2/php.ini &>> $LOG
 	vim /etc/php/7.2/apache2/php.ini
 echo -e "Arquivo atualizado com sucesso!!!, continuando com o script..."
