@@ -26,6 +26,9 @@
 # A opção de circunflexo no final do comando e obrigatório, considerado um meta-caracter de filtragem para
 # a instalação correta de todos os serviços do LAMP.
 # Recurso faz parte do software Tasksel: https://help.ubuntu.com/community/Tasksel
+#
+# O módulo do PHP Mcrypt na versão 7.2 está descontinuado, para fazer sua instalação e recomendado utilizar
+# o comando o Pecl e adicionar o repositório pecl.php.net, a instalação e baseada em compilação do módulo.
 # 
 # Variável da Data Inicial para calcular o tempo de execução do script
 DATAINICIAL=`date +%s`
@@ -161,14 +164,17 @@ sleep 5
 echo
 #
 echo -e "Instalando o PhpMyAdmin, aguarde..."
-	apt -y install phpmyadmin php-mbstring php-gettext &>> $LOG
+	apt -y install phpmyadmin php-mbstring php-gettext php-dev libmcrypt-dev php-pear &>> $LOG
 echo -e "Instalação do PhpMyAdmin feita com sucesso!!!, continuando com o script..."
 sleep 5
 echo
 #				 
 echo -e "Atualizando as dependências do PHP para o PhpMyAdmin, aguarde..."
-	phpenmod mcrypt
-	phpenmod mbstring
+	pecl channel-update pecl.php.net &>> $LOG
+	pecl install mcrypt-1.0.1
+	cp -v conf/mcrypt.ini /etc/php/7.2/mods-available/ &>> $LOG
+	phpenmod mcrypt &>> $LOG
+	phpenmod mbstring &>> $LOG
 echo -e "Atualização das dependêncais feita com sucesso!!!, continuando com o script..."
 sleep 5
 echo
