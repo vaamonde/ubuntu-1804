@@ -15,7 +15,7 @@
 # PHP-7.2 (Personal Home Page - PHP: Hypertext Preprocessor) - Linguagem de Programação Dinâmica para Web
 # PERL - Linguagem de programação multiplataforma
 # PYTHON - Linguagem de programação de alto nível
-# PhpMyAdmin - Aplicativo desenvolvido em PHP para administração do MySQL pela Internet
+# PHPMYADMIN - Aplicativo desenvolvido em PHP para administração do MySQL pela Internet
 #
 # Debconf - Sistema de configuração de pacotes Debian
 # Site: http://manpages.ubuntu.com/manpages/bionic/man7/debconf.7.html
@@ -29,7 +29,10 @@
 #
 # O módulo do PHP Mcrypt na versão 7.2 está descontinuado, para fazer sua instalação e recomendado utilizar
 # o comando o Pecl e adicionar o repositório pecl.php.net, a instalação e baseada em compilação do módulo.
-# 
+#
+# Observação: Nesse script está sendo feito a instalação do Oracle MySQL, hoje os desenvolvedores estão migrando
+# para o MariaDB, nesse script o mesmo deve ser reconfigurado para instalar e configurar o MariaDB no Ubuntu.
+#
 # Variável da Data Inicial para calcular o tempo de execução do script
 DATAINICIAL=`date +%s`
 #
@@ -190,6 +193,9 @@ echo
 echo -e "Atualizando e editando o arquivo de configuração do Apache2, aguarde..."
 	cp -v /etc/apache2/apache2.conf /etc/apache2/apache2.conf.old &>> $LOG
 	cp -v conf/apache2.conf /etc/apache2/apache2.conf &>> $LOG
+	echo -e "Pressione <Enter> para editar o arquivo: apache2.conf"
+		read
+		sleep 3
 	vim /etc/apache2/apache2.conf
 echo -e "Arquivo atualizado com sucesso!!!, continuando com o script..."
 sleep 5
@@ -198,6 +204,9 @@ echo
 echo -e "Atualizando e editando o arquivo de configuração do PHP, aguarde..."
 	cp -v /etc/php/7.2/apache2/php.ini /etc/php/7.2/apache2/php.ini.old &>> $LOG
 	cp -v conf/php.ini /etc/php/7.2/apache2/php.ini &>> $LOG
+	echo -e "Pressione <Enter> para editar o arquivo: php.ini"
+		read
+		sleep 3
 	vim /etc/php/7.2/apache2/php.ini
 echo -e "Arquivo atualizado com sucesso!!!, continuando com o script..."
 sleep 5
@@ -218,6 +227,9 @@ echo
 echo -e "Atualizando e editando o arquivo de configuração do MySQL, aguarde..."
 	cp -v /etc/mysql/mysql.conf.d/mysqld.cnf /etc/mysql/mysql.conf.d/mysqld.cnf.old &>> $LOG
 	cp -v conf/mysqld.cnf /etc/mysql/mysql.conf.d/mysqld.cnf &>> $LOG
+	echo -e "Pressione <Enter> para editar o arquivo: mysqld.cnf"
+		read
+		sleep 3
 	vim /etc/mysql/mysql.conf.d/mysqld.cnf
 echo -e "Arquivo atualizado com sucesso!!!, continuando com o script..."
 sleep 5
