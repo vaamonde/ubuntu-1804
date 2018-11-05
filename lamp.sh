@@ -10,6 +10,8 @@
 # Testado e homologado para a versão do Ubuntu Server 18.04.x LTS x64
 # Kernel >= 4.15.x
 #
+# Vídeo de instalação do GNU/Linux Ubuntu Server 18.04.x LTS: https://www.youtube.com/watch?v=zDdCrqNhIXI
+#
 # APACHE-2.4 (Apache HTTP Server) -Servidor de Hospedagem de Páginas web
 # MYSQL-5.7 (SGBD) - Sistemas de Gerenciamento de Banco de Dados
 # PHP-7.2 (Personal Home Page - PHP: Hypertext Preprocessor) - Linguagem de Programação Dinâmica para Web
