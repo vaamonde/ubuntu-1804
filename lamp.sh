@@ -96,15 +96,15 @@ fi
 #
 # Script de instalação do LAMP-Server no GNU/Linux Ubuntu Server 18.04.x
 clear
-echo -e "Instalação do LAMP-SERVER no GNU/Linux Ubuntu Server 18.04.x"
+echo -e "Instalação do LAMP-SERVER no GNU/Linux Ubuntu Server 18.04.x\n"
 echo -e "APACHE (Apache HTTP Server) - Servidor de Hospedagem de Páginas Web - Porta 80/443"
 echo -e "Após a instalação do Apache2 acessar a URL: http://`hostname -I`/"
-echo -e "MYSQL (SGBD) - Sistemas de Gerenciamento de Banco de Dados - Porta 3306"
-echo -e "PHP (Personal Home Page - PHP: Hypertext Preprocessor) - Linguagem de Programação Dinâmica para Web"
-echo -e "PERL - Linguagem de programação multi-plataforma"
-echo -e "PYTHON - Linguagem de programação de alto nível"
+echo -e "MYSQL (SGBD) - Sistemas de Gerenciamento de Banco de Dados - Porta 3306\n"
+echo -e "PHP (Personal Home Page - PHP: Hypertext Preprocessor) - Linguagem de Programação Dinâmica para Web\n"
+echo -e "PERL - Linguagem de programação multi-plataforma\n"
+echo -e "PYTHON - Linguagem de programação de alto nível\n"
 echo -e "PhpMyAdmin - Aplicativo desenvolvido em PHP para administração do MySQL pela Internet"
-echo -e "Após a instalação do PhpMyAdmin acessar a URL: http://`hostname -I`/phpmyadmin"
+echo -e "Após a instalação do PhpMyAdmin acessar a URL: http://`hostname -I`/phpmyadmin\n"
 echo -e "Aguarde, esse processo demora um pouco..."
 sleep 5
 echo
@@ -174,7 +174,7 @@ echo
 #				 
 echo -e "Atualizando as dependências do PHP para o PhpMyAdmin, aguarde..."
 	pecl channel-update pecl.php.net &>> $LOG
-	pecl install mcrypt-1.0.1
+	echo | pecl install mcrypt-1.0.1
 	cp -v conf/mcrypt.ini /etc/php/7.2/mods-available/ &>> $LOG
 	phpenmod mcrypt &>> $LOG
 	phpenmod mbstring &>> $LOG
