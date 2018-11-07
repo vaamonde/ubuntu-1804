@@ -100,14 +100,14 @@ fi
 clear
 echo -e "Instalação do LAMP-SERVER no GNU/Linux Ubuntu Server 18.04.x\n"
 echo -e "APACHE (Apache HTTP Server) - Servidor de Hospedagem de Páginas Web - Porta 80/443"
-echo -e "Após a instalação do Apache2 acessar a URL: http://`hostname -I`/"
+echo -e "Após a instalação do Apache2 acessar a URL: http://`hostname -I`/\n"
 echo -e "MYSQL (SGBD) - Sistemas de Gerenciamento de Banco de Dados - Porta 3306\n"
 echo -e "PHP (Personal Home Page - PHP: Hypertext Preprocessor) - Linguagem de Programação Dinâmica para Web\n"
 echo -e "PERL - Linguagem de programação multi-plataforma\n"
 echo -e "PYTHON - Linguagem de programação de alto nível\n"
 echo -e "PhpMyAdmin - Aplicativo desenvolvido em PHP para administração do MySQL pela Internet"
 echo -e "Após a instalação do PhpMyAdmin acessar a URL: http://`hostname -I`/phpmyadmin\n"
-echo -e "Aguarde, esse processo demora um pouco..."
+echo -e "Aguarde, esse processo demora um pouco dependendo do seu Link de Internet..."
 sleep 5
 echo
 #
@@ -176,7 +176,7 @@ echo
 #				 
 echo -e "Atualizando as dependências do PHP para o PhpMyAdmin, aguarde..."
 	pecl channel-update pecl.php.net &>> $LOG
-	echo | pecl install mcrypt-1.0.1
+	echo | pecl install mcrypt-1.0.1 &>> $LOG
 	cp -v conf/mcrypt.ini /etc/php/7.2/mods-available/ &>> $LOG
 	phpenmod mcrypt &>> $LOG
 	phpenmod mbstring &>> $LOG
@@ -191,6 +191,11 @@ echo -e "Criando o arquivo de teste do PHP phpinfo.php, aguarde..."
 echo -e "Arquivo criado com sucesso!!!, continuando com o script..."
 sleep 5
 echo
+#
+echo -e "Instalação do LAMP-Server e PhpMyAdmin feito com sucesso!!! Pressione <Enter> para continuar."
+read
+sleep 3
+clear
 #
 echo -e "Atualizando e editando o arquivo de configuração do Apache2, aguarde..."
 	cp -v /etc/apache2/apache2.conf /etc/apache2/apache2.conf.old &>> $LOG
