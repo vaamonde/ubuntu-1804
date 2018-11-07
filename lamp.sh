@@ -5,8 +5,8 @@
 # Facebook: facebook.com/BoraParaPratica
 # YouTube: youtube.com/BoraParaPratica
 # Data de criação: 04/11/2018
-# Data de atualização: 04/11/2018
-# Versão: 0.01
+# Data de atualização: 07/11/2018
+# Versão: 0.02
 # Testado e homologado para a versão do Ubuntu Server 18.04.x LTS x64
 # Kernel >= 4.15.x
 #
@@ -15,9 +15,9 @@
 # APACHE-2.4 (Apache HTTP Server) -Servidor de Hospedagem de Páginas web
 # MYSQL-5.7 (SGBD) - Sistemas de Gerenciamento de Banco de Dados
 # PHP-7.2 (Personal Home Page - PHP: Hypertext Preprocessor) - Linguagem de Programação Dinâmica para Web
-# PERL - Linguagem de programação multiplataforma
-# PYTHON - Linguagem de programação de alto nível
-# PHPMYADMIN - Aplicativo desenvolvido em PHP para administração do MySQL pela Internet
+# PERL-5.26 - Linguagem de programação multiplataforma
+# PYTHON-2.7 - Linguagem de programação de alto nível
+# PHPMYADMIN-4.6 - Aplicativo desenvolvido em PHP para administração do MySQL pela Internet
 #
 # Debconf - Sistema de configuração de pacotes Debian
 # Site: http://manpages.ubuntu.com/manpages/bionic/man7/debconf.7.html
