@@ -7,7 +7,7 @@
 # Data de criação: 31/05/2016
 # Data de atualização: 29/12/2016
 # Versão: 0.7
-# Testado e homologado para a versão do Ubuntu Server 16.04 LTS x64
+# Testado e homologado para a versão do Ubuntu Server 18.04 LTS x64
 # Kernel >= 4.4.x
 
 <IfModule mod_expires.c>
