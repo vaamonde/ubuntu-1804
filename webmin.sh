@@ -37,7 +37,6 @@ LOG=$VARLOGPATH/$LOGSCRIPT
 #
 # Variável do download do Webmin
 WEBMIN="https://prdownloads.sourceforge.net/webadmin/webmin_1.890_all.deb"
-WEBMINVERSION=`echo webmin*`
 #
 # Verificando se o usuário e Root
 if [ "$USUARIO" == "0" ]
@@ -115,6 +114,7 @@ sleep 5
 echo
 #				 
 echo -e "Instalando o Webmin, aguarde..."
+	WEBMINVERSION=`echo webmin*`
 	dpkg -i $WEBMINVERSION &>> $LOG
 echo -e "Instalação do Webmin feita com sucesso!!!, continuando com o script..."
 sleep 5
