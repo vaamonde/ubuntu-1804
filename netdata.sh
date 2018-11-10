@@ -104,7 +104,7 @@ echo -e "Instalando o Netdata, aguarde..."
 echo
 #
 echo -e "Instalando as dependências do Netdata, aguarde..."
-	apt -y install zlib1g-dev gcc make git autoconf autogen automake pkg-config uuid-dev python python-pip python-dev python3-dev libmysqlclient-dev python-ipaddress &>> $LOG
+	apt -y install zlib1g-dev gcc make git autoconf autogen automake pkg-config uuid-dev python python-mysqldb python-pip python-dev python3-dev libmysqlclient-dev python-ipaddress &>> $LOG
 echo -e "Instalação das dependências feita com sucesso!!!, continuando com o script..."
 sleep 5
 echo
