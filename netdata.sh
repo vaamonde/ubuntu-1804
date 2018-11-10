@@ -111,7 +111,7 @@ echo
 #
 echo -e "Fazendo a clonagem do Netdata, aguarde..."
 	git clone $NETDATA &>> $LOG
-echo -e "Clobagem do Netdata feito com sucesso!!!, continuando com o script..."
+echo -e "Clonagem do Netdata feito com sucesso!!!, continuando com o script..."
 sleep 5
 echo
 #				 
@@ -128,8 +128,15 @@ echo -e "Porta de conexão verificada com sucesso!!!, continuando com o script..
 sleep 5
 echo
 #
-echo -e "Editando o arquivo de monitoramento do MySQL, aguarde..."
-	netstat -an | grep 19999
+echo -e "Netdata instalado com sucesso!!!, pressione <Enter> para continuar com o script."
+read
+sleep 5
+clear
+#
+echo -e "Editando o arquivo de monitoramento do MySQL, pressione <Enter> para editar"
+	read
+	sleep 5
+	vim /usr/lib/netdata/conf.d/python.d/mysql.conf
 echo -e "Arquivo editado com sucesso!!!, continuando com o script..."
 sleep 5
 echo
