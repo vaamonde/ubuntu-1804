@@ -2,4 +2,4 @@
 
 🔵 COMO instalar o GNU/Linux Ubuntu Server 18.04.x LTS
 
-<iframe width="1024" height="768" src="https://www.youtube.com/embed/zDdCrqNhIXI" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+https://youtu.be/zDdCrqNhIXI
