@@ -12,9 +12,10 @@
 #
 # Vídeo de instalação do GNU/Linux Ubuntu Server 18.04.x LTS: https://www.youtube.com/watch?v=zDdCrqNhIXI
 #
-# O LogAnalyzer é uma interface da Web para o Syslog/Rsyslog e outros dados de eventos da rede. Ele fornece fácil navegação, análise de eventos de rede
-# em tempo real e serviços de relatórios. Os relatórios ajudam a manter um visão na atividade da rede. Ele consolida o Syslog/Rsyslog e outros dados de
-# eventos, fornecendo uma página web de fácil leitura. Os gráficos ajudam a ver as coisas importantes de relance.
+# O LogAnalyzer é uma interface da Web para o Syslog/Rsyslog e outros dados de eventos da rede. Ele fornece fácil navegação
+# análise de eventos de rede em tempo real e serviços de relatórios. Os relatórios ajudam a manter um visão na atividade da
+# rede. Ele consolida o Syslog/Rsyslog e outros dados de eventos, fornecendo uma página web de fácil leitura. Os gráficos 
+# ajudam a ver as coisas importantes de relance.
 #
 # Site oficial: https://loganalyzer.adiscon.com/
 #
@@ -42,7 +43,7 @@ LOGANALYZER="http://download.adiscon.com/loganalyzer/loganalyzer-4.1.6.tar.gz"
 MYSQLUSER="root"
 MYSQLPASS="pti@2018"
 #
-# Declarando as variaveis para criação da Base de Dados do Rsyslog
+# Declarando as variaveis para criação da Base de Dados do Syslog/Rsyslog
 RSYSLOGUSER="syslog"
 RSYSLOGPASS=$RSYSLOGUSER
 RSYSLOGDB=$RSYSLOGUSER
@@ -124,7 +125,7 @@ sleep 5
 echo
 #
 echo -e "Instalando as dependências do LogAnalyzer, aguarde..."
-	echo "rsyslog-mysql rsyslog-mysql/dbconfig-install boolean false" |  debconf-set-selections
+	echo "rsyslog-mysql rsyslog-mysql/dbconfig-install boolean false" | debconf-set-selections &>> $LOG
 	apt -y install rsyslog-mysql &>> $LOG
 echo -e "Dependências instaladas com sucesso!!!, continuando com o script"
 sleep 5
@@ -214,7 +215,7 @@ echo -e "Reinicializando o Serviço do Rsyslog, aguarde..."
 echo -e "Serviço do Rsyslog reinicializado com sucesso!!!, continuando com o script..."
 sleep 5
 echo
-
+#
 echo -e "Instalação do LogAnalyzer feita com Sucesso!!!"
 	DATAFINAL=`date +%s`
 	SOMA=`expr $DATAFINAL - $DATAINICIAL`
