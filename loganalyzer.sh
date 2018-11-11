@@ -217,6 +217,12 @@ echo -e "Serviço do Rsyslog reinicializado com sucesso!!!, continuando com o sc
 sleep 5
 echo
 #
+echo -e "Verificando a porta de conexão do Syslog/Rsyslog, aguarde..."
+	netstat -an | grep 514
+echo -e "Porta de conexão do Syslog/Rsyslog verificado com sucesso!!!, continuando o script..."
+sleep 5
+echo
+#
 echo -e "Instalação do LogAnalyzer feita com Sucesso!!!"
 	DATAFINAL=`date +%s`
 	SOMA=`expr $DATAFINAL - $DATAINICIAL`
