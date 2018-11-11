@@ -13,3 +13,7 @@
 <hr>
 
 [![Instalação do Webmin](https://github.com/vaamonde/ubuntu-1804/blob/master/img/server-14.png)](https://www.youtube.com/watch?v=rKTFI9s_YNY)
+
+<hr>
+
+[![Instalação do Netdata](https://github.com/vaamonde/ubuntu-1804/blob/master/img/server-15.png)](https://www.youtube.com/watch?v=TdTTgztYVKc)
