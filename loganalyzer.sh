@@ -170,16 +170,17 @@ sleep 5
 echo
 #
 echo -e "Descompactando o LogAnalyzer, aguarde..."
-	LOGANALYZERFILE=`echo loganalyzer*.tar*`
+	LOGANALYZERFILE=`echo loganalyzer*.*.*`
 	tar -xzvf $LOGANALYZERFILE &>> $LOG
 echo -e "Descompactação do LogAnalyzer feita com sucesso!!!, continuando com o script..."
 sleep 5
 echo
 #
 echo -e "Copiando os arquivos de configuração do LogAnalyzer, aguarde..."
-	LOGANALYZERDIR=`echo loganalyzer*/srv`
+	LOGANALYZERDIR=`echo loganalyzer*/`
+	SOURCE="src/"
 	mkdir -v /var/www/html/log &>> $LOG
-	cp -Rv $LOGANALYZERDIR/* /var/www/html/log/ &>> $LOG
+	cp -Rv $LOGANALYZERDIR$SOURCE /var/www/html/log/ &>> $LOG
 	touch /var/www/html/log/config.php &>> $LOG
 	chmod -v 666 /var/www/html/log/config.php &>> $LOG
 	chown -Rv www-data.www-data /var/www/html/log/ &>> $LOG
