@@ -177,9 +177,9 @@ sleep 5
 echo
 #
 echo -e "Copiando os arquivos de configuração do LogAnalyzer, aguarde..."
-	LOGANALYZERDIR=`echo loganalyzer*/`
+	LOGANALYZERDIR=`echo loganalyzer*/srv`
 	mkdir -v /var/www/html/log &>> $LOG
-	mv -v $LOGANALYZERDIRsrv/* /var/www/html/log/ &>> $LOG
+	cp -Rv $LOGANALYZERDIR/* /var/www/html/log/ &>> $LOG
 	touch /var/www/html/log/config.php &>> $LOG
 	chmod -v 666 /var/www/html/log/config.php &>> $LOG
 	chown -Rv www-data.www-data /var/www/html/log/ &>> $LOG
