@@ -44,9 +44,7 @@ MYSQLUSER="root"
 MYSQLPASS="pti@2018"
 #
 # Declarando as variaveis para criação da Base de Dados do Syslog/Rsyslog
-RSYSLOGUSER="syslog"
-RSYSLOGPASS=$RSYSLOGUSER
-RSYSLOGDB=$RSYSLOGUSER
+RSYSLOGDB="syslog"
 RSYSLOGDATABASE="CREATE DATABASE syslog;"
 RSYSLOGUSER="CREATE USER 'syslog' IDENTIFIED BY 'syslog';"
 RSYSLOGGRANTDATABASE="GRANT USAGE ON *.* TO 'syslog' IDENTIFIED BY 'syslog';"
@@ -137,7 +135,7 @@ echo -e "Criando a Base de Dados do Rsyslog, aguarde..."
 	mysql -u $MYSQLUSER -p$MYSQLPASS -e "$RSYSLOGGRANTDATABASE" mysql &>> $LOG
 	mysql -u $MYSQLUSER -p$MYSQLPASS -e "$RSYSLOGGRANTALL" mysql &>> $LOG
 	mysql -u $MYSQLUSER -p$MYSQLPASS -e "$RSYSLOGFLUSH" mysql &>> $LOG
-	mysql -u $RSYSLOGUSER -D $RSYSLOGDB -p$RSYSLOGPASS < $RSYSLOGINSTALL
+	mysql -u$MYSQLUSER -D $RSYSLOGDB -p$MYSQLPASS < $RSYSLOGINSTALL
 echo -e "Base de Dados do Rsyslog criada com sucesso!!!, continuando o script..."
 sleep 5
 echo
