@@ -5,3 +5,7 @@
 <hr>
 
 [![Instalação do LAMP Server](https://github.com/vaamonde/ubuntu-1804/blob/master/img/server-12.png)](https://www.youtube.com/watch?v=6EFUu-I3u4s&)
+
+<hr>
+
+[![Instalação do Wordpress](https://github.com/vaamonde/ubuntu-1804/blob/master/img/server-13.png)](https://www.youtube.com/watch?v=Fs2B7kLdlm4&t)
