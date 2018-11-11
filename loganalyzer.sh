@@ -178,7 +178,7 @@ echo
 #
 echo -e "Copiando os arquivos de configuração do LogAnalyzer, aguarde..."
 	LOGANALYZERDIR=`echo loganalyzer*/`
-	SOURCE="src/"
+	SOURCE="src/*"
 	mkdir -v /var/www/html/log &>> $LOG
 	cp -Rv $LOGANALYZERDIR$SOURCE /var/www/html/log/ &>> $LOG
 	touch /var/www/html/log/config.php &>> $LOG
