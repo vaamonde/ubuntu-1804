@@ -18,7 +18,8 @@
 # o agora com o máximo de detalhes possível, permitindo que o usuário tenha uma visão do que está acontecendo e do que acaba
 # de acontecer em seu sistema ou aplicativo, sendo uma opção ideal para resolver problemas de desempenho em tempo real.
 # https:\\(ip do servidor):(porta de utilização). Exemplo: https:\\172.16.1.20:19999
-
+#
+# Site oficial: https://github.com/netdata/netdata
 #
 # Variável da Data Inicial para calcular o tempo de execução do script
 DATAINICIAL=`date +%s`
