@@ -137,7 +137,7 @@ echo -e "Criando a Base de Dados do Rsyslog, aguarde..."
 	mysql -u $MYSQLUSER -p$MYSQLPASS -e "$RSYSLOGGRANTDATABASE" mysql &>> $LOG
 	mysql -u $MYSQLUSER -p$MYSQLPASS -e "$RSYSLOGGRANTALL" mysql &>> $LOG
 	mysql -u $MYSQLUSER -p$MYSQLPASS -e "$RSYSLOGFLUSH" mysql &>> $LOG
-	mysql -u $RSYSLOGUSER -D $RSYSLOGDB -p$RSYSLOPASS < $RSYSLOGINSTALL
+	mysql -u $RSYSLOGUSER -D $RSYSLOGDB -p$RSYSLOPASS < $RSYSLOGINSTALL &>> $LOG
 echo -e "Base de Dados do Rsyslog criada com sucesso!!!, continuando o script..."
 sleep 5
 echo
@@ -170,7 +170,7 @@ sleep 5
 echo
 #
 echo -e "Descompactando o LogAnalyzer, aguarde..."
-	LOGANALYZERFILE=`echo loganalyzer*`
+	LOGANALYZERFILE=`echo loganalyzer*.tar*`
 	tar -xzvf $LOGANALYZERFILE &>> $LOG
 echo -e "Descompactação do LogAnalyzer feita com sucesso!!!, continuando com o script..."
 sleep 5
@@ -179,7 +179,7 @@ echo
 echo -e "Copiando os arquivos de configuração do LogAnalyzer, aguarde..."
 	LOGANALYZERDIR=`echo loganalyzer*/`
 	mkdir -v /var/www/html/log &>> $LOG
-	mv -v $LOGANALYZERDIR/srv/* /var/www/html/log/ &>> $LOG
+	mv -v $LOGANALYZERDIRsrv/* /var/www/html/log/ &>> $LOG
 	touch /var/www/html/log/config.php &>> $LOG
 	chmod -v 666 /var/www/html/log/config.php &>> $LOG
 	chown -Rv www-data.www-data /var/www/html/log/ &>> $LOG
