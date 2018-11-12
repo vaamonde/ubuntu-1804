@@ -5,8 +5,8 @@
 # Facebook: facebook.com/BoraParaPratica
 # YouTube: youtube.com/BoraParaPratica
 # Data de criação: 04/11/2018
-# Data de atualização: 07/11/2018
-# Versão: 0.02
+# Data de atualização: 12/11/2018
+# Versão: 0.03
 # Testado e homologado para a versão do Ubuntu Server 18.04.x LTS x64
 # Kernel >= 4.15.x
 #
@@ -245,6 +245,12 @@ echo
 echo -e "Reinicializando os serviços do MySQL, aguarde..."
 	sudo service mysql restart
 echo -e "Serviço reinicializado com sucesso!!!, continuando com o script..."
+sleep 5
+echo
+#
+echo -e "Verificando as portas de Conexão do Apache2 e do MySQL, aguarde..."
+	netstat -an | grep '80\|3306'
+echo -e "Portas verificadas com sucesso!!!, continuando com o script..."
 sleep 5
 echo
 #
