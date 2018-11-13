@@ -117,7 +117,7 @@ sleep 5
 echo
 #
 echo -e "Adicionando as Chaves GPG do Docker, aguarde..."
-	curl -fsSL $DOCKERGPG | apt-key add - &>> $LOG
+	curl -fsSL $DOCKERGPG | apt-key add -
 echo -e "Chaves adicionadas com sucesso!!!, continuando com o script..."
 sleep 5
 echo
