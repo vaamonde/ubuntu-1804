@@ -196,6 +196,12 @@ echo -e "Container criado com sucesso!!!, continuando com o script..."
 sleep 5
 echo
 #
+echo -e "Verificando a porta de conexão do Portainer, aguarde..."
+	netstat -an | grep 9000
+echo -e "Porta de conexão verificada com sucesso!!!, continuando com o script..."
+sleep 5
+echo
+#
 echo -e "Instalação do Docker e Portainer feita com Sucesso!!!"
 	DATAFINAL=`date +%s`
 	SOMA=`expr $DATAFINAL - $DATAINICIAL`
