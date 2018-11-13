@@ -141,7 +141,7 @@ sleep 5
 echo
 #
 echo -e "Instalando o Docker, aguarde..."
-	sudo apt install docker-ce cgroup-liste &>> $LOG
+	sudo apt install docker-ce cgroup-lite &>> $LOG
 echo -e "Docker instalado com sucesso!!!, continuando com o script..."
 sleep 5
 echo
