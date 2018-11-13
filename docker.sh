@@ -117,7 +117,7 @@ sleep 5
 echo
 #
 echo -e "Adicionando as Chaves GPG do Docker, aguarde..."
-	curl -fsSL $DOCKERGPG | apt-key add -
+	curl -fsSL $DOCKERGPG | apt-key add - &>> $LOG
 echo -e "Chaves adicionadas com sucesso!!!, continuando com o script..."
 sleep 5
 echo
@@ -141,13 +141,13 @@ sleep 5
 echo
 #
 echo -e "Instalando o Docker, aguarde..."
-	sudo apt install docker-ce cgroup-lite &>> $LOG
+	apt -y install docker-ce cgroup-lite &>> $LOG
 echo -e "Docker instalado com sucesso!!!, continuando com o script..."
 sleep 5
 echo
 #
 echo -e "Adicionando o usuário Root do Grupo do Docker, aguarde..."
-	sudo usermod -a -G docker $USER &>> $LOG
+	usermod -a -G docker $USER &>> $LOG
 echo -e "Usuário adicionado com sucesso!!!, continuando com o script..."
 sleep 5
 echo
@@ -185,13 +185,13 @@ sleep 3
 echo
 #
 echo -e "Criando o volue do Portainer, aguarde..."
-	docker volume create portainer_data
+	docker volume create portainer_data &>> $LOG
 echo -e "Volume criado com sucesso!!!, continuando com o script..."
 sleep 5
 echo
 #
 echo -e "Criando o Container do Portainer, aguarde..."
-	docker run --name portainer -d -p 9000:9000 -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data portainer/portainer
+	docker run --name portainer -d -p 9000:9000 -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data portainer/portainer &>> $LOG
 echo -e "Container criado com sucesso!!!, continuando com o script..."
 sleep 5
 echo
