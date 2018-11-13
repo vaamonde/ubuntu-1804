@@ -129,7 +129,7 @@ sleep 5
 echo
 #
 echo -e "Adicionando o repositório do Docker, aguarde..."
-	sudo add-apt-repository "$DOCKERDEB"
+	sudo add-apt-repository "$DOCKERDEB" &>> $LOG
 echo -e "Repositório adicionado com sucesso!!!, continuando com o script..."
 sleep 5
 echo
@@ -175,10 +175,14 @@ echo -e "Container iniciado com sucesso!!!, continuando com o script..."
 sleep 5
 echo
 #
-echo -e "Container criado com sucesso!!!, pressione <Enter> para continuar com o script."
+echo -e "Container criados com sucesso!!!, pressione <Enter> para continuar com o script."
 read
 sleep 5
 clear
+#
+echo -e "Instalando o Portainer, aguarde..."
+sleep 3
+echo
 #
 echo -e "Criando o volue do Portainer, aguarde..."
 	docker volume create portainer_data
