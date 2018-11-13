@@ -12,16 +12,16 @@
 #
 # Vídeo de instalação do GNU/Linux Ubuntu Server 18.04.x LTS: https://www.youtube.com/watch?v=zDdCrqNhIXI
 #
-# O Docker é uma tecnologia de software que fornece contêineres, promovido pela empresa Docker, Inc. O Docker fornece uma camada
-# adicional de abstração e automação de virtualização de nível de sistema operacional no Windows e no Linux. O Docker usa as
-# características de isolação de recurso do núcleo do Linux como cgroups e espaços de nomes do núcleo, e um sistema de arquivos com
-# recursos de união, como OverlayFS e outros para permitir "contêineres" independentes para executar dentro de uma única instância
-# Linux, evitando a sobrecarga de iniciar e manter máquinas virtuais (VMs).
+# O Docker é uma tecnologia de software que fornece contêineres, promovido pela empresa Docker, Inc. O Docker fornece uma 
+# camada adicional de abstração e automação de virtualização de nível de sistema operacional no Windows e no Linux. O Docker
+# usa as características de isolação de recurso do núcleo do Linux como cgroups e espaços de nomes do núcleo, e um sistema de
+# arquivos com recursos de união, como OverlayFS e outros para permitir "contêineres" independentes para executar dentro de 
+# uma única instância Linux, evitando a sobrecarga de iniciar e manter máquinas virtuais (VMs).
 #
 # Site oficial: https://www.docker.com/docker-community
 #
-# O Portainer.io uma solução de gerenciamento para o Docker, com ele é possível gerenciar facilmente os seus hosts Docker e clusters
-# com Docker Swarm através de uma interface web limpa, simples e intuitiva.
+# O Portainer.io uma solução de gerenciamento para o Docker, com ele é possível gerenciar facilmente os seus hosts Docker e 
+# clusters com Docker Swarm através de uma interface web limpa, simples e intuitiva.
 #
 # Site oficial: https://portainer.io/
 #
@@ -123,13 +123,13 @@ sleep 5
 echo
 #				 
 echo -e "Verificando as Chaves do GPG do Docker, aguarde..."
-	sudo apt-key fingerprint $DOCKERKEY &>> $LOG
+	apt-key fingerprint $DOCKERKEY &>> $LOG
 echo -e "Chaves verificadas com sucesso com sucesso!!!, continuando com o script..."
 sleep 5
 echo
 #
 echo -e "Adicionando o repositório do Docker, aguarde..."
-	sudo add-apt-repository "$DOCKERDEB" &>> $LOG
+	add-apt-repository "$DOCKERDEB" &>> $LOG
 echo -e "Repositório adicionado com sucesso!!!, continuando com o script..."
 sleep 5
 echo
