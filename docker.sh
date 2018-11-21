@@ -117,6 +117,7 @@ sleep 5
 echo
 #
 echo -e "Adicionando as Chaves GPG do Docker, aguarde..."
+	#-f (fail), -s (silent), -S (show-error), -L (location)
 	curl -fsSL $DOCKERGPG | apt-key add -
 echo -e "Chaves adicionadas com sucesso!!!, continuando com o script..."
 sleep 5
@@ -147,6 +148,7 @@ sleep 5
 echo
 #
 echo -e "Adicionando o usuário Root do Grupo do Docker, aguarde..."
+	#-a (append), -G (groups)
 	usermod -a -G docker $USER &>> $LOG
 echo -e "Usuário adicionado com sucesso!!!, continuando com o script..."
 sleep 5
@@ -170,6 +172,7 @@ sleep 5
 echo
 #
 echo -e "Iniciando o Container de teste do Ubuntu, aguarde..."
+	#-i (Keep STDIN open even if not attached), -t (Allocate a pseudo-TTY)
 	docker run -it ubuntu bash
 echo -e "Container iniciado com sucesso!!!, continuando com o script..."
 sleep 5
@@ -191,12 +194,14 @@ sleep 5
 echo
 #
 echo -e "Criando o Container do Portainer, aguarde..."
+	#-d (Run container in background and print container ID), -p (Publish a container’s port(s) to the host), -v (Bind mount a volume)
 	docker run --name portainer -d -p 9000:9000 -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data portainer/portainer &>> $LOG
 echo -e "Container criado com sucesso!!!, continuando com o script..."
 sleep 5
 echo
 #
 echo -e "Verificando a porta de conexão do Portainer, aguarde..."
+	#-a (all), -n (numeric)
 	netstat -an | grep 9000
 echo -e "Porta de conexão verificada com sucesso!!!, continuando com o script..."
 sleep 5
