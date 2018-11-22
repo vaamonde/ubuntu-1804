@@ -113,7 +113,7 @@ sleep 5
 echo
 #
 echo -e "Baixando o OpenFire do site oficial, aguarde..."
-	wget $OPENFIRE &>> $LOG
+	wget $OPENFIRE -O openfire.deb &>> $LOG
 echo -e "OpenFire baixado com sucesso!!!, continuando com o script..."
 sleep 5
 echo
