@@ -42,16 +42,16 @@ FLUSH="FLUSH PRIVILEGES;"
 OPENFIRE="https://www.igniterealtime.org/downloadServlet?filename=openfire/openfire_4.2.3_all.deb"
 #
 # Verificando se o usuário e Root, Distribuição e >=18.04 e o Kernel >=4.15 <IF MELHORADO)
-if [ "$USUARIO" == "0" ] && [ "$UBUNTU" == "19" ] && [ "$KERNEL" == "4.15" ]
+if [ "$USUARIO" == "0" ] && [ "$UBUNTU" == "18.04" ] && [ "$KERNEL" == "4.15" ]
 	then
 		echo -e "O usuário e Root, continuando com o script..."
 		echo -e "Distribuição e >=18.04.x, continuando com o script..."
 		echo -e "Kernel e >= 4.15, continuando com o script..."
 		sleep 5
 	else
-		echo -e "Usuário não e Root ou Distribuição não e >=18.04.x ou Kernel não e >=4.15."
+		echo -e "Usuário não e Root ($USUARIO) ou Distribuição não e >=18.04.x ($UBUNTU) ou Kernel não e >=4.15 ($KERNEL)"
 		echo -e "Caso você não tenha executado o script com o comando: sudo -i"
-		echo -e "Execute novamente o mesmo para verificar o ambiente."
+		echo -e "Execute novamente o script para verificar o ambiente."
 		exit 1
 fi
 #
