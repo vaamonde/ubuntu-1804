@@ -103,14 +103,18 @@ sleep 5
 echo
 #				 
 echo -e "Criando o Banco de Dados do OpenFire, aguarde..."
-	
+	mysql -u $USER -p$PASSWORD -e "$DATABASE" mysql &>> $LOG
+	mysql -u $USER -p$PASSWORD -e "$USERDATABASE" mysql &>> $LOG
+	mysql -u $USER -p$PASSWORD -e "$GRANTDATABASE" mysql &>> $LOG
+	mysql -u $USER -p$PASSWORD -e "$GRANTALL" mysql &>> $LOG
+	mysql -u $USER -p$PASSWORD -e "$FLUSH" mysql &>> $LOG	
 echo -e "Banco de Dados criado com sucesso!!!, continuando com o script..."
 sleep 5
 echo
 #
 echo -e "Baixando o OpenFire do site oficial, aguarde..."
 	wget $OPENFIRE &>> $LOG
-echo -e "Repositório adicionado com sucesso!!!, continuando com o script..."
+echo -e "OpenFire baixado com sucesso!!!, continuando com o script..."
 sleep 5
 echo
 #
