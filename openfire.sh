@@ -5,8 +5,8 @@
 # Facebook: facebook.com/BoraParaPratica
 # YouTube: youtube.com/BoraParaPratica
 # Data de criação: 22/11/2018
-# Data de atualização: 22/11/2018
-# Versão: 0.01
+# Data de atualização: 24/11/2018
+# Versão: 0.02
 # Testado e homologado para a versão do Ubuntu Server 18.04.x LTS x64
 # Kernel >= 4.15.x
 #
@@ -20,6 +20,8 @@
 # conversas em grupo que usa o servidor XMPP escrito em Java e licenciado sob a licença Apache 2.0.
 #
 # Vídeo de instalação do GNU/Linux Ubuntu Server 18.04.x LTS: https://www.youtube.com/watch?v=zDdCrqNhIXI
+#
+# Vídeo de instalação do LAMP Server no GNU/Linux Ubuntu Server 18.04.x LTS
 #
 # Variável da Data Inicial para calcular o tempo de execução do script
 DATAINICIAL=`date +%s`
@@ -51,6 +53,7 @@ FLUSH="FLUSH PRIVILEGES;"
 OPENFIRE="https://www.igniterealtime.org/downloadServlet?filename=openfire/openfire_4.2.3_all.deb"
 #
 # Verificando se o usuário e Root, Distribuição e >=18.04 e o Kernel >=4.15 <IF MELHORADO)
+clear
 if [ "$USUARIO" == "0" ] && [ "$UBUNTU" == "18.04" ] && [ "$KERNEL" == "4.15" ]
 	then
 		echo -e "O usuário e Root, continuando com o script..."
@@ -64,6 +67,15 @@ if [ "$USUARIO" == "0" ] && [ "$UBUNTU" == "18.04" ] && [ "$KERNEL" == "4.15" ]
 		exit 1
 fi
 #
+# Verificando se as dependêncais do OpenFire estão instaladas
+echo -n "Verificando as dependências, aguarde... "
+	for name in mysql-server mysql-common
+	do
+  		[[ $(dpkg -s $name 2> /dev/null) ]] || { echo -en "\n\nO software: $name precisa ser instalado. \nUse o comando 'apt install $name'\n";deps=1; }
+	done
+		[[ $deps -ne 1 ]] && echo "Dependências.: OK" || { echo -en "\nInstale as dependências acima e execute novamente este script\n";exit 1; }
+		sleep 5
+#		
 # Script de instalação do OpenFire no GNU/Linux Ubuntu Server 18.04.x
 clear
 echo -e "Instalação do OpenFire no GNU/Linux Ubuntu Server 18.04.x\n"
@@ -85,12 +97,14 @@ sleep 5
 echo
 #
 echo -e "Atualizando o sistema, aguarde..."
+	#-y (yes)
 	apt -y upgrade &>> $LOG
 echo -e "Sistema atualizado com sucesso!!!, continuando com o script..."
 sleep 5
 echo
 #
 echo -e "Removendo software desnecessários, aguarde..."
+	#-y (yes)
 	apt -y autoremove &>> $LOG
 echo -e "Software removidos com sucesso!!!, continuando com o script..."
 sleep 5
@@ -100,6 +114,7 @@ echo -e "Instalando o OpenFire, aguarde..."
 echo
 #
 echo -e "Instalando as dependências do OpenFire, aguarde..."
+	#-y (yes)
 	apt -y install openjdk-8-jdk openjdk-8-jre &>> $LOG
 echo -e "Instalação das dependências feita com sucesso!!!, continuando com o script..."
 sleep 5
@@ -122,12 +137,14 @@ sleep 5
 echo
 #
 echo -e "Baixando o OpenFire do site oficial, aguarde..."
+	#-O (output document file)
 	wget $OPENFIRE -O openfire.deb &>> $LOG
 echo -e "OpenFire baixado com sucesso!!!, continuando com o script..."
 sleep 5
 echo
 #
 echo -e "Instalando o OpenFire, aguarde..."
+	#-i (install)
 	dpkg -i openfire.deb &>> $LOG
 echo -e "OpenFire instalado com sucesso!!!, continuando com o script..."
 sleep 5
