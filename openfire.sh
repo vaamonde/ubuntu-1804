@@ -67,7 +67,7 @@ fi
 # Script de instalação do OpenFire no GNU/Linux Ubuntu Server 18.04.x
 clear
 echo -e "Instalação do OpenFire no GNU/Linux Ubuntu Server 18.04.x\n"
-echo -e "Após a instalação do Portainer acessar a URL: http://`hostname -I`:9090/\n"
+echo -e "Após a instalação do OpenFire acessar a URL: http://`hostname -I | cut -d' ' -f1`:9090/\n"
 echo -e "Aguarde, esse processo demora um pouco dependendo do seu Link de Internet..."
 sleep 5
 echo
@@ -128,7 +128,7 @@ sleep 5
 echo
 #
 echo -e "Instalando o OpenFire, aguarde..."
-	dpkg -i openfire*.deb &>> $LOG
+	dpkg -i openfire.deb &>> $LOG
 echo -e "OpenFire instalado com sucesso!!!, continuando com o script..."
 sleep 5
 echo
