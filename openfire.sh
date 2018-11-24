@@ -10,6 +10,15 @@
 # Testado e homologado para a versão do Ubuntu Server 18.04.x LTS x64
 # Kernel >= 4.15.x
 #
+# Extensible Messaging and Presence Protocol (XMPP) (conhecido anteriormente como Jabber) é um protocolo aberto,
+# extensível, baseado em XML, para sistemas de mensagens instantâneas, desenvolvido originalmente para mensagens
+# instantâneas e informação de presença formalizado pelo IETF. Softwares com base XMPP são distribuídos em milhares
+# de servidores através da internet, e usados por cerca de dez milhões de pessoas em todo mundo, de acordo com a 
+# XMPP Standards Foundation.
+#
+# O Openfire (anteriormente conhecido como Wildfire e Jive Messenger) é um servidor de mensagens instantâneas e de
+# conversas em grupo que usa o servidor XMPP escrito em Java e licenciado sob a licença Apache 2.0.
+#
 # Vídeo de instalação do GNU/Linux Ubuntu Server 18.04.x LTS: https://www.youtube.com/watch?v=zDdCrqNhIXI
 #
 # Variável da Data Inicial para calcular o tempo de execução do script
