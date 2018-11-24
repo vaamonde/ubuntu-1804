@@ -91,7 +91,7 @@ echo -e "Instalando o OpenFire, aguarde..."
 echo
 #
 echo -e "Instalando as dependências do OpenFire, aguarde..."
-	apt -y install openjdk-11-jdk &>> $LOG
+	apt -y install openjdk-8-jdk openjdk-8-jre &>> $LOG
 echo -e "Instalação das dependências feita com sucesso!!!, continuando com o script..."
 sleep 5
 echo
