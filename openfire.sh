@@ -84,6 +84,7 @@ echo -n "Verificando as dependências, aguarde... "
 		sleep 5
 #		
 # Script de instalação do OpenFire no GNU/Linux Ubuntu Server 18.04.x
+# opção do comando hostname: -I (all IP address)
 clear
 echo -e "Instalação do OpenFire no GNU/Linux Ubuntu Server 18.04.x\n"
 echo -e "Após a instalação do OpenFire acessar a URL: http://`hostname -I | cut -d' ' -f1`:9090/\n"
