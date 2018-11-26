@@ -24,9 +24,12 @@
 # Vídeo de instalação do LAMP Server no GNU/Linux Ubuntu Server 18.04.x LTS: https://www.youtube.com/watch?v=6EFUu-I3u4s
 #
 # Variável da Data Inicial para calcular o tempo de execução do script
+# opção do comando date: +%s (seconds since)
 DATAINICIAL=`date +%s`
 #
 # Variáveis para validar o ambiente, verificando se o usuário e "root", versão do ubuntu e kernel
+# opções do comando id: -u (user), opções do comando: lsb_release: -r (release), -s (short), opões do comando uname: -r (kernel release)
+# opções do comando cut: -d (delimiter), -f (fields)
 USUARIO=`id -u`
 UBUNTU=`lsb_release -rs`
 KERNEL=`uname -r | cut -d'.' -f1,2`
@@ -35,6 +38,7 @@ KERNEL=`uname -r | cut -d'.' -f1,2`
 VARLOGPATH="/var/log/"
 #
 # Variável para criação do arquivo de Log dos Script
+# $0 (nome do comando)
 LOGSCRIPT=`echo $0 | cut -d'/' -f2`
 #
 # Variável do caminho para armazenar os Log's de instalação
@@ -53,6 +57,7 @@ FLUSH="FLUSH PRIVILEGES;"
 OPENFIRE="https://www.igniterealtime.org/downloadServlet?filename=openfire/openfire_4.2.3_all.deb"
 #
 # Verificando se o usuário e Root, Distribuição e >=18.04 e o Kernel >=4.15 <IF MELHORADO)
+# && = operador lógico AND, == comparação de string
 clear
 if [ "$USUARIO" == "0" ] && [ "$UBUNTU" == "18.04" ] && [ "$KERNEL" == "4.15" ]
 	then
@@ -68,6 +73,8 @@ if [ "$USUARIO" == "0" ] && [ "$UBUNTU" == "18.04" ] && [ "$KERNEL" == "4.15" ]
 fi
 #
 # Verificando se as dependêncais do OpenFire estão instaladas
+# opção do dpkg: -s (status), opção do echo: -e (intepretador de escapes de barra invertida), -n (permite nova linha)
+# || (operador lógico OU), 2> (redirecionar de saída de erro STDERR), && = operador lógico AND
 echo -n "Verificando as dependências, aguarde... "
 	for name in mysql-server mysql-common
 	do
@@ -127,6 +134,7 @@ sleep 5
 echo
 #				 
 echo -e "Criando o Banco de Dados do OpenFire, aguarde..."
+	#-u (user), -p (password), -e (execute)
 	mysql -u $USER -p$PASSWORD -e "$DATABASE" mysql &>> $LOG
 	mysql -u $USER -p$PASSWORD -e "$USERDATABASE" mysql &>> $LOG
 	mysql -u $USER -p$PASSWORD -e "$GRANTDATABASE" mysql &>> $LOG
