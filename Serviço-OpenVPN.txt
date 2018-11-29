@@ -1,0 +1,365 @@
+Rede Matriz:					172.16.XXX.0/24
+Rede Filial:					172.16.XXX.0/24
+IP WAN Matriz:					10.26.44.XXX
+IP WAN Filial:					10.26.44.XXX
+Rede Túnel Site-to-Site:		192.168.10.0/30
+Rede Túnel Remote Access:		192.168.10.0/24
+
+#Configuração do CA e Certification
+
+#Etapa-01
+
+01. System, Cert. Manager;
+02. CAs, Add;
+#Create / Edit CA
+	03. Descriptive name: CA-Interna
+	04. Method: Create an internal Certificate Authority
+#Internal Certificate Authority
+	05. Key length (bits): 2048
+	06. Digest Algorithm: sha256
+	07. Lifetime (days) 3650
+	08. Common Name: internal-ca
+	09. Country Code: BR
+	10. State or Province: São Paulo
+	11. City: são Paulo
+	12. Organization: vaamonde100.local
+	13. Organizational Unit: Matriz Vaamonde
+14. Save
+
+#Exportar e instalar a CA nos clientes Windows e GNU/Linux
+
+#Etapa-02
+
+01. System, Cert. Manager;
+02. Certificates, Add/Sign;
+#Add/Sign a New Certificate
+	03. Method: Create an Internal Certificate
+	04. Description name: Certificado_Interno
+#Internal Certificate
+05. Certificate authority: CA-Interna
+06. Key lenght: 2048
+07. Digest Algorithm: sha256
+08. Lifetime (days): 3650
+09. Common Name: pti.intra
+10. Country Code: BR
+11. State or Provice: São Paulo
+12. City: São Paulo
+13. Organization: Procedimentos em TI
+14. Organizational Unit: Matriz Procedimentos em TI
+#Certificate Attributes
+15. Certificate Type: Server Certificate
+16. Alternative Names: FQDN or Hostname		vaamonde.local
+					   FQDN or Hostname		firewall100
+					   FQDN or Hostname		firewall100.vaamonde.local
+					   IP address			172.16.100.254
+17. Save
+
+#Etapa-03
+
+01. System, Advanced;
+#webConfigurator
+02. Protocol: HTTPS
+03. SSL Certificate: Certiticado_Interno
+04. Save
+
+#Etapa-04
+
+01. System, User Manager;
+02. Users, Add;
+#User Properties
+03. Username: vaamonde
+04. Password: 123@senac - Confirm Password: 123@senac
+05. Full Name: Robson Vaamonde
+06. Expiration date: Deixar o padrão
+07. Custom Settings: Desmarcado
+08. Group Membership: Deixar o padrão
+09. Certificate: Marcar a opção: Click to create a user certificate
+#Create Certificate for User
+10. Descriptive name: vaamonde
+11. Certificate authority: CA-Interna
+12. Ley lenght: 2048 bits
+13. Lifetime: 3650
+#Key
+14. Authorized SSH Keys: Deixar o padrão
+15. IPsec Pre-Shared Keys Deixar o padrão
+16. Save
+
+======================================================================================
+
+#Configuração do OpenVPN Matriz e Filial
+
+Etapa-01: 
+
+pf-Matriz Site-to-Site - Ponto-a-Ponto
+
+01. VPN, OpenVPN;
+02. Servers, Add;
+#General Information
+03. Server mode: Peer-to-Peer (Shared Key)
+04. Protocol: UDP on IPv4 only
+05. Device mode: tun - Layer 3 Tunnel Mode
+06. Interface: WAN
+07. Local Port: 1194
+08. Description: VPN-Matriz-Filial
+#Cryptographic Settings
+09. Shared Key: Marcado
+10. Encryption Algorithm: AES-256-CBC (256-bit)
+11. Enable NCP: Marcado
+12. Auth digest algorithm: SHA256 (256-bit)
+13. Hardware Crypto: No Hardware Crypto Acceleration
+#Tunnel Settings
+14. IPv4 Tunnel Network: 192.168.10./30 (Endereço da Rede da VPN)
+15. IPv6 Tunnel Network: Não utilizado
+16. IPv4 Remote Network(s): 172.16.10.0/24 (Endereço da Rede da Filial)
+17. IPv6 Remote Network(s): Não utilizado
+18. Concurrent connections: Deixar em branco que é o máximo
+19. Compression: Disable Compression, retain compression packet framing [compress]
+20. Type-of-Service: Desmarcado
+#Advanced Configuration
+21. Custom options: Sem opções
+22. UDP Fast I/O: Desmarcado
+23. Send/Receive Buffer: Default
+24. Gateway creation: Both
+25. Verbosity Level: Default
+26. Save
+
+Após salvar, voltar novamente nas configurações para copiar a Chave Compartilhada e enviar para a Filial
+Cryptographic Settings
+Shared Key
+
+Etapa-02: 
+
+pf-Filial Site-to-Site - Ponto-a-Ponto
+
+01. VPN, OpenVPN
+02. Clients, Add
+#General Information
+03. Server mode: Peer-to-Peer (Shared Key)
+04. Protocol: UDP on IPv4 only
+05. Device mode: tun - Layer 3 Tunnel Mode
+06. Interface: WAN
+07. Local port: Deixar o padrão
+08. Server host or address: 10.26.46.xxx (Endereço IP da WAN da Matriz)
+09. Server port: 1194
+10. Proxy host or address: Não utilizado
+11. Proxy port: Não utilizado
+12. Proxy Authentication: none
+13. Description: VPN-Filial-Matriz
+#Cryptographic Settings
+14. Auto generate: Desmarcar
+15. Shared Key: Colar a Chave gerada pelo Servidor
+16. Encryption Algorithm: AES-256-CBC (256-bit)
+17. Enable NCP: Marcado
+18. Auth digest algorithm: SHA256 (256-bit)
+19. Hardware Crypto: No Hardware Crypto Acceleration
+#Tunnel Settings
+20. IPv4 Tunnel Network: 192.168.10.0/30 (Endereço da Rede da VPN)
+21. IPv6 Tunnel Network: Não utilizado
+22. IPv4 Remote Network(s): 172.16.100.0/24 (Endereço da Rede da Matriz)
+23. Ipv6 Remote Network(s): Não utilizado
+24. Limit outgoing bandwith: Deixar o Padrão
+25. Compression: Disable Compression, retaim compression packet framing [compress]
+26. Type-of-Service: Desmarcado
+27. Don't add/remove routes: Desmarcado
+#Advanced Configuration
+28. Custom options: Não utilizado
+29. UDP Fast I/O: Desmarcado
+30. Send/Receive Buffer: Default
+31. Gateway creation: Desmarcado
+32. Verbosity level: Default
+33. Save
+
+#Configuração das Regras de Firewall do OpenVPN Matriz e Filial
+
+Etapa-03: 
+
+pf-Matriz WAN Accept VPN
+
+01. Firewall, Aliases;
+02. IP, Add;
+#Properties
+03. Name: wan_ip_filial
+04. Description: Rede da VPN
+05. Type: Networks 
+#Network(s)
+06. Host: 10.26.44.XXX - Endereço IP da Filial
+07. Save
+08. Apply Changes
+
+01. Firewall, Rules;
+02. WAN, Add;
+#Edit Firewall Rule
+03. Action: Pass
+04. Interface: WAN
+05. Address Family: IPv4
+06. Protocol: UDP
+#Source
+07. Source: Single host or alias: wan_ip_filial
+#Destination
+08. Destination: WAN Address
+09. Destination port range: OpenVPN (1194)
+#Extra Options
+10. Log: Enable
+11. Description: Rede da VPN
+12. Save
+13. Apply Changes
+
+Etapa-04: 
+
+pf-Matriz OpenVPN Accept LAN
+
+01. Firewall, Aliases;
+02. IP, Add;
+#Properties
+03. Name: rede_filial
+04. Description: Rede da Filial e VPN
+05. Type: Network: 
+#Network(s)
+06. Network or FQDN: 172.16.10.0/24 LAN Filial
+					 192.168.10.0/30 LAN VPN
+07. Save
+08. Apply Changes
+
+01. Firewall, Rules;
+02. OpenVPN, Add;
+#Edit Firewall Rule
+03. Action: Pass
+04. Interface: OpenVPN
+05. Address Family: IPv4
+06. Protocol: any
+#Source
+Source: Single host or alias - rede_filial
+#Destination
+Destination: any
+#Extra Options
+10. Log: Enable
+11. Description: Acesso VPN Filial
+12. Save
+13. Apply Changes
+
+Etapa-05: 
+
+pf-Filial OpenVPN Accept LAN
+
+01. Firewall, Aliases;
+02. IP, Add;
+#Properties
+03. Name: rede_matriz
+04. Description: Rede da Matriz e VPN
+05. Type: Network: 
+#Network(s)
+06. Network or FQDN: 172.16.100.0/24 LAN Matriz
+					 192.168.10.0/30 LAN VPN
+07. Save
+08. Apply Changes
+
+01. Firewall, Rules;
+02. OpenVPN, Add;
+#Edit Firewall Rule
+03. Action: Pass
+04. Interface: OpenVPN
+05. Address Family: IPv4
+06. Protocol: any
+#Source
+Source: Single host or alias - rede_matriz
+#Destination
+Destination: any
+#Extra Options
+10. Log: Enable
+11. Description: Acesso VPN Matriz
+12. Save
+13. Apply Changes
+
+Etapa-06: 
+
+#Verificação dos Status da VPN:
+
+Status, OpenVPN
+Status, System Logs, OpenVPN
+
+======================================================================================
+
+#Configuração do OpenVPN Remote Access Matriz
+
+pf-Matriz Site-to-Client - Remote Access
+
+#Etapa-01
+
+01. System, Package Manager;
+02. Available Packages;
+03. Search term: openvpn
+04. openvpn-client-export - Install
+05. Confirm
+
+#Etapa-02
+
+01. VPN, OpenVPN;
+02. Wizards;
+#Select an Authentication Backend Type
+03. Typer of Server: Local User Access
+04. Next
+05. Certificate Authority: CA-Interna
+06. Next
+07. Certificate: Certificado_Interno
+08. Next
+09. Interface: WAN
+10. Protocol: UDP on IPv4 only
+11. Local Port: 1194
+12. Description: Acesso VPN Matriz
+#Cryptographics Settings
+13. TLS Authentication: Marcado
+14. Generate TLS Key: Marcado
+15. TLS Shared Key: Deixar o padrão
+16. DH Parameters Lenght: 2048 bits
+17. Encryption Algorithm: AES-256-CBC (256 bit keys, 128 bit block)
+18. Auth Digest Algorithm: SHA256 (256-bit)
+19. Hardware Crypto: no Hardware Crypto Acceleration
+#Tunnel Settings
+20. Tunnel Network: 192.168.10.0/24 (Rede do Túnel da VPN)
+21. Redirect Gateway: Desmarcado
+22. Local Network: 172.16.100.0/24 (Rede LAN Local da Matriz)
+23. Concurrent Connections: 10
+24. Compression: Disable Compression, retain compression packet framing [compress]
+25. Type-of-Service: Desmarcado
+26. Inter-Client Communication: Desmarcado
+27. Duplicate Connections: Desmarcado
+#Client Settings
+28. Dynamic IP: Marcado
+29. Topology: Subnet - One IP address per client in a common subnet
+30. DNS Default Domain: Deixar o padrão
+31. DNS Server 1 até 4: Deixar o padrão
+32. NTP Server 1 até 2: Deixar o padrão
+33. NetBIOS Options: Desmarcado
+34. NetBIOS Node Type: none
+35. NetBIOS Scope ID: Deixar o padrão
+36. WINS Server 1 até 2: Deixar o padrão
+37. Advanced: Deixar o padrão
+38. Next
+#Traffic from clients to server:
+39. Firewall Rule: Marcar
+#Traffic from clients through VPN
+40. OpenVPN rule: Marcar
+41. Next
+#Configuration Complete!
+42. Finish
+
+#Etapa-03
+
+01. VPN, OpenVPN;
+02. Client Export;
+#OpenVPN Server
+03. Remote Access Server: Accesso VPN Matriz UDP4:1194
+DEIXAR O PADRÃO PARA TODOS:	#Client Connection Behavior
+							#Certificate Export options
+							#Proxy Options
+							#Advanced
+							#Search
+#OpenVPN Clients
+04. User: vaamonde	Windows: x64-win6
+05. Instalar o software no Microsoft Windows
+
+Desafio, configurar o cliente no GNU/Linux Mint
+
+#OpenVPN Clients
+04. User: leandro	GNU/Linux: 
+05. Configurar a VPN no GNU/Linux Mint
