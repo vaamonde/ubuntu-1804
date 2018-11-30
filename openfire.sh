@@ -28,8 +28,8 @@
 DATAINICIAL=`date +%s`
 #
 # Variáveis para validar o ambiente, verificando se o usuário e "root", versão do ubuntu e kernel
-# opções do comando id: -u (user), opções do comando: lsb_release: -r (release), -s (short), opões do comando uname: -r (kernel release)
-# opções do comando cut: -d (delimiter), -f (fields)
+# opções do comando id: -u (user), opções do comando: lsb_release: -r (release), -s (short), 
+# opões do comando uname: -r (kernel release), opções do comando cut: -d (delimiter), -f (fields)
 USUARIO=`id -u`
 UBUNTU=`lsb_release -rs`
 KERNEL=`uname -r | cut -d'.' -f1,2`
@@ -38,7 +38,7 @@ KERNEL=`uname -r | cut -d'.' -f1,2`
 VARLOGPATH="/var/log/"
 #
 # Variável para criação do arquivo de Log dos Script
-# $0 (nome do comando)
+# $0 (variável de ambiente do nome do comando)
 LOGSCRIPT=`echo $0 | cut -d'/' -f2`
 #
 # Variável do caminho para armazenar os Log's de instalação
@@ -84,7 +84,7 @@ echo -n "Verificando as dependências, aguarde... "
 		sleep 5
 #		
 # Script de instalação do OpenFire no GNU/Linux Ubuntu Server 18.04.x
-# opção do comando hostname: -I (all IP address)
+# opção do comando hostname: -I (all IP address), opções do comando cut: -d (delimiter), -f (fields)
 clear
 echo -e "Instalação do OpenFire no GNU/Linux Ubuntu Server 18.04.x\n"
 echo -e "Após a instalação do OpenFire acessar a URL: http://`hostname -I | cut -d' ' -f1`:9090/\n"
@@ -93,6 +93,7 @@ sleep 5
 echo
 #
 echo -e "Adicionando o Repositório Universal do Apt, aguarde..."
+	#opção do comando: &>> (redirecionar de saida padrão)
 	add-apt-repository universe &>> $LOG
 echo -e "Repositório adicionado com sucesso!!!, continuando com o script..."
 sleep 5
@@ -167,9 +168,11 @@ sleep 5
 echo
 #
 echo -e "Instalação do OpenFire feita com Sucesso!!!"
+	# opção do comando date: +%s (seconds since)
 	DATAFINAL=`date +%s`
 	SOMA=`expr $DATAFINAL - $DATAINICIAL`
 	RESULTADO=`expr 10800 + $SOMA`
+	# opção do comando date: -d (date), +%H (hour), %M (minute), %S (second)
 	TEMPO=`date -d @$RESULTADO +%H:%M:%S`
 echo -e "Tempo gasto para execução do script $0: $TEMPO"
 echo -e "Pressione <Enter> para concluir o processo."
