@@ -53,7 +53,7 @@ FLUSH="FLUSH PRIVILEGES;"
 ZONEMINDER="ppa:iconnor/zoneminder-master"
 #
 # Verificando se o usuário e Root, Distribuição e >=18.04 e o Kernel >=4.15 <IF MELHORADO)
-# && = operador lógico AND, == comparação de string
+# && = operador lógico AND, == comparação de string, exit 1 = A maioria dos erros comuns na execução
 clear
 if [ "$USUARIO" == "0" ] && [ "$UBUNTU" == "18.04" ] && [ "$KERNEL" == "4.15" ]
 	then
@@ -130,15 +130,6 @@ echo -e "Atualizando novamente as listas do Apt, aguarde..."
 echo -e "Listas atualizadas com sucesso!!!, continuando com o script..."
 sleep 5
 echo
-#				 
-echo -e "Criando o Banco de Dados do ZoneMinder, aguarde..."
-	#-u (user), -p (password), -e (execute), < (Redirecionador de Saída STDOUT)
-	mysql -u $USER -p$PASSWORD < $DATABASE &>> $LOG
-	mysql -u $USER -p$PASSWORD -e "$GRANTALL" mysql &>> $LOG
-	mysql -u $USER -p$PASSWORD -e "$FLUSH" mysql &>> $LOG
-echo -e "Banco de Dados criado com sucesso!!!, continuando com o script..."
-sleep 5
-echo
 #
 echo -e "Editando as Configurações do Servidor de MySQL, perssione <Enter> para continuar"
 	#sql_mode = NO_ENGINE_SUBSTITUTION
@@ -146,6 +137,15 @@ echo -e "Editando as Configurações do Servidor de MySQL, perssione <Enter> par
 	vim /etc/mysql/mysql.conf.d/mysqld.cnf
 	sudo service mysql restart &>> $LOG
 echo -e "Banco de Dados editado com sucesso!!!, continuando com o script..."
+sleep 5
+echo
+#
+echo -e "Criando o Banco de Dados do ZoneMinder, aguarde..."
+	#-u (user), -p (password), -e (execute), < (Redirecionador de Saída STDOUT)
+	mysql -u $USER -p$PASSWORD < $DATABASE &>> $LOG
+	mysql -u $USER -p$PASSWORD -e "$GRANTALL" mysql &>> $LOG
+	mysql -u $USER -p$PASSWORD -e "$FLUSH" mysql &>> $LOG
+echo -e "Banco de Dados criado com sucesso!!!, continuando com o script..."
 sleep 5
 echo
 #
@@ -199,6 +199,7 @@ echo -e "Instalação do ZoneMinder feita com Sucesso!!!"
 	# opção do comando date: +%s (seconds since)
 	DATAFINAL=`date +%s`
 	SOMA=`expr $DATAFINAL - $DATAINICIAL`
+	# opção do comando expr: 10800 segundos, usada para arredondamento de cálculo
 	RESULTADO=`expr 10800 + $SOMA`
 	# opção do comando date: -d (date), +%H (hour), %M (minute), %S (second)
 	TEMPO=`date -d @$RESULTADO +%H:%M:%S`
