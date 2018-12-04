@@ -83,7 +83,7 @@ echo -n "Verificando as dependências, aguarde... "
 # opção do comando hostname: -I (all IP address)
 clear
 echo -e "Instalação do ZoneMinder no GNU/Linux Ubuntu Server 18.04.x\n"
-echo -e "Após a instalação do ZoneMinder acessar a URL: http://`hostname -I/zm/\n"
+echo -e "Após a instalação do ZoneMinder acessar a URL: http://`hostname -I`/zm/\n"
 echo -e "Aguarde, esse processo demora um pouco dependendo do seu Link de Internet..."
 sleep 5
 echo
