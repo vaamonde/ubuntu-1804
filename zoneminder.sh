@@ -132,20 +132,12 @@ sleep 5
 echo
 #
 echo -e "Editando as Configurações do Servidor de MySQL, perssione <Enter> para continuar"
+	#[mysqld]
 	#sql_mode = NO_ENGINE_SUBSTITUTION
 	read
 	vim /etc/mysql/mysql.conf.d/mysqld.cnf
 	sudo service mysql restart &>> $LOG
 echo -e "Banco de Dados editado com sucesso!!!, continuando com o script..."
-sleep 5
-echo
-#
-echo -e "Criando o Banco de Dados do ZoneMinder, aguarde..."
-	#-u (user), -p (password), -e (execute), < (Redirecionador de Saída STDOUT)
-	mysql -u $USER -p$PASSWORD < $DATABASE &>> $LOG
-	mysql -u $USER -p$PASSWORD -e "$GRANTALL" mysql &>> $LOG
-	mysql -u $USER -p$PASSWORD -e "$FLUSH" mysql &>> $LOG
-echo -e "Banco de Dados criado com sucesso!!!, continuando com o script..."
 sleep 5
 echo
 #
@@ -161,6 +153,15 @@ echo -e "Instalando o ZoneMinder, aguarde..."
 	#-y (yes)
 	apt -y install zoneminder &>> $LOG
 echo -e "ZoneMinder instalado com sucesso!!!, continuando com o script..."
+sleep 5
+echo
+#
+echo -e "Criando o Banco de Dados do ZoneMinder, aguarde..."
+	#-u (user), -p (password), -e (execute), < (Redirecionador de Saída STDOUT)
+	mysql -u $USER -p$PASSWORD < $DATABASE &>> $LOG
+	mysql -u $USER -p$PASSWORD -e "$GRANTALL" mysql &>> $LOG
+	mysql -u $USER -p$PASSWORD -e "$FLUSH" mysql &>> $LOG
+echo -e "Banco de Dados criado com sucesso!!!, continuando com o script..."
 sleep 5
 echo
 #
