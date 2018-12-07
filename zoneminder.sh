@@ -28,6 +28,7 @@ DATAINICIAL=`date +%s`
 # Variáveis para validar o ambiente, verificando se o usuário e "root", versão do ubuntu e kernel
 # opções do comando id: -u (user), opções do comando: lsb_release: -r (release), -s (short), 
 # opões do comando uname: -r (kernel release), opções do comando cut: -d (delimiter), -f (fields)
+# opção do caracter: | (piper) Conecta a saída padrão com a entrada padrão de outro comando
 USUARIO=`id -u`
 UBUNTU=`lsb_release -rs`
 KERNEL=`uname -r | cut -d'.' -f1,2`
