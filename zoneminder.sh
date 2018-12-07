@@ -183,6 +183,7 @@ echo -e "Habilitando os recursos do Apache2 para o ZoneMinder, aguarde..."
 	a2enmod cgi &>> $LOG
 	a2enmod rewrite &>> $LOG
 	a2enconf zoneminder &>> $LOG
+	service apache2 restart &>> $LOG
 echo -e "Recurso habilitado com sucesso!!!, continuando com o script..."
 sleep 5
 echo
@@ -191,7 +192,6 @@ echo
 echo -e "Criando o Serviço do ZoneMinder, aguarde..."
 	systemctl enable zoneminder &>> $LOG
 	service zoneminder start &>> $LOG
-	service apache2 restart &>> $LOG
 echo -e "Serviço criado com sucesso!!!, continuando com o script..."
 sleep 5
 echo
