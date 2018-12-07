@@ -142,7 +142,8 @@ sleep 5
 echo
 #
 echo -e "Editando as Configurações do PHP, perssione <Enter> para continuar"
-	#[Date] - date.timezone = America/Sao_Paulo
+	#[Date]
+	#date.timezone = America/Sao_Paulo
 	read
 	vim /etc/php/7.2/apache2/php.ini
 echo -e "Arquivo do PHP editado com sucesso!!!, continuando com o script..."
