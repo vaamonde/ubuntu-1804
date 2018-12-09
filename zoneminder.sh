@@ -6,7 +6,7 @@
 # YouTube: youtube.com/BoraParaPratica
 # Data de criação: 02/12/2018
 # Data de atualização: 09/12/2018
-# Versão: 0.03
+# Versão: 0.04
 # Testado e homologado para a versão do Ubuntu Server 18.04.x LTS x64
 # Kernel >= 4.15.x
 #
@@ -123,7 +123,7 @@ echo
 echo -e "Instalando o ZoneMinder, aguarde..."
 echo
 #
-echo -e "Adiconando o PPA do ZoneMinder, aguarde..."
+echo -e "Adicionando o PPA do ZoneMinder, aguarde..."
 	#echo | (faz a função do Enter)
 	echo | sudo add-apt-repository $ZONEMINDER &>> $LOG
 echo -e "PPA adicionado com sucesso!!!, continuando com o script..."
