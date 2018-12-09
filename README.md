@@ -25,3 +25,7 @@
 <hr>
 
 [![Instalação do Docker e Portainer](https://github.com/vaamonde/ubuntu-1804/blob/master/img/server-17.png)](https://www.youtube.com/watch?v=ixgLCHX_7QA&t)
+
+<hr>
+
+[![Instalação do OpenFire e Spark](https://github.com/vaamonde/ubuntu-1804/blob/master/img/server-18.png)](https://www.youtube.com/watch?v=_2-cVeA-Rvo)
