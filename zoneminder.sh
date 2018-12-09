@@ -5,8 +5,8 @@
 # Facebook: facebook.com/BoraParaPratica
 # YouTube: youtube.com/BoraParaPratica
 # Data de criação: 02/12/2018
-# Data de atualização: 07/12/2018
-# Versão: 0.02
+# Data de atualização: 09/12/2018
+# Versão: 0.03
 # Testado e homologado para a versão do Ubuntu Server 18.04.x LTS x64
 # Kernel >= 4.15.x
 #
@@ -16,6 +16,10 @@
 # pode usar câmeras padrão (por meio de uma placa de captura, USB, Firewire etc.) ou dispositivos de
 # câmera baseados em IP. O software permite três modos de operação: monitoramento (sem gravação), 
 # gravação após movimento detectado e gravação permanente.
+#
+# CCTV / CFTV = (Closed-Circuit Television - Circuito fechado de televisão);
+# PTZ Pan/Tilt/Zoom (Uma câmera de rede PTZ oferece funcionalidade de vídeo em rede combinada com o recurso
+# de movimento horizontal, vertical e de zoom - Pan = Panorâmica Horizontal - Tilt = Vertical | Zoom - Aproximar)
 #
 # Vídeo de instalação do GNU/Linux Ubuntu Server 18.04.x LTS: https://www.youtube.com/watch?v=zDdCrqNhIXI
 #
@@ -73,7 +77,7 @@ fi
 # opção do dpkg: -s (status), opção do echo: -e (intepretador de escapes de barra invertida), -n (permite nova linha), \n (new line)
 # || (operador lógico OU), 2> (redirecionar de saída de erro STDERR), && = operador lógico AND
 echo -n "Verificando as dependências, aguarde... "
-	for name in mysql-server mysql-common software-properties-common
+	for name in apache2 mysql-server mysql-common software-properties-common
 	do
   		[[ $(dpkg -s $name 2> /dev/null) ]] || { echo -en "\n\nO software: $name precisa ser instalado. \nUse o comando 'apt install $name'\n";deps=1; }
 	done
@@ -82,7 +86,7 @@ echo -n "Verificando as dependências, aguarde... "
 #		
 # Script de instalação do ZoneMinder no GNU/Linux Ubuntu Server 18.04.x
 # opção do comando hostname: -I (all IP address)
-clear
+echo
 echo -e "Instalação do ZoneMinder no GNU/Linux Ubuntu Server 18.04.x\n"
 echo -e "Após a instalação do ZoneMinder acessar a URL: http://`hostname -I`/zm/\n"
 echo -e "Aguarde, esse processo demora um pouco dependendo do seu Link de Internet..."
