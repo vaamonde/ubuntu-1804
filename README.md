@@ -29,3 +29,8 @@
 <hr>
 
 [![Instalação do OpenFire e Spark](https://github.com/vaamonde/ubuntu-1804/blob/master/img/server-18.png)](https://www.youtube.com/watch?v=_2-cVeA-Rvo)
+
+<hr>
+
+[![Instalação do ZoneMinder](https://github.com/vaamonde/ubuntu-1804/blob/master/img/server-19.png)](https://www.youtube.com/watch?v=YbnKB5iUCWg)
+
