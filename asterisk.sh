@@ -10,6 +10,11 @@
 # Testado e homologado para a versão do Ubuntu Server 18.04.x LTS x64
 # Kernel >= 4.15.x
 #
+# O Asterisk é um software livre, de código aberto, que implementa em software os recursos encontrados em um PABX 
+# convencional, utilizando tecnologia de VoIP. Ele foi criado pelo Mark Spencer em 1999.
+# Inicialmente desenvolvido pela empresa Digium, hoje recebe contribuições de programadores ao redor de todo o mundo. 
+# Seu desenvolvimento é ativo e sua área de aplicação muito promissora.
+#
 # Vídeo de instalação do GNU/Linux Ubuntu Server 18.04.x LTS: https://www.youtube.com/watch?v=zDdCrqNhIXI
 #
 # Variável da Data Inicial para calcular o tempo de execução do script
