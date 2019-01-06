@@ -40,11 +40,11 @@ LOGSCRIPT=`echo $0 | cut -d'/' -f2`
 LOG=$VARLOGPATH/$LOGSCRIPT
 #
 # Declarando as variaveis de Download do Asterisk
-DAHDI="dahdi-linux-complete-current.tar.gz"
-DAHDITOOLS="dahdi-tools-3.0.0.tar.gz"
-LIPRI="libpri-current.tar.gz"
+DAHDI="git://git.asterisk.org/dahdi/linux dahdi-linux"
+DAHDITOOLS="git://git.asterisk.org/dahdi/tools dahdi-tools"
+LIPRI="http://gerrit.asterisk.org/libpri libpri"
 SPANDSP="spandsp-0.0.5.tgz"
-ASTERISK="asterisk-16-current.tar.gz"
+ASTERISK="http://gerrit.asterisk.org/asterisk asterisk"
 #
 # Verificando se o usuário e Root, Distribuição e >=18.04 e o Kernel >=4.15 <IF MELHORADO)
 # && = operador lógico AND, == comparação de string, exit 1 = A maioria dos erros comuns na execução
@@ -115,10 +115,8 @@ sleep 5
 echo
 #
 echo -e "Download e instalação do DAHDI, aguarde..."
-	wget http://downloads.asterisk.org/pub/telephony/dahdi-linux-complete/$DAHDI &>> $LOG
-	#-z (gzip) | -x (extract) | -v (verbose) | -f (file)
-	tar -zxvf dahdi-linux-complete-current* &>> $LOG
-	cd dahdi-linux-complete-current*/
+	git clone $DAHDI &>> $LOG
+	cd dahdi-linux*/
 	./configure  &>> $LOG
 	make clean  &>> $LOG
 	make all  &>> $LOG
@@ -129,9 +127,7 @@ sleep 5
 echo	
 #
 echo -e "Download e instalação do DAHDI Tools, aguarde..."
-	wget http://downloads.asterisk.org/pub/telephony/dahdi-tools/releases/$DAHDITOOLS &>> $LOG
-	#-z (gzip) | -x (extract) | -v (verbose) | -f (file)
-	tar -zxvf dahdi-tools*  &>> $LOG
+	git clone $DAHDITOOLS &>> $LOG
 	cd dahdi-tools*/
 	./configure  &>> $LOG
 	make all  &>> $LOG
@@ -143,10 +139,8 @@ sleep 5
 echo	
 #
 echo -e "Download e instalação do LIBPRI, aguarde..."
-	wget http://downloads.asterisk.org/pub/telephony/libpri/$LIBPRI &>> $LOG
-	#-z (gzip) | -x (extract) | -v (verbose) | -f (file)
-	tar -zxvf libpri-current* &>> $LOG
-	cd libpri-*/ &>> $LOG
+	git clone $LIBPRI &>> $LOG
+	cd libpri*/ &>> $LOG
 	./configure &>> $LOG
 	make all &>> $LOG
 	make install &>> $LOG
@@ -177,9 +171,8 @@ sleep 5
 echo	
 #
 echo -e "Download e instalação do Asterisk, aguarde..."
-	wget http://downloads.asterisk.org/pub/telephony/asterisk/$ASTERISK &>> $LOG
-	tar -zxvf asterisk-16-current* &>> $LOG
-	cd asterisk-*/
+	git clone $ASTERISK &>> $LOG
+	cd asterisk*/
 	./configure &>> $LOG
 	make all &>> $LOG
 	make install &>> $LOG
