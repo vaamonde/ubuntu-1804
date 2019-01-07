@@ -109,7 +109,7 @@ echo
 #
 echo -e "Instalando as dependências do Asterisk, aguarde..."
 	#-y (yes) | $(uname -r) = kernel-release
-	apt install -y build-essential libssl-dev libncurses5-dev libnewt-dev libxml2-dev linux-headers-$(uname -r) libsqlite3-dev uuid-dev subversion libjansson-dev sqlite3 autoconf automake libtool libedit-dev flex bison libtool libtool-bin &>> $LOG
+	apt install -y build-essential libssl-dev libelf-dev libncurses5-dev libnewt-dev libxml2-dev linux-headers-$(uname -r) libsqlite3-dev uuid-dev subversion libjansson-dev sqlite3 autoconf automake libtool libedit-dev flex bison libtool libtool-bin &>> $LOG
 echo -e "Dependências instaladas com sucesso!!!, continuando com o script..."
 sleep 5
 echo
