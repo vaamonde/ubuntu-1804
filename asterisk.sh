@@ -43,7 +43,6 @@ LOG=$VARLOGPATH/$LOGSCRIPT
 DAHDI="git://git.asterisk.org/dahdi/linux dahdi-linux"
 DAHDITOOLS="git://git.asterisk.org/dahdi/tools dahdi-tools"
 LIBPRI="http://gerrit.asterisk.org/libpri libpri"
-SPANDSP="spandsp-0.0.5.tgz"
 ASTERISK="http://gerrit.asterisk.org/asterisk asterisk"
 #
 # Verificando se o usuário e Root, Distribuição e >=18.04 e o Kernel >=4.15 <IF MELHORADO)
