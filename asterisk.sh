@@ -149,28 +149,7 @@ echo -e "Download e instalação do LIBPRI, aguarde..."
 	cd ..
 echo -e "LIBPRI instalado com sucesso!!!, continuando com o script..."
 sleep 5
-echo	
-#
-echo -e "Instalando as dependências do SpanDSP, aguarde..."
-	#-y (yes)
-	apt-get install -y libgraphics-magick-perl libgraphicsmagick++1 libgraphicsmagick++1-dev libgraphicsmagick1 libgraphicsmagick1-dev libtiff-doc libtiff-opengl libtiff-tools  libtiff4 libtiff4-dev libtiffxx0c2 &>> $LOG
-echo -e "Dependências instaladas com sucesso!!!, continuando com o script..."
-sleep 5
 echo
-#
-echo -e "Download e instalação do SPANDSP, aguarde..."
-	wget http://www.soft-switch.org/downloads/spandsp/$SPANDSP &>> $LOG
-	#-z (gzip) | -x (extract) | -v (verbose) | -f (file)
-	tar zxvf spandsp-* &>> $LOG
-	cd spandsp-*/
-	./configure --prefix=/usr &>> $LOG
-	make &>> $LOG
-	make install &>> $LOG
-	ldconfig -v &>> $LOG
-	cd ..
-echo -e "SPANDSP instalado com sucesso!!!, continuando com o script..."
-sleep 5
-echo	
 #
 echo -e "Download e instalação do Asterisk, aguarde..."
 	git clone $ASTERISK &>> $LOG
