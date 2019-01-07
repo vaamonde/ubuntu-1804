@@ -42,7 +42,7 @@ LOG=$VARLOGPATH/$LOGSCRIPT
 # Declarando as variaveis de Download do Asterisk
 DAHDI="git://git.asterisk.org/dahdi/linux dahdi-linux"
 DAHDITOOLS="git://git.asterisk.org/dahdi/tools dahdi-tools"
-LIPRI="http://gerrit.asterisk.org/libpri libpri"
+LIBPRI="http://gerrit.asterisk.org/libpri libpri"
 SPANDSP="spandsp-0.0.5.tgz"
 ASTERISK="http://gerrit.asterisk.org/asterisk asterisk"
 #
