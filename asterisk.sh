@@ -129,10 +129,11 @@ echo
 echo -e "Download e instalação do DAHDI Tools, aguarde..."
 	git clone $DAHDITOOLS &>> $LOG
 	cd dahdi-tools*/
-	./configure  &>> $LOG
+	autoreconf -i  &>> $LOG
+	./configure &>> $LOG
+	make clean  &>> $LOG
 	make all  &>> $LOG
 	make install  &>> $LOG
-	make config  &>> $LOG
 	cd ..
 echo -e "DAHDI Tools instalado com sucesso!!!, continuando com o script..."
 sleep 5
@@ -142,6 +143,7 @@ echo -e "Download e instalação do LIBPRI, aguarde..."
 	git clone $LIBPRI &>> $LOG
 	cd libpri*/ &>> $LOG
 	./configure &>> $LOG
+	make clean  &>> $LOG
 	make all &>> $LOG
 	make install &>> $LOG
 	cd ..
