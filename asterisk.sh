@@ -15,6 +15,15 @@
 # Inicialmente desenvolvido pela empresa Digium, hoje recebe contribuições de programadores ao redor de todo o mundo. 
 # Seu desenvolvimento é ativo e sua área de aplicação muito promissora.
 #
+# DAHDI = DAHDI (Digium\Asterisk Hardware Device Interface) é uma coleção de drivers de código aberto, para o Linux, 
+# que são usados para fazer interface com uma variedade de hardware relacionado à telefonia.
+#
+# DAHDI Tools = contém uma variedade de utilitários de comandos do usuário que são usados para configurar e testar os 
+# drivers de hardware desenvolvidos pela Digium e Zapatel.
+#
+# LIBPRI = A biblioteca libpri permite que o Asterisk se comunique com conexões ISDN. Você só precisará disso se for 
+# usar o DAHDI com hardware de interface ISDN (como placas T1 / E1 / J1 / BRI).
+#
 # Vídeo de instalação do GNU/Linux Ubuntu Server 18.04.x LTS: https://www.youtube.com/watch?v=zDdCrqNhIXI
 #
 # Variável da Data Inicial para calcular o tempo de execução do script
@@ -25,6 +34,9 @@ DATAINICIAL=`date +%s`
 # opções do comando id: -u (user), opções do comando: lsb_release: -r (release), -s (short), 
 # opões do comando uname: -r (kernel release), opções do comando cut: -d (delimiter), -f (fields)
 # opção do caracter: | (piper) Conecta a saída padrão com a entrada padrão de outro comando
+# opção do shell script: acento crase ` ` = Executa comandos numa subshell, retornando o resultado
+# opção do shell script: aspas simples ' ' = Protege uma string completamente (nenhum caractere é especial)
+# opção do shell script: aspas duplas " " = Protege uma string, mas reconhece $, \ e ` como especiais
 USUARIO=`id -u`
 UBUNTU=`lsb_release -rs`
 KERNEL=`uname -r | cut -d'.' -f1,2`
@@ -116,9 +128,13 @@ echo
 echo -e "Download e instalação do DAHDI, aguarde..."
 	git clone $DAHDI &>> $LOG
 	cd dahdi-linux*/
+	#preparação e configuração do source para compilação
 	./configure  &>> $LOG
+	#desfaz o processo de compilação anterior
 	make clean  &>> $LOG
+	#compila todas as opções do software
 	make all  &>> $LOG
+	#executa os comandos para instalar o programa
 	make install  &>> $LOG
 	cd ..
 echo -e "DAHDI instalado com sucesso!!!, continuando com o script..."
@@ -128,10 +144,15 @@ echo
 echo -e "Download e instalação do DAHDI Tools, aguarde..."
 	git clone $DAHDITOOLS &>> $LOG
 	cd dahdi-tools*/
+	#atualize os arquivos de configuração gerados
 	autoreconf -i  &>> $LOG
+	#preparação e configuração do source para compilação
 	./configure &>> $LOG
+	#desfaz o processo de compilação anterior
 	make clean  &>> $LOG
+	#compila todas as opções do software
 	make all  &>> $LOG
+	#executa os comandos para instalar o programa
 	make install  &>> $LOG
 	cd ..
 echo -e "DAHDI Tools instalado com sucesso!!!, continuando com o script..."
@@ -141,9 +162,13 @@ echo
 echo -e "Download e instalação do LIBPRI, aguarde..."
 	git clone $LIBPRI &>> $LOG
 	cd libpri*/ &>> $LOG
+	#preparação e configuração do source para compilação
 	./configure &>> $LOG
+	#desfaz o processo de compilação anterior
 	make clean  &>> $LOG
+	#compila todas as opções do software
 	make all &>> $LOG
+	#executa os comandos para instalar o programa
 	make install &>> $LOG
 	cd ..
 echo -e "LIBPRI instalado com sucesso!!!, continuando com o script..."
@@ -153,13 +178,23 @@ echo
 echo -e "Download e instalação do Asterisk, aguarde..."
 	git clone $ASTERISK &>> $LOG
 	cd asterisk*/
+	#preparação e configuração do source para compilação
 	./configure &>> $LOG
+	#desfaz o processo de compilação anterior
+	make clean  &>> $LOG
+	#compila todas as opções do software
 	make all &>> $LOG
+	#executa os comandos para instalar o programa
 	make install &>> $LOG
+	#instala um conjunto de arquivos de configuração de amostra para o Asterisk
 	make samples &>> $LOG
+	#instala um conjunto de configuração básica para o Asterisk
 	make basic-pbx &>> $LOG
+	#instala um conjunto de scripts de inicialização do Asterisk
 	make config &>> $LOG
+	#instala um conjunto de scripts de configuração dos Logs do Asterisk
 	make install-logrotate &>> $LOG
+	#inicializando o serviço do Asterisk
 	sudo service asterisk start &>> $LOG
 	cd ..
 echo -e "Asterisk instalado com sucesso!!!, continuando com o script..."
