@@ -9,6 +9,7 @@
 # Versão: 0.01
 # Testado e homologado para a versão do Ubuntu Server 18.04.x LTS x64
 # Kernel >= 4.15.x
+# Link do material de apoio do script: https://www.asterisksounds.org/pt-br/instalar
 
 # Script de conversão de formatados de audio do Asterisk, utilizando o software sox
 
