@@ -135,8 +135,8 @@ echo
 #
 echo -e "Download e instalação do DAHDI, aguarde..."
 	# opção do comando: &>> (redirecionar a entrada padrão)
-	# opção do comando git: clone (clonar projeto)
-	git clone $DAHDI &>> $LOG
+	# opção do comando git: clone (clonar projeto), -v (verbose)
+	git clone -v $DAHDI &>> $LOG
 	cd dahdi-linux*/
 	# preparação e configuração do source para compilação
 	./configure  &>> $LOG
@@ -154,8 +154,8 @@ echo
 #
 echo -e "Download e instalação do DAHDI Tools, aguarde..."
 	# opção do comando: &>> (redirecionar a entrada padrão)
-	# opção do comando git: clone (clonar projeto)
-	git clone $DAHDITOOLS &>> $LOG
+	# opção do comando git: clone (clonar projeto), -v (verbose)
+	git clone -v $DAHDITOOLS &>> $LOG
 	cd dahdi-tools*/
 	# atualize os arquivos de configuração gerados
 	autoreconf -i  &>> $LOG
@@ -175,8 +175,8 @@ echo
 #
 echo -e "Download e instalação do LIBPRI, aguarde..."
 	# opção do comando: &>> (redirecionar a entrada padrão)
-	# opção do comando git: clone (clonar projeto)
-	git clone $LIBPRI &>> $LOG
+	# opção do comando git: clone (clonar projeto), -v (verbose)
+	git clone -v $LIBPRI &>> $LOG
 	cd libpri*/ &>> $LOG
 	# preparação e configuração do source para compilação
 	./configure &>> $LOG
@@ -194,8 +194,8 @@ echo
 #
 echo -e "Download e instalação do Asterisk, aguarde..."
 	# opção do comando: &>> (redirecionar a entrada padrão)
-	# opção do comando git: clone (clonar projeto)
-	git clone $ASTERISK &>> $LOG
+	# opção do comando git: clone (clonar projeto), -v (verbose)
+	git clone -v $ASTERISK &>> $LOG
 	cd asterisk*/
 	# preparação e configuração do source para compilação
 	./configure &>> $LOG
