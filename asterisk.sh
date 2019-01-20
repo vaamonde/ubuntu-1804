@@ -77,7 +77,8 @@ fi
 #		
 # Script de instalação do Asterisk no GNU/Linux Ubuntu Server 18.04.x
 # opção do comando hostname: -I (all IP address)
-echo
+# opção do comando date: + (format), %d (day), %m (month), %Y (year 1970), %H (hour 24), %M (minute 60)
+echo -e "Início do script $0 em: `date +%d/%m/%Y-"("%H:%M")"`\n" &>> $LOG
 echo -e "Instalação do Asterisk no GNU/Linux Ubuntu Server 18.04.x\n"
 echo -e "Aguarde, esse processo demora um pouco dependendo do seu Link de Internet...\n"
 echo -e "Após a instalação, para acessar o CLI do Asterisk, digite o comando: asterisk -rvvvv"
@@ -290,5 +291,7 @@ echo -e "Instalação do Asterisk feita com Sucesso!!!"
 	TEMPO=`date -d @$RESULTADO +%H:%M:%S`
 echo -e "Tempo gasto para execução do script $0: $TEMPO"
 echo -e "Pressione <Enter> para concluir o processo."
+# opção do comando date: + (format), %d (day), %m (month), %Y (year 1970), %H (hour 24), %M (minute 60)
+echo -e "Fim do script $0 em: `date +%d/%m/%Y-"("%H:%M")"`\n" &>> $LOG
 read
 exit 1
