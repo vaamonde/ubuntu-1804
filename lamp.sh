@@ -5,8 +5,8 @@
 # Facebook: facebook.com/BoraParaPratica
 # YouTube: youtube.com/BoraParaPratica
 # Data de criação: 04/11/2018
-# Data de atualização: 12/11/2018
-# Versão: 0.03
+# Data de atualização: 20/01/2019
+# Versão: 0.04
 # Testado e homologado para a versão do Ubuntu Server 18.04.x LTS x64
 # Kernel >= 4.15.x
 #
@@ -36,9 +36,16 @@
 # para o MariaDB, nesse script o mesmo deve ser reconfigurado para instalar e configurar o MariaDB no Ubuntu.
 #
 # Variável da Data Inicial para calcular o tempo de execução do script
+# opção do comando date: +%s (seconds since)
 DATAINICIAL=`date +%s`
 #
 # Variáveis para validar o ambiente, verificando se o usuário e "root", versão do ubuntu e kernel
+# opções do comando id: -u (user), opções do comando: lsb_release: -r (release), -s (short), 
+# opções do comando uname: -r (kernel release), opções do comando cut: -d (delimiter), -f (fields)
+# opção do caracter: | (piper) Conecta a saída padrão com a entrada padrão de outro comando
+# opção do shell script: acento crase ` ` = Executa comandos numa subshell, retornando o resultado
+# opção do shell script: aspas simples ' ' = Protege uma string completamente (nenhum caractere é especial)
+# opção do shell script: aspas duplas " " = Protege uma string, mas reconhece $, \ e ` como especiais
 USUARIO=`id -u`
 UBUNTU=`lsb_release -rs`
 KERNEL=`uname -r | cut -d'.' -f1,2`
@@ -47,16 +54,25 @@ KERNEL=`uname -r | cut -d'.' -f1,2`
 VARLOGPATH="/var/log/"
 #
 # Variável para criação do arquivo de Log dos Script
+# $0 (variável de ambiente do nome do comando)
+# opção do caracter: | (piper) Conecta a saída padrão com a entrada padrão de outro comando
+# opção do shell script: acento crase ` ` = Executa comandos numa subshell, retornando o resultado
+# opção do shell script: aspas simples ' ' = Protege uma string completamente (nenhum caractere é especial)
+# opções do comando cut: -d (delimiter), -f (fields)
 LOGSCRIPT=`echo $0 | cut -d'/' -f2`
 #
 # Variável do caminho para armazenar os Log's de instalação
 LOG=$VARLOGPATH/$LOGSCRIPT
 #
-# Variáveis de configuração do MySQL e liberação de conexão remota
+# Variáveis de configuração do MySQL e liberação de conexão remota para o usuário Root
 USER="root"
 PASSWORD="pti@2018"
 AGAIN=$PASSWORD
+# opões do comando GRANT: grant (permissão), all (todos privilegios), on (em ou na | banco ou tabela), *.* (todos os bancos/tabelas)
+# to (para), user@'%' (usuário @ localhost), identified by (indentificado por - senha do usuário)
 GRANTALL="GRANT ALL ON *.* TO $USER@'%' IDENTIFIED BY '$PASSWORD';"
+# opção do comando FLUSH: privileges (recarregar as permissões)
+FLUSH="FLUSH PRIVILEGES;"
 #
 # Variáveis de configuração do PhpMyAdmin
 ADMINUSER=$USER
@@ -69,6 +85,7 @@ WEBSERVER="apache2"
 export DEBIAN_FRONTEND="noninteractive"
 #
 # Verificando se o usuário e Root
+# == comparação de string, exit 1 = A maioria dos erros comuns na execução
 if [ "$USUARIO" == "0" ]
 	then
 		echo -e "O usuário e Root, continuando com o script..."
@@ -78,6 +95,7 @@ if [ "$USUARIO" == "0" ]
 fi
 #
 # Verificando se a distribuição e 18.04.x
+# == comparação de string, exit 1 = A maioria dos erros comuns na execução
 if [ "$UBUNTU" == "18.04" ]
 	then
 		echo -e "Distribuição e 18.04.x, continuando com o script..."
@@ -87,6 +105,9 @@ if [ "$UBUNTU" == "18.04" ]
 fi
 #		
 # Verificando se o Kernel e 4.15
+# == comparação de string, exit 1 = A maioria dos erros comuns na execução
+# opção do comando sleep: 5 (seconds)
+# opção do comando exit: 1 (A maioria dos erros comuns na execução)
 if [ "$KERNEL" == "4.15" ]
 	then
 		echo -e "Kernel e >= 4.15, continuando com o script..."
@@ -97,6 +118,9 @@ if [ "$KERNEL" == "4.15" ]
 fi
 #
 # Script de instalação do LAMP-Server no GNU/Linux Ubuntu Server 18.04.x
+# opção do comando echo: -e (enable) habilita interpretador, \n = (new line)
+# opção do comando hostname: -I (all IP address)
+# opção do comando sleep: 5 (seconds)
 clear
 echo -e "Instalação do LAMP-SERVER no GNU/Linux Ubuntu Server 18.04.x\n"
 echo -e "APACHE (Apache HTTP Server) - Servidor de Hospedagem de Páginas Web - Porta 80/443"
@@ -112,24 +136,30 @@ sleep 5
 echo
 #
 echo -e "Adicionando o Repositório Universal do Apt, aguarde..."
+	# opção do comando: &>> (redirecionar a entrada padrão)
 	add-apt-repository universe &>> $LOG
 echo -e "Repositório adicionado com sucesso!!!, continuando com o script..."
 sleep 5
 echo
 #
 echo -e "Atualizando as listas do Apt, aguarde..."
+	# opção do comando: &>> (redirecionar a entrada padrão)
 	apt update &>> $LOG
 echo -e "Listas atualizadas com sucesso!!!, continuando com o script..."
 sleep 5
 echo
 #
 echo -e "Atualizando o sistema, aguarde..."
+	# opção do comando: &>> (redirecionar a entrada padrão)
+	# opção do comando apt: -y (yes)
 	apt -y upgrade &>> $LOG
 echo -e "Sistema atualizado com sucesso!!!, continuando com o script..."
 sleep 5
 echo
 #
 echo -e "Removendo software desnecessários, aguarde..."
+	# opção do comando: &>> (redirecionar a entrada padrão)
+	# opção do comando apt: -y (yes)
 	apt -y autoremove &>> $LOG
 echo -e "Software removidos com Sucesso!!!, continuando com o script..."
 sleep 5
@@ -139,6 +169,8 @@ echo -e "Instalando o LAMP-SERVER, aguarde..."
 echo
 #
 echo -e "Configurando as variáveis do Debconf do MySQL para o Apt, aguarde..."
+	# opção do comando: &>> (redirecionar a entrada padrão)
+	# opção do comando | (piper): (Conecta a saída padrão com a entrada padrão de outro comando)
 	echo "mysql-server-5.7 mysql-server/root_password password $PASSWORD" |  debconf-set-selections
 	echo "mysql-server-5.7 mysql-server/root_password_again password $AGAIN" |  debconf-set-selections
 	debconf-show mysql-server-5.7 &>> $LOG
@@ -147,6 +179,9 @@ sleep 5
 echo
 #
 echo -e "Instalando o LAMP-SERVER, aguarde..."
+	# opção do comando: &>> (redirecionar a entrada padrão)
+	# opção do comando apt: -y (yes)
+	# opção do comando ^ (circunflexo): (expressão regular - Casa o começo da linha)
 	apt -y install lamp-server^ perl python &>> $LOG
 echo -e "Instalação do LAMP-SERVER feito com sucesso!!!, continuando com o script..."
 sleep 5
@@ -156,6 +191,8 @@ echo -e "Instalando o PhpMyAdmin, aguarde..."
 echo
 #
 echo -e "Configurando as variáveis do Debconf do PhpMyAdmin para o Apt, aguarde..."
+	# opção do comando: &>> (redirecionar a entrada padrão)
+	# opção do comando | (piper): (Conecta a saída padrão com a entrada padrão de outro comando)
 	echo "phpmyadmin phpmyadmin/internal/skip-preseed boolean true" |  debconf-set-selections
 	echo "phpmyadmin phpmyadmin/dbconfig-install boolean true" |  debconf-set-selections
 	echo "phpmyadmin phpmyadmin/app-password-confirm password $APP_PASSWORD" |  debconf-set-selections
@@ -169,12 +206,17 @@ sleep 5
 echo
 #
 echo -e "Instalando o PhpMyAdmin, aguarde..."
+	# opção do comando: &>> (redirecionar a entrada padrão)
+	# opção do comando apt: -y (yes)
 	apt -y install phpmyadmin php-mbstring php-gettext php-dev libmcrypt-dev php-pear &>> $LOG
 echo -e "Instalação do PhpMyAdmin feita com sucesso!!!, continuando com o script..."
 sleep 5
 echo
 #				 
 echo -e "Atualizando as dependências do PHP para o PhpMyAdmin, aguarde..."
+	# opção do comando: &>> (redirecionar a entrada padrão)
+	# opção do comando echo: | = (faz a função de Enter)
+	# opção do comando cp: -v (verbose)
 	pecl channel-update pecl.php.net &>> $LOG
 	echo | pecl install mcrypt-1.0.1 &>> $LOG
 	cp -v conf/mcrypt.ini /etc/php/7.2/mods-available/ &>> $LOG
@@ -185,9 +227,11 @@ sleep 5
 echo
 #
 echo -e "Criando o arquivo de teste do PHP phpinfo.php, aguarde..."
+	# opção do comando: > (redirecionar a entrada padrão)
+	# opção do comando chown: -v (verbose)
 	touch /var/www/html/phpinfo.php
 	echo -e "<?php phpinfo(); ?>" > /var/www/html/phpinfo.php
-	chown www-data.www-data /var/www/html/phpinfo.php
+	chown -v www-data.www-data /var/www/html/phpinfo.php
 echo -e "Arquivo criado com sucesso!!!, continuando com o script..."
 sleep 5
 echo
@@ -198,6 +242,9 @@ sleep 3
 clear
 #
 echo -e "Atualizando e editando o arquivo de configuração do Apache2, aguarde..."
+	# opção do comando: &>> (redirecionar a entrada padrão)
+	# opção do comando cp: -v (verbose)
+	# opção do comando sleep: 3 (seconds)
 	cp -v /etc/apache2/apache2.conf /etc/apache2/apache2.conf.old &>> $LOG
 	cp -v conf/apache2.conf /etc/apache2/apache2.conf &>> $LOG
 	echo -e "Pressione <Enter> para editar o arquivo: apache2.conf"
@@ -209,6 +256,9 @@ sleep 5
 echo
 #
 echo -e "Atualizando e editando o arquivo de configuração do PHP, aguarde..."
+	# opção do comando: &>> (redirecionar a entrada padrão)
+	# opção do comando cp: -v (verbose)
+	# opção do comando sleep: 3 (seconds)
 	cp -v /etc/php/7.2/apache2/php.ini /etc/php/7.2/apache2/php.ini.old &>> $LOG
 	cp -v conf/php.ini /etc/php/7.2/apache2/php.ini &>> $LOG
 	echo -e "Pressione <Enter> para editar o arquivo: php.ini"
@@ -226,12 +276,18 @@ sleep 5
 echo
 #
 echo -e "Permitindo o Root do MySQL se autenticar remotamente, aguarde..."
+	# opção do comando: &>> (redirecionar a entrada padrão)
+	# opção do comando mysql: -u (user), -p (password) -e (execute)
 	mysql -u $USER -p$PASSWORD -e "$GRANTALL" mysql &>> $LOG
+	mysql -u $USER -p$PASSWORD -e "$FLUSH" mysql &>> $LOG
 echo -e "Permissão alterada com sucesso!!!, continuando com o script..."
 sleep 5
 echo
 #
 echo -e "Atualizando e editando o arquivo de configuração do MySQL, aguarde..."
+	# opção do comando: &>> (redirecionar a entrada padrão)
+	# opção do comando cp: -v (verbose)
+	# opção do comando sleep: 3 (seconds)
 	cp -v /etc/mysql/mysql.conf.d/mysqld.cnf /etc/mysql/mysql.conf.d/mysqld.cnf.old &>> $LOG
 	cp -v conf/mysqld.cnf /etc/mysql/mysql.conf.d/mysqld.cnf &>> $LOG
 	echo -e "Pressione <Enter> para editar o arquivo: mysqld.cnf"
@@ -249,15 +305,21 @@ sleep 5
 echo
 #
 echo -e "Verificando as portas de Conexão do Apache2 e do MySQL, aguarde..."
+	# opção do comando netstat: a (all), n (numeric)
+	# opção do comando grep: ' ' (aspas simples) protege uma string, \| (Escape e opção Ou)
 	netstat -an | grep '80\|3306'
 echo -e "Portas verificadas com sucesso!!!, continuando com o script..."
 sleep 5
 echo
 #
 echo -e "Instalação do LAMP-SERVER feito com Sucesso!!!"
+	#opção do comando date: +%s (seconds since)
+	#opção do caracter ` ` (crase): executa o comando em um subshell 
 	DATAFINAL=`date +%s`
 	SOMA=`expr $DATAFINAL - $DATAINICIAL`
+	#opção do comando expr: 10800 segundos, usada para arredondamento de cálculo
 	RESULTADO=`expr 10800 + $SOMA`
+	#opção do comando date: -d (date), +%H (hour), %M (minute), %S (second)
 	TEMPO=`date -d @$RESULTADO +%H:%M:%S`
 echo -e "Tempo gasto para execução do script $0: $TEMPO"
 echo -e "Pressione <Enter> para concluir o processo."
