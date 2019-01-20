@@ -241,9 +241,9 @@ echo -e "Download e configuração do Sons em Português/Brasil do Asterisk, agu
 	# opção do comando cd: - (rollback)
 	cd -
 	# opção do comando chown: -R (recursive), -v (verbose), Asterisk.Asterisk (Usuário.Grupo)
-	chown -Rv asterisk.asterisk /var/lib/asterisk/sounds/pt_BR &>> $LOG
+	#chown -Rv asterisk.asterisk /var/lib/asterisk/sounds/pt_BR &>> $LOG
 	# opção do comando chmod: -R (recursive), -v (verbose), 775 (Dono=RWX,Grupo=RWX=Outros=R-X)
-	chmod -Rv 775 /var/lib/asterisk/sounds/pt_BR &>> $LOG
+	#chmod -Rv 775 /var/lib/asterisk/sounds/pt_BR &>> $LOG
 echo -e "Configuração do Sons em Português/Brasil feito com sucesso!!!!, continuado com o script..."
 sleep 5
 echo
@@ -270,6 +270,17 @@ clear
 echo -e "Editando o arquivo de Plano de Discagem Extensões (extensions.conf), pressione <Enter> para editar"
 	read
 	vim /etc/asterisk/extensions.conf
+echo -e "Arquivo editado com sucesso!!!, continuando com o script..."
+sleep 5
+clear
+#
+echo -e "Editando o arquivo de Módulos para habilitar o Protocolo SIP (modules.conf), pressione <Enter> para editar"
+	read
+	# opção do comando: &>> (redirecionar a entrada padrão)
+	# opção do comando cp: -v (verbose)
+	# adcionar a opção na seção Channel Drivers: load = chan_sip.so
+	cp -v /etc/asterisk/modules.conf /etc/asterisk/modules.conf.bkp &>> $LOG
+	vim /etc/asterisk/modules.conf
 echo -e "Arquivo editado com sucesso!!!, continuando com o script..."
 sleep 5
 clear
