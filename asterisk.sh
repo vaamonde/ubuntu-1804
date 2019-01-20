@@ -82,34 +82,37 @@ sleep 5
 echo
 #
 echo -e "Adicionando o Repositório Universal do Apt, aguarde..."
-	#opção do comando: &>> (redirecionar a entrada padrão)
+	# opção do comando: &>> (redirecionar a entrada padrão)
 	add-apt-repository universe &>> $LOG
 echo -e "Repositório adicionado com sucesso!!!, continuando com o script..."
 sleep 5
 echo
 #
 echo -e "Adicionando o Repositório Multiverse do Apt, aguarde..."
-	#opção do comando: &>> (redirecionar a entrada padrão)
+	# opção do comando: &>> (redirecionar a entrada padrão)
 	add-apt-repository multiverse &>> $LOG
 echo -e "Repositório adicionado com sucesso!!!, continuando com o script..."
 sleep 5
 echo
 #
 echo -e "Atualizando as listas do Apt, aguarde..."
+	 opção do comando: &>> (redirecionar a entrada padrão)
 	apt update &>> $LOG
 echo -e "Listas atualizadas com sucesso!!!, continuando com o script..."
 sleep 5
 echo
 #
 echo -e "Atualizando o sistema, aguarde..."
-	#-y (yes)
+	# opção do comando: &>> (redirecionar a entrada padrão)
+	# opção do comando apt: -y (yes)
 	apt -y upgrade &>> $LOG
 echo -e "Sistema atualizado com sucesso!!!, continuando com o script..."
 sleep 5
 echo
 #
 echo -e "Removendo software desnecessários, aguarde..."
-	#-y (yes)
+	# opção do comando: &>> (redirecionar a entrada padrão)
+	# opção do comando apt: -y (yes)
 	apt -y autoremove &>> $LOG
 echo -e "Software removidos com sucesso!!!, continuando com o script..."
 sleep 5
@@ -119,13 +122,16 @@ echo -e "Instalando o Asterisk, aguarde..."
 echo
 #
 echo -e "Instalando as dependências do Asterisk, aguarde..."
-	#-y (yes) | $(uname -r) = kernel-release
+	# opção do comando: &>> (redirecionar a entrada padrão)
+	# opção do comando apt: -y (yes) | $(uname -r) = kernel-release
 	apt install -y build-essential libssl-dev libelf-dev libncurses5-dev libnewt-dev libxml2-dev linux-headers-$(uname -r) libsqlite3-dev uuid-dev subversion libjansson-dev sqlite3 autoconf automake libtool libedit-dev flex bison libtool libtool-bin &>> $LOG
 echo -e "Dependências instaladas com sucesso!!!, continuando com o script..."
 sleep 5
 echo
 #
 echo -e "Download e instalação do DAHDI, aguarde..."
+	# opção do comando: &>> (redirecionar a entrada padrão)
+	# opção do comando git: clone (clonar projeto)
 	git clone $DAHDI &>> $LOG
 	cd dahdi-linux*/
 	#preparação e configuração do source para compilação
@@ -142,6 +148,8 @@ sleep 5
 echo	
 #
 echo -e "Download e instalação do DAHDI Tools, aguarde..."
+	# opção do comando: &>> (redirecionar a entrada padrão)
+	# opção do comando git: clone (clonar projeto)
 	git clone $DAHDITOOLS &>> $LOG
 	cd dahdi-tools*/
 	#atualize os arquivos de configuração gerados
@@ -160,6 +168,8 @@ sleep 5
 echo	
 #
 echo -e "Download e instalação do LIBPRI, aguarde..."
+	# opção do comando: &>> (redirecionar a entrada padrão)
+	# opção do comando git: clone (clonar projeto)
 	git clone $LIBPRI &>> $LOG
 	cd libpri*/ &>> $LOG
 	#preparação e configuração do source para compilação
@@ -176,6 +186,8 @@ sleep 5
 echo
 #
 echo -e "Download e instalação do Asterisk, aguarde..."
+	# opção do comando: &>> (redirecionar a entrada padrão)
+	# opção do comando git: clone (clonar projeto)
 	git clone $ASTERISK &>> $LOG
 	cd asterisk*/
 	#preparação e configuração do source para compilação
