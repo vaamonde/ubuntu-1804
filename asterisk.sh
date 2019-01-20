@@ -5,8 +5,8 @@
 # Facebook: facebook.com/BoraParaPratica
 # YouTube: youtube.com/BoraParaPratica
 # Data de criação: 06/01/2019
-# Data de atualização: 06/01/2019
-# Versão: 0.01
+# Data de atualização: 20/01/2019
+# Versão: 0.02
 # Testado e homologado para a versão do Ubuntu Server 18.04.x LTS x64
 # Kernel >= 4.15.x
 #
@@ -56,6 +56,8 @@ DAHDI="git://git.asterisk.org/dahdi/linux dahdi-linux"
 DAHDITOOLS="git://git.asterisk.org/dahdi/tools dahdi-tools"
 LIBPRI="http://gerrit.asterisk.org/libpri libpri"
 ASTERISK="http://gerrit.asterisk.org/asterisk asterisk"
+PTBRCORE="https://www.asterisksounds.org/pt-br/download/asterisk-sounds-core-pt-BR-sln16.zip"
+PTBREXTRA="https://www.asterisksounds.org/pt-br/download/asterisk-sounds-extra-pt-BR-sln16.zip"
 #
 # Verificando se o usuário e Root, Distribuição e >=18.04 e o Kernel >=4.15 <IF MELHORADO)
 # && = operador lógico AND, == comparação de string, exit 1 = A maioria dos erros comuns na execução
@@ -77,7 +79,8 @@ fi
 # opção do comando hostname: -I (all IP address)
 echo
 echo -e "Instalação do Asterisk no GNU/Linux Ubuntu Server 18.04.x\n"
-echo -e "Aguarde, esse processo demora um pouco dependendo do seu Link de Internet..."
+echo -e "Aguarde, esse processo demora um pouco dependendo do seu Link de Internet...\n"
+echo -e "Após a instalação, para acessar o CLI do Asterisk, digite o comando: asterisk -rvvvv"
 sleep 5
 echo
 #
@@ -96,7 +99,7 @@ sleep 5
 echo
 #
 echo -e "Atualizando as listas do Apt, aguarde..."
-	 opção do comando: &>> (redirecionar a entrada padrão)
+	#opção do comando: &>> (redirecionar a entrada padrão)
 	apt update &>> $LOG
 echo -e "Listas atualizadas com sucesso!!!, continuando com o script..."
 sleep 5
@@ -124,7 +127,7 @@ echo
 echo -e "Instalando as dependências do Asterisk, aguarde..."
 	# opção do comando: &>> (redirecionar a entrada padrão)
 	# opção do comando apt: -y (yes) | $(uname -r) = kernel-release
-	apt install -y build-essential libssl-dev libelf-dev libncurses5-dev libnewt-dev libxml2-dev linux-headers-$(uname -r) libsqlite3-dev uuid-dev subversion libjansson-dev sqlite3 autoconf automake libtool libedit-dev flex bison libtool libtool-bin &>> $LOG
+	apt install -y build-essential libssl-dev libelf-dev libncurses5-dev libnewt-dev libxml2-dev linux-headers-$(uname -r) libsqlite3-dev uuid-dev subversion libjansson-dev sqlite3 autoconf automake libtool libedit-dev flex bison libtool libtool-bin unzip sox &>> $LOG
 echo -e "Dependências instaladas com sucesso!!!, continuando com o script..."
 sleep 5
 echo
@@ -134,14 +137,15 @@ echo -e "Download e instalação do DAHDI, aguarde..."
 	# opção do comando git: clone (clonar projeto)
 	git clone $DAHDI &>> $LOG
 	cd dahdi-linux*/
-	#preparação e configuração do source para compilação
+	# preparação e configuração do source para compilação
 	./configure  &>> $LOG
-	#desfaz o processo de compilação anterior
+	# desfaz o processo de compilação anterior
 	make clean  &>> $LOG
-	#compila todas as opções do software
+	# compila todas as opções do software
 	make all  &>> $LOG
-	#executa os comandos para instalar o programa
+	# executa os comandos para instalar o programa
 	make install  &>> $LOG
+	# opção do comando cd: .. (dois pontos sequenciais - Subir uma pasta)
 	cd ..
 echo -e "DAHDI instalado com sucesso!!!, continuando com o script..."
 sleep 5
@@ -152,16 +156,17 @@ echo -e "Download e instalação do DAHDI Tools, aguarde..."
 	# opção do comando git: clone (clonar projeto)
 	git clone $DAHDITOOLS &>> $LOG
 	cd dahdi-tools*/
-	#atualize os arquivos de configuração gerados
+	# atualize os arquivos de configuração gerados
 	autoreconf -i  &>> $LOG
-	#preparação e configuração do source para compilação
+	# preparação e configuração do source para compilação
 	./configure &>> $LOG
-	#desfaz o processo de compilação anterior
+	# desfaz o processo de compilação anterior
 	make clean  &>> $LOG
-	#compila todas as opções do software
+	# compila todas as opções do software
 	make all  &>> $LOG
-	#executa os comandos para instalar o programa
+	# executa os comandos para instalar o programa
 	make install  &>> $LOG
+	# opção do comando cd: .. (dois pontos sequenciais - Subir uma pasta)
 	cd ..
 echo -e "DAHDI Tools instalado com sucesso!!!, continuando com o script..."
 sleep 5
@@ -172,14 +177,15 @@ echo -e "Download e instalação do LIBPRI, aguarde..."
 	# opção do comando git: clone (clonar projeto)
 	git clone $LIBPRI &>> $LOG
 	cd libpri*/ &>> $LOG
-	#preparação e configuração do source para compilação
+	# preparação e configuração do source para compilação
 	./configure &>> $LOG
-	#desfaz o processo de compilação anterior
+	# desfaz o processo de compilação anterior
 	make clean  &>> $LOG
-	#compila todas as opções do software
+	# compila todas as opções do software
 	make all &>> $LOG
-	#executa os comandos para instalar o programa
+	# executa os comandos para instalar o programa
 	make install &>> $LOG
+	# opção do comando cd: .. (dois pontos sequenciais - Subir uma pasta)
 	cd ..
 echo -e "LIBPRI instalado com sucesso!!!, continuando com o script..."
 sleep 5
@@ -190,28 +196,89 @@ echo -e "Download e instalação do Asterisk, aguarde..."
 	# opção do comando git: clone (clonar projeto)
 	git clone $ASTERISK &>> $LOG
 	cd asterisk*/
-	#preparação e configuração do source para compilação
+	# preparação e configuração do source para compilação
 	./configure &>> $LOG
-	#desfaz o processo de compilação anterior
+	# desfaz o processo de compilação anterior
 	make clean  &>> $LOG
-	#compila todas as opções do software
+	# compila todas as opções do software
 	make all &>> $LOG
-	#executa os comandos para instalar o programa
+	# executa os comandos para instalar o programa
 	make install &>> $LOG
-	#instala um conjunto de arquivos de configuração de amostra para o Asterisk
+	# instala um conjunto de arquivos de configuração de amostra para o Asterisk
 	make samples &>> $LOG
-	#instala um conjunto de configuração básica para o Asterisk
+	# instala um conjunto de configuração básica para o Asterisk
 	make basic-pbx &>> $LOG
-	#instala um conjunto de scripts de inicialização do Asterisk
+	# instala um conjunto de scripts de inicialização do Asterisk
 	make config &>> $LOG
-	#instala um conjunto de scripts de configuração dos Logs do Asterisk
+	# instala um conjunto de scripts de configuração dos Logs do Asterisk
 	make install-logrotate &>> $LOG
-	#inicializando o serviço do Asterisk
+	# inicializando o serviço do Asterisk
 	sudo service asterisk start &>> $LOG
+	# opção do comando cd: .. (dois pontos sequenciais - Subir uma pasta)
 	cd ..
 echo -e "Asterisk instalado com sucesso!!!, continuando com o script..."
 sleep 5
 echo	
+#
+echo -e "Download e configuração do Sons em Português/Brasil do Asterisk, aguarde..."
+	# opção do comando: &>> (redirecionar a entrada padrão)
+	# opção do comando mkdir: -v (verbose)
+	mkdir -v /var/lib/asterisk/sounds/pt_BR &>> $LOG
+	# opção do comando cp: -v (verbose)
+	cp -v conf/convert.sh /var/lib/asterisk/sounds/pt_BR &>> $LOG
+	# opção do comando chmod: -v (verbose), +x (adicionar permissão de execução =Dono:R-X,Grupo=R-X,Outros=R-X)
+	chmod -v +x /var/lib/asterisk/sounds/pt_BR/convert.sh &>> $LOG
+	cd /var/lib/asterisk/sounds/pt_BR
+	# opção do comando wget: -O (file)
+	wget -O core.zip $PTBRCORE &>> $LOG
+	wget -O extra.zip $PTBREXTRA &>> $LOG
+	# opção do comando unzip: -o (overwrite)
+	unzip -o core.zip &>> $LOG
+	unzip -o extra.zip &>> $LOG
+	# opção do comando: ./ (execução de scripts)
+	./convert.sh &>> $LOG
+	# opção do comando cd: - (rollback)
+	cd -
+	# opção do comando chown: -R (recursive), -v (verbose), Asterisk.Asterisk (Usuário.Grupo)
+	chown -Rv asterisk.asterisk /var/lib/asterisk/sounds/pt_BR &>> $LOG
+	# opção do comando chmod: -R (recursive), -v (verbose), 775 (Dono=RWX,Grupo=RWX=Outros=R-X)
+	chmod -Rv 775 /var/lib/asterisk/sounds/pt_BR &>> $LOG
+echo -e "Configuração do Sons em Português/Brasil feito com sucesso!!!!, continuado com o script..."
+sleep 5
+echo
+#
+echo -e "Atualizando os arquivos de Ramais SIP e o Plano de Discagem, aguarde..."
+	# opção do comando: &>> (redirecionar a entrada padrão)
+	# opção do comando mv: -v (verbose)
+	mv -v /etc/asterisk/sip.conf /etc/asterisk/sip.conf.bkp &>> $LOG
+	mv -v /etc/asterisk/extensions.conf /etc/asterisk/extensions.conf.bkp &>> $LOG
+	# opção do comando cp: -v (verbose)
+	cp -v conf/sip.conf /etc/asterisk/sip.conf &>> $LOG
+	cp -v conf/extensions.conf /etc/asterisk/extensions.conf &>> $LOG
+echo -e "Arquivos atualizados com sucesso!!!, continuando com o script"
+sleep 5
+clear
+#
+echo -e "Editando o arquivo de Ramais SIP (sip.conf), pressione <Enter> para editar"
+	read
+	vim /etc/asterisk/sip.conf
+echo -e "Arquivo editado com sucesso!!!, continuando com o script..."
+sleep 5
+clear
+#
+echo -e "Editando o arquivo de Plano de Discagem Extensões (extensions.conf), pressione <Enter> para editar"
+	read
+	vim /etc/asterisk/extensions.conf
+echo -e "Arquivo editado com sucesso!!!, continuando com o script..."
+sleep 5
+clear
+#
+echo -e "Reinicializando o serviço do Asterisk, aguarde..."
+	# opção do comando: &>> (redirecionar a entrada padrão)
+	sudo service asterisk restart &>> $LOG
+echo -e "Serviço reinicializado com sucesso!!!, continuando com o script..."
+sleep 5
+echo
 #
 echo -e "Instalação do Asterisk feita com Sucesso!!!"
 	# opção do comando date: +%s (seconds since)
