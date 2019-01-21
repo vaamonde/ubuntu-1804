@@ -128,7 +128,8 @@ echo
 echo -e "Instalando as dependências do Asterisk, aguarde..."
 	# opção do comando: &>> (redirecionar a entrada padrão)
 	# opção do comando apt: -y (yes) | $(uname -r) = kernel-release
-	apt install -y build-essential libssl-dev libelf-dev libncurses5-dev libnewt-dev libxml2-dev linux-headers-$(uname -r) libsqlite3-dev uuid-dev subversion libjansson-dev sqlite3 autoconf automake libtool libedit-dev flex bison libtool libtool-bin unzip sox openssl zlib1g-dev unixodbc unixodbc-dev subversion subersion-tools &>> $LOG
+	apt install -y subversion subersion-tools &>> $LOG
+	apt install -y build-essential libssl-dev libelf-dev libncurses5-dev libnewt-dev libxml2-dev linux-headers-$(uname -r) libsqlite3-dev uuid-dev subversion libjansson-dev sqlite3 autoconf automake libtool libedit-dev flex bison libtool libtool-bin unzip sox openssl zlib1g-dev unixodbc unixodbc-dev &>> $LOG
 echo -e "Dependências instaladas com sucesso!!!, continuando com o script..."
 sleep 5
 echo
@@ -136,7 +137,7 @@ echo
 echo -e "Download e instalação do DAHDI, aguarde..."
 	# opção do comando: &>> (redirecionar a entrada padrão)
 	# opção do comando wget: -O (file)
-	wget -O dahdi-linux $DAHDI &>> $LOG
+	wget -O dahdi-linux.tar.gz $DAHDI &>> $LOG
 	# opção do comando tar: -z (gzip), -x (extract), -v (verbose), -f (file)
 	tar -zxvf dahdi-linux.tar.gz &>> $LOG
 	cd dahdi-linux*/
