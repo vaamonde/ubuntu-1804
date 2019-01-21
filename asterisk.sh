@@ -340,7 +340,7 @@ echo -e "Configuração da Segurança do Asterisk, aguarde..."
 	sudo systemctl restart asterisk  &>> $LOG
 	# habilitando o serviço do asterisk
 	sudo systemctl enable asterisk  &>> $LOG
-echo -e "Configuração da segurança do Asterisk feita com sucesso!!!, contunuando com o script..."
+echo -e "Configuração da segurança do Asterisk feita com sucesso!!!, continuando com o script..."
 sleep 5
 clear
 #
