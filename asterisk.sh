@@ -24,6 +24,10 @@
 # LIBPRI = A biblioteca libpri permite que o Asterisk se comunique com conexões ISDN. Você só precisará disso se for 
 # usar o DAHDI com hardware de interface ISDN (como placas T1 / E1 / J1 / BRI).
 #
+# iLBC = O iLBC (internet Low Bitrate Codec) é um codec de voz GRATUITO adequado para comunicação de voz robusta sobre IP. 
+# O codec é projetado para fala de banda estreita e resulta em uma taxa de bits de carga útil de 13,33 kbit / s com um 
+# comprimento de quadro de codificação de 30 ms e 15,20 kbps com um comprimento de codificação de 20 ms.
+#
 # Vídeo de instalação do GNU/Linux Ubuntu Server 18.04.x LTS: https://www.youtube.com/watch?v=zDdCrqNhIXI
 #
 # Variável da Data Inicial para calcular o tempo de execução do script
@@ -96,7 +100,7 @@ echo -e "Repositório adicionado com sucesso!!!, continuando com o script..."
 sleep 5
 echo
 #
-echo -e "Adicionando o Repositório Multiverse do Apt, aguarde..."
+echo -e "Adicionando o Repositório Multiversão do Apt, aguarde..."
 	# opção do comando: &>> (redirecionar a entrada padrão)
 	add-apt-repository multiverse &>> $LOG
 echo -e "Repositório adicionado com sucesso!!!, continuando com o script..."
@@ -143,6 +147,7 @@ echo -e "Download e instalação do DAHDI, aguarde..."
 	wget -O dahdi-linux.tar.gz $DAHDI &>> $LOG
 	# opção do comando tar: -z (gzip), -x (extract), -v (verbose), -f (file)
 	tar -zxvf dahdi-linux.tar.gz &>> $LOG
+	# acessando diretório do dahdi-linux
 	cd dahdi-linux*/
 	# preparação e configuração do source para compilação
 	./configure  &>> $LOG
@@ -164,6 +169,7 @@ echo -e "Download e instalação do DAHDI Tools, aguarde..."
 	wget -O dahdi-tools.tar.gz $DAHDITOOLS &>> $LOG
 	# opção do comando tar: -z (gzip), -x (extract), -v (verbose), -f (file)
 	tar -zxvf dahdi-tools.tar.gz &>> $LOG
+	# acessando diretório do dahdi-tools
 	cd dahdi-tools*/
 	# atualize os arquivos de configuração gerados
 	autoreconf -i  &>> $LOG
@@ -187,6 +193,7 @@ echo -e "Download e instalação do LIBPRI, aguarde..."
 	wget -O libpri.tar.gz $LIBPRI &>> $LOG
 	# opção do comando tar: -z (gzip), -x (extract), -v (verbose), -f (file)
 	tar -zxvf libpri.tar.gz &>> $LOG
+	# acessando diretório do libpri
 	cd libpri*/ &>> $LOG
 	# preparação e configuração do source para compilação
 	./configure &>> $LOG
@@ -208,12 +215,13 @@ echo -e "Download e instalação do Asterisk, aguarde..."
 	wget -O asterisk.tar.gz $ASTERISK &>> $LOG
 	# opção do comando tar: -z (gzip), -x (extract), -v (verbose), -f (file)
 	tar -zxvf asterisk.tar.gz &>> $LOG
+	# acessando diretório do asterisk
 	cd asterisk*/
-	# resolvendo a dependência do suporte a MP3
+	# resolvendo as dependências do suporte a Música e Sons em MP3
 	bash contrib/scripts/get_mp3_source.sh &>> $LOG
-	# resolvendo a dependência do suporte ao Codec ILBC
+	# resolvendo as dependências do suporte ao Codec iLBC
 	echo Y | bash contrib/scripts/get_ilbc_source.sh  &>> $LOG
-	# instalando as dependência do MP3 e ILBC
+	# instalando as dependência do MP3 e ILBC utilizando o debconf-set-selections
 	# opção do comando | (piper): (Conecta a saída padrão com a entrada padrão de outro comando)
 	echo "libvpb1 libvpb1/countrycode $COUNTRYCODE" |  debconf-set-selections
 	bash contrib/scripts/install_prereq install
@@ -221,12 +229,12 @@ echo -e "Download e instalação do Asterisk, aguarde..."
 	./configure &>> $LOG
 	# desfaz o processo de compilação anterior
 	make clean  &>> $LOG
-	# menu de seleção de configuração do Asterisk
+	# menu de seleção de configuração do Asterisk (recomendado)
 	make menuselect
 	clear
-	# compila todas as opções do software
+	# compila todas as opções do software marcadas nas opções do make menuselect
 	make all &>> $LOG
-	# executa os comandos para instalar o programa
+	# executa os comandos para instalar o programa com as opções do make maneselect
 	make install &>> $LOG
 	# instala um conjunto de arquivos de configuração de amostra para o Asterisk
 	make samples &>> $LOG
@@ -234,9 +242,9 @@ echo -e "Download e instalação do Asterisk, aguarde..."
 	make basic-pbx &>> $LOG
 	# instala um conjunto de documentção para o Asterisk
 	make progdocs &>> $LOG
-	# instala um conjunto de scripts de inicialização do Asterisk
+	# instala um conjunto de scripts de inicialização do Asterisk (systemctl)
 	make config &>> $LOG
-	# instala um conjunto de scripts de configuração dos Logs do Asterisk
+	# instala um conjunto de scripts de configuração dos Logs do Asterisk (rsyslog)
 	make install-logrotate &>> $LOG
 	# inicializando o serviço do Asterisk
 	sudo systemctl start asterisk &>> $LOG
@@ -250,10 +258,12 @@ echo -e "Download e configuração do Sons em Português/Brasil do Asterisk, agu
 	# opção do comando: &>> (redirecionar a entrada padrão)
 	# opção do comando mkdir: -v (verbose)
 	mkdir -v /var/lib/asterisk/sounds/pt_BR &>> $LOG
+	# copiando o script convert.sh para conversão dos formatas de sons para o padrão do Asterisk
 	# opção do comando cp: -v (verbose)
 	cp -v conf/convert.sh /var/lib/asterisk/sounds/pt_BR &>> $LOG
 	# opção do comando chmod: -v (verbose), +x (adicionar permissão de execução =Dono:R-X,Grupo=R-X,Outros=R-X)
 	chmod -v +x /var/lib/asterisk/sounds/pt_BR/convert.sh &>> $LOG
+	# acessando o diretório dos sons em pt_BR
 	cd /var/lib/asterisk/sounds/pt_BR
 	# opção do comando wget: -O (file)
 	wget -O core.zip $PTBRCORE &>> $LOG
