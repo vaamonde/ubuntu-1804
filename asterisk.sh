@@ -9,6 +9,7 @@
 # Versão: 0.04
 # Testado e homologado para a versão do Ubuntu Server 18.04.x LTS x64
 # Kernel >= 4.15.x
+# Testado e homologado para a versão do Asterisk 16.1.1
 #
 # O Asterisk é um software livre, de código aberto, que implementa em software os recursos encontrados em um PABX 
 # convencional, utilizando tecnologia de VoIP. Ele foi criado pelo Mark Spencer em 1999.
@@ -90,6 +91,7 @@ fi
 # opção do comando hostname: -I (all IP address)
 # opção do comando date: + (format), %d (day), %m (month), %Y (year 1970), %H (hour 24), %M (minute 60)
 echo -e "Início do script $0 em: `date +%d/%m/%Y-"("%H:%M")"`\n" &>> $LOG
+#
 echo -e "Instalação do Asterisk no GNU/Linux Ubuntu Server 18.04.x\n"
 echo -e "Aguarde, esse processo demora um pouco dependendo do seu Link de Internet...\n"
 echo -e "Após a instalação, para acessar o CLI do Asterisk, digite o comando: asterisk -rvvvv"
@@ -251,7 +253,8 @@ echo -e "Download e instalação do Asterisk, aguarde..."
 	# instala um conjunto de configuração básica para o Asterisk
 	make basic-pbx &>> $LOG
 	# instala um conjunto de documentção para o Asterisk
-	make progdocs &>> $LOG
+	# habilitar esse recurso, o processo de compilação demora bastante
+	#make progdocs &>> $LOG
 	# instala um conjunto de scripts de inicialização do Asterisk (systemctl)
 	make config &>> $LOG
 	# instala um conjunto de scripts de configuração dos Logs do Asterisk (rsyslog)
