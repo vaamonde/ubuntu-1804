@@ -51,11 +51,11 @@ LOGSCRIPT=`echo $0 | cut -d'/' -f2`
 # Variável do caminho para armazenar os Log's de instalação
 LOG=$VARLOGPATH/$LOGSCRIPT
 #
-# Declarando as variaveis de Download do Asterisk
-DAHDI="git://git.asterisk.org/dahdi/linux dahdi-linux"
-DAHDITOOLS="git://git.asterisk.org/dahdi/tools dahdi-tools"
-LIBPRI="http://gerrit.asterisk.org/libpri libpri"
-ASTERISK="http://gerrit.asterisk.org/asterisk asterisk"
+# Declarando as variaveis de Download do Asterisk: http://downloads.asterisk.org/pub/telephony/
+DAHDI="http://downloads.asterisk.org/pub/telephony/dahdi-linux/dahdi-linux-current.tar.gz"
+DAHDITOOLS="http://downloads.asterisk.org/pub/telephony/dahdi-tools/dahdi-tools-current.tar.gz"
+LIBPRI="http://downloads.asterisk.org/pub/telephony/libpri/libpri-current.tar.gz"
+ASTERISK="http://downloads.asterisk.org/pub/telephony/asterisk/asterisk-16-current.tar.gz"
 PTBRCORE="https://www.asterisksounds.org/pt-br/download/asterisk-sounds-core-pt-BR-sln16.zip"
 PTBREXTRA="https://www.asterisksounds.org/pt-br/download/asterisk-sounds-extra-pt-BR-sln16.zip"
 #
@@ -128,15 +128,17 @@ echo
 echo -e "Instalando as dependências do Asterisk, aguarde..."
 	# opção do comando: &>> (redirecionar a entrada padrão)
 	# opção do comando apt: -y (yes) | $(uname -r) = kernel-release
-	apt install -y build-essential libssl-dev libelf-dev libncurses5-dev libnewt-dev libxml2-dev linux-headers-$(uname -r) libsqlite3-dev uuid-dev subversion libjansson-dev sqlite3 autoconf automake libtool libedit-dev flex bison libtool libtool-bin unzip sox &>> $LOG
+	apt install -y build-essential libssl-dev libelf-dev libncurses5-dev libnewt-dev libxml2-dev linux-headers-$(uname -r) libsqlite3-dev uuid-dev subversion libjansson-dev sqlite3 autoconf automake libtool libedit-dev flex bison libtool libtool-bin unzip sox openssl zlib1g-dev unixodbc unixodbc-dev subversion subersion-tools &>> $LOG
 echo -e "Dependências instaladas com sucesso!!!, continuando com o script..."
 sleep 5
 echo
 #
 echo -e "Download e instalação do DAHDI, aguarde..."
 	# opção do comando: &>> (redirecionar a entrada padrão)
-	# opção do comando git: clone (clonar projeto), -v (verbose)
-	git clone -v $DAHDI &>> $LOG
+	# opção do comando wget: -O (file)
+	wget -O dahdi-linux $DAHDI &>> $LOG
+	# opção do comando tar: -z (gzip), -x (extract), -v (verbose), -f (file)
+	tar -zxvf dahdi-linux.tar.gz &>> $LOG
 	cd dahdi-linux*/
 	# preparação e configuração do source para compilação
 	./configure  &>> $LOG
@@ -154,8 +156,10 @@ echo
 #
 echo -e "Download e instalação do DAHDI Tools, aguarde..."
 	# opção do comando: &>> (redirecionar a entrada padrão)
-	# opção do comando git: clone (clonar projeto), -v (verbose)
-	git clone -v $DAHDITOOLS &>> $LOG
+	# opção do comando wget: -O (file)
+	wget -O dahdi-tools.tar.gz $DAHDITOOLS &>> $LOG
+	# opção do comando tar: -z (gzip), -x (extract), -v (verbose), -f (file)
+	tar -zxvf dahdi-tools.tar.gz &>> $LOG
 	cd dahdi-tools*/
 	# atualize os arquivos de configuração gerados
 	autoreconf -i  &>> $LOG
@@ -175,8 +179,10 @@ echo
 #
 echo -e "Download e instalação do LIBPRI, aguarde..."
 	# opção do comando: &>> (redirecionar a entrada padrão)
-	# opção do comando git: clone (clonar projeto), -v (verbose)
-	git clone -v $LIBPRI &>> $LOG
+	# opção do comando wget: -O (file)
+	wget -O libpri.tar.gz $LIBPRI &>> $LOG
+	# opção do comando tar: -z (gzip), -x (extract), -v (verbose), -f (file)
+	tar -zxvf libpri.tar.gz &>> $LOG
 	cd libpri*/ &>> $LOG
 	# preparação e configuração do source para compilação
 	./configure &>> $LOG
@@ -194,13 +200,23 @@ echo
 #
 echo -e "Download e instalação do Asterisk, aguarde..."
 	# opção do comando: &>> (redirecionar a entrada padrão)
-	# opção do comando git: clone (clonar projeto), -v (verbose)
-	git clone -v $ASTERISK &>> $LOG
+	# opção do comando wget: -O (file)
+	wget -O asterisk.tar.gz $ASTERISK &>> $LOG
+	# opção do comando tar: -z (gzip), -x (extract), -v (verbose), -f (file)
+	tar -zxvf asterisk.tar.gz &>> $LOG
 	cd asterisk*/
+	# resolvendo a dependência do suporte a MP3
+	bash contrib/scripts/get_mp3_source.sh &>> $LOG
+	# resolvendo a dependência do suporte ao Codec ILBC
+	bash contrib/scripts/get_ilbc_source.sh
+	# instalando as dependência do MP3 e ILBC
+	bash contrib/scripts/install_prereq install
 	# preparação e configuração do source para compilação
 	./configure &>> $LOG
 	# desfaz o processo de compilação anterior
 	make clean  &>> $LOG
+	# menu de seleção de configuração do Asterisk
+	make menuselect
 	# compila todas as opções do software
 	make all &>> $LOG
 	# executa os comandos para instalar o programa
@@ -214,12 +230,12 @@ echo -e "Download e instalação do Asterisk, aguarde..."
 	# instala um conjunto de scripts de configuração dos Logs do Asterisk
 	make install-logrotate &>> $LOG
 	# inicializando o serviço do Asterisk
-	sudo service asterisk start &>> $LOG
+	sudo systemctl start asterisk &>> $LOG
 	# opção do comando cd: .. (dois pontos sequenciais - Subir uma pasta)
 	cd ..
 echo -e "Asterisk instalado com sucesso!!!, continuando com o script..."
 sleep 5
-echo	
+echo		
 #
 echo -e "Download e configuração do Sons em Português/Brasil do Asterisk, aguarde..."
 	# opção do comando: &>> (redirecionar a entrada padrão)
@@ -241,22 +257,60 @@ echo -e "Download e configuração do Sons em Português/Brasil do Asterisk, agu
 	# opção do comando cd: - (rollback)
 	cd -
 	# opção do comando chown: -R (recursive), -v (verbose), Asterisk.Asterisk (Usuário.Grupo)
-	#chown -Rv asterisk.asterisk /var/lib/asterisk/sounds/pt_BR &>> $LOG
+	chown -Rv asterisk.asterisk /var/lib/asterisk/sounds/pt_BR &>> $LOG
 	# opção do comando chmod: -R (recursive), -v (verbose), 775 (Dono=RWX,Grupo=RWX=Outros=R-X)
-	#chmod -Rv 775 /var/lib/asterisk/sounds/pt_BR &>> $LOG
+	chmod -Rv 775 /var/lib/asterisk/sounds/pt_BR &>> $LOG
 echo -e "Configuração do Sons em Português/Brasil feito com sucesso!!!!, continuado com o script..."
 sleep 5
 echo
 #
-echo -e "Atualizando os arquivos de Ramais SIP e o Plano de Discagem, aguarde..."
+echo -e "Atualizando os arquivos de Ramais SIP, Plano de Discagem e Módulos, aguarde..."
 	# opção do comando: &>> (redirecionar a entrada padrão)
 	# opção do comando mv: -v (verbose)
+	# opção do comando cp: -v (verbose)
 	mv -v /etc/asterisk/sip.conf /etc/asterisk/sip.conf.bkp &>> $LOG
 	mv -v /etc/asterisk/extensions.conf /etc/asterisk/extensions.conf.bkp &>> $LOG
+	mv -v /etc/asterisk/modules.conf /etc/asterisk/modules.conf.bkp &>> $LOG
 	# opção do comando cp: -v (verbose)
 	cp -v conf/sip.conf /etc/asterisk/sip.conf &>> $LOG
 	cp -v conf/extensions.conf /etc/asterisk/extensions.conf &>> $LOG
+	cp -v conf/modules.conf /etc/asterisk/modules.conf.bkp &>> $LOG
 echo -e "Arquivos atualizados com sucesso!!!, continuando com o script"
+sleep 5
+clear
+#
+echo -e "Configuração da Segurança do Asterisk, aguarde..."
+	# opção do comando: &>> (redirecionar a entrada padrão)
+	# adicionando o grupo do Asterisk
+	groupadd asterisk  &>> $LOG
+	# criando o usuário asterisk
+	# opções do comando useradd: -r (system account), -d (home directory), -g (group GID)
+	useradd -r -d /var/lib/asterisk -g asterisk asterisk  &>> $LOG
+	# alteração do grupos do usuário asterisk
+	# opções do comando usermod: -a (append), -G (groups)
+	usermod -aG audio,dialout asterisk  &>> $LOG
+	# alteração do dono e grupo padrão das pastas do asterisk
+	# opções do comando chown: -R (recursive), -v (verbose)
+	chown -Rv asterisk.asterisk /etc/asterisk  &>> $LOG
+	chown -Rv asterisk.asterisk /var/{lib,log,spool}/asterisk  &>> $LOG
+	chown -Rv asterisk.asterisk /usr/lib/asterisk  &>> $LOG
+	echo -e "Editando o arquivo de configuração padrão do Asterisk, pressione <Enter> para editar"
+		read
+		vim /etc/default/asterisk
+	echo -e "Arquivo editado com sucesso!!!, continuando com o script..."
+	sleep 5
+	echo
+	echo -e "Editando o arquivo e inicialização do Asterisk, pressione <Enter> para editar"
+		read
+		vim /etc/asterisk/asterisk.conf
+		echo -e "Arquivo editado com sucesso!!!, continuando com o script..."
+	sleep 5
+	echo
+	# reinicializando o serviços do asterisk
+	sudo systemctl restart asterisk  &>> $LOG
+	# habilitando o serviço do asterisk
+	sudo systemctl enable asterisk  &>> $LOG
+echo -e "Configuração da segurança do Asterisk feita com sucesso!!!, contunuando com o script..."
 sleep 5
 clear
 #
@@ -276,10 +330,6 @@ clear
 #
 echo -e "Editando o arquivo de Módulos para habilitar o Protocolo SIP (modules.conf), pressione <Enter> para editar"
 	read
-	# opção do comando: &>> (redirecionar a entrada padrão)
-	# opção do comando cp: -v (verbose)
-	# adcionar a opção na seção Channel Drivers: load = chan_sip.so
-	cp -v /etc/asterisk/modules.conf /etc/asterisk/modules.conf.bkp &>> $LOG
 	vim /etc/asterisk/modules.conf
 echo -e "Arquivo editado com sucesso!!!, continuando com o script..."
 sleep 5
