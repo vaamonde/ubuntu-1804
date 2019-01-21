@@ -132,7 +132,6 @@ echo
 echo -e "Instalando as dependências do Asterisk, aguarde..."
 	# opção do comando: &>> (redirecionar a entrada padrão)
 	# opção do comando apt: -y (yes) | $(uname -r) = kernel-release
-	apt install -y subversion subersion-tools &>> $LOG
 	apt install -y build-essential libssl-dev libelf-dev libncurses5-dev libnewt-dev libxml2-dev linux-headers-$(uname -r) libsqlite3-dev uuid-dev subversion libjansson-dev sqlite3 autoconf automake libtool libedit-dev flex bison libtool libtool-bin unzip sox openssl zlib1g-dev unixodbc unixodbc-dev &>> $LOG
 echo -e "Dependências instaladas com sucesso!!!, continuando com o script..."
 sleep 5
@@ -233,6 +232,8 @@ echo -e "Download e instalação do Asterisk, aguarde..."
 	make samples &>> $LOG
 	# instala um conjunto de configuração básica para o Asterisk
 	make basic-pbx &>> $LOG
+	# instala um conjunto de documentção para o Asterisk
+	make progdocs &>> $LOG
 	# instala um conjunto de scripts de inicialização do Asterisk
 	make config &>> $LOG
 	# instala um conjunto de scripts de configuração dos Logs do Asterisk
@@ -264,10 +265,6 @@ echo -e "Download e configuração do Sons em Português/Brasil do Asterisk, agu
 	./convert.sh &>> $LOG
 	# opção do comando cd: - (rollback)
 	cd - &>> $LOG
-	# opção do comando chown: -R (recursive), -v (verbose), Asterisk.Asterisk (Usuário.Grupo)
-	chown -Rv asterisk.asterisk /var/lib/asterisk/sounds/pt_BR &>> $LOG
-	# opção do comando chmod: -R (recursive), -v (verbose), 775 (Dono=RWX,Grupo=RWX=Outros=R-X)
-	chmod -Rv 775 /var/lib/asterisk/sounds/pt_BR &>> $LOG
 echo -e "Configuração do Sons em Português/Brasil feito com sucesso!!!!, continuado com o script..."
 sleep 5
 echo
@@ -292,16 +289,18 @@ echo -e "Configuração da Segurança do Asterisk, aguarde..."
 	# adicionando o grupo do Asterisk
 	groupadd asterisk  &>> $LOG
 	# criando o usuário asterisk
-	# opções do comando useradd: -r (system account), -d (home directory), -g (group GID)
+	# opções do comando useradd: -r (system account), -d (home directory), -g (group GID), asterisk (user)
 	useradd -r -d /var/lib/asterisk -g asterisk asterisk  &>> $LOG
 	# alteração do grupos do usuário asterisk
-	# opções do comando usermod: -a (append), -G (groups)
+	# opções do comando usermod: -a (append), -G (groups), asterisk (user)
 	usermod -aG audio,dialout asterisk  &>> $LOG
 	# alteração do dono e grupo padrão das pastas do asterisk
-	# opções do comando chown: -R (recursive), -v (verbose)
+	# opções do comando chown: -R (recursive), -v (verbose), Asterisk.Asterisk (Usuário.Grupo)
 	chown -Rv asterisk.asterisk /etc/asterisk  &>> $LOG
 	chown -Rv asterisk.asterisk /var/{lib,log,spool}/asterisk  &>> $LOG
 	chown -Rv asterisk.asterisk /usr/lib/asterisk  &>> $LOG
+	# opção do comando chmod: -R (recursive), -v (verbose), 775 (Dono=RWX,Grupo=RWX=Outros=R-X)
+	chmod -Rv 775 /var/lib/asterisk/sounds/pt_BR &>> $LOG
 	echo -e "Editando o arquivo de configuração padrão do Asterisk, pressione <Enter> para editar"
 		read
 		vim /etc/default/asterisk
@@ -345,8 +344,15 @@ clear
 #
 echo -e "Reinicializando o serviço do Asterisk, aguarde..."
 	# opção do comando: &>> (redirecionar a entrada padrão)
-	sudo service asterisk restart &>> $LOG
+	sudo systemctl restart asterisk  &>> $LOG
 echo -e "Serviço reinicializado com sucesso!!!, continuando com o script..."
+sleep 5
+echo
+#
+echo -e "Verificando a porta de Conexão do Protocolo SIP, aguarde..."
+	#opção do comando netstat: -a (all), -n (numeric)
+	netstat -an | grep 5060
+echo -e "Porta de conexão verificada com sucesso!!!, continuando com o script..."
 sleep 5
 echo
 #
