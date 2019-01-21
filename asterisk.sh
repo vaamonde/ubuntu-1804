@@ -241,6 +241,7 @@ echo -e "Download e instalação do Asterisk, aguarde..."
 	# menu de seleção de configuração do Asterisk (recomendado)
 	make menuselect
 	clear
+	echo -e "Compilando e instalando o Asterisk, aguarde...."
 	# compila todas as opções do software marcadas nas opções do make menuselect
 	make all &>> $LOG
 	# executa os comandos para instalar o programa com as opções do make maneselect
