@@ -6,7 +6,7 @@
 # YouTube: youtube.com/BoraParaPratica
 # Data de criação: 06/01/2019
 # Data de atualização: 21/01/2019
-# Versão: 0.03
+# Versão: 0.04
 # Testado e homologado para a versão do Ubuntu Server 18.04.x LTS x64
 # Kernel >= 4.15.x
 #
@@ -58,6 +58,10 @@ LIBPRI="http://downloads.asterisk.org/pub/telephony/libpri/libpri-current.tar.gz
 ASTERISK="http://downloads.asterisk.org/pub/telephony/asterisk/asterisk-16-current.tar.gz"
 PTBRCORE="https://www.asterisksounds.org/pt-br/download/asterisk-sounds-core-pt-BR-sln16.zip"
 PTBREXTRA="https://www.asterisksounds.org/pt-br/download/asterisk-sounds-extra-pt-BR-sln16.zip"
+COUNTRYCODE="55"
+#
+# Exportando o recurso de Noninteractive do Debconf para não solicitar telas de configuração
+export DEBIAN_FRONTEND="noninteractive"
 #
 # Verificando se o usuário e Root, Distribuição e >=18.04 e o Kernel >=4.15 <IF MELHORADO)
 # && = operador lógico AND, == comparação de string, exit 1 = A maioria dos erros comuns na execução
@@ -209,8 +213,10 @@ echo -e "Download e instalação do Asterisk, aguarde..."
 	# resolvendo a dependência do suporte a MP3
 	bash contrib/scripts/get_mp3_source.sh &>> $LOG
 	# resolvendo a dependência do suporte ao Codec ILBC
-	bash contrib/scripts/get_ilbc_source.sh
+	echo Y | bash contrib/scripts/get_ilbc_source.sh  &>> $LOG
 	# instalando as dependência do MP3 e ILBC
+	# opção do comando | (piper): (Conecta a saída padrão com a entrada padrão de outro comando)
+	echo "libvpb1 libvpb1/countrycode $COUNTRYCODE" |  debconf-set-selections
 	bash contrib/scripts/install_prereq install
 	# preparação e configuração do source para compilação
 	./configure &>> $LOG
@@ -218,6 +224,7 @@ echo -e "Download e instalação do Asterisk, aguarde..."
 	make clean  &>> $LOG
 	# menu de seleção de configuração do Asterisk
 	make menuselect
+	clear
 	# compila todas as opções do software
 	make all &>> $LOG
 	# executa os comandos para instalar o programa
@@ -256,7 +263,7 @@ echo -e "Download e configuração do Sons em Português/Brasil do Asterisk, agu
 	# opção do comando: ./ (execução de scripts)
 	./convert.sh &>> $LOG
 	# opção do comando cd: - (rollback)
-	cd -
+	cd - &>> $LOG
 	# opção do comando chown: -R (recursive), -v (verbose), Asterisk.Asterisk (Usuário.Grupo)
 	chown -Rv asterisk.asterisk /var/lib/asterisk/sounds/pt_BR &>> $LOG
 	# opção do comando chmod: -R (recursive), -v (verbose), 775 (Dono=RWX,Grupo=RWX=Outros=R-X)
@@ -275,7 +282,7 @@ echo -e "Atualizando os arquivos de Ramais SIP, Plano de Discagem e Módulos, ag
 	# opção do comando cp: -v (verbose)
 	cp -v conf/sip.conf /etc/asterisk/sip.conf &>> $LOG
 	cp -v conf/extensions.conf /etc/asterisk/extensions.conf &>> $LOG
-	cp -v conf/modules.conf /etc/asterisk/modules.conf.bkp &>> $LOG
+	cp -v conf/modules.conf /etc/asterisk/modules.conf &>> $LOG
 echo -e "Arquivos atualizados com sucesso!!!, continuando com o script"
 sleep 5
 clear
