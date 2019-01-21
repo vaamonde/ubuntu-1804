@@ -224,7 +224,7 @@ echo -e "Download e instalação do Asterisk, aguarde..."
 	# resolvendo as dependências do suporte ao Codec iLBC
 	echo "get_ilbc_source.sh"
 	read
-	echo Y | bash contrib/scripts/get_ilbc_source.sh  &>> $LOG
+	bash contrib/scripts/get_ilbc_source.sh  &>> $LOG
 	# instalando as dependência do MP3 e ILBC utilizando o debconf-set-selections
 	# opção do comando | (piper): (Conecta a saída padrão com a entrada padrão de outro comando)
 	echo "install_prereq"
