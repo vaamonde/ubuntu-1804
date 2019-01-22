@@ -223,19 +223,13 @@ echo -e "Download e instalação do Asterisk, aguarde..."
 	# acessando diretório do asterisk
 	cd asterisk*/
 	# resolvendo as dependências do suporte a Música e Sons em MP3
-	echo "get_mp3_source.sh"
-	read
 	bash contrib/scripts/get_mp3_source.sh &>> $LOG
 	# resolvendo as dependências do suporte ao Codec iLBC
-	echo "get_ilbc_source.sh"
-	read
 	bash contrib/scripts/get_ilbc_source.sh  &>> $LOG
 	# instalando as dependência do MP3 e ILBC utilizando o debconf-set-selections
 	# opção do comando | (piper): (Conecta a saída padrão com a entrada padrão de outro comando)
-	echo "install_prereq"
-	read
 	echo "libvpb1 libvpb1/countrycode $COUNTRYCODE" |  debconf-set-selections
-	bash contrib/scripts/install_prereq install
+	Y | bash contrib/scripts/install_prereq install &>> $LOG
 	# preparação e configuração do source para compilação
 	./configure &>> $LOG
 	# desfaz o processo de compilação anterior
