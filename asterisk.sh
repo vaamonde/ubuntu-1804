@@ -225,13 +225,13 @@ echo -e "Download e instalação do Asterisk, aguarde..."
 	# resolvendo as dependências do suporte a Música e Sons em MP3
 	bash contrib/scripts/get_mp3_source.sh &>> $LOG
 	# resolvendo as dependências do suporte ao Codec iLBC
-	bash contrib/scripts/get_ilbc_source.sh  &>> $LOG
+	bash contrib/scripts/get_ilbc_source.sh &>> $LOG
 	# instalando as dependência do MP3 e ILBC utilizando o debconf-set-selections
 	# opção do comando | (piper): (Conecta a saída padrão com a entrada padrão de outro comando)
 	echo "libvpb1 libvpb1/countrycode $COUNTRYCODE" | debconf-set-selections
 	# opção do comando yes: yes é um comando utilizado, normalmente, em conjunto com outro, para responder sempre 
 	# positivamente (ou negativamente) às perguntas do segundo programa
-	yes | bash contrib/scripts/install_prereq install 
+	yes | bash contrib/scripts/install_prereq install &>> $LOG
 	# preparação e configuração do source para compilação
 	./configure &>> $LOG
 	# desfaz o processo de compilação anterior
