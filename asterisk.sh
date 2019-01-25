@@ -39,9 +39,11 @@
 HORAINICIAL=`date +%T`
 #
 # Variáveis para validar o ambiente, verificando se o usuário e "root", versão do ubuntu e kernel
-# opções do comando id: -u (user), opções do comando: lsb_release: -r (release), -s (short), 
-# opões do comando uname: -r (kernel release), opções do comando cut: -d (delimiter), -f (fields)
-# opção do caracter: | (piper) Conecta a saída padrão com a entrada padrão de outro comando
+# opções do comando id: -u (user)
+# opções do comando: lsb_release: -r (release), -s (short), 
+# opões do comando uname: -r (kernel release)
+# opções do comando cut: -d (delimiter), -f (fields)
+# opção do shell script: piper | = Conecta a saída padrão com a entrada padrão de outro comando
 # opção do shell script: acento crase ` ` = Executa comandos numa subshell, retornando o resultado
 # opção do shell script: aspas simples ' ' = Protege uma string completamente (nenhum caractere é especial)
 # opção do shell script: aspas duplas " " = Protege uma string, mas reconhece $, \ e ` como especiais
@@ -53,6 +55,7 @@ KERNEL=`uname -r | cut -d'.' -f1,2`
 VARLOGPATH="/var/log/"
 #
 # Variável para criação do arquivo de Log dos Script
+# opções do comando cut: -d (delimiter), -f (fields)
 # $0 (variável de ambiente do nome do comando)
 LOGSCRIPT=`echo $0 | cut -d'/' -f2`
 #
@@ -73,7 +76,7 @@ COUNTRYCODE="55"
 export DEBIAN_FRONTEND="noninteractive"
 #
 # Verificando se o usuário e Root, Distribuição e >=18.04 e o Kernel >=4.15 <IF MELHORADO)
-# && = operador lógico AND, == comparação de string, exit 1 = A maioria dos erros comuns na execução
+# [ ] = teste de expressão, && = operador lógico AND, == comparação de string, exit 1 = A maioria dos erros comuns na execução
 clear
 if [ "$USUARIO" == "0" ] && [ "$UBUNTU" == "18.04" ] && [ "$KERNEL" == "4.15" ]
 	then
@@ -89,6 +92,7 @@ if [ "$USUARIO" == "0" ] && [ "$UBUNTU" == "18.04" ] && [ "$KERNEL" == "4.15" ]
 fi
 #		
 # Script de instalação do Asterisk no GNU/Linux Ubuntu Server 18.04.x
+# opção do comando echo: -e (enable interpretation of backslash escapes), \n (new line)
 # opção do comando hostname: -I (all IP address)
 # opção do comando date: + (format), %d (day), %m (month), %Y (year 1970), %H (hour 24), %M (minute 60)
 echo -e "Início do script $0 em: `date +%d/%m/%Y-"("%H:%M")"`\n" &>> $LOG
@@ -271,8 +275,6 @@ echo -e "Download e configuração do Sons em Português/Brasil do Asterisk, agu
 	# copiando o script convert.sh para conversão dos formatas de sons para o padrão do Asterisk
 	# opção do comando cp: -v (verbose)
 	cp -v conf/convert.sh $SOUNDS &>> $LOG
-	# opção do comando chmod: -v (verbose), +x (adicionar permissão de execução =Dono:R-X,Grupo=R-X,Outros=R-X)
-	chmod -v +x $SOUNDS/convert.sh &>> $LOG
 	# acessando o diretório dos sons em pt_BR
 	cd $SOUNDS &>> $LOG
 	# opção do comando wget: -O (file)
@@ -281,9 +283,9 @@ echo -e "Download e configuração do Sons em Português/Brasil do Asterisk, agu
 	# opção do comando unzip: -o (overwrite)
 	unzip -o core.zip &>> $LOG
 	unzip -o extra.zip &>> $LOG
-	# opção do comando: ./ (execução de scripts)
-	./convert.sh &>> $LOG
-	# opção do comando cd: - (rollback)
+	# converte os sons da pasta para outros formatos
+	bash convert.sh &>> $LOG
+	# opção do comando cd: - (traço, rollback voltar a pasta anterior)
 	cd - &>> $LOG
 echo -e "Configuração do Sons em Português/Brasil feito com sucesso!!!!, continuado com o script..."
 sleep 5
