@@ -5,8 +5,8 @@
 # Facebook: facebook.com/BoraParaPratica
 # YouTube: youtube.com/BoraParaPratica
 # Data de criação: 06/01/2019
-# Data de atualização: 24/01/2019
-# Versão: 0.07
+# Data de atualização: 25/01/2019
+# Versão: 0.08
 # Testado e homologado para a versão do Ubuntu Server 18.04.x LTS x64
 # Kernel >= 4.15.x
 # Testado e homologado para a versão do Asterisk 16.1.1
@@ -34,9 +34,9 @@
 #
 # Vídeo de instalação do GNU/Linux Ubuntu Server 18.04.x LTS: https://www.youtube.com/watch?v=zDdCrqNhIXI
 #
-# Variável da Data Inicial para calcular o tempo de execução do script
-# opção do comando date: +%s (seconds since)
-DATAINICIAL=`date +%s`
+# Variável da Data Inicial para calcular o tempo de execução do script (VARIÁVEL MELHORADA)
+# opção do comando date: +%s (Time)
+HORAINICIAL=`date +%T`
 #
 # Variáveis para validar o ambiente, verificando se o usuário e "root", versão do ubuntu e kernel
 # opções do comando id: -u (user), opções do comando: lsb_release: -r (release), -s (short), 
@@ -351,13 +351,14 @@ sleep 5
 echo
 #
 echo -e "Instalação do Asterisk feita com Sucesso!!!"
-	# opção do comando date: +%s (seconds since)
-	DATAFINAL=`date +%s`
-	SOMA=`expr $DATAFINAL - $DATAINICIAL`
-	# opção do comando expr: 10800 segundos, usada para arredondamento de cálculo
-	RESULTADO=`expr 10800 + $SOMA`
-	# opção do comando date: -d (date), +%H (hour), %M (minute), %S (second)
-	TEMPO=`date -d @$RESULTADO +%H:%M:%S`
+	# script para calcular o tempo gasto (SCRIPT MELHORADO, CORRIGIDO FALHA DE HORA:MINUTO:SEGUNDOS)
+	# opção do comando date: +%T (Time)
+	HORAFINAL=`date +%T`
+	# opção do comando date: -u (utc), -d (date), +%s (second since 1970)
+	HORAINICIAL01=$(date -u -d "$HORAINICIAL" +"%s")
+	HORAFINAL01=$(date -u -d "$HORAFINAL" +"%s")
+	# opção do comando date: -d (date), +%H (hour), %M (minute), %S (second), 0 (string command), sec (force second)
+	TEMPO=`date -u -d "0 $HORAFINAL01 sec - $HORAINICIAL01 sec" +"%H:%M:%S"`
 echo -e "Tempo gasto para execução do script $0: $TEMPO"
 echo -e "Pressione <Enter> para concluir o processo."
 # opção do comando date: + (format), %d (day), %m (month), %Y (year 1970), %H (hour 24), %M (minute 60)
