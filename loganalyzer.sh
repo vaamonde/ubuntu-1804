@@ -5,8 +5,8 @@
 # Facebook: facebook.com/BoraParaPratica
 # YouTube: youtube.com/BoraParaPratica
 # Data de criação: 11/11/2018
-# Data de atualização: 11/11/2018
-# Versão: 0.01
+# Data de atualização: 29/01/2019
+# Versão: 0.02
 # Testado e homologado para a versão do Ubuntu Server 18.04.x LTS x64
 # Kernel >= 4.15.x
 #
@@ -19,10 +19,19 @@
 #
 # Site oficial: https://loganalyzer.adiscon.com/
 #
-# Variável da Data Inicial para calcular o tempo de execução do script
-DATAINICIAL=`date +%s`
+# Variável da Data Inicial para calcular o tempo de execução do script (VARIÁVEL MELHORADA)
+# opção do comando date: +%T (Time)
+HORAINICIAL=`date +%T`
 #
 # Variáveis para validar o ambiente, verificando se o usuário e "root", versão do ubuntu e kernel
+# opções do comando id: -u (user)
+# opções do comando: lsb_release: -r (release), -s (short), 
+# opões do comando uname: -r (kernel release)
+# opções do comando cut: -d (delimiter), -f (fields)
+# opção do shell script: piper | = Conecta a saída padrão com a entrada padrão de outro comando
+# opção do shell script: acento crase ` ` = Executa comandos numa subshell, retornando o resultado
+# opção do shell script: aspas simples ' ' = Protege uma string completamente (nenhum caractere é especial)
+# opção do shell script: aspas duplas " " = Protege uma string, mas reconhece $, \ e ` como especiais
 USUARIO=`id -u`
 UBUNTU=`lsb_release -rs`
 KERNEL=`uname -r | cut -d'.' -f1,2`
@@ -31,6 +40,8 @@ KERNEL=`uname -r | cut -d'.' -f1,2`
 VARLOGPATH="/var/log/"
 #
 # Variável para criação do arquivo de Log dos Script
+# opções do comando cut: -d (delimiter), -f (fields)
+# $0 (variável de ambiente do nome do comando)
 LOGSCRIPT=`echo $0 | cut -d'/' -f2`
 #
 # Variável do caminho para armazenar os Log's de instalação
@@ -62,35 +73,27 @@ LOGFLUSH="FLUSH PRIVILEGES;"
 # Exportando o recurso de Noninteractive do Debconf para não solicitar telas de configuração
 export DEBIAN_FRONTEND="noninteractive"
 #
-# Verificando se o usuário e Root
-if [ "$USUARIO" == "0" ]
+# Verificando se o usuário e Root, Distribuição e >=18.04 e o Kernel >=4.15 <IF MELHORADO)
+# [ ] = teste de expressão, && = operador lógico AND, == comparação de string, exit 1 = A maioria dos erros comuns na execução
+clear
+if [ "$USUARIO" == "0" ] && [ "$UBUNTU" == "18.04" ] && [ "$KERNEL" == "4.15" ]
 	then
 		echo -e "O usuário e Root, continuando com o script..."
-	else
-		echo -e "Usuário não e Root, execute o comando: sudo -i, execute novamente o script."
-		exit 1
-fi
-#
-# Verificando se a distribuição e 18.04.x
-if [ "$UBUNTU" == "18.04" ]
-	then
-		echo -e "Distribuição e 18.04.x, continuando com o script..."
-	else
-		echo -e "Distribuição não homologada, instale a versão 18.04.x e execute novamente o script."
-		exit 1
-fi
-#		
-# Verificando se o Kernel e 4.15
-if [ "$KERNEL" == "4.15" ]
-	then
+		echo -e "Distribuição e >=18.04.x, continuando com o script..."
 		echo -e "Kernel e >= 4.15, continuando com o script..."
 		sleep 5
 	else
-		echo -e "Kernel não homologado, instale a versão do Ubuntu 18.04.x e atualize o sistema."
+		echo -e "Usuário não e Root ($USUARIO) ou Distribuição não e >=18.04.x ($UBUNTU) ou Kernel não e >=4.15 ($KERNEL)"
+		echo -e "Caso você não tenha executado o script com o comando: sudo -i"
+		echo -e "Execute novamente o script para verificar o ambiente."
 		exit 1
 fi
 #
 # Script de instalação do LogAnalyzer no GNU/Linux Ubuntu Server 18.04.x
+# opção do comando echo: -e (enable interpretation of backslash escapes), \n (new line)
+# opção do comando hostname: -I (all IP address)
+# opção do comando date: + (format), %d (day), %m (month), %Y (year 1970), %H (hour 24), %M (minute 60)
+echo -e "Início do script $0 em: `date +%d/%m/%Y-"("%H:%M")"`\n" &>> $LOG
 clear
 echo -e "Instalação do LogAnalyzer no GNU/Linux Ubuntu Server 18.04.x\n"
 echo -e "Após a instalação do LogAnalyzer acessar a URL: http://`hostname -I`/log/\n"
@@ -105,24 +108,31 @@ sleep 5
 echo
 #
 echo -e "Atualizando as listas do Apt, aguarde..."
+	# opção do comando: &>> (redirecionar a entrada padrão)
 	apt update &>> $LOG
 echo -e "Listas atualizadas com sucesso!!!, continuando com o script..."
 sleep 5
 echo
 #
 echo -e "Atualizando o sistema, aguarde..."
+	# opção do comando: &>> (redirecionar a entrada padrão)
+	# opção do comando apt: -y (yes)
 	apt -y upgrade &>> $LOG
 echo -e "Sistema atualizado com sucesso!!!, continuando com o script..."
 sleep 5
 echo
 #
 echo -e "Removendo software desnecessários, aguarde..."
+	# opção do comando: &>> (redirecionar a entrada padrão)
+	# opção do comando apt: -y (yes)
 	apt -y autoremove &>> $LOG
 echo -e "Software removidos com sucesso!!!, continuando com o script..."
 sleep 5
 echo
 #
 echo -e "Instalando as dependências do LogAnalyzer, aguarde..."
+	# opção do comando: &>> (redirecionar a entrada padrão)
+	# opção do comando apt: -y (yes)
 	echo "rsyslog-mysql rsyslog-mysql/dbconfig-install boolean false" | debconf-set-selections &>> $LOG
 	apt -y install rsyslog-mysql &>> $LOG
 echo -e "Dependências instaladas com sucesso!!!, continuando com o script"
@@ -130,6 +140,8 @@ sleep 5
 echo
 #
 echo -e "Criando a Base de Dados do Rsyslog, aguarde..."
+	# opção do comando: &>> (redirecionar a entrada padrão)
+	# opção do comando mysql: -u (user), -p (password), -e (execute), < (Redirecionador de Saída STDOUT)
 	mysql -u $MYSQLUSER -p$MYSQLPASS -e "$RSYSLOGDATABASE" mysql &>> $LOG
 	mysql -u $MYSQLUSER -p$MYSQLPASS -e "$RSYSLOGUSERDATABASE" mysql &>> $LOG
 	mysql -u $MYSQLUSER -p$MYSQLPASS -e "$RSYSLOGGRANTDATABASE" mysql &>> $LOG
@@ -141,6 +153,8 @@ sleep 5
 echo
 #
 echo -e "Criando a Base de Dados do LogAnalyzer, aguarde..."
+	# opção do comando: &>> (redirecionar a entrada padrão)
+	# opção do comando mysql: -u (user), -p (password), -e (execute)
 	mysql -u $MYSQLUSER -p$MYSQLPASS -e "$LOGDATABASE" mysql &>> $LOG
 	mysql -u $MYSQLUSER -p$MYSQLPASS -e "$LOGUSERDATABASE" mysql &>> $LOG
 	mysql -u $MYSQLUSER -p$MYSQLPASS -e "$LOGGRANTDATABASE" mysql &>> $LOG
@@ -151,6 +165,8 @@ sleep 5
 echo
 #
 echo -e "Atualizando os arquivos de configuração do Rsyslog, aguarde..."
+	# opção do comando: &>> (redirecionar a entrada padrão)
+	# opção do comando cp: -v (verbose)
 	cp -v conf/rsyslog.conf /etc/rsyslog.conf  >> $LOG
 	cp -v conf/mysql.conf /etc/rsyslog.d/mysql.conf >> $LOG
 echo -e "Arquivos atualizadas com sucesso!!!, continuando com o script..."
@@ -162,12 +178,15 @@ sleep 5
 echo
 #
 echo -e "Baixando o LogAnalyzer do site oficial, aguarde..."
+	# opção do comando: &>> (redirecionar a entrada padrão)
 	wget $LOGANALYZER &>> $LOG
 echo -e "LogAnalyzer baixado com sucesso!!!, continuando com o script..."
 sleep 5
 echo
 #
 echo -e "Descompactando o LogAnalyzer, aguarde..."
+	# opção do comando: &>> (redirecionar a entrada padrão)
+	# opção do comando tar: -z (gzip), -x (extract), -v (verbose), -f (file)
 	LOGANALYZERFILE=`echo loganalyzer*.*.*`
 	tar -xzvf $LOGANALYZERFILE &>> $LOG
 echo -e "Descompactação do LogAnalyzer feita com sucesso!!!, continuando com o script..."
@@ -175,6 +194,11 @@ sleep 5
 echo
 #
 echo -e "Copiando os arquivos de configuração do LogAnalyzer, aguarde..."
+	# opção do comando: &>> (redirecionar a entrada padrão)
+	# opção do comando mkdir: -v (verbose)
+	# opção do comando cp: -R (recurse), -v (verbose)
+	# opção do comando chmod: -v (verbose), 775 (Dono=R-X,Grupo=R-X=Outros=R-X)
+	# opção do comando chown: -R (recursive), -v (verbose), www-data.www-data (Usuário.Grupo)
 	LOGANALYZERDIR=`echo loganalyzer*/`
 	SOURCE="src/*"
 	mkdir -v /var/www/html/log &>> $LOG
@@ -216,17 +240,25 @@ sleep 5
 echo
 #
 echo -e "Verificando a porta de conexão do Syslog/Rsyslog, aguarde..."
+	# opção do comando netstat: -a (all), -n (numeric)
 	netstat -an | grep 514
 echo -e "Porta de conexão do Syslog/Rsyslog verificado com sucesso!!!, continuando o script..."
 sleep 5
 echo
 #
 echo -e "Instalação do LogAnalyzer feita com Sucesso!!!"
-	DATAFINAL=`date +%s`
-	SOMA=`expr $DATAFINAL - $DATAINICIAL`
-	RESULTADO=`expr 10800 + $SOMA`
-	TEMPO=`date -d @$RESULTADO +%H:%M:%S`
-echo -e "Tempo gasto para execução do script $0: $TEMPO"
+	# script para calcular o tempo gasto (SCRIPT MELHORADO, CORRIGIDO FALHA DE HORA:MINUTO:SEGUNDOS)
+	# opção do comando date: +%T (Time)
+	HORAFINAL=`date +%T`
+	# opção do comando date: -u (utc), -d (date), +%s (second since 1970)
+	HORAINICIAL01=$(date -u -d "$HORAINICIAL" +"%s")
+	HORAFINAL01=$(date -u -d "$HORAFINAL" +"%s")
+	# opção do comando date: -u (utc), -d (date), 0 (string command), sec (force second), +%H (hour), %M (minute), %S (second), 
+	TEMPO=`date -u -d "0 $HORAFINAL01 sec - $HORAINICIAL01 sec" +"%H:%M:%S"`
+	# $0 (variável de ambiente do nome do comando)
+	echo -e "Tempo gasto para execução do script $0: $TEMPO"
 echo -e "Pressione <Enter> para concluir o processo."
+# opção do comando date: + (format), %d (day), %m (month), %Y (year 1970), %H (hour 24), %M (minute 60)
+echo -e "Fim do script $0 em: `date +%d/%m/%Y-"("%H:%M")"`\n" &>> $LOG
 read
 exit 1
