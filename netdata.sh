@@ -5,8 +5,8 @@
 # Facebook: facebook.com/BoraParaPratica
 # YouTube: youtube.com/BoraParaPratica
 # Data de criação: 11/11/2018
-# Data de atualização: 11/11/2018
-# Versão: 0.01
+# Data de atualização: 29/01/2019
+# Versão: 0.02
 # Testado e homologado para a versão do Ubuntu Server 18.04.x LTS x64
 # Kernel >= 4.15.x
 #
@@ -21,10 +21,19 @@
 #
 # Site oficial: https://github.com/netdata/netdata
 #
-# Variável da Data Inicial para calcular o tempo de execução do script
-DATAINICIAL=`date +%s`
+# Variável da Data Inicial para calcular o tempo de execução do script (VARIÁVEL MELHORADA)
+# opção do comando date: +%T (Time)
+HORAINICIAL=`date +%T`
 #
 # Variáveis para validar o ambiente, verificando se o usuário e "root", versão do ubuntu e kernel
+# opções do comando id: -u (user)
+# opções do comando: lsb_release: -r (release), -s (short), 
+# opões do comando uname: -r (kernel release)
+# opções do comando cut: -d (delimiter), -f (fields)
+# opção do shell script: piper | = Conecta a saída padrão com a entrada padrão de outro comando
+# opção do shell script: acento crase ` ` = Executa comandos numa subshell, retornando o resultado
+# opção do shell script: aspas simples ' ' = Protege uma string completamente (nenhum caractere é especial)
+# opção do shell script: aspas duplas " " = Protege uma string, mas reconhece $, \ e ` como especiais
 USUARIO=`id -u`
 UBUNTU=`lsb_release -rs`
 KERNEL=`uname -r | cut -d'.' -f1,2`
@@ -33,6 +42,8 @@ KERNEL=`uname -r | cut -d'.' -f1,2`
 VARLOGPATH="/var/log/"
 #
 # Variável para criação do arquivo de Log dos Script
+# opções do comando cut: -d (delimiter), -f (fields)
+# $0 (variável de ambiente do nome do comando)
 LOGSCRIPT=`echo $0 | cut -d'/' -f2`
 #
 # Variável do caminho para armazenar os Log's de instalação
@@ -41,35 +52,27 @@ LOG=$VARLOGPATH/$LOGSCRIPT
 # Variável do download do Webmin
 NETDATA="https://github.com/firehol/netdata.git --depth=1"
 #
-# Verificando se o usuário e Root
-if [ "$USUARIO" == "0" ]
+# Verificando se o usuário e Root, Distribuição e >=18.04 e o Kernel >=4.15 <IF MELHORADO)
+# [ ] = teste de expressão, && = operador lógico AND, == comparação de string, exit 1 = A maioria dos erros comuns na execução
+clear
+if [ "$USUARIO" == "0" ] && [ "$UBUNTU" == "18.04" ] && [ "$KERNEL" == "4.15" ]
 	then
 		echo -e "O usuário e Root, continuando com o script..."
-	else
-		echo -e "Usuário não e Root, execute o comando: sudo -i, execute novamente o script."
-		exit 1
-fi
-#
-# Verificando se a distribuição e 18.04.x
-if [ "$UBUNTU" == "18.04" ]
-	then
-		echo -e "Distribuição e 18.04.x, continuando com o script..."
-	else
-		echo -e "Distribuição não homologada, instale a versão 18.04.x e execute novamente o script."
-		exit 1
-fi
-#		
-# Verificando se o Kernel e 4.15
-if [ "$KERNEL" == "4.15" ]
-	then
+		echo -e "Distribuição e >=18.04.x, continuando com o script..."
 		echo -e "Kernel e >= 4.15, continuando com o script..."
 		sleep 5
 	else
-		echo -e "Kernel não homologado, instale a versão do Ubuntu 18.04.x e atualize o sistema."
+		echo -e "Usuário não e Root ($USUARIO) ou Distribuição não e >=18.04.x ($UBUNTU) ou Kernel não e >=4.15 ($KERNEL)"
+		echo -e "Caso você não tenha executado o script com o comando: sudo -i"
+		echo -e "Execute novamente o script para verificar o ambiente."
 		exit 1
 fi
 #
 # Script de instalação do Netdata no GNU/Linux Ubuntu Server 18.04.x
+# opção do comando echo: -e (enable interpretation of backslash escapes), \n (new line)
+# opção do comando hostname: -I (all IP address)
+# opção do comando date: + (format), %d (day), %m (month), %Y (year 1970), %H (hour 24), %M (minute 60)
+echo -e "Início do script $0 em: `date +%d/%m/%Y-"("%H:%M")"`\n" &>> $LOG
 clear
 echo -e "Instalação do Netdata no GNU/Linux Ubuntu Server 18.04.x\n"
 echo -e "Após a instalação do Netdata acessar a URL: http://`hostname -I`:19999/\n"
@@ -78,24 +81,30 @@ sleep 5
 echo
 #
 echo -e "Adicionando o Repositório Universal do Apt, aguarde..."
+	# opção do comando: &>> (redirecionar a entrada padrão)
 	add-apt-repository universe &>> $LOG
 echo -e "Repositório adicionado com sucesso!!!, continuando com o script..."
 sleep 5
 echo
 #
 echo -e "Atualizando as listas do Apt, aguarde..."
+	# opção do comando: &>> (redirecionar a entrada padrão)
 	apt update &>> $LOG
 echo -e "Listas atualizadas com sucesso!!!, continuando com o script..."
 sleep 5
 echo
 #
 echo -e "Atualizando o sistema, aguarde..."
+	# opção do comando: &>> (redirecionar a entrada padrão)
+	# opção do comando apt: -y (yes)
 	apt -y upgrade &>> $LOG
 echo -e "Sistema atualizado com sucesso!!!, continuando com o script..."
 sleep 5
 echo
 #
 echo -e "Removendo software desnecessários, aguarde..."
+	# opção do comando: &>> (redirecionar a entrada padrão)
+	# opção do comando apt: -y (yes)
 	apt -y autoremove &>> $LOG
 echo -e "Software removidos com sucesso!!!, continuando com o script..."
 sleep 5
@@ -105,18 +114,23 @@ echo -e "Instalando o Netdata, aguarde..."
 echo
 #
 echo -e "Instalando as dependências do Netdata, aguarde..."
+	# opção do comando: &>> (redirecionar a entrada padrão)
+	# opção do comando apt: -y (yes)
 	apt -y install zlib1g-dev gcc make git autoconf autogen automake pkg-config uuid-dev python python-mysqldb python-pip python-dev python3-dev libmysqlclient-dev python-ipaddress &>> $LOG
 echo -e "Instalação das dependências feita com sucesso!!!, continuando com o script..."
 sleep 5
 echo
 #
 echo -e "Fazendo a clonagem do Netdata, aguarde..."
+	# opção do comando: &>> (redirecionar a entrada padrão)
 	git clone $NETDATA &>> $LOG
 echo -e "Clonagem do Netdata feito com sucesso!!!, continuando com o script..."
 sleep 5
 echo
 #				 
 echo -e "Instalando o Netdata, aguarde..."
+	# opção do comando: &>> (redirecionar a entrada padrão)
+	# opção do comando echo |: faz a função de Enter no Script
 	cd netdata/
 	echo | ./netdata-installer.sh &>> $LOG
 echo -e "Instalação do Netdata feita com sucesso!!!, continuando com o script..."
@@ -124,6 +138,7 @@ sleep 5
 echo
 #
 echo -e "Verificando a porta de conexão do Netdata, aguarde..."
+	# opção do comando netstat: -a (all), -n (numeric)
 	netstat -an | grep 19999
 echo -e "Porta de conexão verificada com sucesso!!!, continuando com o script..."
 sleep 5
@@ -149,11 +164,18 @@ sleep 5
 echo
 #
 echo -e "Instalação do Netdata feita com Sucesso!!!"
-	DATAFINAL=`date +%s`
-	SOMA=`expr $DATAFINAL - $DATAINICIAL`
-	RESULTADO=`expr 10800 + $SOMA`
-	TEMPO=`date -d @$RESULTADO +%H:%M:%S`
-echo -e "Tempo gasto para execução do script $0: $TEMPO"
+	# script para calcular o tempo gasto (SCRIPT MELHORADO, CORRIGIDO FALHA DE HORA:MINUTO:SEGUNDOS)
+	# opção do comando date: +%T (Time)
+	HORAFINAL=`date +%T`
+	# opção do comando date: -u (utc), -d (date), +%s (second since 1970)
+	HORAINICIAL01=$(date -u -d "$HORAINICIAL" +"%s")
+	HORAFINAL01=$(date -u -d "$HORAFINAL" +"%s")
+	# opção do comando date: -u (utc), -d (date), 0 (string command), sec (force second), +%H (hour), %M (minute), %S (second), 
+	TEMPO=`date -u -d "0 $HORAFINAL01 sec - $HORAINICIAL01 sec" +"%H:%M:%S"`
+	# $0 (variável de ambiente do nome do comando)
+	echo -e "Tempo gasto para execução do script $0: $TEMPO"
 echo -e "Pressione <Enter> para concluir o processo."
+# opção do comando date: + (format), %d (day), %m (month), %Y (year 1970), %H (hour 24), %M (minute 60)
+echo -e "Fim do script $0 em: `date +%d/%m/%Y-"("%H:%M")"`\n" &>> $LOG
 read
 exit 1
