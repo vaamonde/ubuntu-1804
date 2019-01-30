@@ -50,6 +50,7 @@ LOGSCRIPT=`echo $0 | cut -d'/' -f2`
 LOG=$VARLOGPATH/$LOGSCRIPT
 #
 # Variável do download do Webmin
+# opção do comando git clone --depth=1: Crie um clone superficial com um histórico truncado para o número especificado de confirmações
 NETDATA="https://github.com/firehol/netdata.git --depth=1"
 #
 # Verificando se o usuário e Root, Distribuição e >=18.04 e o Kernel >=4.15 <IF MELHORADO)
