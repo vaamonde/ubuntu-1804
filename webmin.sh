@@ -69,7 +69,7 @@ if [ "$USUARIO" == "0" ] && [ "$UBUNTU" == "18.04" ] && [ "$KERNEL" == "4.15" ]
 		exit 1
 fi
 #
-# Script de instalação do Asterisk no GNU/Linux Ubuntu Server 18.04.x
+# Script de instalação do Webmin no GNU/Linux Ubuntu Server 18.04.x
 # opção do comando echo: -e (enable interpretation of backslash escapes), \n (new line)
 # opção do comando hostname: -I (all IP address)
 # opção do comando date: + (format), %d (day), %m (month), %Y (year 1970), %H (hour 24), %M (minute 60)
