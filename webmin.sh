@@ -5,8 +5,8 @@
 # Facebook: facebook.com/BoraParaPratica
 # YouTube: youtube.com/BoraParaPratica
 # Data de criação: 10/11/2018
-# Data de atualização: 20/01/2019
-# Versão: 0.02
+# Data de atualização: 29/01/2019
+# Versão: 0.03
 # Testado e homologado para a versão do Ubuntu Server 18.04.x LTS x64
 # Kernel >= 4.15.x
 #
@@ -21,9 +21,9 @@
 # servidores, fornecendo uma interface amigável, e que quando configurado com um servidor web, pode ser acessado de qualquer
 # local, através de um navegador: https:\\(ip do servidor):(porta de utilização). Exemplo: https:\\172.16.1.20:10000
 #
-# Variável da Data Inicial para calcular o tempo de execução do script
-# opção do comando date: +%s (seconds since)
-DATAINICIAL=`date +%s`
+# Variável da Data Inicial para calcular o tempo de execução do script (VARIÁVEL MELHORADA)
+# opção do comando date: +%T (Time)
+HORAINICIAL=`date +%T`
 #
 # Variáveis para validar o ambiente, verificando se o usuário e "root", versão do ubuntu e kernel
 # opções do comando id: -u (user), opções do comando: lsb_release: -r (release), -s (short), 
@@ -53,43 +53,29 @@ LOG=$VARLOGPATH/$LOGSCRIPT
 # Variável do download do Webmin - (Link de download atualizado em: 20/01/2019)
 WEBMIN="https://prdownloads.sourceforge.net/webadmin/webmin_1.900_all.deb"
 #
-# Verificando se o usuário e Root
-# == comparação de string, exit 1 = A maioria dos erros comuns na execução
-if [ "$USUARIO" == "0" ]
+# Verificando se o usuário e Root, Distribuição e >=18.04 e o Kernel >=4.15 <IF MELHORADO)
+# [ ] = teste de expressão, && = operador lógico AND, == comparação de string, exit 1 = A maioria dos erros comuns na execução
+clear
+if [ "$USUARIO" == "0" ] && [ "$UBUNTU" == "18.04" ] && [ "$KERNEL" == "4.15" ]
 	then
 		echo -e "O usuário e Root, continuando com o script..."
-	else
-		echo -e "Usuário não e Root, execute o comando: sudo -i, execute novamente o script."
-		exit 1
-fi
-#
-# Verificando se a distribuição e 18.04.x
-# == comparação de string, exit 1 = A maioria dos erros comuns na execução
-if [ "$UBUNTU" == "18.04" ]
-	then
-		echo -e "Distribuição e 18.04.x, continuando com o script..."
-	else
-		echo -e "Distribuição não homologada, instale a versão 18.04.x e execute novamente o script."
-		exit 1
-fi
-#		
-# Verificando se o Kernel e 4.15
-# == comparação de string, exit 1 = A maioria dos erros comuns na execução
-# opção do comando sleep: 5 (seconds)
-if [ "$KERNEL" == "4.15" ]
-	then
+		echo -e "Distribuição e >=18.04.x, continuando com o script..."
 		echo -e "Kernel e >= 4.15, continuando com o script..."
 		sleep 5
 	else
-		echo -e "Kernel não homologado, instale a versão do Ubuntu 18.04.x e atualize o sistema."
+		echo -e "Usuário não e Root ($USUARIO) ou Distribuição não e >=18.04.x ($UBUNTU) ou Kernel não e >=4.15 ($KERNEL)"
+		echo -e "Caso você não tenha executado o script com o comando: sudo -i"
+		echo -e "Execute novamente o script para verificar o ambiente."
 		exit 1
 fi
 #
-# Script de instalação do Webmin no GNU/Linux Ubuntu Server 18.04.x
-# opção do comando echo: -e (enable) habilita interpretador, \n = (new line)
+# Script de instalação do Asterisk no GNU/Linux Ubuntu Server 18.04.x
+# opção do comando echo: -e (enable interpretation of backslash escapes), \n (new line)
 # opção do comando hostname: -I (all IP address)
-# opção do comando sleep: 5 (seconds
+# opção do comando date: + (format), %d (day), %m (month), %Y (year 1970), %H (hour 24), %M (minute 60)
+echo -e "Início do script $0 em: `date +%d/%m/%Y-"("%H:%M")"`\n" &>> $LOG
 clear
+#
 echo -e "Instalação do Webmin no GNU/Linux Ubuntu Server 18.04.x\n"
 echo -e "Após a instalação do Webmin acessar a URL: https://`hostname -I`:10000/\n"
 echo -e "Aguarde, esse processo demora um pouco dependendo do seu Link de Internet..."
@@ -161,15 +147,18 @@ sleep 5
 echo
 #
 echo -e "Instalação do Webmin feito com Sucesso!!!"
-	# opção do comando date: +%s (seconds since)
-	# opção do caracter ` ` (crase): executa o comando em um subshell 
-	DATAFINAL=`date +%s`
-	SOMA=`expr $DATAFINAL - $DATAINICIAL`
-	# opção do comando expr: 10800 segundos, usada para arredondamento de cálculo
-	RESULTADO=`expr 10800 + $SOMA`
-	# opção do comando date: -d (date), +%H (hour), %M (minute), %S (second)
-	TEMPO=`date -d @$RESULTADO +%H:%M:%S`
-echo -e "Tempo gasto para execução do script $0: $TEMPO"
+	# script para calcular o tempo gasto (SCRIPT MELHORADO, CORRIGIDO FALHA DE HORA:MINUTO:SEGUNDOS)
+	# opção do comando date: +%T (Time)
+	HORAFINAL=`date +%T`
+	# opção do comando date: -u (utc), -d (date), +%s (second since 1970)
+	HORAINICIAL01=$(date -u -d "$HORAINICIAL" +"%s")
+	HORAFINAL01=$(date -u -d "$HORAFINAL" +"%s")
+	# opção do comando date: -u (utc), -d (date), 0 (string command), sec (force second), +%H (hour), %M (minute), %S (second), 
+	TEMPO=`date -u -d "0 $HORAFINAL01 sec - $HORAINICIAL01 sec" +"%H:%M:%S"`
+	# $0 (variável de ambiente do nome do comando)
+	echo -e "Tempo gasto para execução do script $0: $TEMPO"
 echo -e "Pressione <Enter> para concluir o processo."
+# opção do comando date: + (format), %d (day), %m (month), %Y (year 1970), %H (hour 24), %M (minute 60)
+echo -e "Fim do script $0 em: `date +%d/%m/%Y-"("%H:%M")"`\n" &>> $LOG
 read
 exit 1
