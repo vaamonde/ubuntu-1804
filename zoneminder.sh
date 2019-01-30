@@ -5,8 +5,8 @@
 # Facebook: facebook.com/BoraParaPratica
 # YouTube: youtube.com/BoraParaPratica
 # Data de criação: 02/12/2018
-# Data de atualização: 09/12/2018
-# Versão: 0.04
+# Data de atualização: 29/01/2018
+# Versão: 0.05
 # Testado e homologado para a versão do Ubuntu Server 18.04.x LTS x64
 # Kernel >= 4.15.x
 #
@@ -25,9 +25,9 @@
 #
 # Vídeo de instalação do LAMP Server no GNU/Linux Ubuntu Server 18.04.x LTS: https://www.youtube.com/watch?v=6EFUu-I3u4s
 #
-# Variável da Data Inicial para calcular o tempo de execução do script
-# opção do comando date: +%s (seconds since)
-DATAINICIAL=`date +%s`
+# Variável da Data Inicial para calcular o tempo de execução do script (VARIÁVEL MELHORADA)
+# opção do comando date: +%T (Time)
+HORAINICIAL=`date +%T`
 #
 # Variáveis para validar o ambiente, verificando se o usuário e "root", versão do ubuntu e kernel
 # opções do comando id: -u (user), opções do comando: lsb_release: -r (release), -s (short), 
@@ -85,8 +85,12 @@ echo -n "Verificando as dependências, aguarde... "
 		sleep 5
 #		
 # Script de instalação do ZoneMinder no GNU/Linux Ubuntu Server 18.04.x
+# opção do comando echo: -e (enable interpretation of backslash escapes), \n (new line)
 # opção do comando hostname: -I (all IP address)
-echo
+# opção do comando date: + (format), %d (day), %m (month), %Y (year 1970), %H (hour 24), %M (minute 60)
+echo -e "Início do script $0 em: `date +%d/%m/%Y-"("%H:%M")"`\n" &>> $LOG
+clear
+#
 echo -e "Instalação do ZoneMinder no GNU/Linux Ubuntu Server 18.04.x\n"
 echo -e "Após a instalação do ZoneMinder acessar a URL: http://`hostname -I`/zm/\n"
 echo -e "Aguarde, esse processo demora um pouco dependendo do seu Link de Internet..."
@@ -94,27 +98,30 @@ sleep 5
 echo
 #
 echo -e "Adicionando o Repositório Universal do Apt, aguarde..."
-	#opção do comando: &>> (redirecionar a entrada padrão)
+	# opção do comando: &>> (redirecionar a entrada padrão)
 	add-apt-repository universe &>> $LOG
 echo -e "Repositório adicionado com sucesso!!!, continuando com o script..."
 sleep 5
 echo
 #
 echo -e "Atualizando as listas do Apt, aguarde..."
+	# opção do comando: &>> (redirecionar a entrada padrão)
 	apt update &>> $LOG
 echo -e "Listas atualizadas com sucesso!!!, continuando com o script..."
 sleep 5
 echo
 #
 echo -e "Atualizando o sistema, aguarde..."
-	#-y (yes)
+	# opção do comando: &>> (redirecionar a entrada padrão)
+	# opção do comando apt: -y (yes)
 	apt -y upgrade &>> $LOG
 echo -e "Sistema atualizado com sucesso!!!, continuando com o script..."
 sleep 5
 echo
 #
 echo -e "Removendo software desnecessários, aguarde..."
-	#-y (yes)
+	# opção do comando: &>> (redirecionar a entrada padrão)
+	# opção do comando apt: -y (yes)
 	apt -y autoremove &>> $LOG
 echo -e "Software removidos com sucesso!!!, continuando com o script..."
 sleep 5
@@ -124,19 +131,22 @@ echo -e "Instalando o ZoneMinder, aguarde..."
 echo
 #
 echo -e "Adicionando o PPA do ZoneMinder, aguarde..."
-	#echo | (faz a função do Enter)
+	# opção do comando: &>> (redirecionar a entrada padrão)
+	# opção do comando echo |: (faz a função do Enter)
 	echo | sudo add-apt-repository $ZONEMINDER &>> $LOG
 echo -e "PPA adicionado com sucesso!!!, continuando com o script..."
 sleep 5
 echo
 #
 echo -e "Atualizando novamente as listas do Apt, aguarde..."
+	# opção do comando: &>> (redirecionar a entrada padrão)
 	apt update &>> $LOG
 echo -e "Listas atualizadas com sucesso!!!, continuando com o script..."
 sleep 5
 echo
 #
 echo -e "Editando as Configurações do Servidor de MySQL, perssione <Enter> para continuar"
+	# opção do comando: &>> (redirecionar a entrada padrão)
 	#[mysqld]
 	#sql_mode = NO_ENGINE_SUBSTITUTION
 	read
@@ -147,6 +157,7 @@ sleep 5
 echo
 #
 echo -e "Editando as Configurações do PHP, perssione <Enter> para continuar"
+	# opção do comando: &>> (redirecionar a entrada padrão)
 	#[Date]
 	#date.timezone = America/Sao_Paulo
 	read
@@ -156,14 +167,16 @@ sleep 5
 echo
 #
 echo -e "Instalando o ZoneMinder, aguarde..."
-	#-y (yes)
+	# opção do comando: &>> (redirecionar a entrada padrão)
+	# opção do comando apt: -y (yes)
 	apt -y install zoneminder &>> $LOG
 echo -e "ZoneMinder instalado com sucesso!!!, continuando com o script..."
 sleep 5
 echo
 #
 echo -e "Criando o Banco de Dados do ZoneMinder, aguarde..."
-	#-u (user), -p (password), -e (execute), < (Redirecionador de Saída STDOUT)
+	# opção do comando: &>> (redirecionar a entrada padrão)
+	# opção do comando mysql: -u (user), -p (password), -e (execute), < (Redirecionador de Saída STDOUT)
 	mysql -u $USER -p$PASSWORD < $DATABASE &>> $LOG
 	mysql -u $USER -p$PASSWORD -e "$GRANTALL" mysql &>> $LOG
 	mysql -u $USER -p$PASSWORD -e "$FLUSH" mysql &>> $LOG
@@ -172,9 +185,9 @@ sleep 5
 echo
 #
 echo -e "Alterando as permissões do ZoneMinder, aguarde..."
-	#opções do comando: chmod -v (verbose), 740 (dono=RWX,grupo=R,outro=)
-	#opções do comando: chown -v (verbose), -R (recursive), root (dono), www-data (grupo)
-	#opções do comando: usermod -a (append), -G (group), video (grupo), www-data (user)
+	# opções do comando chmod: -v (verbose), 740 (dono=RWX,grupo=R,outro=)
+	# opções do comando chown: -v (verbose), -R (recursive), root (dono), www-data (grupo)
+	# opções do comando usermod: -a (append), -G (group), video (grupo), www-data (user)
 	chmod -v 740 /etc/zm/zm.conf &>> $LOG
 	chown -v root.www-data /etc/zm/zm.conf &>> $LOG
 	chown -Rv www-data.www-data /usr/share/zoneminder/ &>> $LOG
@@ -185,7 +198,8 @@ echo
 #
 #
 echo -e "Habilitando os recursos do Apache2 para o ZoneMinder, aguarde..."
-	#a2enmod (Apache2 Enable Mode), a2enconf (Apache2 Enable Conf)
+	# opção do comando: &>> (redirecionar a entrada padrão)
+	# a2enmod (Apache2 Enable Mode), a2enconf (Apache2 Enable Conf)
 	a2enmod cgi &>> $LOG
 	a2enmod rewrite &>> $LOG
 	a2enconf zoneminder &>> $LOG
@@ -196,6 +210,7 @@ echo
 #
 #
 echo -e "Criando o Serviço do ZoneMinder, aguarde..."
+	# opção do comando: &>> (redirecionar a entrada padrão)
 	systemctl enable zoneminder &>> $LOG
 	service zoneminder start &>> $LOG
 echo -e "Serviço criado com sucesso!!!, continuando com o script..."
@@ -203,14 +218,18 @@ sleep 5
 echo
 #
 echo -e "Instalação do ZoneMinder feita com Sucesso!!!"
-	# opção do comando date: +%s (seconds since)
-	DATAFINAL=`date +%s`
-	SOMA=`expr $DATAFINAL - $DATAINICIAL`
-	# opção do comando expr: 10800 segundos, usada para arredondamento de cálculo
-	RESULTADO=`expr 10800 + $SOMA`
-	# opção do comando date: -d (date), +%H (hour), %M (minute), %S (second)
-	TEMPO=`date -d @$RESULTADO +%H:%M:%S`
-echo -e "Tempo gasto para execução do script $0: $TEMPO"
+	# script para calcular o tempo gasto (SCRIPT MELHORADO, CORRIGIDO FALHA DE HORA:MINUTO:SEGUNDOS)
+	# opção do comando date: +%T (Time)
+	HORAFINAL=`date +%T`
+	# opção do comando date: -u (utc), -d (date), +%s (second since 1970)
+	HORAINICIAL01=$(date -u -d "$HORAINICIAL" +"%s")
+	HORAFINAL01=$(date -u -d "$HORAFINAL" +"%s")
+	# opção do comando date: -u (utc), -d (date), 0 (string command), sec (force second), +%H (hour), %M (minute), %S (second), 
+	TEMPO=`date -u -d "0 $HORAFINAL01 sec - $HORAINICIAL01 sec" +"%H:%M:%S"`
+	# $0 (variável de ambiente do nome do comando)
+	echo -e "Tempo gasto para execução do script $0: $TEMPO"
 echo -e "Pressione <Enter> para concluir o processo."
+# opção do comando date: + (format), %d (day), %m (month), %Y (year 1970), %H (hour 24), %M (minute 60)
+echo -e "Fim do script $0 em: `date +%d/%m/%Y-"("%H:%M")"`\n" &>> $LOG
 read
 exit 1
