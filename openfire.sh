@@ -5,8 +5,8 @@
 # Facebook: facebook.com/BoraParaPratica
 # YouTube: youtube.com/BoraParaPratica
 # Data de criação: 22/11/2018
-# Data de atualização: 24/11/2018
-# Versão: 0.02
+# Data de atualização: 29/01/2019
+# Versão: 0.03
 # Testado e homologado para a versão do Ubuntu Server 18.04.x LTS x64
 # Kernel >= 4.15.x
 #
@@ -23,9 +23,9 @@
 #
 # Vídeo de instalação do LAMP Server no GNU/Linux Ubuntu Server 18.04.x LTS: https://www.youtube.com/watch?v=6EFUu-I3u4s
 #
-# Variável da Data Inicial para calcular o tempo de execução do script
-# opção do comando date: +%s (seconds since)
-DATAINICIAL=`date +%s`
+# Variável da Data Inicial para calcular o tempo de execução do script (VARIÁVEL MELHORADA)
+# opção do comando date: +%T (Time)
+HORAINICIAL=`date +%T`
 #
 # Variáveis para validar o ambiente, verificando se o usuário e "root", versão do ubuntu e kernel
 # opções do comando id: -u (user), opções do comando: lsb_release: -r (release), -s (short), 
@@ -57,7 +57,7 @@ FLUSH="FLUSH PRIVILEGES;"
 OPENFIRE="https://www.igniterealtime.org/downloadServlet?filename=openfire/openfire_4.2.3_all.deb"
 #
 # Verificando se o usuário e Root, Distribuição e >=18.04 e o Kernel >=4.15 <IF MELHORADO)
-# && = operador lógico AND, == comparação de string
+# [ ] = teste de expressão, && = operador lógico AND, == comparação de string, exit 1 = A maioria dos erros comuns na execução
 clear
 if [ "$USUARIO" == "0" ] && [ "$UBUNTU" == "18.04" ] && [ "$KERNEL" == "4.15" ]
 	then
@@ -74,7 +74,8 @@ fi
 #
 # Verificando se as dependêncais do OpenFire estão instaladas
 # opção do dpkg: -s (status), opção do echo: -e (intepretador de escapes de barra invertida), -n (permite nova linha)
-# || (operador lógico OU), 2> (redirecionar de saída de erro STDERR), && = operador lógico AND
+# || (operador lógico OU), 2> (redirecionar de saída de erro STDERR), && = operador lógico AND, { } = agrupa comandos em blocos
+# [ ] = testa uma expressão, retornando 0 ou 1, -ne = é diferente (NotEqual)
 echo -n "Verificando as dependências, aguarde... "
 	for name in mysql-server mysql-common
 	do
@@ -84,7 +85,10 @@ echo -n "Verificando as dependências, aguarde... "
 		sleep 5
 #		
 # Script de instalação do OpenFire no GNU/Linux Ubuntu Server 18.04.x
-# opção do comando hostname: -I (all IP address), opções do comando cut: -d (delimiter), -f (fields)
+# opção do comando echo: -e (enable interpretation of backslash escapes), \n (new line)
+# opção do comando hostname: -I (all IP address)
+# opção do comando date: + (format), %d (day), %m (month), %Y (year 1970), %H (hour 24), %M (minute 60)
+echo -e "Início do script $0 em: `date +%d/%m/%Y-"("%H:%M")"`\n" &>> $LOG
 clear
 echo -e "Instalação do OpenFire no GNU/Linux Ubuntu Server 18.04.x\n"
 echo -e "Após a instalação do OpenFire acessar a URL: http://`hostname -I | cut -d' ' -f1`:9090/\n"
@@ -100,20 +104,23 @@ sleep 5
 echo
 #
 echo -e "Atualizando as listas do Apt, aguarde..."
+	#opção do comando: &>> (redirecionar de saida padrão)
 	apt update &>> $LOG
 echo -e "Listas atualizadas com sucesso!!!, continuando com o script..."
 sleep 5
 echo
 #
 echo -e "Atualizando o sistema, aguarde..."
-	#-y (yes)
+	#opção do comando: &>> (redirecionar de saida padrão)
+	#opção do comando apt: -y (yes)
 	apt -y upgrade &>> $LOG
 echo -e "Sistema atualizado com sucesso!!!, continuando com o script..."
 sleep 5
 echo
 #
 echo -e "Removendo software desnecessários, aguarde..."
-	#-y (yes)
+	#opção do comando: &>> (redirecionar de saida padrão)
+	#opção do comando apt: -y (yes)
 	apt -y autoremove &>> $LOG
 echo -e "Software removidos com sucesso!!!, continuando com o script..."
 sleep 5
@@ -123,7 +130,8 @@ echo -e "Instalando o OpenFire, aguarde..."
 echo
 #
 echo -e "Instalando as dependências do OpenFire, aguarde..."
-	#-y (yes)
+	#opção do comando: &>> (redirecionar de saida padrão)
+	#opção do comando apt: -y (yes)
 	apt -y install openjdk-8-jdk openjdk-8-jre &>> $LOG
 echo -e "Instalação das dependências feita com sucesso!!!, continuando com o script..."
 sleep 5
@@ -136,7 +144,8 @@ sleep 5
 echo
 #				 
 echo -e "Criando o Banco de Dados do OpenFire, aguarde..."
-	#-u (user), -p (password), -e (execute)
+	#opção do comando: &>> (redirecionar de saida padrão)
+	#opção do comando mysql: -u (user), -p (password), -e (execute)
 	mysql -u $USER -p$PASSWORD -e "$DATABASE" mysql &>> $LOG
 	mysql -u $USER -p$PASSWORD -e "$USERDATABASE" mysql &>> $LOG
 	mysql -u $USER -p$PASSWORD -e "$GRANTDATABASE" mysql &>> $LOG
@@ -147,34 +156,41 @@ sleep 5
 echo
 #
 echo -e "Baixando o OpenFire do site oficial, aguarde..."
-	#-O (output document file)
+	#opção do comando: &>> (redirecionar de saida padrão)
+	#opção do comando wget: -O (output document file)
 	wget $OPENFIRE -O openfire.deb &>> $LOG
 echo -e "OpenFire baixado com sucesso!!!, continuando com o script..."
 sleep 5
 echo
 #
 echo -e "Instalando o OpenFire, aguarde..."
-	#-i (install)
+	#opção do comando: &>> (redirecionar de saida padrão)
+	#opção do comando dpkg: -i (install)
 	dpkg -i openfire.deb &>> $LOG
 echo -e "OpenFire instalado com sucesso!!!, continuando com o script..."
 sleep 5
 echo
 #
 echo -e "Verificando a porta de conexão do OpenFire, aguarde..."
-	#-a (all), -n (numeric)
+	#opção do comando netstat: -a (all), -n (numeric)
 	netstat -an | grep 9090
 echo -e "Porta de conexão verificada com sucesso!!!, continuando com o script..."
 sleep 5
 echo
 #
 echo -e "Instalação do OpenFire feita com Sucesso!!!"
-	# opção do comando date: +%s (seconds since)
-	DATAFINAL=`date +%s`
-	SOMA=`expr $DATAFINAL - $DATAINICIAL`
-	RESULTADO=`expr 10800 + $SOMA`
-	# opção do comando date: -d (date), +%H (hour), %M (minute), %S (second)
-	TEMPO=`date -d @$RESULTADO +%H:%M:%S`
-echo -e "Tempo gasto para execução do script $0: $TEMPO"
+	# script para calcular o tempo gasto (SCRIPT MELHORADO, CORRIGIDO FALHA DE HORA:MINUTO:SEGUNDOS)
+	# opção do comando date: +%T (Time)
+	HORAFINAL=`date +%T`
+	# opção do comando date: -u (utc), -d (date), +%s (second since 1970)
+	HORAINICIAL01=$(date -u -d "$HORAINICIAL" +"%s")
+	HORAFINAL01=$(date -u -d "$HORAFINAL" +"%s")
+	# opção do comando date: -u (utc), -d (date), 0 (string command), sec (force second), +%H (hour), %M (minute), %S (second), 
+	TEMPO=`date -u -d "0 $HORAFINAL01 sec - $HORAINICIAL01 sec" +"%H:%M:%S"`
+	# $0 (variável de ambiente do nome do comando)
+	echo -e "Tempo gasto para execução do script $0: $TEMPO"
 echo -e "Pressione <Enter> para concluir o processo."
+# opção do comando date: + (format), %d (day), %m (month), %Y (year 1970), %H (hour 24), %M (minute 60)
+echo -e "Fim do script $0 em: `date +%d/%m/%Y-"("%H:%M")"`\n" &>> $LOG
 read
 exit 1
