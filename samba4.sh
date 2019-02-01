@@ -16,10 +16,22 @@
 # pode se integrar a um domínio do Microsoft Windows Server, como um controlador de domínio (DC) ou como um 
 # membro do domínio. A partir da versão 4, ele suporta domínios do Active Directory e do Microsoft Windows NT.
 #
+# O KERBEROS Kerberos é o nome de um Protocolo de rede, que permite comunicações individuais seguras e identificadas, 
+# em uma rede insegura. Para isso o Massachusetts Institute of Technology (MIT) disponibiliza um pacote de aplicativos que 
+# implementam esse protocolo. O protocolo Kerberos previne Eavesdropping e Replay attack, e ainda garante a integridade dos 
+# dados. Seus projetistas inicialmente o modelaram na arquitetura cliente-servidor, e é possível a autenticação mutua entre 
+# o cliente e o servidor, permitindo assim que ambos se autentiquem.
+#
+# O NTP é um protocolo para sincronização dos relógios dos computadores baseado no protocolo UDP sob a porta 123. 
+# É utilizado para sincronização do relógio de um conjunto de computadores e dispositivos em redes de dados com latência 
+# variável. O NTP permite manter o relógio de um computador sincronizado com a hora sempre certa e com grande exatidão. 
+# Foi originalmente idealizado por David L. Mills da Universidade do Delaware e ainda hoje é mantido por ele e por uma 
+# equipe de voluntários. 
+#
 # Vídeo de instalação do GNU/Linux Ubuntu Server 18.04.x LTS: https://www.youtube.com/watch?v=zDdCrqNhIXI
 #
 # Variável da Data Inicial para calcular o tempo de execução do script (VARIÁVEL MELHORADA)
-# opção do comando date: +%T (Time)
+# opção do comando date: +%T (Time)O NTP é um protocolo para sincronização dos relógios dos computadores baseado no protocolo UDP sob a porta 123. É utilizado para sincronização do relógio de um conjunto de computadores e dispositivos em redes de dados com latência variável. O NTP permite manter o relógio de um computador sincronizado com a hora sempre certa e com grande exatidão. Foi originalmente idealizado por David L. Mills da Universidade do Delaware e ainda hoje é mantido por ele e por uma equipe de voluntários. 
 HORAINICIAL=`date +%T`
 #
 # Variáveis para validar o ambiente, verificando se o usuário e "root", versão do ubuntu e kernel
