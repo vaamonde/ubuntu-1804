@@ -5,8 +5,8 @@
 # Facebook: facebook.com/BoraParaPratica
 # YouTube: youtube.com/BoraParaPratica
 # Data de criação: 11/11/2018
-# Data de atualização: 29/01/2019
-# Versão: 0.02
+# Data de atualização: 01/02/2019
+# Versão: 0.03
 # Testado e homologado para a versão do Ubuntu Server 18.04.x LTS x64
 # Kernel >= 4.15.x
 #
@@ -116,7 +116,7 @@ echo
 #
 echo -e "Instalando as dependências do Netdata, aguarde..."
 	# opção do comando: &>> (redirecionar a entrada padrão)
-	# opção do comando apt: -y (yes)
+	# opção do comando apt: -y (yes), \ (bar left) quedra de linha na opção do apt
 	apt -y install zlib1g-dev gcc make git autoconf autogen automake pkg-config uuid-dev python python-mysqldb python-pip \ 
 	python-dev python3-dev libmysqlclient-dev python-ipaddress &>> $LOG
 echo -e "Instalação das dependências feita com sucesso!!!, continuando com o script..."
