@@ -6,7 +6,7 @@
 # YouTube: youtube.com/BoraParaPratica
 # Data de criação: 12/11/2018
 # Data de atualização: 29/01/2019
-# Versão: 0.02
+# Versão: 0.03
 # Testado e homologado para a versão do Ubuntu Server 18.04.x LTS x64
 # Kernel >= 4.15.x
 #
@@ -121,8 +121,9 @@ echo
 #
 echo -e "Instalando as dependências do Docker, aguarde..."
 	# opção do comando: &>> (redirecionar a entrada padrão)
-	# opção do comando apt: -y (yes)
-	apt -y install apt-transport-https ca-certificates curl software-properties-common linux-image-generic linux-image-extra-virtual &>> $LOG
+	# opção do comando apt: -y (yes), \ (bar left) quedra de linha na opção do apt
+	apt -y install apt-transport-https ca-certificates curl software-properties-common linux-image-generic \ 
+	linux-image-extra-virtual &>> $LOG
 echo -e "Instalação das dependências feita com sucesso!!!, continuando com o script..."
 sleep 5
 echo
