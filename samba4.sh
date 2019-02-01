@@ -9,7 +9,7 @@
 # Versão: 0.02
 # Testado e homologado para a versão do Ubuntu Server 18.04.x LTS x64
 # Kernel >= 4.15.x
-# Testado e homologado para a versão do SAMBA-4.9.4
+# Testado e homologado para a versão do SAMBA-4.7.x
 #
 # O SAMBA4 é uma reimplementação de software livre do protocolo de rede SMB e foi originalmente desenvolvido por
 # Andrew Tridgell. O Samba fornece serviços de arquivo e impressão para vários clientes do Microsoft Windows e 
