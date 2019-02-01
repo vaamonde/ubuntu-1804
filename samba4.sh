@@ -6,7 +6,7 @@
 # YouTube: youtube.com/BoraParaPratica
 # Data de criação: 01/02/2019
 # Data de atualização: 01/02/2019
-# Versão: 0.01
+# Versão: 0.02
 # Testado e homologado para a versão do Ubuntu Server 18.04.x LTS x64
 # Kernel >= 4.15.x
 # Testado e homologado para a versão do SAMBA-4.9.4
@@ -164,8 +164,14 @@ echo -e "Criando o serviço do SAMBA4 no Systemd, aguarde..."
 	cp -v conf/samba-ad-dc.service /etc/systemd/system/ &>> $LOG
 	systemctl daemon-reload &>> $LOG
 	systemctl enable samba-ad-dc &>> $LOG
-	systemctl start samba-ad-dc &>> $LOG
 echo -e "Serviço criado com sucesso!!!, continuando com o script"
+sleep 5
+echo
+#
+echo -e "Promovendo o SAMBA4 como Controlador de Domínio (AD-DS), aguarde..."
+	samba-tool domain provision --realm=pti.intra --domain=pti --adminpass=pti@2018 --server-role=dc --dns-backend=SAMBA_INTERNAL \
+	--function-level=2008_R2 --use-xattr=yes --use-rfc2307 &>> $LOG
+echo -e "Promoção do Controlador de Domínio feito com sucesso!!!, continuando com o script"
 sleep 5
 echo
 #
