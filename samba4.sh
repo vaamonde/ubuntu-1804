@@ -152,6 +152,23 @@ echo -e "Download e instalação do SAMBA4, aguarde..."
 echo -e "SAMBA4 instalado com sucesso!!!, continuando com o script..."
 sleep 5
 echo
+#
+echo -e "Desabilitando os serviços no Systemd, aguarde..."
+	systemctl mask smbd nmbd winbind &>> $LOG
+	systemctl disable smbd nmbd winbind &>> $LOG
+echo -e "Serviços desabilitado com sucesso!!!, continuando com o script"
+sleep 5
+echo
+#
+echo -e "Criando o serviço do SAMBA4 no Systemd, aguarde..."
+	cp -v conf/samba-ad-dc.service /etc/systemd/system/ &>> $LOG
+	systemctl daemon-reload &>> $LOG
+	systemctl enable samba-ad-dc &>> $LOG
+	systemctl start samba-ad-dc &>> $LOG
+echo -e "Serviço criado com sucesso!!!, continuando com o script"
+sleep 5
+echo
+#
 echo -e "Instalação do SAMBA4 feita com Sucesso!!!"
 	# script para calcular o tempo gasto (SCRIPT MELHORADO, CORRIGIDO FALHA DE HORA:MINUTO:SEGUNDOS)
 	# opção do comando date: +%T (Time)
