@@ -36,15 +36,15 @@ UBUNTU=`lsb_release -rs`
 KERNEL=`uname -r | cut -d'.' -f1,2`
 #
 # Variável do caminho do Log dos Script utilizado nesse curso
-VARLOGPATH="/var/log/"
+VARLOGPATH="/var/log/$(echo $0 | cut -d'/' -f2)"
 #
 # Variável para criação do arquivo de Log dos Script
 # opções do comando cut: -d (delimiter), -f (fields)
 # $0 (variável de ambiente do nome do comando)
-LOGSCRIPT=`echo $0 | cut -d'/' -f2`
+#LOGSCRIPT=`echo $0 | cut -d'/' -f2`
 #
 # Variável do caminho para armazenar os Log's de instalação
-LOG=$VARLOGPATH/$LOGSCRIPT
+#LOG=$VARLOGPATH/$LOGSCRIPT
 #
 # Declarando as variaveis de Download do SAMBA4: https://www.samba.org/samba/download/
 SAMBA4="https://download.samba.org/pub/samba/samba-latest.tar.gz"
@@ -118,7 +118,7 @@ echo
 #
 echo -e "Instalando as dependências do SAMBA4, aguarde..."
 	# opção do comando: &>> (redirecionar a entrada padrão)
-	# opção do comando apt: -y (yes)
+	# opção do comando apt: -y (yes), \ (bar left) quedra de linha na opção do apt
 	apt install -y acl attr autoconf bind9utils bison build-essential debhelper dnsutils docbook-xml docbook-xsl \
 	flex gdb libjansson-dev krb5-user krb5-config libacl1-dev libaio-dev libarchive-dev libattr1-dev libblkid-dev \
 	libbsd-dev libcap-dev libcups2-dev libgnutls28-dev libgpgme-dev libjson-perl libldap2-dev libncurses5-dev \
@@ -145,7 +145,7 @@ echo -e "Download e instalação do SAMBA4, aguarde..."
 	# compila todas as opções do software
 	make all &>> $LOG
 	# testa a compilação em busca de erros
-	make test &>> $LOG
+	# make test &>> $LOG
 	# executa os comandos para instalar o programa
 	make install &>> $LOG
 	# exportação de variável de ambiente do SAMBA4 no PATH de execução
