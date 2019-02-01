@@ -35,16 +35,13 @@ USUARIO=`id -u`
 UBUNTU=`lsb_release -rs`
 KERNEL=`uname -r | cut -d'.' -f1,2`
 #
-# Variável do caminho do Log dos Script utilizado nesse curso
-VARLOGPATH="/var/log/$(echo $0 | cut -d'/' -f2)"
-#
-# Variável para criação do arquivo de Log dos Script
+# Variável do caminho do Log dos Script utilizado nesse curso (VARIÁVEL MELHORADA)
 # opções do comando cut: -d (delimiter), -f (fields)
 # $0 (variável de ambiente do nome do comando)
-#LOGSCRIPT=`echo $0 | cut -d'/' -f2`
+VARLOGPATH="/var/log/$(echo $0 | cut -d'/' -f2)"
 #
 # Variável do caminho para armazenar os Log's de instalação
-#LOG=$VARLOGPATH/$LOGSCRIPT
+LOG=$VARLOGPATH
 #
 # Declarando as variaveis de Download do SAMBA4: https://www.samba.org/samba/download/
 SAMBA4="https://download.samba.org/pub/samba/samba-latest.tar.gz"
