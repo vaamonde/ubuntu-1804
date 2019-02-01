@@ -122,9 +122,9 @@ echo -e "Instalando as dependências do SAMBA4, aguarde..."
 	apt install -y acl attr autoconf bind9utils bison build-essential debhelper dnsutils docbook-xml docbook-xsl \
 	flex gdb libjansson-dev krb5-user krb5-config libacl1-dev libaio-dev libarchive-dev libattr1-dev libblkid-dev \
 	libbsd-dev libcap-dev libcups2-dev libgnutls28-dev libgpgme-dev libjson-perl libldap2-dev libncurses5-dev \
-	libpam0g-dev libparse-yapp-perl libpopt-dev libreadline-dev nettle-dev perl perl-modules pkg-config \
-	python-all-dev python-crypto python-dbg python-dev python-dnspython python3-dnspython python-gpgme \
-	python3-gpgme python-markdown python3-markdown python3-dev xsltproc zlib1g-dev liblmdb-dev lmdb-utils \
+	libpam0g-dev libparse-yapp-perl libpopt-dev libreadline-dev nettle-dev perl perl-modules-5.26 pkg-config \
+	python-all-dev python-crypto python-dbg python-dev python-dnspython python3-dnspython python-gpg \
+	python3-gpg python-markdown python3-markdown python3-dev xsltproc zlib1g-dev liblmdb-dev lmdb-utils \
 	winbind libpam-winbind libnss-winbind ntp ntpdate
 echo -e "Dependências instaladas com sucesso!!!, continuando com o script..."
 sleep 5
