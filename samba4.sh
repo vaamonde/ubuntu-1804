@@ -11,7 +11,7 @@
 # Kernel >= 4.15.x
 # Testado e homologado para a versão do SAMBA-4.9.4
 #
-# O SAMBA é uma reimplementação de software livre do protocolo de rede SMB e foi originalmente desenvolvido por
+# O SAMBA4 é uma reimplementação de software livre do protocolo de rede SMB e foi originalmente desenvolvido por
 # Andrew Tridgell. O Samba fornece serviços de arquivo e impressão para vários clientes do Microsoft Windows e 
 # pode se integrar a um domínio do Microsoft Windows Server, como um controlador de domínio (DC) ou como um 
 # membro do domínio. A partir da versão 4, ele suporta domínios do Active Directory e do Microsoft Windows NT.
@@ -38,13 +38,7 @@ KERNEL=`uname -r | cut -d'.' -f1,2`
 # Variável do caminho do Log dos Script utilizado nesse curso (VARIÁVEL MELHORADA)
 # opções do comando cut: -d (delimiter), -f (fields)
 # $0 (variável de ambiente do nome do comando)
-VARLOGPATH="/var/log/$(echo $0 | cut -d'/' -f2)"
-#
-# Variável do caminho para armazenar os Log's de instalação
-LOG=$VARLOGPATH
-#
-# Declarando as variaveis de Download do SAMBA4: https://www.samba.org/samba/download/
-SAMBA4="https://download.samba.org/pub/samba/samba-latest.tar.gz"
+LOG="/var/log/$(echo $0 | cut -d'/' -f2)"
 #
 # Verificando se o usuário e Root, Distribuição e >=18.04 e o Kernel >=4.15 <IF MELHORADO)
 # [ ] = teste de expressão, && = operador lógico AND, == comparação de string, exit 1 = A maioria dos erros comuns na execução
@@ -71,7 +65,6 @@ echo -e "Início do script $0 em: `date +%d/%m/%Y-"("%H:%M")"`\n" &>> $LOG
 echo -e "Instalação do SAMBA4 no GNU/Linux Ubuntu Server 18.04.x\n"
 echo -e "Aguarde, esse processo demora um pouco dependendo do seu Link de Internet...\n"
 sleep 5
-echo
 #
 echo -e "Adicionando o Repositório Universal do Apt, aguarde..."
 	# opção do comando: &>> (redirecionar a entrada padrão)
@@ -116,62 +109,7 @@ echo
 echo -e "Instalando as dependências do SAMBA4, aguarde..."
 	# opção do comando: &>> (redirecionar a entrada padrão)
 	# opção do comando apt: -y (yes), \ (bar left) quedra de linha na opção do apt
-	apt install -y acl attr autoconf bind9utils bison build-essential debhelper dnsutils docbook-xml docbook-xsl \
-	flex gdb libjansson-dev krb5-user krb5-config libacl1-dev libaio-dev libarchive-dev libattr1-dev libblkid-dev \
-	libbsd-dev libcap-dev libcups2-dev libgnutls28-dev libgpgme-dev libjson-perl libldap2-dev libncurses5-dev \
-	libpam0g-dev libparse-yapp-perl libpopt-dev libreadline-dev nettle-dev perl perl-modules-5.26 pkg-config \
-	python-all-dev python-crypto python-dbg python-dev python-dnspython python3-dnspython python-gpg \
-	python3-gpg python-markdown python3-markdown python3-dev xsltproc zlib1g-dev liblmdb-dev lmdb-utils \
-	winbind libpam-winbind libnss-winbind ntp ntpdate
 echo -e "Dependências instaladas com sucesso!!!, continuando com o script..."
-sleep 5
-echo
-#
-echo -e "Download e instalação do SAMBA4, aguarde..."
-	# opção do comando: &>> (redirecionar a entrada padrão)
-	# opção do comando wget: -O (file)
-	wget $SAMBA4 &>> $LOG
-	# opção do comando tar: -z (gzip), -x (extract), -v (verbose), -f (file)
-	tar -zxvf samba-latest.tar.gz &>> $LOG
-	# acessando diretório do dahdi-linux
-	cd samba-*/ &>> $LOG
-	# preparação e configuração do source para compilação
-	./configure --sysconfdir=/etc/samba/ --mandir=/usr/share/man/ --enable-debug --enable-selftest &>> $LOG
-	# desfaz o processo de compilação anterior
-	make clean  &>> $LOG
-	# compila todas as opções do software
-	make all &>> $LOG
-	# testa a compilação em busca de erros
-	# make test &>> $LOG
-	# executa os comandos para instalar o programa
-	make install &>> $LOG
-	# exportação de variável de ambiente do SAMBA4 no PATH de execução
-	export PATH=/usr/local/samba/bin/:/usr/local/samba/sbin/:$PATH
-	# opção do comando cd: .. (dois pontos sequenciais - Subir uma pasta)
-	cd ..
-echo -e "SAMBA4 instalado com sucesso!!!, continuando com o script..."
-sleep 5
-echo
-#
-echo -e "Desabilitando os serviços no Systemd, aguarde..."
-	systemctl mask smbd nmbd winbind &>> $LOG
-	systemctl disable smbd nmbd winbind &>> $LOG
-echo -e "Serviços desabilitado com sucesso!!!, continuando com o script"
-sleep 5
-echo
-#
-echo -e "Criando o serviço do SAMBA4 no Systemd, aguarde..."
-	cp -v conf/samba-ad-dc.service /etc/systemd/system/ &>> $LOG
-	systemctl daemon-reload &>> $LOG
-	systemctl enable samba-ad-dc &>> $LOG
-echo -e "Serviço criado com sucesso!!!, continuando com o script"
-sleep 5
-echo
-#
-echo -e "Promovendo o SAMBA4 como Controlador de Domínio (AD-DS), aguarde..."
-	samba-tool domain provision --realm=pti.intra --domain=pti --adminpass=pti@2018 --server-role=dc --dns-backend=SAMBA_INTERNAL \
-	--function-level=2008_R2 --use-xattr=yes --use-rfc2307 &>> $LOG
-echo -e "Promoção do Controlador de Domínio feito com sucesso!!!, continuando com o script"
 sleep 5
 echo
 #
