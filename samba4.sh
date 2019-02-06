@@ -5,8 +5,8 @@
 # Facebook: facebook.com/BoraParaPratica
 # YouTube: youtube.com/BoraParaPratica
 # Data de criação: 01/02/2019
-# Data de atualização: 01/02/2019
-# Versão: 0.02
+# Data de atualização: 06/02/2019
+# Versão: 0.03
 # Testado e homologado para a versão do Ubuntu Server 18.04.x LTS x64
 # Kernel >= 4.15.x
 # Testado e homologado para a versão do SAMBA-4.7.x
@@ -51,6 +51,31 @@ KERNEL=`uname -r | cut -d'.' -f1,2`
 # opções do comando cut: -d (delimiter), -f (fields)
 # $0 (variável de ambiente do nome do comando)
 LOG="/var/log/$(echo $0 | cut -d'/' -f2)"
+#
+# Variáveis de configuração do Kerberos e SAMBA4
+REALM="PTI.INTRA"
+NETBIOS="PTI"
+DOMAIN="pti.intra"
+FQDN="ptispo01ws01.pti.intra"
+IP="172.16.1.20"
+#
+# Variáveis de configuração do NTP Server
+NTP="a.st1.ntp.br"
+#
+# Variáveis de configuração do SAMBA4
+ROLE="dc"
+DNS="SAMBA_INTERNAL"
+USER="administrator"
+PASSWORD="pti@2019"
+LEVEL="2008_R2"
+SITE="PTI.INTRA"
+#
+# Variáveis de configuração do DNS
+ARPA="1.16.172.in-addr.arpa"
+ARPAIP="20"
+#
+# Exportando o recurso de Noninteractive do Debconf para não solicitar telas de configuração
+export DEBIAN_FRONTEND="noninteractive"
 #
 # Verificando se o usuário e Root, Distribuição e >=18.04 e o Kernel >=4.15 <IF MELHORADO)
 # [ ] = teste de expressão, && = operador lógico AND, == comparação de string, exit 1 = A maioria dos erros comuns na execução
@@ -115,13 +140,160 @@ echo -e "Software removidos com sucesso!!!, continuando com o script..."
 sleep 5
 echo
 #
-echo -e "Instalando o SAMBA-4, aguarde..."
+echo -e "Instalando o SAMBA4, aguarde..."
 echo
 #
 echo -e "Instalando as dependências do SAMBA4, aguarde..."
 	# opção do comando: &>> (redirecionar a entrada padrão)
 	# opção do comando apt: -y (yes), \ (bar left) quedra de linha na opção do apt
+	apt -y install ntp ntpdate build-essential libacl1-dev libattr1-dev libblkid-dev libgnutls-dev libreadline-dev python-dev \
+	libpam0g-dev python-dnspython gdb pkg-config libpopt-dev libldap2-dev dnsutils libbsd-dev docbook-xsl acl attr debconf-utils \
+	figlet sysv-rc-conf &>> $LOG
 echo -e "Dependências instaladas com sucesso!!!, continuando com o script..."
+sleep 5
+echo
+#
+echo -e "Instalando o KERBEROS, aguarde..."
+	# opção do comando: &>> (redirecionar a entrada padrão)
+	# opção do comando apt: -y (yes)
+	# opção do comando | (piper): (Conecta a saída padrão com a entrada padrão de outro comando)
+	# opção do comando cp: -v (verbose)
+	# opção do comando mv: -v (verbose)
+	echo "krb5-config krb5-config/default_realm string $REALM" | debconf-set-selections
+	echo "krb5-config krb5-config/kerberos_servers string $FQDN" | debconf-set-selections
+	echo "krb5-config krb5-config/admin_server string $FQDN" | debconf-set-selections
+	echo "krb5-config krb5-config/add_servers_realm string $REALM" | debconf-set-selections
+	echo "krb5-config krb5-config/add_servers boolean true" | debconf-set-selections
+	echo "krb5-config krb5-config/read_config boolean true" | debconf-set-selections
+	debconf-show krb5-config &>> $LOG
+	apt -y install krb5-user krb5-config &>> $LOG
+	mv -v /etc/krb5.conf /etc/krb5.conf.old &>> $LOG
+	cp -v conf/krb5.conf /etc/krb5.conf &>> $LOG
+		echo -e "Editando o arquivo de configuração do KERBEROS, pressione <Enter> para continuar..."
+		read
+		sleep 5
+		vim /etc/krb5.conf
+		echo - e "Arquivo editado com sucesso!!!, continuando com o script... \n"
+echo -e "KERBEROS instalado com sucesso!!!, continuando com o script..."
+sleep 5
+echo
+#
+echo -e "Atualizando as configurações do NTP Server, aguarde..."
+	# opção do comando: &>> (redirecionar a entrada padrão)
+	# opção do comando: > (redirecionar a entrada padrão)
+	# opção do comando cp: -v (verbose)
+	# opção do comando mv: -v (verbose)
+	# opção do comando chown: -v (verbose), ntp.ntp (user e group)
+	# opção do comando ntpdate: d (debug), q (query), u (unprivileged), v (verbose)
+	# opção do comando ntpq: p (peers), n (numeric)
+	# opção do comando hwclock: --systohc (Set the Hardware Clock to the current System Time)
+	mv -v /etc/ntp.conf /etc/ntp.conf.old &>> $LOG
+	cp -v conf/ntp.drift /var/lib/ntp/ntp.drift &>> $LOG
+	echo 0.0 > /var/lib/ntp/ntp.drift &>> $LOG
+	chown -v ntp.ntp /var/lib/ntp/ntp.drift &>> $LOG
+	cp -v conf/ntp.conf /etc/ntp.conf &>> $LOG
+	systemctl stop ntp.service ntp &>> $LOG
+	echo -e "Editando o arquivo de configuração do NTP, pressione <Enter> para continuar..."
+		read
+		sleep 5
+		vim /etc/ntp.conf
+	echo - e "Arquivo editado com sucesso!!!, continuando com o script...\n"
+	ntpdate -dquv $NTP &>> $LOG
+	systemctl start ntp.service ntp &>> $LOG
+	ntpq -pn &>> $LOG
+	hwclock --systohc &>> $LOG
+		echo -e "Informações de Data/Hora de hardware: `hwclock`\n"
+		echo -e "Informações de Data/Hora de software: `date`\n"
+		echo -e "Pressione <Enter> para continuar...\n"
+		read
+echo -e "Atualização do NTP Server feita com sucesso!!!, continuando com o script..."
+sleep 5
+echo
+#
+echo -e "Atualizando as configurações do FSTAB, aguarde..."
+	# opção do comando: &>> (redirecionar a entrada padrão)
+	# opção do comando cp: -v (verbose)
+	cp -v /etc/fstab /etc/fstab.old &>> $LOG
+	echo -e "Editando o arquivo de configuração do FSTAB, pressione <Enter> para continuar..."
+		read
+		sleep 5
+		vim /etc/fstab
+		mount -o remount, rw /dev/sda2
+	echo - e "Arquivo editado com sucesso!!!, continuando com o script...\n"
+echo -e "Atualização do FSTAB feita com sucesso!!!, continuando com o script..."
+sleep 5
+echo
+#
+echo -e "Instalando o SAMBA4, aguarde..."
+	# opção do comando: &>> (redirecionar a entrada padrão)
+	# opção do comando apt: -y (yes), \ (bar left) quedra de linha na opção do apt
+	apt -y install samba samba-common smbclient cifs-utils samba-vfs-modules samba-testsuite samba-dbg samba-dsdb-modules \
+	winbind ldb-tools libnss-winbind libpam-winbind unzip kcc tree &>> $LOG
+echo -e "Instalação do SAMBA4 feito com sucesso!!!, continuando com o script..."
+sleep 5
+echo
+#
+echo -e "Atualizando as configurações do NSSWITCH, aguarde..."
+	# opção do comando: &>> (redirecionar a entrada padrão)
+	# opção do comando cp: -v (verbose)
+	cp -v /etc/nsswitch.conf /etc/nsswitch.conf.old &>> $LOG
+	echo -e "Editando o arquivo de configuração do FSTAB, pressione <Enter> para continuar..."
+		read
+		sleep 5
+		vim /etc/nsswitch.conf
+	echo - e "Arquivo editado com sucesso!!!, continuando com o script...\n"
+echo -e "Atualização do NSSWITCH feita com sucesso!!!, continuando com o script..."
+sleep 5
+echo
+#
+echo -e "Atualizando as configurações do SYSCTL, aguarde..."
+	# opção do comando: &>> (redirecionar a entrada padrão)
+	# opção do comando cp: -v (verbose)
+	# opção do comando mv: -v (verbose)
+	mv -v /etc/sysctl.conf /etc/sysctl.conf.old &>> $LOG
+	cp -v conf/sysctl.conf /etc/sysctl.conf &>> $LOG
+	echo -e "Editando o arquivo de configuração do SYSCTL, pressione <Enter> para continuar..."
+		read
+		sleep 5
+		vim /etc/sysctl.conf
+	echo - e "Arquivo editado com sucesso!!!, continuando com o script...\n"
+echo -e "Atualização do SYSCTL feita com sucesso!!!, continuando com o script..."
+sleep 5
+echo
+#
+echo -e "Atualizando as configurações do LIMITS, aguarde..."
+	# opção do comando: &>> (redirecionar a entrada padrão)
+	# opção do comando cp: -v (verbose)
+	# opção do comando mv: -v (verbose)
+	mv -v /etc/security/limits.conf /etc/security/limits.conf.old &>> $LOG
+	cp -v conf/limits.conf /etc/security/limits.conf &>> $LOG
+	echo -e "Editando o arquivo de configuração do LIMITS, pressione <Enter> para continuar..."
+		read
+		sleep 5
+		/etc/security/limits.conf
+	echo - e "Arquivo editado com sucesso!!!, continuando com o script...\n"
+echo -e "Atualização do LIMITS feita com sucesso!!!, continuando com o script..."
+sleep 5
+echo
+#
+echo -e "Promovendo o SAMBA4 como Controlador de Domínio do Active Directory AD-DS, aguarde..."
+	# opção do comando: &>> (redirecionar a entrada padrão)
+	# opção do comando mv: -v (verbose)
+	systemctl stop samba.service stop
+	mv -v /etc/samba/smb.conf /etc/samba/smb.conf.old &>> $LOG
+	samba-tool domain provision --realm=$REALM --domain=$NETBIOS --server-role=$ROLE --dns-backend=$DNS --adminpass=$PASSWORD \
+	--function-level=$LEVEL --site=$SITE --host-ip=$IP --option="interfaces = lo enp0s3" --option="bind interfaces only = yes" \
+	--option="allow dns updates = nonsecure and secure" --option="dns forwarder = 172.16.1.254" --option="winbind use default domain = yes" \
+	--option="winbind enum users = yes" --option="winbind enum groups = yes" --option="winbind refresh tickets = yes" \
+	--option="server signing = auto" --option="vfs objects = acl_xattr" --option="map acl inherit = yes" --option="store dos attributes = yes" \
+	--option="client use spnego = no" --option="use spnego = no" --option="client use spnego principal = no" --use-rfc2307 --use-xattrs=yes &>> $LOG
+	samba-tool user setexpiry $USER --noexpiry &>> $LOG
+	net rpc rights grant 'PTI\Domain Admins' SeDiskOperatorPrivilege -U $USER%$PASSWORD &>> $LOG
+	net rpc rights grant 'PTI\Domain Admins' SePrintOperatorPrivilege -U $USER%$PASSWORD &>> $LOG
+	samba-tool dns zonecreate $DOMAIN2 $ARPA -U $USER --password=$PASSWORD &>> $LOG
+	samba-tool dns add $DOMAIN2 $ARPA $ARPAIP PTR $FQDN -U $USER --password=$PASSWORD &>> $LOG
+	samba_dnsupdate --use-file=/var/lib/samba/private/dns.keytab --verbose --all-names &>> $LOG
+echo -e "Controlador de Domínio SAMBA4 promivido com sucesso!!!, continuando com o script..."
 sleep 5
 echo
 #
