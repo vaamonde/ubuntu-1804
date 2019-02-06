@@ -198,7 +198,7 @@ echo -e "Atualizando as configurações do NTP Server, aguarde..."
 	chown -v ntp.ntp /var/lib/ntp/ntp.drift &>> $LOG
 	cp -v conf/ntp.conf /etc/ntp.conf &>> $LOG
 	systemctl stop ntp.service &>> $LOG
-	timedatectl set-timezone “America/Sao_Paulo” &>> $LOG
+	timedatectl set-timezone "America/Sao_Paulo" &>> $LOG
 	echo -e "Editando o arquivo de configuração do NTP, pressione <Enter> para continuar..."
 		read
 		sleep 3
