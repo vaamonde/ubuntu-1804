@@ -232,7 +232,7 @@ echo
 echo -e "Instalando o SAMBA4, aguarde..."
 	# opção do comando: &>> (redirecionar a entrada padrão)
 	# opção do comando apt: -y (yes), \ (bar left) quedra de linha na opção do apt
-	apt -y install samba samba-common smbclient cifs-utils samba-vfs-modules samba-testsuite samba-dbg samba-dsdb-modules \
+	apt -y install samba samba-common smbclient cifs-utils samba-vfs-modules samba-testsuite samba-dsdb-modules \
 	winbind ldb-tools libnss-winbind libpam-winbind unzip kcc tree &>> $LOG
 echo -e "Instalação do SAMBA4 feito com sucesso!!!, continuando com o script..."
 sleep 5
