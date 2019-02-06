@@ -178,7 +178,7 @@ echo -e "Instalando o KERBEROS, aguarde..."
 		read
 		sleep 5
 		vim /etc/krb5.conf
-		echo - e "Arquivo editado com sucesso!!!, continuando com o script... \n"
+		echo -e "Arquivo editado com sucesso!!!, continuando com o script...\n"
 echo -e "KERBEROS instalado com sucesso!!!, continuando com o script..."
 sleep 5
 echo
@@ -202,7 +202,7 @@ echo -e "Atualizando as configurações do NTP Server, aguarde..."
 		read
 		sleep 5
 		vim /etc/ntp.conf
-	echo - e "Arquivo editado com sucesso!!!, continuando com o script...\n"
+	echo -e "Arquivo editado com sucesso!!!, continuando com o script...\n"
 	ntpdate -dquv $NTP &>> $LOG
 	systemctl start ntp.service ntp &>> $LOG
 	ntpq -pn &>> $LOG
@@ -224,7 +224,7 @@ echo -e "Atualizando as configurações do FSTAB, aguarde..."
 		sleep 5
 		vim /etc/fstab
 		mount -o remount, rw /dev/sda2
-	echo - e "Arquivo editado com sucesso!!!, continuando com o script...\n"
+	echo -e "Arquivo editado com sucesso!!!, continuando com o script...\n"
 echo -e "Atualização do FSTAB feita com sucesso!!!, continuando com o script..."
 sleep 5
 echo
@@ -246,7 +246,7 @@ echo -e "Atualizando as configurações do HOSTNAME, aguarde..."
 		read
 		sleep 5
 		vim /etc/hostname
-	echo - e "Arquivo editado com sucesso!!!, continuando com o script...\n"
+	echo -e "Arquivo editado com sucesso!!!, continuando com o script...\n"
 echo -e "Atualização do HOSTNAME feita com sucesso!!!, continuando com o script..."
 sleep 5
 echo
@@ -259,7 +259,7 @@ echo -e "Atualizando as configurações do HOSTS, aguarde..."
 		read
 		sleep 5
 		vim /etc/hosts
-	echo - e "Arquivo editado com sucesso!!!, continuando com o script...\n"
+	echo -e "Arquivo editado com sucesso!!!, continuando com o script...\n"
 echo -e "Atualização do HOSTS feita com sucesso!!!, continuando com o script..."
 sleep 5
 echo
@@ -272,7 +272,7 @@ echo -e "Atualizando as configurações do NSSWITCH, aguarde..."
 		read
 		sleep 5
 		vim /etc/nsswitch.conf
-	echo - e "Arquivo editado com sucesso!!!, continuando com o script...\n"
+	echo -e "Arquivo editado com sucesso!!!, continuando com o script...\n"
 echo -e "Atualização do NSSWITCH feita com sucesso!!!, continuando com o script..."
 sleep 5
 echo
@@ -287,7 +287,7 @@ echo -e "Atualizando as configurações do SYSCTL, aguarde..."
 		read
 		sleep 5
 		vim /etc/sysctl.conf
-	echo - e "Arquivo editado com sucesso!!!, continuando com o script...\n"
+	echo -e "Arquivo editado com sucesso!!!, continuando com o script...\n"
 echo -e "Atualização do SYSCTL feita com sucesso!!!, continuando com o script..."
 sleep 5
 echo
@@ -302,7 +302,7 @@ echo -e "Atualizando as configurações do LIMITS, aguarde..."
 		read
 		sleep 5
 		/etc/security/limits.conf
-	echo - e "Arquivo editado com sucesso!!!, continuando com o script...\n"
+	echo -e "Arquivo editado com sucesso!!!, continuando com o script...\n"
 echo -e "Atualização do LIMITS feita com sucesso!!!, continuando com o script..."
 sleep 5
 echo
@@ -315,7 +315,7 @@ echo -e "Atualizando as configurações do NETPLAN, aguarde..."
 		read
 		sleep 5
 		/etc/netplan/50-cloud-init.yaml
-	echo - e "Arquivo editado com sucesso!!!, continuando com o script...\n"
+	echo -e "Arquivo editado com sucesso!!!, continuando com o script...\n"
 echo -e "Atualização do NETPLAN feita com sucesso!!!, continuando com o script..."
 sleep 5
 echo
