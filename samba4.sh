@@ -70,7 +70,7 @@ ROLE="dc"
 DNS="SAMBA_INTERNAL"
 USER="administrator"
 PASSWORD="pti@2018"
-LEVEL="2012_R2"
+LEVEL="2008_R2"
 SITE="PTI.INTRA"
 INTERFACE="enp0s3"
 GATEWAY="172.16.1.254"
@@ -143,7 +143,7 @@ echo -e "Removendo software desnecessários, aguarde..."
 	apt -y autoremove &>> $LOG
 echo -e "Software removidos com sucesso!!!, continuando com o script..."
 sleep 5
-echo
+clean
 #
 echo -e "Instalando o SAMBA4, aguarde..."
 echo
@@ -176,12 +176,12 @@ echo -e "Instalando o KERBEROS, aguarde..."
 	cp -v conf/krb5.conf /etc/krb5.conf &>> $LOG
 		echo -e "Editando o arquivo de configuração do KERBEROS, pressione <Enter> para continuar..."
 		read
-		sleep 5
+		sleep 3
 		vim /etc/krb5.conf
 		echo -e "Arquivo editado com sucesso!!!, continuando com o script...\n"
 echo -e "KERBEROS instalado com sucesso!!!, continuando com o script..."
 sleep 5
-echo
+clean
 #
 echo -e "Atualizando as configurações do NTP Server, aguarde..."
 	# opção do comando: &>> (redirecionar a entrada padrão)
@@ -197,14 +197,15 @@ echo -e "Atualizando as configurações do NTP Server, aguarde..."
 	echo 0.0 > /var/lib/ntp/ntp.drift &>> $LOG
 	chown -v ntp.ntp /var/lib/ntp/ntp.drift &>> $LOG
 	cp -v conf/ntp.conf /etc/ntp.conf &>> $LOG
-	systemctl stop ntp.service ntp &>> $LOG
+	systemctl stop ntp.service &>> $LOG
+	timedatectl set-timezone “America/Sao_Paulo” &>> $LOG
 	echo -e "Editando o arquivo de configuração do NTP, pressione <Enter> para continuar..."
 		read
-		sleep 5
+		sleep 3
 		vim /etc/ntp.conf
 	echo -e "Arquivo editado com sucesso!!!, continuando com o script...\n"
 	ntpdate -dquv $NTP &>> $LOG
-	systemctl start ntp.service ntp &>> $LOG
+	systemctl start ntp.service &>> $LOG
 	ntpq -pn &>> $LOG
 	hwclock --systohc &>> $LOG
 		echo -e "Informações de Data/Hora de hardware: `hwclock`\n"
@@ -213,7 +214,7 @@ echo -e "Atualizando as configurações do NTP Server, aguarde..."
 		read
 echo -e "Atualização do NTP Server feita com sucesso!!!, continuando com o script..."
 sleep 5
-echo
+clean
 #
 echo -e "Atualizando as configurações do FSTAB, aguarde..."
 	# opção do comando: &>> (redirecionar a entrada padrão)
@@ -221,22 +222,13 @@ echo -e "Atualizando as configurações do FSTAB, aguarde..."
 	cp -v /etc/fstab /etc/fstab.old &>> $LOG
 	echo -e "Editando o arquivo de configuração do FSTAB, pressione <Enter> para continuar..."
 		read
-		sleep 5
+		sleep 3
 		vim /etc/fstab
-		mount -o remount, rw /dev/sda2
+		mount -o remount,rw /dev/sda2 &>> $LOG
 	echo -e "Arquivo editado com sucesso!!!, continuando com o script...\n"
 echo -e "Atualização do FSTAB feita com sucesso!!!, continuando com o script..."
 sleep 5
-echo
-#
-echo -e "Instalando o SAMBA4, aguarde..."
-	# opção do comando: &>> (redirecionar a entrada padrão)
-	# opção do comando apt: -y (yes), \ (bar left) quedra de linha na opção do apt
-	apt -y install samba samba-common smbclient cifs-utils samba-vfs-modules samba-testsuite samba-dsdb-modules \
-	winbind ldb-tools libnss-winbind libpam-winbind unzip kcc tree &>> $LOG
-echo -e "Instalação do SAMBA4 feito com sucesso!!!, continuando com o script..."
-sleep 5
-echo
+clean
 #
 echo -e "Atualizando as configurações do HOSTNAME, aguarde..."
 	# opção do comando: &>> (redirecionar a entrada padrão)
@@ -244,12 +236,12 @@ echo -e "Atualizando as configurações do HOSTNAME, aguarde..."
 	cp -v /etc/hostname /etc/hostname.old &>> $LOG
 	echo -e "Editando o arquivo de configuração do HOSTNAME, pressione <Enter> para continuar..."
 		read
-		sleep 5
+		sleep 3
 		vim /etc/hostname
 	echo -e "Arquivo editado com sucesso!!!, continuando com o script...\n"
 echo -e "Atualização do HOSTNAME feita com sucesso!!!, continuando com o script..."
 sleep 5
-echo
+clean
 #
 echo -e "Atualizando as configurações do HOSTS, aguarde..."
 	# opção do comando: &>> (redirecionar a entrada padrão)
@@ -257,25 +249,12 @@ echo -e "Atualizando as configurações do HOSTS, aguarde..."
 	cp -v /etc/hosts /etc/hosts.old &>> $LOG
 	echo -e "Editando o arquivo de configuração do HOSTS, pressione <Enter> para continuar..."
 		read
-		sleep 5
+		sleep 3
 		vim /etc/hosts
 	echo -e "Arquivo editado com sucesso!!!, continuando com o script...\n"
 echo -e "Atualização do HOSTS feita com sucesso!!!, continuando com o script..."
 sleep 5
-echo
-#
-echo -e "Atualizando as configurações do NSSWITCH, aguarde..."
-	# opção do comando: &>> (redirecionar a entrada padrão)
-	# opção do comando cp: -v (verbose)
-	cp -v /etc/nsswitch.conf /etc/nsswitch.conf.old &>> $LOG
-	echo -e "Editando o arquivo de configuração do FSTAB, pressione <Enter> para continuar..."
-		read
-		sleep 5
-		vim /etc/nsswitch.conf
-	echo -e "Arquivo editado com sucesso!!!, continuando com o script...\n"
-echo -e "Atualização do NSSWITCH feita com sucesso!!!, continuando com o script..."
-sleep 5
-echo
+clean
 #
 echo -e "Atualizando as configurações do NETPLAN, aguarde..."
 	# opção do comando: &>> (redirecionar a entrada padrão)
@@ -283,10 +262,19 @@ echo -e "Atualizando as configurações do NETPLAN, aguarde..."
 	cp -v /etc/netplan/50-cloud-init.yaml /etc/netplan/50-cloud-init.yaml.old &>> $LOG
 	echo -e "Editando o arquivo de configuração do NETPLAN, pressione <Enter> para continuar..."
 		read
-		sleep 5
-		/etc/netplan/50-cloud-init.yaml
+		sleep 3
+		vim /etc/netplan/50-cloud-init.yaml
 	echo -e "Arquivo editado com sucesso!!!, continuando com o script...\n"
 echo -e "Atualização do NETPLAN feita com sucesso!!!, continuando com o script..."
+sleep 5
+clean
+#
+echo -e "Instalando o SAMBA4, aguarde..."
+	# opção do comando: &>> (redirecionar a entrada padrão)
+	# opção do comando apt: -y (yes), \ (bar left) quedra de linha na opção do apt
+	apt -y install samba samba-common smbclient cifs-utils samba-vfs-modules samba-testsuite samba-dsdb-modules \
+	winbind ldb-tools libnss-winbind libpam-winbind unzip kcc tree &>> $LOG
+echo -e "Instalação do SAMBA4 feito com sucesso!!!, continuando com o script..."
 sleep 5
 echo
 #
