@@ -70,7 +70,7 @@ ROLE="dc"
 DNS="SAMBA_INTERNAL"
 USER="administrator"
 PASSWORD="pti@2019"
-LEVEL="2008_R2"
+LEVEL="2012_R2"
 SITE="PTI.INTRA"
 #
 # Variáveis de configuração do DNS
@@ -233,6 +233,32 @@ echo -e "Instalando o SAMBA4, aguarde..."
 	apt -y install samba samba-common smbclient cifs-utils samba-vfs-modules samba-testsuite samba-dbg samba-dsdb-modules \
 	winbind ldb-tools libnss-winbind libpam-winbind unzip kcc tree &>> $LOG
 echo -e "Instalação do SAMBA4 feito com sucesso!!!, continuando com o script..."
+sleep 5
+echo
+#
+echo -e "Atualizando as configurações do HOSTNAME, aguarde..."
+	# opção do comando: &>> (redirecionar a entrada padrão)
+	# opção do comando cp: -v (verbose)
+	cp -v /etc/hostname /etc/hostname.old &>> $LOG
+	echo -e "Editando o arquivo de configuração do HOSTNAME, pressione <Enter> para continuar..."
+		read
+		sleep 5
+		vim /etc/hostname
+	echo - e "Arquivo editado com sucesso!!!, continuando com o script...\n"
+echo -e "Atualização do HOSTNAME feita com sucesso!!!, continuando com o script..."
+sleep 5
+echo
+#
+echo -e "Atualizando as configurações do HOSTS, aguarde..."
+	# opção do comando: &>> (redirecionar a entrada padrão)
+	# opção do comando cp: -v (verbose)
+	cp -v /etc/hosts /etc/hosts.old &>> $LOG
+	echo -e "Editando o arquivo de configuração do HOSTS, pressione <Enter> para continuar..."
+		read
+		sleep 5
+		vim /etc/hosts
+	echo - e "Arquivo editado com sucesso!!!, continuando com o script...\n"
+echo -e "Atualização do HOSTS feita com sucesso!!!, continuando com o script..."
 sleep 5
 echo
 #
