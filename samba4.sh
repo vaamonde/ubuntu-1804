@@ -29,6 +29,9 @@
 # equipe de voluntários. 
 #
 # Vídeo de instalação do GNU/Linux Ubuntu Server 18.04.x LTS: https://www.youtube.com/watch?v=zDdCrqNhIXI
+# Vídeo de atualização do Sistema: 
+# Vídeo de configuração da Placa de Rede: 
+# Vídeo de configuração do Hostname e Hosts: 
 #
 # Variável da Data Inicial para calcular o tempo de execução do script (VARIÁVEL MELHORADA)
 # opção do comando date: +%T (Time)O NTP é um protocolo para sincronização dos relógios dos computadores baseado no protocolo UDP sob a porta 123. É utilizado para sincronização do relógio de um conjunto de computadores e dispositivos em redes de dados com latência variável. O NTP permite manter o relógio de um computador sincronizado com a hora sempre certa e com grande exatidão. Foi originalmente idealizado por David L. Mills da Universidade do Delaware e ainda hoje é mantido por ele e por uma equipe de voluntários. 
@@ -146,9 +149,9 @@ echo
 echo -e "Instalando as dependências do SAMBA4, aguarde..."
 	# opção do comando: &>> (redirecionar a entrada padrão)
 	# opção do comando apt: -y (yes), \ (bar left) quedra de linha na opção do apt
-	apt -y install ntp ntpdate build-essential libacl1-dev libattr1-dev libblkid-dev libgnutls-dev libreadline-dev python-dev \
-	libpam0g-dev python-dnspython gdb pkg-config libpopt-dev libldap2-dev dnsutils libbsd-dev docbook-xsl acl attr debconf-utils \
-	figlet sysv-rc-conf &>> $LOG
+	apt -y install ntp ntpdate build-essential libacl1-dev libattr1-dev libblkid-dev libgnutls-dev libreadline-dev \ 
+	python-dev libpam0g-dev python-dnspython gdb pkg-config libpopt-dev libldap2-dev dnsutils libbsd-dev docbook-xsl acl \
+	attr debconf-utils figlet sysv-rc-conf &>> $LOG
 echo -e "Dependências instaladas com sucesso!!!, continuando com o script..."
 sleep 5
 echo
