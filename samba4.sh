@@ -281,7 +281,9 @@ echo
 echo -e "Promovendo o SAMBA4 como Controlador de Domínio do Active Directory AD-DS, aguarde..."
 	# opção do comando: &>> (redirecionar a entrada padrão)
 	# opção do comando mv: -v (verbose)
-	systemctl stop samba.service stop
+	systemctl stop samba-ad-dc.service &>> $LOG
+	systemctl stop smbd.service &>> $LOG
+	systemctl stop nmbd.service &>> $LOG
 	mv -v /etc/samba/smb.conf /etc/samba/smb.conf.old &>> $LOG
 	samba-tool domain provision --realm=$REALM --domain=$NETBIOS --server-role=$ROLE --dns-backend=$DNS --use-rfc2307 \
 	--adminpass=$PASSWORD --function-level=$LEVEL --forest-level=$LEVEL --site=$SITE --host-ip=$IP --use-xattrs=yes\
