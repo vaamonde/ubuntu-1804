@@ -72,6 +72,8 @@ USER="administrator"
 PASSWORD="pti@2019"
 LEVEL="2012_R2"
 SITE="PTI.INTRA"
+INTERFACE="enp0s3"
+GATEWAY="172.16.1.254"
 #
 # Variáveis de configuração do DNS
 ARPA="1.16.172.in-addr.arpa"
@@ -305,28 +307,42 @@ echo -e "Atualização do LIMITS feita com sucesso!!!, continuando com o script.
 sleep 5
 echo
 #
+echo -e "Atualizando as configurações do NETPLAN, aguarde..."
+	# opção do comando: &>> (redirecionar a entrada padrão)
+	# opção do comando cp: -v (verbose)
+	cp -v /etc/netplan/50-cloud-init.yaml /etc/netplan/50-cloud-init.yaml.old &>> $LOG
+	echo -e "Editando o arquivo de configuração do NETPLAN, pressione <Enter> para continuar..."
+		read
+		sleep 5
+		/etc/netplan/50-cloud-init.yaml
+	echo - e "Arquivo editado com sucesso!!!, continuando com o script...\n"
+echo -e "Atualização do NETPLAN feita com sucesso!!!, continuando com o script..."
+sleep 5
+echo
+#
 echo -e "Promovendo o SAMBA4 como Controlador de Domínio do Active Directory AD-DS, aguarde..."
 	# opção do comando: &>> (redirecionar a entrada padrão)
 	# opção do comando mv: -v (verbose)
 	systemctl stop samba.service stop
 	mv -v /etc/samba/smb.conf /etc/samba/smb.conf.old &>> $LOG
-	samba-tool domain provision --realm=$REALM --domain=$NETBIOS --server-role=$ROLE --dns-backend=$DNS --adminpass=$PASSWORD \
-	--function-level=$LEVEL --site=$SITE --host-ip=$IP --option="interfaces = lo enp0s3" --option="bind interfaces only = yes" \
-	--option="allow dns updates = nonsecure and secure" --option="dns forwarder = 172.16.1.254" --option="winbind use default domain = yes" \
-	--option="winbind enum users = yes" --option="winbind enum groups = yes" --option="winbind refresh tickets = yes" \
-	--option="server signing = auto" --option="vfs objects = acl_xattr" --option="map acl inherit = yes" --option="store dos attributes = yes" \
-	--option="client use spnego = no" --option="use spnego = no" --option="client use spnego principal = no" --use-rfc2307 --use-xattrs=yes &>> $LOG
+	samba-tool domain provision --realm=$REALM --domain=$NETBIOS --server-role=$ROLE --dns-backend=$DNS --use-rfc2307 \
+	--adminpass=$PASSWORD --function-level=$LEVEL --forest-level=$LEVEL --site=$SITE --host-ip=$IP --use-xattrs=yes\
+	--option="interfaces = lo $INTERFACE" --option="bind interfaces only = yes" --option="allow dns updates = nonsecure and secure" \
+	--option="dns forwarder = $GATEWAY" --option="winbind use default domain = yes" --option="winbind enum users = yes" \
+	--option="winbind enum groups = yes" --option="winbind refresh tickets = yes" --option="server signing = auto" \
+	--option="vfs objects = acl_xattr" --option="map acl inherit = yes" --option="store dos attributes = yes" \
+	--option="client use spnego = no" --option="use spnego = no" --option="client use spnego principal = no" &>> $LOG
 	samba-tool user setexpiry $USER --noexpiry &>> $LOG
 	net rpc rights grant 'PTI\Domain Admins' SeDiskOperatorPrivilege -U $USER%$PASSWORD &>> $LOG
 	net rpc rights grant 'PTI\Domain Admins' SePrintOperatorPrivilege -U $USER%$PASSWORD &>> $LOG
-	samba-tool dns zonecreate $DOMAIN2 $ARPA -U $USER --password=$PASSWORD &>> $LOG
-	samba-tool dns add $DOMAIN2 $ARPA $ARPAIP PTR $FQDN -U $USER --password=$PASSWORD &>> $LOG
+	samba-tool dns zonecreate $DOMAIN $ARPA -U $USER --password=$PASSWORD &>> $LOG
+	samba-tool dns add $DOMAIN $ARPA $ARPAIP PTR $FQDN -U $USER --password=$PASSWORD &>> $LOG
 	samba_dnsupdate --use-file=/var/lib/samba/private/dns.keytab --verbose --all-names &>> $LOG
 echo -e "Controlador de Domínio SAMBA4 promivido com sucesso!!!, continuando com o script..."
 sleep 5
 echo
 #
-echo -e "Instalação do SAMBA4 feita com Sucesso!!!"
+echo -e "Instalação do SAMBA4 feita com Sucesso!!!, recomendado reinicializar o servidor no final da instalação."
 	# script para calcular o tempo gasto (SCRIPT MELHORADO, CORRIGIDO FALHA DE HORA:MINUTO:SEGUNDOS)
 	# opção do comando date: +%T (Time)
 	HORAFINAL=`date +%T`
