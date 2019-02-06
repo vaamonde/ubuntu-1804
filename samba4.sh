@@ -277,36 +277,6 @@ echo -e "Atualização do NSSWITCH feita com sucesso!!!, continuando com o scrip
 sleep 5
 echo
 #
-echo -e "Atualizando as configurações do SYSCTL, aguarde..."
-	# opção do comando: &>> (redirecionar a entrada padrão)
-	# opção do comando cp: -v (verbose)
-	# opção do comando mv: -v (verbose)
-	mv -v /etc/sysctl.conf /etc/sysctl.conf.old &>> $LOG
-	cp -v conf/sysctl.conf /etc/sysctl.conf &>> $LOG
-	echo -e "Editando o arquivo de configuração do SYSCTL, pressione <Enter> para continuar..."
-		read
-		sleep 5
-		vim /etc/sysctl.conf
-	echo -e "Arquivo editado com sucesso!!!, continuando com o script...\n"
-echo -e "Atualização do SYSCTL feita com sucesso!!!, continuando com o script..."
-sleep 5
-echo
-#
-echo -e "Atualizando as configurações do LIMITS, aguarde..."
-	# opção do comando: &>> (redirecionar a entrada padrão)
-	# opção do comando cp: -v (verbose)
-	# opção do comando mv: -v (verbose)
-	mv -v /etc/security/limits.conf /etc/security/limits.conf.old &>> $LOG
-	cp -v conf/limits.conf /etc/security/limits.conf &>> $LOG
-	echo -e "Editando o arquivo de configuração do LIMITS, pressione <Enter> para continuar..."
-		read
-		sleep 5
-		/etc/security/limits.conf
-	echo -e "Arquivo editado com sucesso!!!, continuando com o script...\n"
-echo -e "Atualização do LIMITS feita com sucesso!!!, continuando com o script..."
-sleep 5
-echo
-#
 echo -e "Atualizando as configurações do NETPLAN, aguarde..."
 	# opção do comando: &>> (redirecionar a entrada padrão)
 	# opção do comando cp: -v (verbose)
