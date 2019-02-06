@@ -143,7 +143,7 @@ echo -e "Removendo software desnecessários, aguarde..."
 	apt -y autoremove &>> $LOG
 echo -e "Software removidos com sucesso!!!, continuando com o script..."
 sleep 5
-clean
+clear
 #
 echo -e "Instalando o SAMBA4, aguarde..."
 echo
@@ -181,7 +181,7 @@ echo -e "Instalando o KERBEROS, aguarde..."
 		echo -e "Arquivo editado com sucesso!!!, continuando com o script...\n"
 echo -e "KERBEROS instalado com sucesso!!!, continuando com o script..."
 sleep 5
-clean
+clear
 #
 echo -e "Atualizando as configurações do NTP Server, aguarde..."
 	# opção do comando: &>> (redirecionar a entrada padrão)
@@ -214,7 +214,7 @@ echo -e "Atualizando as configurações do NTP Server, aguarde..."
 		read
 echo -e "Atualização do NTP Server feita com sucesso!!!, continuando com o script..."
 sleep 5
-clean
+clear
 #
 echo -e "Atualizando as configurações do FSTAB, aguarde..."
 	# opção do comando: &>> (redirecionar a entrada padrão)
@@ -228,7 +228,7 @@ echo -e "Atualizando as configurações do FSTAB, aguarde..."
 	echo -e "Arquivo editado com sucesso!!!, continuando com o script...\n"
 echo -e "Atualização do FSTAB feita com sucesso!!!, continuando com o script..."
 sleep 5
-clean
+clear
 #
 echo -e "Atualizando as configurações do HOSTNAME, aguarde..."
 	# opção do comando: &>> (redirecionar a entrada padrão)
@@ -241,7 +241,7 @@ echo -e "Atualizando as configurações do HOSTNAME, aguarde..."
 	echo -e "Arquivo editado com sucesso!!!, continuando com o script...\n"
 echo -e "Atualização do HOSTNAME feita com sucesso!!!, continuando com o script..."
 sleep 5
-clean
+clear
 #
 echo -e "Atualizando as configurações do HOSTS, aguarde..."
 	# opção do comando: &>> (redirecionar a entrada padrão)
@@ -254,7 +254,7 @@ echo -e "Atualizando as configurações do HOSTS, aguarde..."
 	echo -e "Arquivo editado com sucesso!!!, continuando com o script...\n"
 echo -e "Atualização do HOSTS feita com sucesso!!!, continuando com o script..."
 sleep 5
-clean
+clear
 #
 echo -e "Atualizando as configurações do NETPLAN, aguarde..."
 	# opção do comando: &>> (redirecionar a entrada padrão)
@@ -267,7 +267,7 @@ echo -e "Atualizando as configurações do NETPLAN, aguarde..."
 	echo -e "Arquivo editado com sucesso!!!, continuando com o script...\n"
 echo -e "Atualização do NETPLAN feita com sucesso!!!, continuando com o script..."
 sleep 5
-clean
+clear
 #
 echo -e "Instalando o SAMBA4, aguarde..."
 	# opção do comando: &>> (redirecionar a entrada padrão)
