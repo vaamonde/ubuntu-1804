@@ -153,7 +153,7 @@ echo -e "Instalando as dependências do SAMBA4, aguarde..."
 	# opção do comando apt: -y (yes), \ (bar left) quedra de linha na opção do apt
 	apt -y install ntp ntpdate build-essential libacl1-dev libattr1-dev libblkid-dev libgnutls28-dev libreadline-dev \
 	python-dev libpam0g-dev python-dnspython gdb pkg-config libpopt-dev libldap2-dev dnsutils libbsd-dev docbook-xsl acl \
-	attr debconf-utils figlet sysv-rc-conf &>> $LOG
+	attr debconf-utils figlet &>> $LOG
 echo -e "Dependências instaladas com sucesso!!!, continuando com o script..."
 sleep 5
 echo
