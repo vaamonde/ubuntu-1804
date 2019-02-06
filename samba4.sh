@@ -285,18 +285,18 @@ echo -e "Promovendo o SAMBA4 como Controlador de Domínio do Active Directory AD
 	systemctl stop nmbd.service &>> $LOG
 	mv -v /etc/samba/smb.conf /etc/samba/smb.conf.old &>> $LOG
 	samba-tool domain provision --realm=$REALM --domain=$NETBIOS --server-role=$ROLE --dns-backend=$DNS --use-rfc2307 \
-	--adminpass=$PASSWORD --function-level=$LEVEL --forest-level=$LEVEL --site=$SITE --host-ip=$IP --use-xattrs=yes\
-	--option="interfaces = lo $INTERFACE" --option="bind interfaces only = yes" --option="allow dns updates = nonsecure and secure" \
+	--adminpass=$PASSWORD --function-level=$LEVEL --site=$SITE --host-ip=$IP --option="interfaces = lo $INTERFACE" \
+	--option="bind interfaces only = yes" --option="allow dns updates = nonsecure and secure" \
 	--option="dns forwarder = $GATEWAY" --option="winbind use default domain = yes" --option="winbind enum users = yes" \
 	--option="winbind enum groups = yes" --option="winbind refresh tickets = yes" --option="server signing = auto" \
 	--option="vfs objects = acl_xattr" --option="map acl inherit = yes" --option="store dos attributes = yes" \
 	--option="client use spnego = no" --option="use spnego = no" --option="client use spnego principal = no" &>> $LOG
 	samba-tool user setexpiry $USER --noexpiry &>> $LOG
-	net rpc rights grant 'PTI\Domain Admins' SeDiskOperatorPrivilege -U $USER%$PASSWORD &>> $LOG
-	net rpc rights grant 'PTI\Domain Admins' SePrintOperatorPrivilege -U $USER%$PASSWORD &>> $LOG
-	samba-tool dns zonecreate $DOMAIN $ARPA -U $USER --password=$PASSWORD &>> $LOG
-	samba-tool dns add $DOMAIN $ARPA $ARPAIP PTR $FQDN -U $USER --password=$PASSWORD &>> $LOG
-	samba_dnsupdate --use-file=/var/lib/samba/private/dns.keytab --verbose --all-names &>> $LOG
+	#net rpc rights grant 'PTI\Domain Admins' SeDiskOperatorPrivilege -U $USER%$PASSWORD &>> $LOG
+	#net rpc rights grant 'PTI\Domain Admins' SePrintOperatorPrivilege -U $USER%$PASSWORD &>> $LOG
+	#samba-tool dns zonecreate $DOMAIN $ARPA -U $USER --password=$PASSWORD &>> $LOG
+	#samba-tool dns add $DOMAIN $ARPA $ARPAIP PTR $FQDN -U $USER --password=$PASSWORD &>> $LOG
+	#samba_dnsupdate --use-file=/var/lib/samba/private/dns.keytab --verbose --all-names &>> $LOG
 echo -e "Controlador de Domínio SAMBA4 promivido com sucesso!!!, continuando com o script..."
 sleep 5
 echo
