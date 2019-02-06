@@ -255,16 +255,18 @@ echo -e "Atualização do HOSTS feita com sucesso!!!, continuando com o script..
 sleep 5
 clear
 #
-echo -e "Atualizando as configurações do NETPLAN, aguarde..."
+echo -e "Atualizando as configurações do NSSWITCH, aguarde..."
 	# opção do comando: &>> (redirecionar a entrada padrão)
 	# opção do comando cp: -v (verbose)
-	cp -v /etc/netplan/50-cloud-init.yaml /etc/netplan/50-cloud-init.yaml.old &>> $LOG
-	echo -e "Editando o arquivo de configuração do NETPLAN, pressione <Enter> para continuar..."
+	# opção do comando mv: -v (verbose)
+	mv -v /etc/nsswitch.conf /etc/nsswitch.conf.old &>> $LOG
+	cp -v conf/nsswitch.conf /etc/nsswitch.conf &>> $LOG
+	echo -e "Editando o arquivo de configuração do NSSWITCH, pressione <Enter> para continuar..."
 		read
 		sleep 3
-		vim /etc/netplan/50-cloud-init.yaml
+		vim /etc/nsswitch.conf
 	echo -e "Arquivo editado com sucesso!!!, continuando com o script...\n"
-echo -e "Atualização do NETPLAN feita com sucesso!!!, continuando com o script..."
+echo -e "Atualização do NSSWITCH feita com sucesso!!!, continuando com o script..."
 sleep 5
 clear
 #
@@ -277,12 +279,27 @@ echo -e "Instalação do SAMBA4 feito com sucesso!!!, continuando com o script..
 sleep 5
 echo
 #
+echo -e "Atualizando as configurações do NETPLAN, aguarde..."
+	# opção do comando: &>> (redirecionar a entrada padrão)
+	# opção do comando cp: -v (verbose)
+	cp -v /etc/netplan/50-cloud-init.yaml /etc/netplan/50-cloud-init.yaml.old &>> $LOG
+	echo -e "Editando o arquivo de configuração do NETPLAN, pressione <Enter> para continuar..."
+		read
+		sleep 3
+		vim /etc/netplan/50-cloud-init.yaml
+		netplan --debug apply &>> $LOG
+	echo -e "Arquivo editado com sucesso!!!, continuando com o script...\n"
+echo -e "Atualização do NETPLAN feita com sucesso!!!, continuando com o script..."
+sleep 5
+clear
+#
+
 echo -e "Promovendo o SAMBA4 como Controlador de Domínio do Active Directory AD-DS, aguarde..."
 	# opção do comando: &>> (redirecionar a entrada padrão)
 	# opção do comando mv: -v (verbose)
-	systemctl stop samba-ad-dc.service &>> $LOG
-	systemctl stop smbd.service &>> $LOG
-	systemctl stop nmbd.service &>> $LOG
+	# opção do comando systemctl: stop (), disable (), mask (), unmask (), enable ()
+	# opção do comando samba-tool: domain (), provision ()
+	systemctl stop samba-ad-dc.service smbd.service nmbd.service &>> $LOG
 	mv -v /etc/samba/smb.conf /etc/samba/smb.conf.old &>> $LOG
 	samba-tool domain provision --realm=$REALM --domain=$NETBIOS --server-role=$ROLE --dns-backend=$DNS --use-rfc2307 \
 	--adminpass=$PASSWORD --function-level=$LEVEL --site=$SITE --host-ip=$IP --option="interfaces = lo $INTERFACE" \
@@ -292,11 +309,15 @@ echo -e "Promovendo o SAMBA4 como Controlador de Domínio do Active Directory AD
 	--option="vfs objects = acl_xattr" --option="map acl inherit = yes" --option="store dos attributes = yes" \
 	--option="client use spnego = no" --option="use spnego = no" --option="client use spnego principal = no" &>> $LOG
 	samba-tool user setexpiry $USER --noexpiry &>> $LOG
-	#net rpc rights grant 'PTI\Domain Admins' SeDiskOperatorPrivilege -U $USER%$PASSWORD &>> $LOG
-	#net rpc rights grant 'PTI\Domain Admins' SePrintOperatorPrivilege -U $USER%$PASSWORD &>> $LOG
-	#samba-tool dns zonecreate $DOMAIN $ARPA -U $USER --password=$PASSWORD &>> $LOG
-	#samba-tool dns add $DOMAIN $ARPA $ARPAIP PTR $FQDN -U $USER --password=$PASSWORD &>> $LOG
-	#samba_dnsupdate --use-file=/var/lib/samba/private/dns.keytab --verbose --all-names &>> $LOG
+	systemctl disable nmbd.service smbd.service winbind.service &>> $LOG
+	systemctl mask nmbd.service smbd.service winbind.service &>> $LOG
+	systemctl unmask samba-ad-dc.service &>> $LOG
+	systemctl enable samba-ad-dc.service &>> $LOG
+	systemctl start samba-ad-dc.service &>> $LOG
+	net rpc rights grant 'PTI\Domain Admins' SeDiskOperatorPrivilege -U $USER%$PASSWORD &>> $LOG
+	samba-tool dns zonecreate $DOMAIN $ARPA -U $USER --password=$PASSWORD &>> $LOG
+	samba-tool dns add $DOMAIN $ARPA $ARPAIP PTR $FQDN -U $USER --password=$PASSWORD &>> $LOG
+	samba_dnsupdate --use-file=/var/lib/samba/private/dns.keytab --verbose --all-names &>> $LOG
 echo -e "Controlador de Domínio SAMBA4 promivido com sucesso!!!, continuando com o script..."
 sleep 5
 echo
