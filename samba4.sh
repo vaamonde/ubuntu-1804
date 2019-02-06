@@ -194,7 +194,6 @@ echo -e "Atualizando as configurações do NTP Server, aguarde..."
 	# opção do comando hwclock: --systohc (Set the Hardware Clock to the current System Time)
 	mv -v /etc/ntp.conf /etc/ntp.conf.old &>> $LOG
 	cp -v conf/ntp.drift /var/lib/ntp/ntp.drift &>> $LOG
-	echo 0.0 > /var/lib/ntp/ntp.drift &>> $LOG
 	chown -v ntp.ntp /var/lib/ntp/ntp.drift &>> $LOG
 	cp -v conf/ntp.conf /etc/ntp.conf &>> $LOG
 	systemctl stop ntp.service &>> $LOG
