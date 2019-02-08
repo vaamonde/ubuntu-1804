@@ -71,28 +71,28 @@ echo -e "Aguarde, esse processo demora um pouco dependendo do seu Link de Intern
 sleep 5
 #
 echo -e "Adicionando o Repositório Universal do Apt, aguarde..."
-	# opção do comando: &>> (redirecionar a entrada padrão)
+	# opção do comando: &>> (redirecionar a saída padrão)
 	add-apt-repository universe &>> $LOG
 echo -e "Repositório adicionado com sucesso!!!, continuando com o script..."
 sleep 5
 echo
 #
 echo -e "Adicionando o Repositório Multiversão do Apt, aguarde..."
-	# opção do comando: &>> (redirecionar a entrada padrão)
+	# opção do comando: &>> (redirecionar a saída padrão)
 	add-apt-repository multiverse &>> $LOG
 echo -e "Repositório adicionado com sucesso!!!, continuando com o script..."
 sleep 5
 echo
 #
 echo -e "Atualizando as listas do Apt, aguarde..."
-	#opção do comando: &>> (redirecionar a entrada padrão)
+	#opção do comando: &>> (redirecionar a saída padrão)
 	apt update &>> $LOG
 echo -e "Listas atualizadas com sucesso!!!, continuando com o script..."
 sleep 5
 echo
 #
 echo -e "Atualizando o sistema, aguarde..."
-	# opção do comando: &>> (redirecionar a entrada padrão)
+	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando apt: -y (yes)
 	apt -y upgrade &>> $LOG
 echo -e "Sistema atualizado com sucesso!!!, continuando com o script..."
@@ -100,7 +100,7 @@ sleep 5
 echo
 #
 echo -e "Removendo software desnecessários, aguarde..."
-	# opção do comando: &>> (redirecionar a entrada padrão)
+	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando apt: -y (yes)
 	apt -y autoremove &>> $LOG
 echo -e "Software removidos com sucesso!!!, continuando com o script..."
@@ -111,9 +111,10 @@ echo -e "Instalando o ownCLOUD, aguarde..."
 echo
 #
 echo -e "Adicionando o repositório de versões do ownCLOUD, aguarde..."
-	# opção do comando: &>> (redirecionar a entrada padrão)
-	# opção do comando wget:
-	# opção do comando apt-key: 
+	# opção do comando: &>> (redirecionar a saída padrão)
+	# opção do comando: < (redirecionar a entrada padrão)
+	# opção do comando wget: -n (), -v (), -O ()
+	# opção do comando apt-key: add (), - ()
 	wget -nv $RELEASE -O Release.key &>> $LOG
 	apt-key add - < Release.key &>> $LOG
 echo -e "Repositório instaladas com sucesso!!!, continuando com o script..."
@@ -121,8 +122,8 @@ sleep 5
 echo
 #
 echo -e "Criando o arquivo de Source List do ownCLOUD, aguarde..."
-	# opção do comando: &>> (redirecionar a entrada padrão)
-	# opção do comando apt:
+	# opção do comando: &>> (redirecionar a saída padrão)
+	# opção do comando cp: -v (verbose)
 	cp -v conf/owncloud.list /etc/apt/sources.list.d/owncloud.list &>> $LOG
 	apt update &>> $LOG
 echo -e "Source List criado com sucesso!!!, continuando com o script..."
@@ -130,9 +131,8 @@ sleep 5
 echo
 #
 echo -e "Instalando o ownCLOUD, aguarde..."
-	# opção do comando: &>> (redirecionar a entrada padrão)
-	# opção do comando apt:
-	cp -v conf/owncloud.list /etc/apt/sources.list.d/owncloud.list &>> $LOG
+	# opção do comando: &>> (redirecionar a saida padrão)
+	# opção do comando apt: -y (yes)
 	apt -y install owncloud-files &>> $LOG
 echo -e "ownCLOUD instalado com sucesso!!!, continuando com o script..."
 sleep 5
