@@ -40,6 +40,10 @@ KERNEL=`uname -r | cut -d'.' -f1,2`
 # $0 (variável de ambiente do nome do comando)
 LOG="/var/log/$(echo $0 | cut -d'/' -f2)"
 #
+# Variáveis de instalação do ownCLOUD
+RELEASE="https://download.owncloud.org/download/repositories/production/Ubuntu_18.04/Release.key"
+REPOSITORY="deb http://download.owncloud.org/download/repositories/production/Ubuntu_18.04/ /"
+#
 # Verificando se o usuário e Root, Distribuição e >=18.04 e o Kernel >=4.15 <IF MELHORADO)
 # [ ] = teste de expressão, && = operador lógico AND, == comparação de string, exit 1 = A maioria dos erros comuns na execução
 clear
@@ -106,11 +110,31 @@ clear
 echo -e "Instalando o ownCLOUD, aguarde..."
 echo
 #
-echo -e "Instalando as dependências do ownCLOUD, aguarde..."
+echo -e "Adicionando o repositório de versões do ownCLOUD, aguarde..."
 	# opção do comando: &>> (redirecionar a entrada padrão)
-	# opção do comando apt: -y (yes), \ (bar left) quedra de linha na opção do apt
-	apt -y install &>> $LOG
-echo -e "Dependências instaladas com sucesso!!!, continuando com o script..."
+	# opção do comando wget:
+	# opção do comando apt-key: 
+	wget -nv $RELEASE -O Release.key &>> $LOG
+	apt-key add - < Release.key &>> $LOG
+echo -e "Repositório instaladas com sucesso!!!, continuando com o script..."
+sleep 5
+echo
+#
+echo -e "Criando o arquivo de Source List do ownCLOUD, aguarde..."
+	# opção do comando: &>> (redirecionar a entrada padrão)
+	# opção do comando apt:
+	cp -v conf/owncloud.list /etc/apt/sources.list.d/owncloud.list &>> $LOG
+	apt update &>> $LOG
+echo -e "Source List criado com sucesso!!!, continuando com o script..."
+sleep 5
+echo
+#
+echo -e "Instalando o ownCLOUD, aguarde..."
+	# opção do comando: &>> (redirecionar a entrada padrão)
+	# opção do comando apt:
+	cp -v conf/owncloud.list /etc/apt/sources.list.d/owncloud.list &>> $LOG
+	apt -y install owncloud-files &>> $LOG
+echo -e "ownCLOUD instalado com sucesso!!!, continuando com o script..."
 sleep 5
 echo
 #
