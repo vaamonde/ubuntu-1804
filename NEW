@@ -4,11 +4,12 @@ Facebook: facebook.com/ProcedimentosEmTI
 Facebook: facebook.com/BoraParaPratica
 YouTube: youtube.com/BoraParaPratica
 Data de criação: 29/01/2019
-Data de atualização: 29/01/2019
-Versão: 0.01
+Data de atualização: 08/02/2019
+Versão: 0.02
 Testado e homologado para a versão do Ubuntu Server 18.04.x LTS x64
 Kernel >= 4.15.x
 
 ============================================= CRIAÇÃO DE NOVOS SCRIPTS =============================================
 
+08/02/2019 - Robson Vaamonde - Trabalhando na criação do script de automatização do ownCloud última versão >= 10.1.x
 29/01/2019 - Robson Vaamonde - Trabalhando na criação do script de automatização do SAMBA-4 última versão >= 4.9.x
