@@ -34,7 +34,7 @@
 # Vídeo de configuração do Hostname e Hosts: 
 #
 # Variável da Data Inicial para calcular o tempo de execução do script (VARIÁVEL MELHORADA)
-# opção do comando date: +%T (Time)O NTP é um protocolo para sincronização dos relógios dos computadores baseado no protocolo UDP sob a porta 123. É utilizado para sincronização do relógio de um conjunto de computadores e dispositivos em redes de dados com latência variável. O NTP permite manter o relógio de um computador sincronizado com a hora sempre certa e com grande exatidão. Foi originalmente idealizado por David L. Mills da Universidade do Delaware e ainda hoje é mantido por ele e por uma equipe de voluntários. 
+# opção do comando date: +%T (Time)
 HORAINICIAL=`date +%T`
 #
 # Variáveis para validar o ambiente, verificando se o usuário e "root", versão do ubuntu e kernel
