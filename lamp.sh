@@ -5,8 +5,8 @@
 # Facebook: facebook.com/BoraParaPratica
 # YouTube: youtube.com/BoraParaPratica
 # Data de criação: 04/11/2018
-# Data de atualização: 29/01/2019
-# Versão: 0.05
+# Data de atualização: 10/02/2019
+# Versão: 0.06
 # Testado e homologado para a versão do Ubuntu Server 18.04.x LTS x64
 # Kernel >= 4.15.x
 #
@@ -50,19 +50,10 @@ USUARIO=`id -u`
 UBUNTU=`lsb_release -rs`
 KERNEL=`uname -r | cut -d'.' -f1,2`
 #
-# Variável do caminho do Log dos Script utilizado nesse curso
-VARLOGPATH="/var/log/"
-#
-# Variável para criação do arquivo de Log dos Script
-# $0 (variável de ambiente do nome do comando)
-# opção do caracter: | (piper) Conecta a saída padrão com a entrada padrão de outro comando
-# opção do shell script: acento crase ` ` = Executa comandos numa subshell, retornando o resultado
-# opção do shell script: aspas simples ' ' = Protege uma string completamente (nenhum caractere é especial)
+# Variável do caminho do Log dos Script utilizado nesse curso (VARIÁVEL MELHORADA)
 # opções do comando cut: -d (delimiter), -f (fields)
-LOGSCRIPT=`echo $0 | cut -d'/' -f2`
-#
-# Variável do caminho para armazenar os Log's de instalação
-LOG=$VARLOGPATH/$LOGSCRIPT
+# $0 (variável de ambiente do nome do comando)
+LOG="/var/log/$(echo $0 | cut -d'/' -f2)"
 #
 # Variáveis de configuração do MySQL e liberação de conexão remota para o usuário Root
 USER="root"
@@ -123,21 +114,21 @@ sleep 5
 echo
 #
 echo -e "Adicionando o Repositório Universal do Apt, aguarde..."
-	# opção do comando: &>> (redirecionar a entrada padrão)
+	# opção do comando: &>> (redirecionar a saída padrão)
 	add-apt-repository universe &>> $LOG
 echo -e "Repositório adicionado com sucesso!!!, continuando com o script..."
 sleep 5
 echo
 #
 echo -e "Atualizando as listas do Apt, aguarde..."
-	# opção do comando: &>> (redirecionar a entrada padrão)
+	# opção do comando: &>> (redirecionar a saída padrão)
 	apt update &>> $LOG
 echo -e "Listas atualizadas com sucesso!!!, continuando com o script..."
 sleep 5
 echo
 #
 echo -e "Atualizando o sistema, aguarde..."
-	# opção do comando: &>> (redirecionar a entrada padrão)
+	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando apt: -y (yes)
 	apt -y upgrade &>> $LOG
 echo -e "Sistema atualizado com sucesso!!!, continuando com o script..."
@@ -145,7 +136,7 @@ sleep 5
 echo
 #
 echo -e "Removendo software desnecessários, aguarde..."
-	# opção do comando: &>> (redirecionar a entrada padrão)
+	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando apt: -y (yes)
 	apt -y autoremove &>> $LOG
 echo -e "Software removidos com Sucesso!!!, continuando com o script..."
@@ -156,7 +147,7 @@ echo -e "Instalando o LAMP-SERVER, aguarde..."
 echo
 #
 echo -e "Configurando as variáveis do Debconf do MySQL para o Apt, aguarde..."
-	# opção do comando: &>> (redirecionar a entrada padrão)
+	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando | (piper): (Conecta a saída padrão com a entrada padrão de outro comando)
 	echo "mysql-server-5.7 mysql-server/root_password password $PASSWORD" |  debconf-set-selections
 	echo "mysql-server-5.7 mysql-server/root_password_again password $AGAIN" |  debconf-set-selections
@@ -166,7 +157,7 @@ sleep 5
 echo
 #
 echo -e "Instalando o LAMP-SERVER, aguarde..."
-	# opção do comando: &>> (redirecionar a entrada padrão)
+	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando apt: -y (yes)
 	# opção do comando ^ (circunflexo): (expressão regular - Casa o começo da linha)
 	apt -y install lamp-server^ perl python &>> $LOG
@@ -178,7 +169,7 @@ echo -e "Instalando o PhpMyAdmin, aguarde..."
 echo
 #
 echo -e "Configurando as variáveis do Debconf do PhpMyAdmin para o Apt, aguarde..."
-	# opção do comando: &>> (redirecionar a entrada padrão)
+	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando | (piper): (Conecta a saída padrão com a entrada padrão de outro comando)
 	echo "phpmyadmin phpmyadmin/internal/skip-preseed boolean true" |  debconf-set-selections
 	echo "phpmyadmin phpmyadmin/dbconfig-install boolean true" |  debconf-set-selections
@@ -193,7 +184,7 @@ sleep 5
 echo
 #
 echo -e "Instalando o PhpMyAdmin, aguarde..."
-	# opção do comando: &>> (redirecionar a entrada padrão)
+	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando apt: -y (yes)
 	apt -y install phpmyadmin php-mbstring php-gettext php-dev libmcrypt-dev php-pear &>> $LOG
 echo -e "Instalação do PhpMyAdmin feita com sucesso!!!, continuando com o script..."
@@ -201,7 +192,7 @@ sleep 5
 echo
 #				 
 echo -e "Atualizando as dependências do PHP para o PhpMyAdmin, aguarde..."
-	# opção do comando: &>> (redirecionar a entrada padrão)
+	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando echo: | = (faz a função de Enter)
 	# opção do comando cp: -v (verbose)
 	pecl channel-update pecl.php.net &>> $LOG
@@ -214,7 +205,7 @@ sleep 5
 echo
 #
 echo -e "Criando o arquivo de teste do PHP phpinfo.php, aguarde..."
-	# opção do comando: > (redirecionar a entrada padrão)
+	# opção do comando: > (redirecionar a saída padrão)
 	# opção do comando chown: -v (verbose)
 	touch /var/www/html/phpinfo.php
 	echo -e "<?php phpinfo(); ?>" > /var/www/html/phpinfo.php
@@ -229,7 +220,7 @@ sleep 3
 clear
 #
 echo -e "Atualizando e editando o arquivo de configuração do Apache2, aguarde..."
-	# opção do comando: &>> (redirecionar a entrada padrão)
+	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando cp: -v (verbose)
 	# opção do comando sleep: 3 (seconds)
 	cp -v /etc/apache2/apache2.conf /etc/apache2/apache2.conf.old &>> $LOG
@@ -243,7 +234,7 @@ sleep 5
 echo
 #
 echo -e "Atualizando e editando o arquivo de configuração do PHP, aguarde..."
-	# opção do comando: &>> (redirecionar a entrada padrão)
+	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando cp: -v (verbose)
 	# opção do comando sleep: 3 (seconds)
 	cp -v /etc/php/7.2/apache2/php.ini /etc/php/7.2/apache2/php.ini.old &>> $LOG
@@ -263,7 +254,7 @@ sleep 5
 echo
 #
 echo -e "Permitindo o Root do MySQL se autenticar remotamente, aguarde..."
-	# opção do comando: &>> (redirecionar a entrada padrão)
+	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando mysql: -u (user), -p (password) -e (execute)
 	mysql -u $USER -p$PASSWORD -e "$GRANTALL" mysql &>> $LOG
 	mysql -u $USER -p$PASSWORD -e "$FLUSH" mysql &>> $LOG
@@ -272,7 +263,7 @@ sleep 5
 echo
 #
 echo -e "Atualizando e editando o arquivo de configuração do MySQL, aguarde..."
-	# opção do comando: &>> (redirecionar a entrada padrão)
+	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando cp: -v (verbose)
 	# opção do comando sleep: 3 (seconds)
 	cp -v /etc/mysql/mysql.conf.d/mysqld.cnf /etc/mysql/mysql.conf.d/mysqld.cnf.old &>> $LOG
@@ -293,7 +284,7 @@ echo
 #
 echo -e "Verificando as portas de Conexão do Apache2 e do MySQL, aguarde..."
 	# opção do comando netstat: a (all), n (numeric)
-	# opção do comando grep: ' ' (aspas simples) protege uma string, \| (Escape e opção Ou)
+	# opção do comando grep: ' ' (aspas simples) protege uma string, \| (Escape e opção OU)
 	netstat -an | grep '80\|3306'
 echo -e "Portas verificadas com sucesso!!!, continuando com o script..."
 sleep 5
