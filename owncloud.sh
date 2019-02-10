@@ -171,12 +171,9 @@ echo -e "Instalando o ownCloud e criando a Base de Dados, aguarde..."
 	# opção do comando chmod: -R (recursive), -v (verbose), 755 (User=RWX, Group=R-X, Other=R-X)
 	# opção do comando mysql: -u (user), -p (password), -e (execute)
 	wget $RELEASE &>> $LOG
-	echo "wget"
-	read
-	tar -jxvf ownlocud-* &>> $LOG
-	echo "tar"
-	read
-	mv -v owncloud*/ /var/www/html/own/ &>> $LOG
+	OWNCLOUDFILE=`echo owncloud*.*.*`
+	tar -xzvf $OWNCLOUDFILE &>> $LOG
+	mv -v owncloud/ /var/www/html/own/ &>> $LOG
 	chown -Rv www-data:www-data /var/www/html/own/ &>> $LOG
 	chmod -Rv 755 /var/www/html/own/ &>> $LOG
 	mysql -u $USER -p$PASSWORD -e "$DATABASE" mysql &>> $LOG
