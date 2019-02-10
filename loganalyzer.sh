@@ -10,14 +10,15 @@
 # Testado e homologado para a versão do Ubuntu Server 18.04.x LTS x64
 # Kernel >= 4.15.x
 #
-# Vídeo de instalação do GNU/Linux Ubuntu Server 18.04.x LTS: https://www.youtube.com/watch?v=zDdCrqNhIXI
-#
 # O LogAnalyzer é uma interface da Web para o Syslog/Rsyslog e outros dados de eventos da rede. Ele fornece fácil navegação
 # análise de eventos de rede em tempo real e serviços de relatórios. Os relatórios ajudam a manter um visão na atividade da
 # rede. Ele consolida o Syslog/Rsyslog e outros dados de eventos, fornecendo uma página web de fácil leitura. Os gráficos 
 # ajudam a ver as coisas importantes de relance.
 #
 # Site oficial: https://loganalyzer.adiscon.com/
+#
+# Vídeo de instalação do GNU/Linux Ubuntu Server 18.04.x LTS: https://www.youtube.com/watch?v=zDdCrqNhIXI
+# vídeo de instalação do LAMP Server no GNU/Linux Ubuntu Server 18.04.x LTS: https://www.youtube.com/watch?v=6EFUu-I3u4s
 #
 # Variável da Data Inicial para calcular o tempo de execução do script (VARIÁVEL MELHORADA)
 # opção do comando date: +%T (Time)
