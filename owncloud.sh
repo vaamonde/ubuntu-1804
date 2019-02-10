@@ -54,8 +54,9 @@ LOG="/var/log/$(echo $0 | cut -d'/' -f2)"
 USER="root"
 PASSWORD="pti@2018"
 DATABASE="CREATE DATABASE owncloud;"
-USERDATABASE="CREATE USER 'owncloud'@'localhost' IDENTIFIED BY 'owncloud';"
-GRANTALL="GRANT ALL ON owncloud.* TO 'owncloud'@'localhost' IDENTIFIED BY 'ownlocud' WITH GRANT OPTION;"
+USERDATABASE="CREATE USER 'owncloud' IDENTIFIED BY 'owncloud';"
+GRANTDATABASE="GRANT USAGE ON *.* TO 'owncloud' IDENTIFIED BY 'owncloud';"
+GRANTALL="GRANT ALL PRIVILEGES ON owncloud.* TO 'owncloud' IDENTIFIED BY 'ownlocud' WITH GRANT OPTION;"
 FLUSH="FLUSH PRIVILEGES;"
 #
 # Variáveis de instalação do ownCloud
@@ -162,11 +163,20 @@ echo
 #
 echo -e "Instalando o ownCloud, aguarde..."
 	# opção do comando: &>> (redirecionar a saida padrão)
+	# opção do comando tar: -z (gzip), -x (extract), -v (verbose), -f (file)
+	# opção do comando chown: -R (recursive), -v (verbose), www-data.www-data (user and group)
+	# opção do comando chmod: -R (recursive), -v (verbose), 755 (User=RWX, Group=R-X, Other=R-X)
+	# opção do comando mysql: -u (user), -p (password), -e (execute)
 	wget $RELEASE &>> $LOG
 	tar -zxvf ownlocud-* &>> $LOG
 	mv -v owncloud*/ /var/www/html/own/ &>> $LOG
-	chown -R www-data:www-data /var/www/html/own/ &>> $LOG
-	chmod -R 755 /var/www/html/own/ &>> $LOG
+	chown -Rv www-data:www-data /var/www/html/own/ &>> $LOG
+	chmod -Rv 755 /var/www/html/own/ &>> $LOG
+	mysql -u $USER -p$PASSWORD -e "$DATABASE" mysql &>> $LOG
+	mysql -u $USER -p$PASSWORD -e "$USERDATABASE" mysql &>> $LOG
+	mysql -u $USER -p$PASSWORD -e "$GRANTDATABASE" mysql &>> $LOG
+	mysql -u $USER -p$PASSWORD -e "$GRANTALL" mysql &>> $LOG
+	mysql -u $USER -p$PASSWORD -e "$FLUSH" mysql &>> $LOG
 echo -e "ownCLOUD instalado com sucesso!!!, continuando com o script..."
 sleep 5
 echo
