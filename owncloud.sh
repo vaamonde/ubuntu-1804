@@ -165,12 +165,16 @@ echo
 #
 echo -e "Instalando o ownCloud e criando a Base de Dados, aguarde..."
 	# opção do comando: &>> (redirecionar a saida padrão)
-	# opção do comando tar: -z (gzip), -x (extract), -v (verbose), -f (file)
+	# opção do comando tar: -j (bzip2), -x (extract), -v (verbose), -f (file)
 	# opção do comando chown: -R (recursive), -v (verbose), www-data.www-data (user and group)
 	# opção do comando chmod: -R (recursive), -v (verbose), 755 (User=RWX, Group=R-X, Other=R-X)
 	# opção do comando mysql: -u (user), -p (password), -e (execute)
 	wget $RELEASE &>> $LOG
-	tar -zxvf ownlocud-* &>> $LOG
+	echo "wget"
+	read
+	tar -jxvf ownlocud-* &>> $LOG
+	echo "tar"
+	read
 	mv -v owncloud*/ /var/www/html/own/ &>> $LOG
 	chown -Rv www-data:www-data /var/www/html/own/ &>> $LOG
 	chmod -Rv 755 /var/www/html/own/ &>> $LOG
