@@ -5,8 +5,8 @@
 # Facebook: facebook.com/BoraParaPratica
 # YouTube: youtube.com/BoraParaPratica
 # Data de criação: 22/11/2018
-# Data de atualização: 29/01/2019
-# Versão: 0.03
+# Data de atualização: 10/02/2019
+# Versão: 0.04
 # Testado e homologado para a versão do Ubuntu Server 18.04.x LTS x64
 # Kernel >= 4.15.x
 #
@@ -34,19 +34,21 @@ USUARIO=`id -u`
 UBUNTU=`lsb_release -rs`
 KERNEL=`uname -r | cut -d'.' -f1,2`
 #
-# Variável do caminho do Log dos Script utilizado nesse curso
-VARLOGPATH="/var/log/"
-#
-# Variável para criação do arquivo de Log dos Script
+# Variável do caminho do Log dos Script utilizado nesse curso (VARIÁVEL MELHORADA)
+# opções do comando cut: -d (delimiter), -f (fields)
 # $0 (variável de ambiente do nome do comando)
-LOGSCRIPT=`echo $0 | cut -d'/' -f2`
-#
-# Variável do caminho para armazenar os Log's de instalação
-LOG=$VARLOGPATH/$LOGSCRIPT
+LOG="/var/log/$(echo $0 | cut -d'/' -f2)"
 #
 # Declarando as variaveis para criação da Base de Dados do OpenFire
 USER="root"
 PASSWORD="pti@2018"
+# opção do comando create: create (criação), database (base de dados), base (banco de dados)
+# opção do comando create: create (criação), user (usuário), identified by (indentificado por - senha do usuário), password (senha)
+# opção do comando grant: grant (permissão), usage (uso em | uso na), *.* (todos os bancos/tabelas), to (para), user (usário)
+# identified by (indentificado por - senha do usuário), password (senha)
+# opões do comando GRANT: grant (permissão), all (todos privilegios), on (em ou na | banco ou tabela), *.* (todos os bancos/tabelas)
+# to (para), user@'%' (usuário @ localhost), identified by (indentificado por - senha do usuário), password (senha)
+# opção do comando FLUSH: flush (atualizar), privileges (recarregar as permissões)
 DATABASE="CREATE DATABASE openfire;"
 USERDATABASE="CREATE USER 'openfire' IDENTIFIED BY 'openfire';"
 GRANTDATABASE="GRANT USAGE ON *.* TO 'openfire' IDENTIFIED BY 'openfire';"
@@ -138,6 +140,7 @@ sleep 5
 echo
 #
 echo -e "Verificando a versão do Java, aguarde..."
+	#opção do comando: &>> (redirecionar de saida padrão)
 	java -version &>> $LOG
 echo -e "Versão verificada com sucesso!!!, continuando com o script..."
 sleep 5
