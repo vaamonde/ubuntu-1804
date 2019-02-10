@@ -10,14 +10,12 @@
 # Testado e homologado para a versão do Ubuntu Server 18.04.x LTS x64
 # Kernel >= 4.15.x
 #
-# Vídeo de instalação do GNU/Linux Ubuntu Server 18.04.x LTS: https://www.youtube.com/watch?v=zDdCrqNhIXI
-#
-# APACHE-2.4 (Apache HTTP Server) -Servidor de Hospedagem de Páginas web
-# MYSQL-5.7 (SGBD) - Sistemas de Gerenciamento de Banco de Dados
-# PHP-7.2 (Personal Home Page - PHP: Hypertext Preprocessor) - Linguagem de Programação Dinâmica para Web
-# PERL-5.26 - Linguagem de programação multiplataforma
-# PYTHON-2.7 - Linguagem de programação de alto nível
-# PHPMYADMIN-4.6 - Aplicativo desenvolvido em PHP para administração do MySQL pela Internet
+# APACHE-2.4 (Apache HTTP Server) -Servidor de Hospedagem de Páginas Web: https://www.apache.org/
+# MYSQL-5.7 (SGBD) - Sistemas de Gerenciamento de Banco de Dados: https://www.mysql.com/
+# PHP-7.2 (Personal Home Page - PHP: Hypertext Preprocessor) - Linguagem de Programação Dinâmica para Web: http://www.php.net/
+# PERL-5.26 - Linguagem de programação multiplataforma: https://www.perl.org/
+# PYTHON-2.7 - Linguagem de programação de alto nível: https://www.python.org/
+# PHPMYADMIN-4.6 - Aplicativo desenvolvido em PHP para administração do MySQL pela Internet: https://www.phpmyadmin.net/
 #
 # Debconf - Sistema de configuração de pacotes Debian
 # Site: http://manpages.ubuntu.com/manpages/bionic/man7/debconf.7.html
@@ -34,6 +32,9 @@
 #
 # Observação: Nesse script está sendo feito a instalação do Oracle MySQL, hoje os desenvolvedores estão migrando
 # para o MariaDB, nesse script o mesmo deve ser reconfigurado para instalar e configurar o MariaDB no Ubuntu.
+# sudo apt update && sudo apt install mariadb-server mariadb-client mariadb-common
+#
+# Vídeo de instalação do GNU/Linux Ubuntu Server 18.04.x LTS: https://www.youtube.com/watch?v=zDdCrqNhIXI
 #
 # Variável da Data Inicial para calcular o tempo de execução do script (VARIÁVEL MELHORADA)
 # opção do comando date: +%T (Time)
@@ -61,8 +62,8 @@ PASSWORD="pti@2018"
 AGAIN=$PASSWORD
 # opões do comando GRANT: grant (permissão), all (todos privilegios), on (em ou na | banco ou tabela), *.* (todos os bancos/tabelas)
 # to (para), user@'%' (usuário @ localhost), identified by (indentificado por - senha do usuário)
-GRANTALL="GRANT ALL ON *.* TO $USER@'%' IDENTIFIED BY '$PASSWORD';"
 # opção do comando FLUSH: privileges (recarregar as permissões)
+GRANTALL="GRANT ALL ON *.* TO $USER@'%' IDENTIFIED BY '$PASSWORD';"
 FLUSH="FLUSH PRIVILEGES;"
 #
 # Variáveis de configuração do PhpMyAdmin
