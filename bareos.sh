@@ -56,7 +56,9 @@ LOG="/var/log/$(echo $0 | cut -d'/' -f2)"
 #
 # Variáveis de instalação do BareOS
 RELEASE="http://download.bareos.org/bareos/release/latest/xUbuntu_18.04/"
+USER="admin"
 PASSWD="bareos"
+PROFILE="webui-admin"
 #
 # Verificando se o usuário e Root, Distribuição e >=18.04 e o Kernel >=4.15 <IF MELHORADO)
 # [ ] = teste de expressão, && = operador lógico AND, == comparação de string, exit 1 = A maioria dos erros comuns na execução
@@ -165,17 +167,38 @@ echo -e "Variáveis configuradas com sucesso!!!, continuando com o script..."
 sleep 5
 echo
 #
-echo -e "Instalando o BareOS e criando a Base de Dados, aguarde..."
+echo -e "Instalando o BareOS Server e criando a Base de Dados em MySQL, aguarde..."
 	# opção do comando: &>> (redirecionar a saida padrão)
-	apt -y install bareos bareos-database-mysql bareos-webui
-	systemctl start bareos-dir.service &>> $LOG
-	systemctl start bareos-sd.service &>> $LOG
-	systemctl start bareos-fd.service &>> $LOG
-	systemctl start apache2.service &>> $LOG
+	apt -y install bareos bareos-database-mysql bareos-tools bareos-bconsole
 echo -e "BareOS instalado com sucesso!!!, continuando com o script..."
 sleep 5
 echo
 #
+echo -e "Instalando o BareOS Webgui, aguarde..."
+	# opção do comando: &>> (redirecionar a saida padrão)
+	apt -y install bareos-webui
+echo -e "BareOS instalado com sucesso!!!, continuando com o script..."
+sleep 5
+echo
+#
+echo -e "Criando o usuário de administração do BareOS Webgui, aguarde..."
+	# opção do comando: &>> (redirecionar a saida padrão)
+	# opção do comando | (piper): (Conecta a saída padrão com a entrada padrão de outro comando)
+	echo -e "configure add console name=$USER password=$PASSWD profile=$PROFILE" | bconsole
+	echo -e "reload" | bconsole
+echo -e "Usuário criado com sucesso!!!, continuando com o script..."
+sleep 5
+echo
+#
+echo -e "Reinicializando os Serviços do BareOS Server, aguarde..."
+	systemctl start bareos-dir.service &>> $LOG
+	systemctl start bareos-sd.service &>> $LOG
+	systemctl start bareos-fd.service &>> $LOG
+	systemctl restart apache2.service &>> $LOG
+echo -e "Serviços reinicializados com sucesso!!!, continuando com o script..."
+sleep 5
+echo
+#	
 echo -e "Instalação do BareOS feita com Sucesso!!!."
 	# script para calcular o tempo gasto (SCRIPT MELHORADO, CORRIGIDO FALHA DE HORA:MINUTO:SEGUNDOS)
 	# opção do comando date: +%T (Time)
