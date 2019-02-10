@@ -5,8 +5,8 @@
 # Facebook: facebook.com/BoraParaPratica
 # YouTube: youtube.com/BoraParaPratica
 # Data de criação: 02/12/2018
-# Data de atualização: 29/01/2018
-# Versão: 0.05
+# Data de atualização: 10/02/2018
+# Versão: 0.06
 # Testado e homologado para a versão do Ubuntu Server 18.04.x LTS x64
 # Kernel >= 4.15.x
 #
@@ -21,8 +21,9 @@
 # PTZ Pan/Tilt/Zoom (Uma câmera de rede PTZ oferece funcionalidade de vídeo em rede combinada com o recurso
 # de movimento horizontal, vertical e de zoom - Pan = Panorâmica Horizontal - Tilt = Vertical | Zoom - Aproximar)
 #
-# Vídeo de instalação do GNU/Linux Ubuntu Server 18.04.x LTS: https://www.youtube.com/watch?v=zDdCrqNhIXI
+# Site Oficial do ZoneMinder: https://zoneminder.com/
 #
+# Vídeo de instalação do GNU/Linux Ubuntu Server 18.04.x LTS: https://www.youtube.com/watch?v=zDdCrqNhIXI
 # Vídeo de instalação do LAMP Server no GNU/Linux Ubuntu Server 18.04.x LTS: https://www.youtube.com/watch?v=6EFUu-I3u4s
 #
 # Variável da Data Inicial para calcular o tempo de execução do script (VARIÁVEL MELHORADA)
@@ -37,15 +38,10 @@ USUARIO=`id -u`
 UBUNTU=`lsb_release -rs`
 KERNEL=`uname -r | cut -d'.' -f1,2`
 #
-# Variável do caminho do Log dos Script utilizado nesse curso
-VARLOGPATH="/var/log/"
-#
-# Variável para criação do arquivo de Log dos Script
+# Variável do caminho do Log dos Script utilizado nesse curso (VARIÁVEL MELHORADA)
+# opções do comando cut: -d (delimiter), -f (fields)
 # $0 (variável de ambiente do nome do comando)
-LOGSCRIPT=`echo $0 | cut -d'/' -f2`
-#
-# Variável do caminho para armazenar os Log's de instalação
-LOG=$VARLOGPATH/$LOGSCRIPT
+LOG="/var/log/$(echo $0 | cut -d'/' -f2)"
 #
 # Declarando as variaveis para criação da Base de Dados do ZoneMinder
 USER="root"
@@ -98,21 +94,21 @@ sleep 5
 echo
 #
 echo -e "Adicionando o Repositório Universal do Apt, aguarde..."
-	# opção do comando: &>> (redirecionar a entrada padrão)
+	# opção do comando: &>> (redirecionar a saída padrão)
 	add-apt-repository universe &>> $LOG
 echo -e "Repositório adicionado com sucesso!!!, continuando com o script..."
 sleep 5
 echo
 #
 echo -e "Atualizando as listas do Apt, aguarde..."
-	# opção do comando: &>> (redirecionar a entrada padrão)
+	# opção do comando: &>> (redirecionar a saída padrão)
 	apt update &>> $LOG
 echo -e "Listas atualizadas com sucesso!!!, continuando com o script..."
 sleep 5
 echo
 #
 echo -e "Atualizando o sistema, aguarde..."
-	# opção do comando: &>> (redirecionar a entrada padrão)
+	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando apt: -y (yes)
 	apt -y upgrade &>> $LOG
 echo -e "Sistema atualizado com sucesso!!!, continuando com o script..."
@@ -120,7 +116,7 @@ sleep 5
 echo
 #
 echo -e "Removendo software desnecessários, aguarde..."
-	# opção do comando: &>> (redirecionar a entrada padrão)
+	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando apt: -y (yes)
 	apt -y autoremove &>> $LOG
 echo -e "Software removidos com sucesso!!!, continuando com o script..."
@@ -131,7 +127,7 @@ echo -e "Instalando o ZoneMinder, aguarde..."
 echo
 #
 echo -e "Adicionando o PPA do ZoneMinder, aguarde..."
-	# opção do comando: &>> (redirecionar a entrada padrão)
+	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando echo |: (faz a função do Enter)
 	echo | sudo add-apt-repository $ZONEMINDER &>> $LOG
 echo -e "PPA adicionado com sucesso!!!, continuando com o script..."
@@ -139,14 +135,14 @@ sleep 5
 echo
 #
 echo -e "Atualizando novamente as listas do Apt, aguarde..."
-	# opção do comando: &>> (redirecionar a entrada padrão)
+	# opção do comando: &>> (redirecionar a saída padrão)
 	apt update &>> $LOG
 echo -e "Listas atualizadas com sucesso!!!, continuando com o script..."
 sleep 5
 echo
 #
 echo -e "Editando as Configurações do Servidor de MySQL, perssione <Enter> para continuar"
-	# opção do comando: &>> (redirecionar a entrada padrão)
+	# opção do comando: &>> (redirecionar a saída padrão)
 	#[mysqld]
 	#sql_mode = NO_ENGINE_SUBSTITUTION
 	read
@@ -157,7 +153,7 @@ sleep 5
 echo
 #
 echo -e "Editando as Configurações do PHP, perssione <Enter> para continuar"
-	# opção do comando: &>> (redirecionar a entrada padrão)
+	# opção do comando: &>> (redirecionar a saída padrão)
 	#[Date]
 	#date.timezone = America/Sao_Paulo
 	read
@@ -167,7 +163,7 @@ sleep 5
 echo
 #
 echo -e "Instalando o ZoneMinder, aguarde..."
-	# opção do comando: &>> (redirecionar a entrada padrão)
+	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando apt: -y (yes)
 	apt -y install zoneminder &>> $LOG
 echo -e "ZoneMinder instalado com sucesso!!!, continuando com o script..."
@@ -175,7 +171,7 @@ sleep 5
 echo
 #
 echo -e "Criando o Banco de Dados do ZoneMinder, aguarde..."
-	# opção do comando: &>> (redirecionar a entrada padrão)
+	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando mysql: -u (user), -p (password), -e (execute), < (Redirecionador de Saída STDOUT)
 	mysql -u $USER -p$PASSWORD < $DATABASE &>> $LOG
 	mysql -u $USER -p$PASSWORD -e "$GRANTALL" mysql &>> $LOG
@@ -185,6 +181,7 @@ sleep 5
 echo
 #
 echo -e "Alterando as permissões do ZoneMinder, aguarde..."
+	# opção do comando: &>> (redirecionar a saída padrão)
 	# opções do comando chmod: -v (verbose), 740 (dono=RWX,grupo=R,outro=)
 	# opções do comando chown: -v (verbose), -R (recursive), root (dono), www-data (grupo)
 	# opções do comando usermod: -a (append), -G (group), video (grupo), www-data (user)
@@ -198,7 +195,7 @@ echo
 #
 #
 echo -e "Habilitando os recursos do Apache2 para o ZoneMinder, aguarde..."
-	# opção do comando: &>> (redirecionar a entrada padrão)
+	# opção do comando: &>> (redirecionar a saída padrão)
 	# a2enmod (Apache2 Enable Mode), a2enconf (Apache2 Enable Conf)
 	a2enmod cgi &>> $LOG
 	a2enmod rewrite &>> $LOG
@@ -210,7 +207,7 @@ echo
 #
 #
 echo -e "Criando o Serviço do ZoneMinder, aguarde..."
-	# opção do comando: &>> (redirecionar a entrada padrão)
+	# opção do comando: &>> (redirecionar a saída padrão)
 	systemctl enable zoneminder &>> $LOG
 	service zoneminder start &>> $LOG
 echo -e "Serviço criado com sucesso!!!, continuando com o script..."
