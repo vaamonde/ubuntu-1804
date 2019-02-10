@@ -143,7 +143,8 @@ echo -e "Instalando o ownCloud, aguarde...\n"
 #
 echo -e "Habilitando os recursos do Apache2, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
-	a2dismod autoindex &>> $LOG
+	# opção do comando echo |: faz a função de Enter
+	echo | a2dismod autoindex &>> $LOG
 	a2enmod rewrite &>> $LOG
 	a2enmod headers &>> $LOG
 	a2enmod env &>> $LOG
