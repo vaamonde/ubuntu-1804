@@ -181,21 +181,21 @@ echo -e "BareOS instalado com sucesso!!!, continuando com o script..."
 sleep 5
 echo
 #
-echo -e "Criando o usuário de administração do BareOS Webgui, aguarde..."
-	# opção do comando: &>> (redirecionar a saida padrão)
-	# opção do comando | (piper): (Conecta a saída padrão com a entrada padrão de outro comando)
-	echo -e "configure add console name=$USER password=$PASSWD profile=$PROFILE" | bconsole
-	echo -e "reload" | bconsole
-echo -e "Usuário criado com sucesso!!!, continuando com o script..."
-sleep 5
-echo
-#
 echo -e "Reinicializando os Serviços do BareOS Server, aguarde..."
 	systemctl start bareos-dir.service &>> $LOG
 	systemctl start bareos-sd.service &>> $LOG
 	systemctl start bareos-fd.service &>> $LOG
 	systemctl restart apache2.service &>> $LOG
 echo -e "Serviços reinicializados com sucesso!!!, continuando com o script..."
+sleep 5
+echo
+#
+echo -e "Criando o usuário de administração do BareOS Webgui, aguarde..."
+	# opção do comando: &>> (redirecionar a saida padrão)
+	# opção do comando | (piper): (Conecta a saída padrão com a entrada padrão de outro comando)
+	echo -e "configure add console name=$USER password=$PASSWD profile=$PROFILE" | bconsole
+	echo -e "reload" | bconsole
+echo -e "Usuário criado com sucesso!!!, continuando com o script..."
 sleep 5
 echo
 #	
