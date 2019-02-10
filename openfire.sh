@@ -19,8 +19,9 @@
 # O Openfire (anteriormente conhecido como Wildfire e Jive Messenger) é um servidor de mensagens instantâneas e de
 # conversas em grupo que usa o servidor XMPP escrito em Java e licenciado sob a licença Apache 2.0.
 #
-# Vídeo de instalação do GNU/Linux Ubuntu Server 18.04.x LTS: https://www.youtube.com/watch?v=zDdCrqNhIXI
+# Site Oficial do OpenFire: https://www.igniterealtime.org/projects/openfire/
 #
+# Vídeo de instalação do GNU/Linux Ubuntu Server 18.04.x LTS: https://www.youtube.com/watch?v=zDdCrqNhIXI
 # Vídeo de instalação do LAMP Server no GNU/Linux Ubuntu Server 18.04.x LTS: https://www.youtube.com/watch?v=6EFUu-I3u4s
 #
 # Variável da Data Inicial para calcular o tempo de execução do script (VARIÁVEL MELHORADA)
@@ -99,21 +100,21 @@ sleep 5
 echo
 #
 echo -e "Adicionando o Repositório Universal do Apt, aguarde..."
-	#opção do comando: &>> (redirecionar de saida padrão)
+	#opção do comando: &>> (redirecionar de saída padrão)
 	add-apt-repository universe &>> $LOG
 echo -e "Repositório adicionado com sucesso!!!, continuando com o script..."
 sleep 5
 echo
 #
 echo -e "Atualizando as listas do Apt, aguarde..."
-	#opção do comando: &>> (redirecionar de saida padrão)
+	#opção do comando: &>> (redirecionar de saída padrão)
 	apt update &>> $LOG
 echo -e "Listas atualizadas com sucesso!!!, continuando com o script..."
 sleep 5
 echo
 #
 echo -e "Atualizando o sistema, aguarde..."
-	#opção do comando: &>> (redirecionar de saida padrão)
+	#opção do comando: &>> (redirecionar de saída padrão)
 	#opção do comando apt: -y (yes)
 	apt -y upgrade &>> $LOG
 echo -e "Sistema atualizado com sucesso!!!, continuando com o script..."
@@ -121,7 +122,7 @@ sleep 5
 echo
 #
 echo -e "Removendo software desnecessários, aguarde..."
-	#opção do comando: &>> (redirecionar de saida padrão)
+	#opção do comando: &>> (redirecionar de saída padrão)
 	#opção do comando apt: -y (yes)
 	apt -y autoremove &>> $LOG
 echo -e "Software removidos com sucesso!!!, continuando com o script..."
@@ -132,7 +133,7 @@ echo -e "Instalando o OpenFire, aguarde..."
 echo
 #
 echo -e "Instalando as dependências do OpenFire, aguarde..."
-	#opção do comando: &>> (redirecionar de saida padrão)
+	#opção do comando: &>> (redirecionar de saída padrão)
 	#opção do comando apt: -y (yes)
 	apt -y install openjdk-8-jdk openjdk-8-jre &>> $LOG
 echo -e "Instalação das dependências feita com sucesso!!!, continuando com o script..."
@@ -140,14 +141,14 @@ sleep 5
 echo
 #
 echo -e "Verificando a versão do Java, aguarde..."
-	#opção do comando: &>> (redirecionar de saida padrão)
+	#opção do comando: &>> (redirecionar de saída padrão)
 	java -version &>> $LOG
 echo -e "Versão verificada com sucesso!!!, continuando com o script..."
 sleep 5
 echo
 #				 
 echo -e "Criando o Banco de Dados do OpenFire, aguarde..."
-	#opção do comando: &>> (redirecionar de saida padrão)
+	#opção do comando: &>> (redirecionar de saída padrão)
 	#opção do comando mysql: -u (user), -p (password), -e (execute)
 	mysql -u $USER -p$PASSWORD -e "$DATABASE" mysql &>> $LOG
 	mysql -u $USER -p$PASSWORD -e "$USERDATABASE" mysql &>> $LOG
@@ -159,7 +160,7 @@ sleep 5
 echo
 #
 echo -e "Baixando o OpenFire do site oficial, aguarde..."
-	#opção do comando: &>> (redirecionar de saida padrão)
+	#opção do comando: &>> (redirecionar de saída padrão)
 	#opção do comando wget: -O (output document file)
 	wget $OPENFIRE -O openfire.deb &>> $LOG
 echo -e "OpenFire baixado com sucesso!!!, continuando com o script..."
@@ -167,7 +168,7 @@ sleep 5
 echo
 #
 echo -e "Instalando o OpenFire, aguarde..."
-	#opção do comando: &>> (redirecionar de saida padrão)
+	#opção do comando: &>> (redirecionar de saída padrão)
 	#opção do comando dpkg: -i (install)
 	dpkg -i openfire.deb &>> $LOG
 echo -e "OpenFire instalado com sucesso!!!, continuando com o script..."
