@@ -193,7 +193,7 @@ echo
 echo -e "Criando o usuário de administração do BareOS Webgui, aguarde..."
 	# opção do comando: &>> (redirecionar a saida padrão)
 	# opção do comando | (piper): (Conecta a saída padrão com a entrada padrão de outro comando)
-	echo -e "configure add console name=$USER password=$PASSWD profile=$PROFILE" | bconsole
+	echo -e "configure add console name=$USER password=$PASSWD profile=$PROFILE tlsenable=no" | bconsole
 	echo -e "reload" | bconsole
 echo -e "Usuário criado com sucesso!!!, continuando com o script..."
 sleep 5
