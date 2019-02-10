@@ -5,8 +5,8 @@
 # Facebook: facebook.com/BoraParaPratica
 # YouTube: youtube.com/BoraParaPratica
 # Data de criação: 06/01/2019
-# Data de atualização: 25/01/2019
-# Versão: 0.09
+# Data de atualização: 10/02/2019
+# Versão: 0.10
 # Testado e homologado para a versão do Ubuntu Server 18.04.x LTS x64
 # Kernel >= 4.15.x
 # Testado e homologado para a versão do Asterisk 16.1.1
@@ -51,16 +51,10 @@ USUARIO=`id -u`
 UBUNTU=`lsb_release -rs`
 KERNEL=`uname -r | cut -d'.' -f1,2`
 #
-# Variável do caminho do Log dos Script utilizado nesse curso
-VARLOGPATH="/var/log/"
-#
-# Variável para criação do arquivo de Log dos Script
+# Variável do caminho do Log dos Script utilizado nesse curso (VARIÁVEL MELHORADA)
 # opções do comando cut: -d (delimiter), -f (fields)
 # $0 (variável de ambiente do nome do comando)
-LOGSCRIPT=`echo $0 | cut -d'/' -f2`
-#
-# Variável do caminho para armazenar os Log's de instalação
-LOG=$VARLOGPATH/$LOGSCRIPT
+LOG="/var/log/$(echo $0 | cut -d'/' -f2)"
 #
 # Declarando as variaveis de Download do Asterisk: http://downloads.asterisk.org/pub/telephony/
 DAHDI="http://downloads.asterisk.org/pub/telephony/dahdi-linux/dahdi-linux-current.tar.gz"
@@ -104,28 +98,28 @@ sleep 5
 echo
 #
 echo -e "Adicionando o Repositório Universal do Apt, aguarde..."
-	# opção do comando: &>> (redirecionar a entrada padrão)
+	# opção do comando: &>> (redirecionar a saída padrão)
 	add-apt-repository universe &>> $LOG
 echo -e "Repositório adicionado com sucesso!!!, continuando com o script..."
 sleep 5
 echo
 #
 echo -e "Adicionando o Repositório Multiversão do Apt, aguarde..."
-	# opção do comando: &>> (redirecionar a entrada padrão)
+	# opção do comando: &>> (redirecionar a saída padrão)
 	add-apt-repository multiverse &>> $LOG
 echo -e "Repositório adicionado com sucesso!!!, continuando com o script..."
 sleep 5
 echo
 #
 echo -e "Atualizando as listas do Apt, aguarde..."
-	#opção do comando: &>> (redirecionar a entrada padrão)
+	#opção do comando: &>> (redirecionar a saída padrão)
 	apt update &>> $LOG
 echo -e "Listas atualizadas com sucesso!!!, continuando com o script..."
 sleep 5
 echo
 #
 echo -e "Atualizando o sistema, aguarde..."
-	# opção do comando: &>> (redirecionar a entrada padrão)
+	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando apt: -y (yes)
 	apt -y upgrade &>> $LOG
 echo -e "Sistema atualizado com sucesso!!!, continuando com o script..."
@@ -133,7 +127,7 @@ sleep 5
 echo
 #
 echo -e "Removendo software desnecessários, aguarde..."
-	# opção do comando: &>> (redirecionar a entrada padrão)
+	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando apt: -y (yes)
 	apt -y autoremove &>> $LOG
 echo -e "Software removidos com sucesso!!!, continuando com o script..."
@@ -144,7 +138,7 @@ echo -e "Instalando o Asterisk, aguarde..."
 echo
 #
 echo -e "Instalando as dependências do Asterisk, aguarde..."
-	# opção do comando: &>> (redirecionar a entrada padrão)
+	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando apt: -y (yes) | $(uname -r) = kernel-release, \ (bar left) quedra de linha na opção do apt
 	apt install -y build-essential libssl-dev libelf-dev libncurses5-dev libnewt-dev libxml2-dev linux-headers-$(uname -r) \
 	libsqlite3-dev uuid-dev subversion libjansson-dev sqlite3 autoconf automake libtool libedit-dev flex bison libtool \ 
@@ -154,7 +148,7 @@ sleep 5
 echo
 #
 echo -e "Download e instalação do DAHDI, aguarde..."
-	# opção do comando: &>> (redirecionar a entrada padrão)
+	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando wget: -O (file)
 	wget -O dahdi-linux.tar.gz $DAHDI &>> $LOG
 	# opção do comando tar: -z (gzip), -x (extract), -v (verbose), -f (file)
@@ -176,7 +170,7 @@ sleep 5
 echo	
 #
 echo -e "Download e instalação do DAHDI Tools, aguarde..."
-	# opção do comando: &>> (redirecionar a entrada padrão)
+	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando wget: -O (file)
 	wget -O dahdi-tools.tar.gz $DAHDITOOLS &>> $LOG
 	# opção do comando tar: -z (gzip), -x (extract), -v (verbose), -f (file)
@@ -200,7 +194,7 @@ sleep 5
 echo	
 #
 echo -e "Download e instalação do LIBPRI, aguarde..."
-	# opção do comando: &>> (redirecionar a entrada padrão)
+	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando wget: -O (file)
 	wget -O libpri.tar.gz $LIBPRI &>> $LOG
 	# opção do comando tar: -z (gzip), -x (extract), -v (verbose), -f (file)
@@ -222,7 +216,7 @@ sleep 5
 echo
 #
 echo -e "Download e instalação do Asterisk, aguarde..."
-	# opção do comando: &>> (redirecionar a entrada padrão)
+	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando wget: -O (file)
 	wget -O asterisk.tar.gz $ASTERISK &>> $LOG
 	# opção do comando tar: -z (gzip), -x (extract), -v (verbose), -f (file)
@@ -271,7 +265,7 @@ sleep 5
 echo		
 #
 echo -e "Download e configuração do Sons em Português/Brasil do Asterisk, aguarde..."
-	# opção do comando: &>> (redirecionar a entrada padrão)
+	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando mkdir: -v (verbose)
 	mkdir -v $SOUNDS &>> $LOG
 	# copiando o script convert.sh para conversão dos formatas de sons para o padrão do Asterisk
@@ -295,7 +289,7 @@ echo
 #
 echo -e "Atualizando os arquivos de Ramais SIP, Plano de Discagem e Módulos, aguarde..."
 	# fazendo o backup das confgurações originais dos arquivos de configuração
-	# opção do comando: &>> (redirecionar a entrada padrão)
+	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando mv: -v (verbose)
 	# opção do comando cp: -v (verbose)
 	mv -v /etc/asterisk/sip.conf /etc/asterisk/sip.conf.bkp &>> $LOG
@@ -311,7 +305,7 @@ sleep 5
 clear
 #
 echo -e "Configuração da Segurança do Asterisk, aguarde..."
-	# opção do comando: &>> (redirecionar a entrada padrão)
+	# opção do comando: &>> (redirecionar a saída padrão)
 	# criando o grupo do asterisk
 	groupadd asterisk &>> $LOG
 	# criando o usuário asterisk
