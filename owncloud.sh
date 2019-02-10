@@ -6,12 +6,12 @@
 # YouTube: youtube.com/BoraParaPratica
 # Data de criação: 08/02/2019
 # Data de atualização: 10/02/2019
-# Versão: 0.02
+# Versão: 0.03
 # Testado e homologado para a versão do Ubuntu Server 18.04.x LTS x64
 # Kernel >= 4.15.x
 # Testado e homologado para a versão do ownCLOUD-10.1.x
 #
-# O ownCLOUD é um sistema de computador mais conhecido como "serviço de armazenamento e sincronização de arquivos". Como tal, 
+# O ownCloud é um sistema de computador mais conhecido como "serviço de armazenamento e sincronização de arquivos". Como tal, 
 # ownCloud é muito semelhante ao amplamente usado Dropbox, cuja principal diferença é que ownCloud é gratuito e open-source, 
 # e permitindo assim qualquer um de instalar e operar sem custo em um servidor privado, sem limite de espaço de armazenamento 
 # (com exceção da capacidade do disco rígido) ou o número de clientes conectados.
