@@ -5,8 +5,8 @@
 # Facebook: facebook.com/BoraParaPratica
 # YouTube: youtube.com/BoraParaPratica
 # Data de criação: 11/11/2018
-# Data de atualização: 01/02/2019
-# Versão: 0.03
+# Data de atualização: 10/02/2019
+# Versão: 0.04
 # Testado e homologado para a versão do Ubuntu Server 18.04.x LTS x64
 # Kernel >= 4.15.x
 #
@@ -38,16 +38,10 @@ USUARIO=`id -u`
 UBUNTU=`lsb_release -rs`
 KERNEL=`uname -r | cut -d'.' -f1,2`
 #
-# Variável do caminho do Log dos Script utilizado nesse curso
-VARLOGPATH="/var/log/"
-#
-# Variável para criação do arquivo de Log dos Script
+# Variável do caminho do Log dos Script utilizado nesse curso (VARIÁVEL MELHORADA)
 # opções do comando cut: -d (delimiter), -f (fields)
 # $0 (variável de ambiente do nome do comando)
-LOGSCRIPT=`echo $0 | cut -d'/' -f2`
-#
-# Variável do caminho para armazenar os Log's de instalação
-LOG=$VARLOGPATH/$LOGSCRIPT
+LOG="/var/log/$(echo $0 | cut -d'/' -f2)"
 #
 # Variável do download do Webmin
 # opção do comando git clone --depth=1: Crie um clone superficial com um histórico truncado para o número especificado de confirmações
@@ -82,21 +76,21 @@ sleep 5
 echo
 #
 echo -e "Adicionando o Repositório Universal do Apt, aguarde..."
-	# opção do comando: &>> (redirecionar a entrada padrão)
+	# opção do comando: &>> (redirecionar a saída padrão)
 	add-apt-repository universe &>> $LOG
 echo -e "Repositório adicionado com sucesso!!!, continuando com o script..."
 sleep 5
 echo
 #
 echo -e "Atualizando as listas do Apt, aguarde..."
-	# opção do comando: &>> (redirecionar a entrada padrão)
+	# opção do comando: &>> (redirecionar a saída padrão)
 	apt update &>> $LOG
 echo -e "Listas atualizadas com sucesso!!!, continuando com o script..."
 sleep 5
 echo
 #
 echo -e "Atualizando o sistema, aguarde..."
-	# opção do comando: &>> (redirecionar a entrada padrão)
+	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando apt: -y (yes)
 	apt -y upgrade &>> $LOG
 echo -e "Sistema atualizado com sucesso!!!, continuando com o script..."
@@ -104,7 +98,7 @@ sleep 5
 echo
 #
 echo -e "Removendo software desnecessários, aguarde..."
-	# opção do comando: &>> (redirecionar a entrada padrão)
+	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando apt: -y (yes)
 	apt -y autoremove &>> $LOG
 echo -e "Software removidos com sucesso!!!, continuando com o script..."
@@ -115,7 +109,7 @@ echo -e "Instalando o Netdata, aguarde..."
 echo
 #
 echo -e "Instalando as dependências do Netdata, aguarde..."
-	# opção do comando: &>> (redirecionar a entrada padrão)
+	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando apt: -y (yes), \ (bar left) quedra de linha na opção do apt
 	apt -y install zlib1g-dev gcc make git autoconf autogen automake pkg-config uuid-dev python python-mysqldb python-pip \ 
 	python-dev python3-dev libmysqlclient-dev python-ipaddress &>> $LOG
@@ -124,14 +118,14 @@ sleep 5
 echo
 #
 echo -e "Fazendo a clonagem do Netdata, aguarde..."
-	# opção do comando: &>> (redirecionar a entrada padrão)
+	# opção do comando: &>> (redirecionar a saída padrão)
 	git clone $NETDATA &>> $LOG
 echo -e "Clonagem do Netdata feito com sucesso!!!, continuando com o script..."
 sleep 5
 echo
 #				 
 echo -e "Instalando o Netdata, aguarde..."
-	# opção do comando: &>> (redirecionar a entrada padrão)
+	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando echo |: faz a função de Enter no Script
 	cd netdata/
 	echo | ./netdata-installer.sh &>> $LOG
@@ -160,7 +154,8 @@ sleep 5
 echo
 #
 echo -e "Reinicializando o serviço do Netdata, aguarde..."
-	sudo service netdata restart
+	# opção do comando: &>> (redirecionar a saída padrão)
+	sudo service netdata restart &>> $LOG
 echo -e "Serviço reinicializado com sucesso!!!, continuando com o script..."
 sleep 5
 echo
