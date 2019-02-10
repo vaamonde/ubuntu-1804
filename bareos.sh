@@ -94,7 +94,7 @@ fi
 # || (operador lógico OU), 2> (redirecionar de saída de erro STDERR), && = operador lógico AND, { } = agrupa comandos em blocos
 # [ ] = testa uma expressão, retornando 0 ou 1, -ne = é diferente (NotEqual)
 echo -n "Verificando as dependências, aguarde... "
-	for name in mysql-server mysql-common
+	for name in mysql-server mysql-common apache2
 	do
   		[[ $(dpkg -s $name 2> /dev/null) ]] || { echo -en "\n\nO software: $name precisa ser instalado. \nUse o comando 'apt install $name'\n";deps=1; }
 	done
