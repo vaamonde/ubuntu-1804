@@ -5,8 +5,8 @@
 # Facebook: facebook.com/BoraParaPratica
 # YouTube: youtube.com/BoraParaPratica
 # Data de criação: 11/11/2018
-# Data de atualização: 29/01/2019
-# Versão: 0.02
+# Data de atualização: 10/02/2019
+# Versão: 0.03
 # Testado e homologado para a versão do Ubuntu Server 18.04.x LTS x64
 # Kernel >= 4.15.x
 #
@@ -36,16 +36,10 @@ USUARIO=`id -u`
 UBUNTU=`lsb_release -rs`
 KERNEL=`uname -r | cut -d'.' -f1,2`
 #
-# Variável do caminho do Log dos Script utilizado nesse curso
-VARLOGPATH="/var/log/"
-#
-# Variável para criação do arquivo de Log dos Script
+# Variável do caminho do Log dos Script utilizado nesse curso (VARIÁVEL MELHORADA)
 # opções do comando cut: -d (delimiter), -f (fields)
 # $0 (variável de ambiente do nome do comando)
-LOGSCRIPT=`echo $0 | cut -d'/' -f2`
-#
-# Variável do caminho para armazenar os Log's de instalação
-LOG=$VARLOGPATH/$LOGSCRIPT
+LOG="/var/log/$(echo $0 | cut -d'/' -f2)"
 #
 # Declarando as variaveis para o download do LogAnalyzer
 LOGANALYZER="http://download.adiscon.com/loganalyzer/loganalyzer-4.1.6.tar.gz"
@@ -56,6 +50,13 @@ MYSQLPASS="pti@2018"
 #
 # Declarando as variaveis para criação da Base de Dados do Syslog/Rsyslog
 RSYSLOGDB="syslog"
+# opção do comando create: create (criação), database (base de dados), base (banco de dados)
+# opção do comando create: create (criação), user (usuário), identified by (indentificado por - senha do usuário), password (senha)
+# opção do comando grant: grant (permissão), usage (uso em | uso na), *.* (todos os bancos/tabelas), to (para), user (usário)
+# identified by (indentificado por - senha do usuário), password (senha)
+# opões do comando GRANT: grant (permissão), all (todos privilegios), on (em ou na | banco ou tabela), *.* (todos os bancos/tabelas)
+# to (para), user@'%' (usuário @ localhost), identified by (indentificado por - senha do usuário), password (senha)
+# opção do comando FLUSH: flush (atualizar), privileges (recarregar as permissões)
 RSYSLOGDATABASE="CREATE DATABASE syslog;"
 RSYSLOGUSER="CREATE USER 'syslog' IDENTIFIED BY 'syslog';"
 RSYSLOGGRANTDATABASE="GRANT USAGE ON *.* TO 'syslog' IDENTIFIED BY 'syslog';"
@@ -64,6 +65,13 @@ RSYSLOGFLUSH="FLUSH PRIVILEGES;"
 RSYSLOGINSTALL="/usr/share/dbconfig-common/data/rsyslog-mysql/install/mysql"
 #
 # Declarando as variaveis para criação da Base de Dados do LogAnalyzer
+# opção do comando create: create (criação), database (base de dados), base (banco de dados)
+# opção do comando create: create (criação), user (usuário), identified by (indentificado por - senha do usuário), password (senha)
+# opção do comando grant: grant (permissão), usage (uso em | uso na), *.* (todos os bancos/tabelas), to (para), user (usário)
+# identified by (indentificado por - senha do usuário), password (senha)
+# opões do comando GRANT: grant (permissão), all (todos privilegios), on (em ou na | banco ou tabela), *.* (todos os bancos/tabelas)
+# to (para), user@'%' (usuário @ localhost), identified by (indentificado por - senha do usuário), password (senha)
+# opção do comando FLUSH: flush (atualizar), privileges (recarregar as permissões)
 LOGDATABASE="CREATE DATABASE loganalyzer;"
 LOGUSERDATABASE="CREATE USER 'loganalyzer' IDENTIFIED BY 'loganalyzer';"
 LOGGRANTDATABASE="GRANT USAGE ON *.* TO 'loganalyzer' IDENTIFIED BY 'loganalyzer';"
@@ -102,20 +110,21 @@ sleep 5
 echo
 #
 echo -e "Adicionando o Repositório Universal do Apt, aguarde..."
+	# opção do comando: &>> (redirecionar a saída padrão)
 	add-apt-repository universe &>> $LOG
 echo -e "Repositório adicionado com sucesso!!!, continuando com o script..."
 sleep 5
 echo
 #
 echo -e "Atualizando as listas do Apt, aguarde..."
-	# opção do comando: &>> (redirecionar a entrada padrão)
+	# opção do comando: &>> (redirecionar a saída padrão)
 	apt update &>> $LOG
 echo -e "Listas atualizadas com sucesso!!!, continuando com o script..."
 sleep 5
 echo
 #
 echo -e "Atualizando o sistema, aguarde..."
-	# opção do comando: &>> (redirecionar a entrada padrão)
+	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando apt: -y (yes)
 	apt -y upgrade &>> $LOG
 echo -e "Sistema atualizado com sucesso!!!, continuando com o script..."
@@ -123,7 +132,7 @@ sleep 5
 echo
 #
 echo -e "Removendo software desnecessários, aguarde..."
-	# opção do comando: &>> (redirecionar a entrada padrão)
+	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando apt: -y (yes)
 	apt -y autoremove &>> $LOG
 echo -e "Software removidos com sucesso!!!, continuando com o script..."
@@ -131,7 +140,7 @@ sleep 5
 echo
 #
 echo -e "Instalando as dependências do LogAnalyzer, aguarde..."
-	# opção do comando: &>> (redirecionar a entrada padrão)
+	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando apt: -y (yes)
 	echo "rsyslog-mysql rsyslog-mysql/dbconfig-install boolean false" | debconf-set-selections &>> $LOG
 	apt -y install rsyslog-mysql &>> $LOG
@@ -140,8 +149,8 @@ sleep 5
 echo
 #
 echo -e "Criando a Base de Dados do Rsyslog, aguarde..."
-	# opção do comando: &>> (redirecionar a entrada padrão)
-	# opção do comando mysql: -u (user), -p (password), -e (execute), < (Redirecionador de Saída STDOUT)
+	# opção do comando: &>> (redirecionar a saída padrão)
+	# opção do comando mysql: -u (user), -p (password), -e (execute), < (Redirecionador de entrada STDOUT)
 	mysql -u $MYSQLUSER -p$MYSQLPASS -e "$RSYSLOGDATABASE" mysql &>> $LOG
 	mysql -u $MYSQLUSER -p$MYSQLPASS -e "$RSYSLOGUSERDATABASE" mysql &>> $LOG
 	mysql -u $MYSQLUSER -p$MYSQLPASS -e "$RSYSLOGGRANTDATABASE" mysql &>> $LOG
@@ -153,7 +162,7 @@ sleep 5
 echo
 #
 echo -e "Criando a Base de Dados do LogAnalyzer, aguarde..."
-	# opção do comando: &>> (redirecionar a entrada padrão)
+	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando mysql: -u (user), -p (password), -e (execute)
 	mysql -u $MYSQLUSER -p$MYSQLPASS -e "$LOGDATABASE" mysql &>> $LOG
 	mysql -u $MYSQLUSER -p$MYSQLPASS -e "$LOGUSERDATABASE" mysql &>> $LOG
@@ -165,9 +174,9 @@ sleep 5
 echo
 #
 echo -e "Atualizando os arquivos de configuração do Rsyslog, aguarde..."
-	# opção do comando: &>> (redirecionar a entrada padrão)
+	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando cp: -v (verbose)
-	cp -v conf/rsyslog.conf /etc/rsyslog.conf  >> $LOG
+	cp -v conf/rsyslog.conf /etc/rsyslog.conf >> $LOG
 	cp -v conf/mysql.conf /etc/rsyslog.d/mysql.conf >> $LOG
 echo -e "Arquivos atualizadas com sucesso!!!, continuando com o script..."
 sleep 5
@@ -178,7 +187,7 @@ sleep 5
 echo
 #
 echo -e "Baixando o LogAnalyzer do site oficial, aguarde..."
-	# opção do comando: &>> (redirecionar a entrada padrão)
+	# opção do comando: &>> (redirecionar a saída padrão)
 	wget $LOGANALYZER &>> $LOG
 echo -e "LogAnalyzer baixado com sucesso!!!, continuando com o script..."
 sleep 5
@@ -194,7 +203,7 @@ sleep 5
 echo
 #
 echo -e "Copiando os arquivos de configuração do LogAnalyzer, aguarde..."
-	# opção do comando: &>> (redirecionar a entrada padrão)
+	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando mkdir: -v (verbose)
 	# opção do comando cp: -R (recurse), -v (verbose)
 	# opção do comando chmod: -v (verbose), 775 (Dono=R-X,Grupo=R-X=Outros=R-X)
@@ -234,6 +243,7 @@ sleep 5
 echo
 #
 echo -e "Reinicializando o Serviço do Rsyslog, aguarde..."
+	# opção do comando: &>> (redirecionar a saída padrão)
 	sudo service rsyslog restart &>> $LOG
 echo -e "Serviço do Rsyslog reinicializado com sucesso!!!, continuando com o script..."
 sleep 5
