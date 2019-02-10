@@ -11,15 +11,18 @@
 # Kernel >= 4.15.x
 # Testado e homologado para a versão do BareOS-18.2.x
 #
-# O BareOS Server Bareos é uma bifurcação do projeto de código aberto Bacula versão 5.2. Em 2010, o desenvolvedor da comunidade do Bacula, Marco Van Wieringen, 
-# começou a coletar contribuições das comunidades que foram rejeitadas ou negligenciadas em começou a desenvolver sua própria vresão. Este trabalho foi mais 
-# tarde a base da criação do software BareOS e desde então foi enriquecido com varios novos recursos.
+# O BareOS Server Bareos é uma bifurcação do projeto de código aberto Bacula versão 5.2. Em 2010, o desenvolvedor da 
+# comunidade do Bacula, Marco Van Wieringen, começou a coletar contribuições das comunidades que foram rejeitadas ou 
+# negligenciadas em começou a desenvolver sua própria vresão. Este trabalho foi mais tarde a base da criação do software 
+# BareOS e desde então foi enriquecido com varios novos recursos.
 #
-# O BareOS é um conjunto de programas de computador que permite ao administrador do sistema gerenciar o backup, a recuperação e a verificação de dados de 
-# computadores em uma rede de que tenha diferentes tipos de sistemas operacionais. O BareOS também pode ser executado inteiramente em um único computador e 
-# pode fazer backup para vários tipos de mídia, incluindo fita e disco. O Bareos é relativamente fácil de usar e eficiente, além de oferecer muitos recursos 
-# avançados de gerenciamento de armazenamento que facilitam a localização e a recuperação de arquivos perdidos ou danificados. Devido ao seu design modular, 
-# o BareOS é escalonável para pequenos sistemas de computadores individuais a sistemas que consistem em centenas de computadores localizados em uma grande rede.
+# O BareOS é um conjunto de programas de computador que permite ao administrador do sistema gerenciar o backup, a recuperação
+# e a verificação de dados de computadores em uma rede de que tenha diferentes tipos de sistemas operacionais. O BareOS também
+# pode ser executado inteiramente em um único computador e pode fazer backup para vários tipos de mídia, incluindo fita e 
+# disco. O Bareos é relativamente fácil de usar e eficiente, além de oferecer muitos recursos avançados de gerenciamento de 
+# armazenamento que facilitam a localização e a recuperação de arquivos perdidos ou danificados. Devido ao seu design modular,
+# o BareOS é escalonável para pequenos sistemas de computadores individuais a sistemas que consistem em centenas de 
+# computadores localizados em uma grande rede.
 #
 # Site Oficial do Projeto: https://www.bareos.org/en/
 #
@@ -147,13 +150,6 @@ sleep 5
 clear
 #
 echo -e "Instalando o BareOS, aguarde...\n"
-#
-echo -e "Habilitando os recursos do Apache2, aguarde..."
-	# opção do comando: &>> (redirecionar a saída padrão)
-
-echo -e "Recursos habilitados com sucesso!!!, continuando com o script..."
-sleep 5
-echo
 #
 echo -e "Instalando as dependências do BareOS, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
