@@ -54,21 +54,6 @@ KERNEL=`uname -r | cut -d'.' -f1,2`
 # $0 (variável de ambiente do nome do comando)
 LOG="/var/log/$(echo $0 | cut -d'/' -f2)"
 #
-# opção do comando create: create (criação), database (base de dados), base (banco de dados)
-# opção do comando create: create (criação), user (usuário), identified by (indentificado por - senha do usuário), password (senha)
-# opção do comando grant: grant (permissão), usage (uso em | uso na), *.* (todos os bancos/tabelas), to (para), user (usário)
-# identified by (indentificado por - senha do usuário), password (senha)
-# opões do comando GRANT: grant (permissão), all (todos privilegios), on (em ou na | banco ou tabela), *.* (todos os bancos/tabelas)
-# to (para), user@'%' (usuário @ localhost), identified by (indentificado por - senha do usuário), password (senha)
-# opção do comando FLUSH: flush (atualizar), privileges (recarregar as permissões)
-USER="root"
-PASSWORD="pti@2018"
-DATABASE="CREATE DATABASE bareos;"
-USERDATABASE="CREATE USER 'bareos'@'localhost' IDENTIFIED BY 'bareos';"
-GRANTDATABASE="GRANT USAGE ON *.* TO 'bareos'@'localhost' IDENTIFIED BY 'bareos';"
-GRANTALL="GRANT ALL PRIVILEGES ON bareos.* TO 'bareos'@'localhost' IDENTIFIED BY 'bareos' WITH GRANT OPTION;"
-FLUSH="FLUSH PRIVILEGES;"
-#
 # Variáveis de instalação do BareOS
 RELEASE="http://download.bareos.org/bareos/release/latest/xUbuntu_18.04/"
 #
@@ -87,7 +72,6 @@ if [ "$USUARIO" == "0" ] && [ "$UBUNTU" == "18.04" ] && [ "$KERNEL" == "4.15" ]
 		echo -e "Execute novamente o script para verificar o ambiente."
 		exit 1
 fi
-#
 #
 # Verificando se as dependêncais do BareOS estão instaladas
 # opção do dpkg: -s (status), opção do echo: -e (intepretador de escapes de barra invertida), -n (permite nova linha)
@@ -108,7 +92,7 @@ echo -n "Verificando as dependências, aguarde... "
 echo -e "Início do script $0 em: `date +%d/%m/%Y-"("%H:%M")"`\n" &>> $LOG
 #
 echo -e "Instalação do BareOS no GNU/Linux Ubuntu Server 18.04.x\n"
-echo -e "Após a instalação do BareOS acessar a URL: http://`hostname -I`/\n"
+echo -e "Após a instalação do BareOS acessar a URL: http://`hostname -I`/bareos-webui\n"
 echo -e "Aguarde, esse processo demora um pouco dependendo do seu Link de Internet...\n"
 sleep 5
 #
@@ -151,16 +135,28 @@ clear
 #
 echo -e "Instalando o BareOS, aguarde...\n"
 #
-echo -e "Instalando as dependências do BareOS, aguarde..."
+echo -e "Adicionando o repositório do BareOS, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
-
-echo -e "Source List criado com sucesso!!!, continuando com o script..."
+	# opção do comando cp: -v (verbose)
+	# opção do comando wget: -q -O- (file)
+	# opção do redirecionador |: Conecta a saída padrão com a entrada padrão de outro comando
+	# opção do comando apt-key: add (file name), - (arquivo recebido de redirecionar |)
+	cp -v conf/bareos.list /etc/apt/sources.list.d/bareos.list &>> $LOG
+	wget -q $RELEASE/Release.key -O- | apt-key add - &>> $LOG
+	apt update &>> $LOG
+echo -e "Repositório do BareOS criado com sucesso!!!, continuando com o script..."
 sleep 5
 echo
 #
 echo -e "Instalando o BareOS e criando a Base de Dados, aguarde..."
 	# opção do comando: &>> (redirecionar a saida padrão)
-
+	apt -y install bareos bareos-database-mysql bareos-webui &>> $LOG
+	#/usr/lib/bareos/scripts/create_bareos_database
+	#/usr/lib/bareos/scripts/make_bareos_tables
+	#/usr/lib/bareos/scripts/grant_bareos_privileges
+	#systemctl start bareos-dir.service
+	#systemctl start bareos-sd.service
+	3systemctl start bareos-fd.service
 echo -e "BareOS instalado com sucesso!!!, continuando com o script..."
 sleep 5
 echo
