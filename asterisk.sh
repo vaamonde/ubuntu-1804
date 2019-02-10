@@ -32,6 +32,8 @@
 # H.323 =  é um conjunto de padrões da ITU-T que define um conjunto de protocolos para o fornecimento de comunicação de áudio 
 # e vídeo numa rede de computadores. O H.323 é um protocolo relativamente antigo que está atualmente sendo substituído pelo SIP.
 #
+# Site Oficial do Asterisk: https://www.asterisk.org/
+#
 # Vídeo de instalação do GNU/Linux Ubuntu Server 18.04.x LTS: https://www.youtube.com/watch?v=zDdCrqNhIXI
 #
 # Variável da Data Inicial para calcular o tempo de execução do script (VARIÁVEL MELHORADA)
