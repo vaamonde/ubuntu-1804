@@ -11,12 +11,15 @@
 # Kernel >= 4.15.x
 # Testado e homologado para a versão do ownCLOUD-10.1.x
 #
-# O ownCLOUD 
+# O ownCLOUD é um sistema de computador mais conhecido como "serviço de armazenamento e sincronização de arquivos". Como tal, 
+# ownCloud é muito semelhante ao amplamente usado Dropbox, cuja principal diferença é que ownCloud é gratuito e open-source, 
+# e permitindo assim qualquer um de instalar e operar sem custo em um servidor privado, sem limite de espaço de armazenamento 
+# (com exceção da capacidade do disco rígido) ou o número de clientes conectados.
 #
 # Vídeo de instalação do GNU/Linux Ubuntu Server 18.04.x LTS: https://www.youtube.com/watch?v=zDdCrqNhIXI
-# Vídeo de atualização do Sistema: 
-# Vídeo de configuração da Placa de Rede: 
-# Vídeo de configuração do Hostname e Hosts: 
+# Vídeo de atualização do Sistema: https://www.youtube.com/watch?v=esnu8TAepHU
+# Vídeo de configuração da Placa de Rede: https://www.youtube.com/watch?v=zSUd4k108Zk
+# Vídeo de configuração do Hostname e Hosts: https://www.youtube.com/watch?v=J7eyb5ynjZA
 #
 # Variável da Data Inicial para calcular o tempo de execução do script (VARIÁVEL MELHORADA)
 # opção do comando date: +%T (Time)
@@ -42,7 +45,6 @@ LOG="/var/log/$(echo $0 | cut -d'/' -f2)"
 #
 # Variáveis de instalação do ownCLOUD
 RELEASE="https://download.owncloud.org/download/repositories/production/Ubuntu_18.04/Release.key"
-REPOSITORY="deb http://download.owncloud.org/download/repositories/production/Ubuntu_18.04/ /"
 #
 # Verificando se o usuário e Root, Distribuição e >=18.04 e o Kernel >=4.15 <IF MELHORADO)
 # [ ] = teste de expressão, && = operador lógico AND, == comparação de string, exit 1 = A maioria dos erros comuns na execução
