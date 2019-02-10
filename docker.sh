@@ -5,8 +5,8 @@
 # Facebook: facebook.com/BoraParaPratica
 # YouTube: youtube.com/BoraParaPratica
 # Data de criação: 12/11/2018
-# Data de atualização: 29/01/2019
-# Versão: 0.03
+# Data de atualização: 10/02/2019
+# Versão: 0.04
 # Testado e homologado para a versão do Ubuntu Server 18.04.x LTS x64
 # Kernel >= 4.15.x
 #
@@ -42,16 +42,10 @@ USUARIO=`id -u`
 UBUNTU=`lsb_release -rs`
 KERNEL=`uname -r | cut -d'.' -f1,2`
 #
-# Variável do caminho do Log dos Script utilizado nesse curso
-VARLOGPATH="/var/log/"
-#
-# Variável para criação do arquivo de Log dos Script
+# Variável do caminho do Log dos Script utilizado nesse curso (VARIÁVEL MELHORADA)
 # opções do comando cut: -d (delimiter), -f (fields)
 # $0 (variável de ambiente do nome do comando)
-LOGSCRIPT=`echo $0 | cut -d'/' -f2`
-#
-# Variável do caminho para armazenar os Log's de instalação
-LOG=$VARLOGPATH/$LOGSCRIPT
+LOG="/var/log/$(echo $0 | cut -d'/' -f2)"
 #
 # Variável do download do Docker
 DOCKERGPG="https://download.docker.com/linux/ubuntu/gpg"
@@ -87,21 +81,21 @@ sleep 5
 echo
 #
 echo -e "Adicionando o Repositório Universal do Apt, aguarde..."
-	# opção do comando: &>> (redirecionar a entrada padrão)
+	# opção do comando: &>> (redirecionar a saída padrão)
 	add-apt-repository universe &>> $LOG
 echo -e "Repositório adicionado com sucesso!!!, continuando com o script..."
 sleep 5
 echo
 #
 echo -e "Atualizando as listas do Apt, aguarde..."
-	# opção do comando: &>> (redirecionar a entrada padrão)
+	# opção do comando: &>> (redirecionar a saída padrão)
 	apt update &>> $LOG
 echo -e "Listas atualizadas com sucesso!!!, continuando com o script..."
 sleep 5
 echo
 #
 echo -e "Atualizando o sistema, aguarde..."
-	# opção do comando: &>> (redirecionar a entrada padrão)
+	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando apt: -y (yes)
 	apt -y upgrade &>> $LOG
 echo -e "Sistema atualizado com sucesso!!!, continuando com o script..."
@@ -109,7 +103,7 @@ sleep 5
 echo
 #
 echo -e "Removendo software desnecessários, aguarde..."
-	# opção do comando: &>> (redirecionar a entrada padrão)
+	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando apt: -y (yes)
 	apt -y autoremove &>> $LOG
 echo -e "Software removidos com sucesso!!!, continuando com o script..."
@@ -120,7 +114,7 @@ echo -e "Instalando o Docker e o Portainer, aguarde..."
 echo
 #
 echo -e "Instalando as dependências do Docker, aguarde..."
-	# opção do comando: &>> (redirecionar a entrada padrão)
+	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando apt: -y (yes), \ (bar left) quedra de linha na opção do apt
 	apt -y install apt-transport-https ca-certificates curl software-properties-common linux-image-generic \ 
 	linux-image-extra-virtual &>> $LOG
@@ -137,28 +131,28 @@ sleep 5
 echo
 #				 
 echo -e "Verificando as Chaves do GPG do Docker, aguarde..."
-	# opção do comando: &>> (redirecionar a entrada padrão)
+	# opção do comando: &>> (redirecionar a saída padrão)
 	apt-key fingerprint $DOCKERKEY &>> $LOG
 echo -e "Chaves verificadas com sucesso com sucesso!!!, continuando com o script..."
 sleep 5
 echo
 #
 echo -e "Adicionando o repositório do Docker, aguarde..."
-	# opção do comando: &>> (redirecionar a entrada padrão)
+	# opção do comando: &>> (redirecionar a saída padrão)
 	add-apt-repository "$DOCKERDEB" &>> $LOG
 echo -e "Repositório adicionado com sucesso!!!, continuando com o script..."
 sleep 5
 echo
 #
 echo -e "Atualizando novamente as listas do Apt, aguarde..."
-	# opção do comando: &>> (redirecionar a entrada padrão)
+	# opção do comando: &>> (redirecionar a saída padrão)
 	apt update &>> $LOG
 echo -e "Listas atualizadas com sucesso!!!, continuando com o script..."
 sleep 5
 echo
 #
 echo -e "Instalando o Docker, aguarde..."
-	# opção do comando: &>> (redirecionar a entrada padrão)
+	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando apt: -y (yes)
 	apt -y install docker-ce cgroup-lite &>> $LOG
 echo -e "Docker instalado com sucesso!!!, continuando com o script..."
@@ -166,7 +160,7 @@ sleep 5
 echo
 #
 echo -e "Adicionando o usuário Root do Grupo do Docker, aguarde..."
-	# opção do comando: &>> (redirecionar a entrada padrão)
+	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando usermod: -a (append), -G (groups), docker (grupo) docker (usuário)
 	usermod -a -G docker $USER &>> $LOG
 echo -e "Usuário adicionado com sucesso!!!, continuando com o script..."
@@ -174,7 +168,7 @@ sleep 5
 echo
 #
 echo -e "Iniciando o Serviço Docker, aguarde..."
-	# opção do comando: &>> (redirecionar a entrada padrão)
+	# opção do comando: &>> (redirecionar a saída padrão)
 	sudo service docker start &>> $LOG
 echo -e "Serviço iniciado com sucesso!!!, continuando com o script..."
 sleep 5
@@ -208,14 +202,14 @@ sleep 3
 echo
 #
 echo -e "Criando o volue do Portainer, aguarde..."
-	# opção do comando: &>> (redirecionar a entrada padrão)
+	# opção do comando: &>> (redirecionar a saída padrão)
 	docker volume create portainer_data &>> $LOG
 echo -e "Volume criado com sucesso!!!, continuando com o script..."
 sleep 5
 echo
 #
 echo -e "Criando o Container do Portainer, aguarde..."
-	# opção do comando: &>> (redirecionar a entrada padrão)
+	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando docker: -d (Run container in background and print container ID), -p (Publish a container’s port(s) to the host), -v (Bind mount a volume)
 	docker run --name portainer -d -p 9000:9000 -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data portainer/portainer &>> $LOG
 echo -e "Container criado com sucesso!!!, continuando com o script..."
