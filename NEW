@@ -11,5 +11,6 @@ Kernel >= 4.15.x
 
 ============================================= CRIAÇÃO DE NOVOS SCRIPTS =============================================
 
+10/02/2019 - Robson Vaamonde - Trabalhando na criação do script de automatização do BareOS última versão >= 18.2.x
 08/02/2019 - Robson Vaamonde - Trabalhando na criação do script de automatização do ownCloud última versão >= 10.1.x
 29/01/2019 - Robson Vaamonde - Trabalhando na criação do script de automatização do SAMBA-4 última versão >= 4.9.x
