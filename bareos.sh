@@ -56,6 +56,7 @@ LOG="/var/log/$(echo $0 | cut -d'/' -f2)"
 #
 # Variáveis de instalação do BareOS
 RELEASE="http://download.bareos.org/bareos/release/latest/xUbuntu_18.04/"
+PASSWD="bareos"
 #
 # Verificando se o usuário e Root, Distribuição e >=18.04 e o Kernel >=4.15 <IF MELHORADO)
 # [ ] = teste de expressão, && = operador lógico AND, == comparação de string, exit 1 = A maioria dos erros comuns na execução
@@ -84,6 +85,9 @@ echo -n "Verificando as dependências, aguarde... "
 	done
 		[[ $deps -ne 1 ]] && echo "Dependências.: OK" || { echo -en "\nInstale as dependências acima e execute novamente este script\n";exit 1; }
 		sleep 5
+#
+# Exportando o recurso de Noninteractive do Debconf para não solicitar telas de configuração
+export DEBIAN_FRONTEND="noninteractive"
 #
 # Script de instalação do BareOS no GNU/Linux Ubuntu Server 18.04.x
 # opção do comando echo: -e (enable interpretation of backslash escapes), \n (new line)
@@ -148,12 +152,26 @@ echo -e "Repositório do BareOS criado com sucesso!!!, continuando com o script.
 sleep 5
 echo
 #
+echo -e "Configurando as variáveis do Debconf do BareOS para o Apt, aguarde..."
+	# opção do comando: &>> (redirecionar a saída padrão)
+	# opção do comando | (piper): (Conecta a saída padrão com a entrada padrão de outro comando)
+	echo "bareos-database-common bareos-database-common/dbconfig-install boolean true" | debconf-set-selections
+	echo "bareos-database-common bareos-database-common/mysql/app-pass password $PASSWD" | debconf-set-selections
+	echo "bareos-database-common bareos-database-common/app-password-confirm password $PASSWD" | debconf-set-selections
+	echo "postfix postfix/main_mailer_type string $POSTFIX" | debconf-set-selections
+	debconf-show bareos-database-common &>> $LOG
+	debconf-show postfix &>> $LOG
+echo -e "Variáveis configuradas com sucesso!!!, continuando com o script..."
+sleep 5
+echo
+#
 echo -e "Instalando o BareOS e criando a Base de Dados, aguarde..."
 	# opção do comando: &>> (redirecionar a saida padrão)
 	apt -y install bareos bareos-database-mysql bareos-webui
 	systemctl start bareos-dir.service &>> $LOG
 	systemctl start bareos-sd.service &>> $LOG
 	systemctl start bareos-fd.service &>> $LOG
+	systemctl start apache2.service &>> $LOG
 echo -e "BareOS instalado com sucesso!!!, continuando com o script..."
 sleep 5
 echo
