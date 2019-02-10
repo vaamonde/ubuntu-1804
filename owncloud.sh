@@ -98,6 +98,7 @@ echo -n "Verificando as dependências, aguarde... "
 echo -e "Início do script $0 em: `date +%d/%m/%Y-"("%H:%M")"`\n" &>> $LOG
 #
 echo -e "Instalação do ownCloud no GNU/Linux Ubuntu Server 18.04.x\n"
+echo -e "Após a instalação do ownCloud acessar a URL: http://`hostname -I`/own/\n"
 echo -e "Aguarde, esse processo demora um pouco dependendo do seu Link de Internet...\n"
 sleep 5
 #
@@ -154,6 +155,7 @@ echo
 #
 echo -e "Instalando as dependências do ownCloud, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
+	# opção do comando apt: -y (yes)
 	apt -y install software-properties-common &>> $LOG
 	apt -y install php-cli php-common php-mbstring php-gd php-intl php-xml php-mysql php-zip php-curl php-xmlrpc &>> $LOG
 	systemctl restart apache2.service &>> $LOG
@@ -161,7 +163,7 @@ echo -e "Source List criado com sucesso!!!, continuando com o script..."
 sleep 5
 echo
 #
-echo -e "Instalando o ownCloud, aguarde..."
+echo -e "Instalando o ownCloud e criando a Base de Dados, aguarde..."
 	# opção do comando: &>> (redirecionar a saida padrão)
 	# opção do comando tar: -z (gzip), -x (extract), -v (verbose), -f (file)
 	# opção do comando chown: -R (recursive), -v (verbose), www-data.www-data (user and group)
