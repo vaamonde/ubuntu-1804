@@ -141,9 +141,9 @@ echo -e "Adicionando o repositório do BareOS, aguarde..."
 	# opção do comando wget: -q -O- (file)
 	# opção do redirecionador |: Conecta a saída padrão com a entrada padrão de outro comando
 	# opção do comando apt-key: add (file name), - (arquivo recebido de redirecionar |)
-	cp -v conf/bareos.list /etc/apt/sources.list.d/bareos.list
-	wget -q $RELEASE/Release.key -O- | apt-key add -
-	apt update
+	cp -v conf/bareos.list /etc/apt/sources.list.d/bareos.list &>> $LOG
+	wget -q $RELEASE/Release.key -O- | apt-key add - &>> $LOG
+	apt update &>> $LOG
 echo -e "Repositório do BareOS criado com sucesso!!!, continuando com o script..."
 sleep 5
 echo
@@ -151,12 +151,9 @@ echo
 echo -e "Instalando o BareOS e criando a Base de Dados, aguarde..."
 	# opção do comando: &>> (redirecionar a saida padrão)
 	apt -y install bareos bareos-database-mysql bareos-webui
-	#/usr/lib/bareos/scripts/create_bareos_database
-	#/usr/lib/bareos/scripts/make_bareos_tables
-	#/usr/lib/bareos/scripts/grant_bareos_privileges
-	#systemctl start bareos-dir.service
-	#systemctl start bareos-sd.service
-	#systemctl start bareos-fd.service
+	systemctl start bareos-dir.service &>> $LOG
+	systemctl start bareos-sd.service &>> $LOG
+	systemctl start bareos-fd.service &>> $LOG
 echo -e "BareOS instalado com sucesso!!!, continuando com o script..."
 sleep 5
 echo
