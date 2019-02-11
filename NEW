@@ -4,13 +4,16 @@ Facebook: facebook.com/ProcedimentosEmTI
 Facebook: facebook.com/BoraParaPratica
 YouTube: youtube.com/BoraParaPratica
 Data de criação: 29/01/2019
-Data de atualização: 08/02/2019
-Versão: 0.02
+Data de atualização: 11/02/2019
+Versão: 0.03
 Testado e homologado para a versão do Ubuntu Server 18.04.x LTS x64
 Kernel >= 4.15.x
 
 ============================================= CRIAÇÃO DE NOVOS SCRIPTS =============================================
 
-10/02/2019 - Robson Vaamonde - Trabalhando na criação do script de automatização do BareOS última versão >= 18.2.x
-08/02/2019 - Robson Vaamonde - Trabalhando na criação do script de automatização do ownCloud última versão >= 10.1.x
-29/01/2019 - Robson Vaamonde - Trabalhando na criação do script de automatização do SAMBA-4 última versão >= 4.9.x
+11/02/2019 - Robson Vaamonde - Trabalhando na criação do script de automatização do Fusion Inventory versão >= 9.x.x
+11/02/2019 - Robson Vaamonde - Trabalhando na criação do script de automatização do GLPI versão >= 9.4.x
+11/02/2019 - Robson Vaamonde - Trabalhando na criação do script de automatização do Ansible versão >= 2.7.x
+10/02/2019 - Robson Vaamonde - Trabalhando na criação do script de automatização do BareOS versão >= 18.2.x
+08/02/2019 - Robson Vaamonde - Trabalhando na criação do script de automatização do ownCloud versão >= 10.1.x
+29/01/2019 - Robson Vaamonde - Trabalhando na criação do script de automatização do SAMBA4 versão >= 4.7.x
