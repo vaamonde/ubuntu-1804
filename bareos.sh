@@ -59,6 +59,7 @@ RELEASE="http://download.bareos.org/bareos/release/latest/xUbuntu_18.04/"
 USER="admin"
 PASSWD="bareos"
 PROFILE="webui-admin"
+POSTFIX="No configuration"
 #
 # Verificando se o usuário e Root, Distribuição e >=18.04 e o Kernel >=4.15 <IF MELHORADO)
 # [ ] = teste de expressão, && = operador lógico AND, == comparação de string, exit 1 = A maioria dos erros comuns na execução
@@ -146,7 +147,7 @@ echo -e "Adicionando o repositório do BareOS, aguarde..."
 	# opção do comando cp: -v (verbose)
 	# opção do comando wget: -q -O- (file)
 	# opção do redirecionador |: Conecta a saída padrão com a entrada padrão de outro comando
-	# opção do comando apt-key: add (file name), - (arquivo recebido de redirecionar |)
+	# opção do comando apt-key: add (file name), - (arquivo recebido dO redirecionar | piper)
 	cp -v conf/bareos.list /etc/apt/sources.list.d/bareos.list &>> $LOG
 	wget -q $RELEASE/Release.key -O- | apt-key add - &>> $LOG
 	apt update &>> $LOG
@@ -169,6 +170,7 @@ echo
 #
 echo -e "Instalando o BareOS Server e criando a Base de Dados em MySQL, aguarde..."
 	# opção do comando: &>> (redirecionar a saida padrão)
+	# opção do comando apt: -y (yes)
 	apt -y install bareos bareos-database-mysql bareos-tools bareos-bconsole
 echo -e "BareOS instalado com sucesso!!!, continuando com o script..."
 sleep 5
@@ -176,8 +178,9 @@ echo
 #
 echo -e "Instalando o BareOS Webgui, aguarde..."
 	# opção do comando: &>> (redirecionar a saida padrão)
+	# opção do comando apt: -y (yes)
 	apt -y install bareos-webui
-echo -e "BareOS instalado com sucesso!!!, continuando com o script..."
+echo -e "BareOS Webgui instalado com sucesso!!!, continuando com o script..."
 sleep 5
 echo
 #
@@ -193,6 +196,9 @@ echo
 echo -e "Criando o usuário de administração do BareOS Webgui, aguarde..."
 	# opção do comando: &>> (redirecionar a saida padrão)
 	# opção do comando | (piper): (Conecta a saída padrão com a entrada padrão de outro comando)
+	# opções do comando bconsole: configure (configurar o BareOS), add (adicionar), console (gerenciamento do console)
+	# name (nome do usuário), password (senha do usuário), profile (perfil do usuário), tlsenable (habilitar ou desabilitar TLS)
+	# reload (aplicar as mudanças)
 	echo -e "configure add console name=$USER password=$PASSWD profile=$PROFILE tlsenable=no" | bconsole
 	echo -e "reload" | bconsole
 echo -e "Usuário criado com sucesso!!!, continuando com o script..."
