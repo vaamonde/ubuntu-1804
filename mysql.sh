@@ -1,9 +1,18 @@
+#Autor: Robson Vaamonde
+#Site: www.procedimentosemti.com.br
+#Facebook: facebook.com/ProcedimentosEmTI
+#Facebook: facebook.com/BoraParaPratica
+#YouTube: youtube.com/BoraParaPratica
+#Data de criação: 13/02/2019
+#Data de atualização: 15/02/2019
+#Versão: 0.02
+
 #Instalando o SGBD MySQL (ou MariaDB)
 sudo apt update && sudo apt install mysql-server mysql-client mysql-common
 sudo apt update && sudo apt install mariadb-server mariadb-client mariadb-common
 
 #Gerenciadores de Banco de Dados MySQL ou MariaDB
-sudo apt update && sudo apt install mysql-workbench phpmyadmin (precisa do Apache2) emma
+sudo apt update && sudo apt install mysql-workbench emma phpmyadmin (precisa do Apache2)
 
 #Aplicando as políticas de segurança no SGDB MySQL (ou MariaDB)
 sudo mysql_secure_installation
