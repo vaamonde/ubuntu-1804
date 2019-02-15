@@ -52,8 +52,8 @@ GRANT ALL PRIVILEGES ON aulaead.* TO 'aulaead';
 FLUSH PRIVILEGES;
 EXIT
 
-##Acessando o SGBD do MySQL
-sudo mysql -u aulaead -p
+##Acessando o SGBD do MySQL com o usuário AulaEAD
+mysql -u aulaead -p
 
 #Utilizando o Banco e Dados AulaEAD
 SHOW DATABASES;
@@ -114,6 +114,7 @@ SELECT COUNT(*) FROM alunos;
 
 #Ordendando as informações das Tabelas
 SELECT * FROM cursos ORDER BY codcurso DESC;
+SELECT * FROM cursos ORDER BY nomecurso DESC;
 
 #Agrupando os valores das Tabelas
 SELECT codcurso FROM matriculas GROUP BY codcurso;
@@ -138,9 +139,10 @@ UPDATE matriculas SET codmatricula='000004' WHERE matricula='000003';
 SELECT * FROM matriculas;
 UPDATE matriculas SET codcurso='000003' WHERE codmatricula='000001';
 
-#Fazendo Backup da Base de Dados do MySQL
-mysqldump -u root -p aulaead > aulaead.sql
-mysqldump -u root -p aulaead < aulaead.sql
+#Fazendo Backup da Base de Dados do MySQL e Restaurando informações
+sudo mysqldump -uaulaead -paulaead aulaead > aulaead.sql
+cat aulaead.sql
+sudo mysqldump -uaulaead -paulaead aulaead < aulaead.sql
 
 #Deletando registros em uma Tabela;
 DELETE FROM matriculas WHERE matricula='000001';
