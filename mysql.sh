@@ -24,6 +24,15 @@ sudo mysql_secure_installation
 6. Remove test database and access to it? (Press y|Y for Yes, any other key for No:) <Enter>
 7. Reload privilege tables now? (Press y|Y for Yes, any other key for No:) y <Enter>
 
+#Verificando o Serviço do SGBD do MySQL
+sudo systemctl status mysql
+sudo systemctl restart mysql
+sudo systemctl stop mysql
+sudo systemctl start mysql
+
+#Verificando o Porta de Conexão do SGDB do MySQL
+sudo netstat -an | grep 3306
+
 #Acessando o SGBD do MySQL com o usuário root do MySQL
 sudo mysql -u root -p
 
