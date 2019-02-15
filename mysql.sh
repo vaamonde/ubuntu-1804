@@ -109,7 +109,7 @@ SELECT * FROM matriculas;
 SELECT matricula, nome FROM alunos;
 SELECT * FROM matriculas WHERE codcurso = '000001';
 SELECT * FROM alunos WHERE cidade LIKE 'S%';
-SELECT * FROM alunos WHERE nome LIKE '%a%' AND cidade = 'São Paulo';
+SELECT * FROM alunos WHERE nome LIKE '%m%' AND cidade = 'São Paulo';
 SELECT COUNT(*) FROM alunos;
 
 #Ordendando as informações das Tabelas
