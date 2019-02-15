@@ -139,14 +139,7 @@ UPDATE matriculas SET codmatricula='000004' WHERE matricula='000003';
 SELECT * FROM matriculas;
 UPDATE matriculas SET codcurso='000003' WHERE codmatricula='000001';
 
-#Fazendo Backup da Base de Dados do MySQL e Restaurando informações
-sudo mysqldump -uaulaead -paulaead aulaead > aulaead.sql
-cat aulaead.sql
-sudo mysqldump -uaulaead -paulaead aulaead < aulaead.sql
-
 #Deletando registros em uma Tabela;
-SHOW DATABASES;
-USE aulaead;
 SELECT * FROM matriculas;
 DELETE FROM matriculas WHERE matricula='000001';
 SELECT * FROM matriculas;
@@ -156,6 +149,7 @@ SHOW TABLES;
 DROP TABLE matriculas;
 SHOW TABLES;
 DROP TABLE cursos, alunos;
+SHOW TABLES;
 
 #Deletando um Banco de Dados
 SHOW DATABASES;
