@@ -155,6 +155,7 @@ SELECT * FROM matriculas;
 SHOW TABLES;
 DROP TABLE matriculas;
 SHOW TABLES;
+DROP TABLE cursos, alunos;
 
 #Deletando um Banco de Dados
 SHOW DATABASES;
