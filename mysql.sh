@@ -145,6 +145,8 @@ cat aulaead.sql
 sudo mysqldump -uaulaead -paulaead aulaead < aulaead.sql
 
 #Deletando registros em uma Tabela;
+SHOW DATABASES;
+USE aulaead;
 DELETE FROM matriculas WHERE matricula='000001';
 SELECT * FROM matriculas;
 				
