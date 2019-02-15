@@ -41,6 +41,7 @@ SHOW DATABASES;
 
 #Criando o nosso Banco de Dados AulaEAD
 CREATE DATABASE aulaead;
+SHOW DATABASES;
 
 #Criando usuários no SGDB MySQL
 CREATE USER 'aulaead' IDENTIFIED BY 'aulaead';
@@ -61,7 +62,7 @@ USE aulaead;
 #Criando a Tabela Alunos e Verificando suas Informações
 CREATE TABLE alunos(
 	matricula VARCHAR(6) NOT NULL,
-	nome VARCHAR(6) NOT NULL,
+	nome VARCHAR(30) NOT NULL,
 	cidade VARCHAR(30) NULL,
 	PRIMARY KEY(matricula));
 DESC alunos;
