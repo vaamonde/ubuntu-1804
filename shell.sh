@@ -1,5 +1,14 @@
 #!/bin/bash
-#Criação das variáveis locais
+#Autor: Robson Vaamonde
+#Site: www.procedimentosemti.com.br
+#Facebook: facebook.com/ProcedimentosEmTI
+#Facebook: facebook.com/BoraParaPratica
+#YouTube: youtube.com/BoraParaPratica
+#Data de criação: 13/02/2019
+#Data de atualização: 15/02/2019
+#Versão: 0.02
+
+#Criação das variáveis locais utilizada nesse script
 USUARIO="Vaamonde"
 USUARIOS=$(who | awk '{print $1}')
 TESTE01=$(test A == B ; echo $?)
