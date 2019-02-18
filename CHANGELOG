@@ -11,6 +11,9 @@ Kernel >= 4.15.x
 
 ============================================= ATUALIZAÇÕES DOS SCRIPTS =============================================
 
+18/02/2019 - Robson Vaamonde - Informado falha no script webmin.sh, error relacionado a linha 128, tinha uma barra de espaço
+a mais no comando de apt -y install.
+
 18/02/2019 - Robson Vaamonde - Informado falha no script netdata.sh, error relacionado a linha 128, tinha uma barra de espaço
 a mais no comando de apt -y install, acréscimo do bloco de verificação de dependências do MySQL e Apache2;
 
