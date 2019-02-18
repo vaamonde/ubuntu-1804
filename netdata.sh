@@ -5,13 +5,10 @@
 # Facebook: facebook.com/BoraParaPratica
 # YouTube: youtube.com/BoraParaPratica
 # Data de criação: 11/11/2018
-# Data de atualização: 10/02/2019
-# Versão: 0.04
+# Data de atualização: 18/02/2019
+# Versão: 0.05
 # Testado e homologado para a versão do Ubuntu Server 18.04.x LTS x64
 # Kernel >= 4.15.x
-#
-# Vídeo de instalação do GNU/Linux Ubuntu Server 18.04.x LTS: https://www.youtube.com/watch?v=zDdCrqNhIXI
-# Vídeo de instalação do LAMP Server no Ubuntu Server 18.04.x LTS: https://www.youtube.com/watch?v=6EFUu-I3u4s
 #
 # O Netdata é uma ferramenta para visualizar e monitorar métricas em tempo real, otimizado para acumular todos os tipos de
 # dados, como uso da CPU, atividade do disco, consultas SQL, visitas a um site, etc. A ferramenta é projetada para visualizar 
@@ -20,6 +17,9 @@
 # https:\\(ip do servidor):(porta de utilização). Exemplo: https:\\172.16.1.20:19999
 #
 # Site oficial: https://github.com/netdata/netdata
+#
+# Vídeo de instalação do GNU/Linux Ubuntu Server 18.04.x LTS: https://www.youtube.com/watch?v=zDdCrqNhIXI
+# Vídeo de instalação do LAMP Server no Ubuntu Server 18.04.x LTS: https://www.youtube.com/watch?v=6EFUu-I3u4s
 #
 # Variável da Data Inicial para calcular o tempo de execução do script (VARIÁVEL MELHORADA)
 # opção do comando date: +%T (Time)
@@ -43,7 +43,7 @@ KERNEL=`uname -r | cut -d'.' -f1,2`
 # $0 (variável de ambiente do nome do comando)
 LOG="/var/log/$(echo $0 | cut -d'/' -f2)"
 #
-# Variável do download do Webmin
+# Variável do download do Netdata
 # opção do comando git clone --depth=1: Crie um clone superficial com um histórico truncado para o número especificado de confirmações
 NETDATA="https://github.com/firehol/netdata.git --depth=1"
 #
@@ -62,6 +62,19 @@ if [ "$USUARIO" == "0" ] && [ "$UBUNTU" == "18.04" ] && [ "$KERNEL" == "4.15" ]
 		echo -e "Execute novamente o script para verificar o ambiente."
 		exit 1
 fi
+#
+#
+# Verificando se as dependêncais do Netdata estão instaladas
+# opção do dpkg: -s (status), opção do echo: -e (intepretador de escapes de barra invertida), -n (permite nova linha)
+# || (operador lógico OU), 2> (redirecionar de saída de erro STDERR), && = operador lógico AND, { } = agrupa comandos em blocos
+# [ ] = testa uma expressão, retornando 0 ou 1, -ne = é diferente (NotEqual)
+echo -n "Verificando as dependências, aguarde... "
+	for name in mysql-server mysql-common apache2
+	do
+  		[[ $(dpkg -s $name 2> /dev/null) ]] || { echo -en "\n\nO software: $name precisa ser instalado. \nUse o comando 'apt install $name'\n";deps=1; }
+	done
+		[[ $deps -ne 1 ]] && echo "Dependências.: OK" || { echo -en "\nInstale as dependências acima e execute novamente este script\n";exit 1; }
+		sleep 5
 #
 # Script de instalação do Netdata no GNU/Linux Ubuntu Server 18.04.x
 # opção do comando echo: -e (enable interpretation of backslash escapes), \n (new line)
