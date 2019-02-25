@@ -54,9 +54,9 @@ LOG="/var/log/$(echo $0 | cut -d'/' -f2)"
 USER="root"
 PASSWORD="pti@2018"
 DATABASE="CREATE DATABASE owncloud;"
-USERDATABASE="CREATE USER 'owncloud'@'localhost' IDENTIFIED BY 'owncloud';"
-GRANTDATABASE="GRANT USAGE ON *.* TO 'owncloud'@'localhost' IDENTIFIED BY 'owncloud';"
-GRANTALL="GRANT ALL PRIVILEGES ON owncloud.* TO 'owncloud'@'localhost' IDENTIFIED BY 'ownlocud' WITH GRANT OPTION;"
+USERDATABASE="CREATE USER 'owncloud' IDENTIFIED BY 'owncloud';"
+GRANTDATABASE="GRANT USAGE ON *.* TO 'owncloud' IDENTIFIED BY 'owncloud';"
+GRANTALL="GRANT ALL PRIVILEGES ON owncloud.* TO 'owncloud' IDENTIFIED BY 'owncloud' WITH GRANT OPTION;"
 FLUSH="FLUSH PRIVILEGES;"
 #
 # Variáveis de instalação do ownCloud
