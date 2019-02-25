@@ -5,8 +5,8 @@
 # Facebook: facebook.com/BoraParaPratica
 # YouTube: youtube.com/BoraParaPratica
 # Data de criação: 08/02/2019
-# Data de atualização: 10/02/2019
-# Versão: 0.03
+# Data de atualização: 25/02/2019
+# Versão: 0.04
 # Testado e homologado para a versão do Ubuntu Server 18.04.x LTS x64
 # Kernel >= 4.15.x
 # Testado e homologado para a versão do ownCLOUD-10.1.x
@@ -46,7 +46,7 @@ LOG="/var/log/$(echo $0 | cut -d'/' -f2)"
 #
 # opção do comando create: create (criação), database (base de dados), base (banco de dados)
 # opção do comando create: create (criação), user (usuário), identified by (indentificado por - senha do usuário), password (senha)
-# opção do comando grant: grant (permissão), usage (uso em | uso na), *.* (todos os bancos/tabelas), to (para), user (usário)
+# opção do comando grant: grant (permissão), usage (uso em | uso na), *.* (todos os bancos/tabelas), to (para), user (usuário)
 # identified by (indentificado por - senha do usuário), password (senha)
 # opões do comando GRANT: grant (permissão), all (todos privilegios), on (em ou na | banco ou tabela), *.* (todos os bancos/tabelas)
 # to (para), user@'%' (usuário @ localhost), identified by (indentificado por - senha do usuário), password (senha)
@@ -172,7 +172,7 @@ echo -e "Instalando o ownCloud e criando a Base de Dados, aguarde..."
 	# opção do comando mysql: -u (user), -p (password), -e (execute)
 	wget $RELEASE &>> $LOG
 	OWNCLOUDFILE=`echo owncloud*.*.*`
-	tar -jzvf $OWNCLOUDFILE &>> $LOG
+	tar -jxvf $OWNCLOUDFILE &>> $LOG
 	mv -v owncloud/ /var/www/html/own/ &>> $LOG
 	chown -Rv www-data:www-data /var/www/html/own/ &>> $LOG
 	chmod -Rv 755 /var/www/html/own/ &>> $LOG
