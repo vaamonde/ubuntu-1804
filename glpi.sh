@@ -9,7 +9,7 @@
 # Versão: 0.01
 # Testado e homologado para a versão do Ubuntu Server 18.04.x LTS x64
 # Kernel >= 4.15.x
-# Testado e homologado para a versão do ownCLOUD-10.1.x
+# Testado e homologado para a versão do GLPI-9.4.x
 #
 # Vídeo de instalação do GNU/Linux Ubuntu Server 18.04.x LTS: https://www.youtube.com/watch?v=zDdCrqNhIXI
 # Vídeo de atualização do Sistema: https://www.youtube.com/watch?v=esnu8TAepHU
