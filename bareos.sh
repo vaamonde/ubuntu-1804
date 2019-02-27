@@ -5,13 +5,13 @@
 # Facebook: facebook.com/BoraParaPratica
 # YouTube: youtube.com/BoraParaPratica
 # Data de criação: 10/02/2019
-# Data de atualização: 10/02/2019
-# Versão: 0.01
+# Data de atualização: 26/02/2019
+# Versão: 0.02
 # Testado e homologado para a versão do Ubuntu Server 18.04.x LTS x64
 # Kernel >= 4.15.x
 # Testado e homologado para a versão do BareOS-18.2.x
 #
-# O BareOS Server Bareos é uma bifurcação do projeto de código aberto Bacula versão 5.2. Em 2010, o desenvolvedor da 
+# O BareOS Server é uma bifurcação do projeto de código aberto Bacula versão 5.2. Em 2010, o desenvolvedor da 
 # comunidade do Bacula, Marco Van Wieringen, começou a coletar contribuições das comunidades que foram rejeitadas ou 
 # negligenciadas em começou a desenvolver sua própria vresão. Este trabalho foi mais tarde a base da criação do software 
 # BareOS e desde então foi enriquecido com varios novos recursos.
@@ -171,7 +171,7 @@ echo
 echo -e "Instalando o BareOS Server e criando a Base de Dados em MySQL, aguarde..."
 	# opção do comando: &>> (redirecionar a saida padrão)
 	# opção do comando apt: -y (yes)
-	apt -y install bareos bareos-database-mysql bareos-tools bareos-bconsole
+	apt -y install bareos bareos-database-mysql bareos-tools bareos-bconsole &>> $LOG
 echo -e "BareOS instalado com sucesso!!!, continuando com o script..."
 sleep 5
 echo
@@ -179,7 +179,7 @@ echo
 echo -e "Instalando o BareOS Webgui, aguarde..."
 	# opção do comando: &>> (redirecionar a saida padrão)
 	# opção do comando apt: -y (yes)
-	apt -y install bareos-webui
+	apt -y install bareos-webui &>> $LOG
 echo -e "BareOS Webgui instalado com sucesso!!!, continuando com o script..."
 sleep 5
 echo
@@ -199,8 +199,8 @@ echo -e "Criando o usuário de administração do BareOS Webgui, aguarde..."
 	# opções do comando bconsole: configure (configurar o BareOS), add (adicionar), console (gerenciamento do console)
 	# name (nome do usuário), password (senha do usuário), profile (perfil do usuário), tlsenable (habilitar ou desabilitar TLS)
 	# reload (aplicar as mudanças)
-	echo -e "configure add console name=$USER password=$PASSWD profile=$PROFILE tlsenable=no" | bconsole
-	echo -e "reload" | bconsole
+	echo -e "configure add console name=$USER password=$PASSWD profile=$PROFILE tlsenable=no" | bconsole &>> $LOG
+	echo -e "reload" | bconsole &>> $LOG
 echo -e "Usuário criado com sucesso!!!, continuando com o script..."
 sleep 5
 echo
@@ -208,12 +208,12 @@ echo
 echo -e "Instalação do BareOS feita com Sucesso!!!."
 	# script para calcular o tempo gasto (SCRIPT MELHORADO, CORRIGIDO FALHA DE HORA:MINUTO:SEGUNDOS)
 	# opção do comando date: +%T (Time)
-	HORAFINAL=`date +%T`
+	HORAFINAL=$(date +%T)
 	# opção do comando date: -u (utc), -d (date), +%s (second since 1970)
 	HORAINICIAL01=$(date -u -d "$HORAINICIAL" +"%s")
 	HORAFINAL01=$(date -u -d "$HORAFINAL" +"%s")
 	# opção do comando date: -u (utc), -d (date), 0 (string command), sec (force second), +%H (hour), %M (minute), %S (second), 
-	TEMPO=`date -u -d "0 $HORAFINAL01 sec - $HORAINICIAL01 sec" +"%H:%M:%S"`
+	TEMPO=$(date -u -d "0 $HORAFINAL01 sec - $HORAINICIAL01 sec" +"%H:%M:%S")
 	# $0 (variável de ambiente do nome do comando)
 	echo -e "Tempo gasto para execução do script $0: $TEMPO"
 echo -e "Pressione <Enter> para concluir o processo."
