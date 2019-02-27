@@ -24,6 +24,11 @@
 # o BareOS é escalonável para pequenos sistemas de computadores individuais a sistemas que consistem em centenas de 
 # computadores localizados em uma grande rede.
 #
+# Soluções de Backup Open Source:
+# Bacula: https://www.bacula.org/
+# Amanda: http://www.amanda.org/
+# Backup PC: http://backuppc.sourceforge.net/
+#
 # Site Oficial do Projeto: https://www.bareos.org/en/
 #
 # Vídeo de instalação do GNU/Linux Ubuntu Server 18.04.x LTS: https://www.youtube.com/watch?v=zDdCrqNhIXI
