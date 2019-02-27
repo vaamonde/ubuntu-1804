@@ -11,7 +11,7 @@
 # Kernel >= 4.15.x
 # Testado e homologado para a versão do BareOS-18.2.x
 #
-# O BareOS Server é uma bifurcação do projeto de código aberto Bacula versão 5.2. Em 2010, o desenvolvedor da 
+# O BareOS Server é uma bifurcação (fork) do projeto de código aberto Bacula versão 5.2. Em 2010, o desenvolvedor da 
 # comunidade do Bacula, Marco Van Wieringen, começou a coletar contribuições das comunidades que foram rejeitadas ou 
 # negligenciadas em começou a desenvolver sua própria vresão. Este trabalho foi mais tarde a base da criação do software 
 # BareOS e desde então foi enriquecido com varios novos recursos.
@@ -34,7 +34,7 @@
 #
 # Variável da Data Inicial para calcular o tempo de execução do script (VARIÁVEL MELHORADA)
 # opção do comando date: +%T (Time)
-HORAINICIAL=`date +%T`
+HORAINICIAL=$(date +%T)
 #
 # Variáveis para validar o ambiente, verificando se o usuário e "root", versão do ubuntu e kernel
 # opções do comando id: -u (user)
@@ -45,9 +45,9 @@ HORAINICIAL=`date +%T`
 # opção do shell script: acento crase ` ` = Executa comandos numa subshell, retornando o resultado
 # opção do shell script: aspas simples ' ' = Protege uma string completamente (nenhum caractere é especial)
 # opção do shell script: aspas duplas " " = Protege uma string, mas reconhece $, \ e ` como especiais
-USUARIO=`id -u`
-UBUNTU=`lsb_release -rs`
-KERNEL=`uname -r | cut -d'.' -f1,2`
+USUARIO=$(id -u)
+UBUNTU=$(lsb_release -rs)
+KERNEL=$(uname -r | cut -d'.' -f1,2)
 #
 # Variável do caminho do Log dos Script utilizado nesse curso (VARIÁVEL MELHORADA)
 # opções do comando cut: -d (delimiter), -f (fields)
@@ -185,6 +185,10 @@ sleep 5
 echo
 #
 echo -e "Reinicializando os Serviços do BareOS Server, aguarde..."
+	# bareos-dir: Bareos Director.
+	# bareos-sd: Bareos Storage Daemon.
+	# bareos-fd: Bareos File Daemon
+	# bareos-webui: Bareos Web Configurator
 	systemctl start bareos-dir.service &>> $LOG
 	systemctl start bareos-sd.service &>> $LOG
 	systemctl start bareos-fd.service &>> $LOG
