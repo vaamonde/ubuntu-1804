@@ -22,65 +22,69 @@ HostKey /etc/ssh/ssh_host_ecdsa_key
 HostKey /etc/ssh/ssh_host_ed25519_key
 
 # Configuração dos Log's do Servidor SSH, recomendado utilizar junto com os arquivos
-#hosts.allow e hosts.deny para geração de log´s detalhes de conexão ao servidor
+# hosts.allow e hosts.deny para geração de log´s detalhados de conexão ao servidor
 SyslogFacility AUTH
 LogLevel INFO
 
 # Negar o acesso ao SSH para o usuário ROOT
 PermitRootLogin no
 
-# Usuários que tem permissão de acesso ao SSH, separados por espaço
+# Usuários que tem permissão de acesso ao SSH, separados por espaço, deve existir no servidor
+# usuário listados no arquivo /etc/passwd
 AllowUsers vaamonde
 
 # Grupos que tem permissão de acesso ao SSH, cuidado, se você usar a variável AllowUsers
 # O grupo padrão do usuário precisa está liberado também, separados por espaço
+# deve existir no servidor, grupos listados no arquivo /etc/group
 AllowGroups vaamonde
 
-# Usuários que não tem permissão de acesso ao SSH, separados por espaço
+# Usuários que não tem permissão de acesso ao SSH, separados por espaço, deve existir no servidor
+# usuário listados no arquivo /etc/passwd
 DenyUsers root
 
 # Grupos que não tem permissão de acesso ao SSH, cuidado, se você usar a variável DenyUsers
 # O grupo padrão do usuário precisa está bloqueado também, separados por espaço
+# deve existir no servidor, grupos listados no arquivo /etc/group
 DenyGroups root
 
-# Banner que será apresentado no momento do acesso ao SSH
+# Banner que será apresentado no momento do acesso ao servidor de SSH
 Banner /etc/issue.net
 
-# Tempo de inatividade em segundo segundos para usuário logados
+# Tempo de inatividade em segundos para usuário logados na sessão do SSH
 LoginGraceTime 120
 ClientAliveInterval 180
 ClientAliveCountMax 0
 
-# Tentativa máxima de conexão simultaneas no servidor de SSH
+# Tentativa máxima de conexões simultaneas no servidor de SSH
 MaxAuthTries 3
 
 # Endereço IP do servidor que está liberado para permitir conexões via SSH
-ListenAddress 192.168.1.10
+ListenAddress 172.16.1.20
 
 # Não ler os arquivos de configurações ~/.rhosts e ~/.shosts
 IgnoreRhosts yes
 HostbasedAuthentication no
 
-# Não permitir usuários com senhas vazias se autenticar no SSH
+# Não permitir usuários com senhas vazias se autenticar no servidor de SSH
 PermitEmptyPasswords no
 
-# Não permitir encaminhamento de portas via SSH
+# Não permitir encaminhamento de portas via SSH e serviços de X11
 AllowTcpForwarding no
 X11Forwarding no
 
-#Metodo de Autenticaticação do SSH
-AuthenticationMethods publickey,password
+# Métodos de Autenticaticação do SSH, utilizar chaves publicas e autenticação por senha
+#AuthenticationMethods publickey,password
 
-# Autenticação utilizando chave pública
+# Autenticação utilizando chaves públicas geradas no cliente
 PubkeyAuthentication yes
 
 # Especifica se a autenticação por senha é permitida. O padrão é yes.
 PasswordAuthentication yes
 
-# Configuração do diretório de Chaves Publicas para autenticação de usuários
+# Configuração do diretório de chaves públicas para autenticar os usuários
 AuthorizedKeysFile .ssh/authorized_keys
 
-# Evitar o uso de diretórios residenciais inseguros e permissões de arquivos de chaves
+# Evitar o uso de diretórios residenciais inseguros e permissões de arquivos de chaves não confiáveis
 StrictModes yes
 
 # Controla o suporte para o esquema de autenticação "keyboard-interactive" definido no RFC-4256
@@ -89,7 +93,7 @@ ChallengeResponseAuthentication no
 #Utilizar autenticação de usuário via PAM
 UsePAM yes
 
-# Configurações Default do SSH (Não alterar)
+# Configurações Default (Padrão) do Servidor de SSH (Não alterar)
 X11DisplayOffset 10
 PrintMotd no
 PrintLastLog yes
