@@ -36,6 +36,15 @@ $table_prefix  = 'wp_';
 /** Configuração do Debug do Wordpress, deixar desativado (padrão false)*/
 define('WP_DEBUG', false);
 
+/** Configuração para usar dois domínios ou dois IP's no mesmo site do Wordpress
+/** Utilizado principalmente quando o seu site do Wordpress está na rede local e
+/** você faz NAT (Port Forwarding) utilizando servidores de Firewall, exemplo pfSense
+/** mais informações acesse: https://suporte.hostgator.com.br/hc/pt-br/articles/115003844573-Como-utilizar-dois-dom%C3%ADnios-em-um-mesmo-WordPress-
+if(strpos($_SERVER["HTTP_HOST"],'172.16.XXX.XXX')===false){
+define('WP_HOME','10.26.XXX.XXX');
+define('WP_SITEURL','10.26.XXX.XXX');
+}*/
+
 /** Bloco de configuração Global, deixar o padrão*/
 
 /**#@+ */
