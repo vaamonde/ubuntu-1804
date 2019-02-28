@@ -15,18 +15,11 @@ Port 22
 # Versão do protocolo de SSH
 Protocol 2
 
-# Tamanho da geração das chaves
-ServerKeyBits 1024
-
 # Configurações de Chaves Públicas e Privadas
 HostKey /etc/ssh/ssh_host_rsa_key
 HostKey /etc/ssh/ssh_host_dsa_key
 HostKey /etc/ssh/ssh_host_ecdsa_key
 HostKey /etc/ssh/ssh_host_ed25519_key
-KeyRegenerationInterval 3600
-
-# Ativar a separação de privilégios
-UsePrivilegeSeparation yes
 
 # Configuração dos Log's do Servidor SSH, recomendado utilizar junto com os arquivos
 #hosts.allow e hosts.deny para geração de log´s detalhes de conexão ao servidor
@@ -66,7 +59,6 @@ ListenAddress 192.168.1.10
 
 # Não ler os arquivos de configurações ~/.rhosts e ~/.shosts
 IgnoreRhosts yes
-RhostsRSAAuthentication no
 HostbasedAuthentication no
 
 # Não permitir usuários com senhas vazias se autenticar no SSH
@@ -95,7 +87,6 @@ ChallengeResponseAuthentication no
 UsePAM yes
 
 # Configurações Default do SSH (Não alterar)
-RSAAuthentication yes
 X11DisplayOffset 10
 PrintMotd no
 PrintLastLog yes
