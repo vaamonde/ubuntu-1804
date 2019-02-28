@@ -69,7 +69,7 @@ AllowTcpForwarding no
 X11Forwarding no
 
 #Metodo de Autenticaticação do SSH
-AuthenticationMethods publickey password
+AuthenticationMethods publickey,password
 
 # Autenticação utilizando chave pública
 PubkeyAuthentication yes
@@ -77,10 +77,13 @@ PubkeyAuthentication yes
 # Especifica se a autenticação por senha é permitida. O padrão é yes.
 PasswordAuthentication yes
 
+# Configuração do diretório de Chaves Publicas para autenticação de usuários
+AuthorizedKeysFile .ssh/authorized_keys
+
 # Evitar o uso de diretórios residenciais inseguros e permissões de arquivos de chaves
 StrictModes yes
 
-#
+# Controla o suporte para o esquema de autenticação "keyboard-interactive" definido no RFC-4256
 ChallengeResponseAuthentication no
 
 #Utilizar autenticação de usuário via PAM
