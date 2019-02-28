@@ -11,6 +11,11 @@
 # Kernel >= 4.15.x
 # Testado e homologado para a versão do OpenSSH Server 
 #
+# OpenSSH (Open Secure Shell) é um conjunto de utilitários de rede relacionado à segurança que provém a criptografia 
+# em sessões de comunicações em uma rede de computadores usando o protocolo SSH. Foi criado com um código aberto 
+# alternativo ao código proprietário da suíte de softwares Secure Shell, oferecido pela SSH Communications Security.
+# OpenSSH foi desenvolvido como parte do projeto OpenBSD, liderado por Theo de Raadt.
+#
 # Site Oficial do Projeto: https://www.openssh.com/
 #
 # Vídeo de instalação do GNU/Linux Ubuntu Server 18.04.x LTS: https://www.youtube.com/watch?v=zDdCrqNhIXI
