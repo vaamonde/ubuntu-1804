@@ -11,6 +11,18 @@
 # Kernel >= 4.15.x
 # Testado e homologado para a versão do GLPI-9.4.x
 #
+# GLPI (sigla em francês: Gestionnaire Libre de Parc Informatique, ou "Free IT Equipment Manager" em inglês) é um sistema
+# gratuito de Gerenciamento de Ativos de TI, sistema de rastreamento de problemas e central de atendimento. Este software
+# de código aberto é escrito em PHP e distribuído sob a Licença Pública Geral GNU.
+#
+# O GLPI é um aplicativo baseado na Web que ajuda as empresas a gerenciar seu sistema de informações. A solução é capaz de 
+# criar um inventário de todos os ativos da organização e gerenciar tarefas administrativas e financeiras. As funcionalidades
+# dos sistemas auxiliam os administradores de TI a criar um banco de dados de recursos técnicos, além de um gerenciamento e 
+# histórico de ações de manutenções. Os usuários podem declarar incidentes ou solicitações (com base no ativo ou não) graças
+# ao recurso de Helpdesk.
+#
+# Site oficial: https://glpi-project.org/pt-br/
+#
 # Vídeo de instalação do GNU/Linux Ubuntu Server 18.04.x LTS: https://www.youtube.com/watch?v=zDdCrqNhIXI
 # Vídeo de atualização do Sistema: https://www.youtube.com/watch?v=esnu8TAepHU
 # Vídeo de configuração da Placa de Rede: https://www.youtube.com/watch?v=zSUd4k108Zk
@@ -74,8 +86,7 @@ if [ "$USUARIO" == "0" ] && [ "$UBUNTU" == "18.04" ] && [ "$KERNEL" == "4.15" ]
 		exit 1
 fi
 #
-#
-# Verificando se as dependêncais do ownCloud estão instaladas
+# Verificando se as dependêncais do GLPI estão instaladas
 # opção do dpkg: -s (status), opção do echo: -e (intepretador de escapes de barra invertida), -n (permite nova linha)
 # || (operador lógico OU), 2> (redirecionar de saída de erro STDERR), && = operador lógico AND, { } = agrupa comandos em blocos
 # [ ] = testa uma expressão, retornando 0 ou 1, -ne = é diferente (NotEqual)
@@ -137,19 +148,12 @@ clear
 #
 echo -e "Instalando o GLPI, aguarde...\n"
 #
-echo -e "Habilitando os recursos do Apache2, aguarde..."
-	# opção do comando: &>> (redirecionar a saída padrão)
-	# opção do comando echo |: faz a função de Enter
-	&>> $LOG
-echo -e "Recursos habilitados com sucesso!!!, continuando com o script..."
-sleep 5
-echo
-#
 echo -e "Instalando as dependências do GLPI, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
-	# opção do comando apt: -y (yes)
-	apt -y install &>> $LOG
-	systemctl restart apache2.service &>> $LOG
+	# opção do comando apt: -y (yes), \ (faz a função de quebra de pagina no comando apt)
+	apt -y install php-curl php-gd php-intl php-pear php-imagick php-imap php-memcache php-pspell php-mysql \
+	php-recode php-tidy php-xmlrpc php-xsl php-mbstring php-gettext php-ldap php-cas php-apcu libapache2-mod-php \
+	php-json php-iconv php-xml &>> $LOG
 echo -e "Source List criado com sucesso!!!, continuando com o script..."
 sleep 5
 echo
@@ -157,6 +161,7 @@ echo
 echo -e "Instalando o GLPI e criando a Base de Dados, aguarde..."
 	# opção do comando: &>> (redirecionar a saida padrão)
 	# opção do comando tar: -j (bzip2), -x (extract), -v (verbose), -f (file)
+	# opção do comando mv: -v (verbose)
 	# opção do comando chown: -R (recursive), -v (verbose), www-data.www-data (user and group)
 	# opção do comando chmod: -R (recursive), -v (verbose), 755 (User=RWX, Group=R-X, Other=R-X)
 	# opção do comando mysql: -u (user), -p (password), -e (execute)
@@ -172,6 +177,21 @@ echo -e "Instalando o GLPI e criando a Base de Dados, aguarde..."
 	mysql -u $USER -p$PASSWORD -e "$GRANTALL" mysql &>> $LOG
 	mysql -u $USER -p$PASSWORD -e "$FLUSH" mysql &>> $LOG
 echo -e "GLPI instalado com sucesso!!!, continuando com o script..."
+sleep 5
+echo
+#
+echo -e "Habilitando os recursos do Apache2 para suportar o GLPI, aguarde..."
+	# opção do comando: &>> (redirecionar a saída padrão)
+	# opção do comando cp: -v (verbose)
+	# opção do comando phpenmod: (habilitar módulos do PHP)
+	# opção do comando a2enconf: (habilitar arquivo de configuração de site do Apache2)
+	# opção do comando systemctl: restart (reinicializar o serviço)
+	cp -v conf/glpi.conf /etc/apache2/conf-available/
+	cp -v conf/glpi-cron /etc/cron.d/ 
+	phpenmod apcu
+	a2enconf glpi
+	systemctl restart apache2 &>> $LOG
+echo -e "Recursos habilitados com sucesso!!!, continuando com o script..."
 sleep 5
 echo
 #
