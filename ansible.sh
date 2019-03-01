@@ -112,30 +112,37 @@ echo -e "Software removidos com sucesso!!!, continuando com o script..."
 sleep 5
 clear
 #
-echo -e "Instalando o Ansible, aguarde...\n"
+echo -e "Instalando o Ansible é o AWX, aguarde...\n"
 #
 echo -e "Adicionando o repositório do Ansible, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
-  apt-add-repository $PPA
-  apt update
+  	apt-add-repository -y $PPA
+  	apt update
 echo -e "Repositório do Ansible adicionado com sucesso!!!, continuando com o script..."
 sleep 5
 echo
 #
 echo -e "Instalando as dependências do Ansible, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
-  apt -y install software-properties-common python
+  	apt -y install software-properties-common python
 echo -e "Dependências do Ansible instaladas com sucesso!!!, continuando com o script..."
 sleep 5
 echo
 #
 echo -e "Instalando o Ansible, aguarde..."
 	# opção do comando: &>> (redirecionar a saida padrão)
-  apt install ansible
+  	apt -y install ansible
 echo -e "Ansible instalado com sucesso!!!, continuando com o script..."
 sleep 5
 echo
-#	
+#
+echo -e "Instalando o Front End do Ansible, aguarde..."
+	# opção do comando: &>> (redirecionar a saida padrão)
+  	apt -y install
+echo -e "Front End do Ansible instalado com sucesso!!!, continuando com o script..."
+sleep 5
+echo
+#
 echo -e "Instalação do Ansible feita com Sucesso!!!."
 	# script para calcular o tempo gasto (SCRIPT MELHORADO, CORRIGIDO FALHA DE HORA:MINUTO:SEGUNDOS)
 	# opção do comando date: +%T (Time)
