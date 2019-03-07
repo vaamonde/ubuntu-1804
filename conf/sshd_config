@@ -9,79 +9,80 @@
 # Testado e homologado para a versão do Ubuntu Server 18.04.x LTS x64
 # Kernel >= 4.15.x
 
-# Protocolo e Porta de conexão padrão do SSH
+# Porta de conexão padrão do Servidor de SSH
 Port 22
 
-# Versão do protocolo de SSH
+# Versão do protocolo padrão do Servidor de SSH
 Protocol 2
 
-# Configurações de Chaves Públicas e Privadas
+# Localização das configurações de Chaves Públicas e Privadas do Servidor de SSH
 HostKey /etc/ssh/ssh_host_rsa_key
 HostKey /etc/ssh/ssh_host_dsa_key
 HostKey /etc/ssh/ssh_host_ecdsa_key
 HostKey /etc/ssh/ssh_host_ed25519_key
 
-# Configuração dos Log's do Servidor SSH, recomendado utilizar junto com os arquivos
-# hosts.allow e hosts.deny para geração de log´s detalhados de conexão ao servidor
+# Configuração dos Log's do Servidor de SSH, recomendado utilizar junto com os arquivos de configuração
+# hosts.allow e hosts.deny para geração de log´s detalhados de conexão ao Servidor de SSH
 SyslogFacility AUTH
 LogLevel INFO
 
-# Negar o acesso ao SSH para o usuário ROOT
+# Negar o acesso remoto ao Servidor de SSH para o usuário ROOT
 PermitRootLogin no
 
-# Usuários que tem permissão de acesso ao SSH, separados por espaço, deve existir no servidor
-# usuário listados no arquivo /etc/passwd
+# Usuários que tem permissão de acesso remoto ao Servidor de SSH, separados por espaço, deve existir no servidor
+# usuários listados no arquivo /etc/passwd
 AllowUsers vaamonde
 
-# Grupos que tem permissão de acesso ao SSH, cuidado, se você usar a variável AllowUsers
-# O grupo padrão do usuário precisa está liberado também, separados por espaço
+# Grupos que tem permissão de acesso remoto ao Servidor de SSH, cuidado, se você usar a variável AllowUsers
+# o grupo padrão do usuário precisa está liberado também, separados por espaço
 # deve existir no servidor, grupos listados no arquivo /etc/group
 AllowGroups vaamonde
 
-# Usuários que não tem permissão de acesso ao SSH, separados por espaço, deve existir no servidor
-# usuário listados no arquivo /etc/passwd
+# Usuários que não tem permissão de acesso remoto ao Servidor de SSH, separados por espaço, deve existir no servidor
+# usuários listados no arquivo /etc/passwd
 DenyUsers root
 
-# Grupos que não tem permissão de acesso ao SSH, cuidado, se você usar a variável DenyUsers
-# O grupo padrão do usuário precisa está bloqueado também, separados por espaço
+# Grupos que não tem permissão de acesso remoto ao Servidor de SSH, cuidado, se você usar a variável DenyUsers
+# o grupo padrão do usuário precisa está bloqueado também, separados por espaço
 # deve existir no servidor, grupos listados no arquivo /etc/group
 DenyGroups root
 
-# Banner que será apresentado no momento do acesso ao servidor de SSH
+# Banner que será apresentado no momento do acesso remoto ao Servidor de SSH, não e recomendado utilizar acentuação
 Banner /etc/issue.net
 
-# Tempo de inatividade em segundos para usuário logados na sessão do SSH
+# Tempo de inatividade em segundos para os usuários logados na sessão do Servidor de SSH
 LoginGraceTime 120
 ClientAliveInterval 180
 ClientAliveCountMax 0
 
-# Tentativa máxima de conexões simultaneas no servidor de SSH
+# Tentativa máxima de conexões simultaneas no Servidor de SSH
 MaxAuthTries 3
 
-# Endereço IP do servidor que está liberado para permitir conexões via SSH
+# Endereço IP do Servidor de SSH que está liberado para permitir conexões remotas via protocolo SSH
 ListenAddress 172.16.1.20
 
 # Não ler os arquivos de configurações ~/.rhosts e ~/.shosts
 IgnoreRhosts yes
 HostbasedAuthentication no
 
-# Não permitir usuários com senhas vazias se autenticar no servidor de SSH
+# Não permitir que usuários sem senhas se autentique remotamente no Servidor de SSH
 PermitEmptyPasswords no
 
-# Não permitir encaminhamento de portas via SSH e serviços de X11
+# Não permitir encaminhamento de portas via Servidor de SSH para os serviços de X11 (ambiente gráfico)
 AllowTcpForwarding no
 X11Forwarding no
 
-# Métodos de Autenticaticação do SSH, utilizar chaves publicas e autenticação por senha
+# Métodos de Autenticaticação do SSH, utilizar chaves públicas e autenticação por senha
 #AuthenticationMethods publickey,password
 
-# Autenticação utilizando chaves públicas geradas no cliente
+# Autenticação utilizando chaves públicas geradas no cliente com o comando ssh-keygen
 PubkeyAuthentication yes
 
 # Especifica se a autenticação por senha é permitida. O padrão é yes.
 PasswordAuthentication yes
 
-# Configuração do diretório de chaves públicas para autenticar os usuários
+# Configuração do diretório de chaves públicas para autenticar os usuários, chave deve ser exportada para
+# o Servidor de SSH utilizando o comando ssh-keygen
 AuthorizedKeysFile .ssh/authorized_keys
 
 # Evitar o uso de diretórios residenciais inseguros e permissões de arquivos de chaves não confiáveis
@@ -90,7 +91,7 @@ StrictModes yes
 # Controla o suporte para o esquema de autenticação "keyboard-interactive" definido no RFC-4256
 ChallengeResponseAuthentication no
 
-#Utilizar autenticação de usuário via PAM
+# Utilizar autenticação de usuário via PAM
 UsePAM yes
 
 # Configurações Default (Padrão) do Servidor de SSH (Não alterar)
