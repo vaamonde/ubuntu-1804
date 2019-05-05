@@ -11,16 +11,16 @@ Kernel >= 4.15.x
 
 ============================================= ATUALIZAÇÕES DOS SCRIPTS =============================================
 
-28/02/2019 - Robson Vaamonde - Atualizado arquivo wp-config.php, acrescentado linhas para trabalhar com dois domínio ou dois
-endereços IP difrentes no mesmo Wordpress.
+28/02/2019 - Robson Vaamonde - Atualizado arquivo wp-config.php, acrescentado linhas para trabalhar com dois domínios ou dois
+endereços IP diferentes no mesmo Wordpress.
 
-25/02/2019 - Robson Vaamonde - Falha no script owncloud.sh, erro nas linhas de criação de banco de dados e na opção de 
+25/02/2019 - Robson Vaamonde - Falha no script owncloud.sh, erro nas linhas de criação do banco de dados e na opção de 
 descompactar o arquivo do owncloud.tar.bz2.
 
-18/02/2019 - Robson Vaamonde - Informado falha no script webmin.sh, error relacionado a linha 110, tinha uma barra de espaço
+18/02/2019 - Robson Vaamonde - Informado falha no script webmin.sh, erro relacionado a linha 110, tinha uma barra de espaço
 a mais no comando de apt -y install.
 
-18/02/2019 - Robson Vaamonde - Informado falha no script netdata.sh, error relacionado a linha 128, tinha uma barra de espaço
+18/02/2019 - Robson Vaamonde - Informado falha no script netdata.sh, erro relacionado a linha 128, tinha uma barra de espaço
 a mais no comando de apt -y install, acréscimo do bloco de verificação de dependências do MySQL e Apache2;
 
 10/02/2019 - Robson Vaamonde - Atualização wordpress.sh, loganalyzer.sh, openfire.sh, zoneminder.sh, acréscimo do bloco de
