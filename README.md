@@ -1,4 +1,4 @@
-<H1>Curso GRÁTIS DE Ubuntu Server
+<h1>Curso GRÁTIS DE Ubuntu Server</h1>
 
 O QUE VOCÊ VAI APRENDER NESSE CURSO
 
