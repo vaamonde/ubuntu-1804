@@ -1,3 +1,13 @@
+#!/bin/bash
+#Autor: Robson Vaamonde
+#Site: www.procedimentosemti.com.br
+#Facebook: facebook.com/ProcedimentosEmTI
+#Facebook: facebook.com/BoraParaPratica
+#YouTube: youtube.com/BoraParaPratica
+#Data de criação: 01/07/2019
+#Data de atualização: 01/07/2019
+#Versão: 0.01
+
 #Comandos básicos de Bash/Shell
 
 _00.    bash    (Ctrl+Alt+T ou Ctrl+Alt+F? ou Alt+F? - F7 terminal gráfico)
