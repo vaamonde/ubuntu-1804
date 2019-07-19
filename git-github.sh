@@ -1,7 +1,12 @@
-#Material de referência: https://git-scm.com/book/pt-br/v2
-#Material de referência: https://rogerdudler.github.io/git-guide/index.pt_BR.html
-#Material de referência: https://comandosgit.github.io/
-#Material de referência: http://tableless.com.br/tudo-que-voce-queria-saber-sobre-git-e-github-mas-tinha-vergonha-de-perguntar
+#!/bin/bash
+#Autor: Robson Vaamonde
+#Site: www.procedimentosemti.com.br
+#Facebook: facebook.com/ProcedimentosEmTI
+#Facebook: facebook.com/BoraParaPratica
+#YouTube: youtube.com/BoraParaPratica
+#Data de criação: 19/07/2019
+#Data de atualização: 19/07/2019
+#Versão: 0.01
 
 #Instalando o Git no Debian, Ubuntu ou Linux Mint
 sudo apt update && sudo apt install git vim
