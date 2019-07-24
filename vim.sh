@@ -1,3 +1,15 @@
+#!/bin/bash
+#Autor: Robson Vaamonde
+#Site: www.procedimentosemti.com.br
+#Facebook: facebook.com/ProcedimentosEmTI
+#Facebook: facebook.com/BoraParaPratica
+#YouTube: youtube.com/BoraParaPratica
+#Data de criação: 24/07/2019
+#Data de atualização: 24/07/2019
+#Versão: 0.01
+
+#Comandos básicos de do Editor de Texto VIM
+
 #Instalando o Editor de Texto VIM no Debian, Ubuntu ou Linux Mint
 sudo apt update && sudo apt install vim vim-common
 
