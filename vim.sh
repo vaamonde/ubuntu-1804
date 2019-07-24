@@ -20,12 +20,12 @@ vim
 #Modos do editor de Texto VIM
 Modo 				Tecla 							Rodapé 				Descrição 
 ---------------------------------------------------------------------------------------------------------
-de Inserção         i ou Insert                     -- INSERÇÃO --		Inserção de texto
+de Inserção         i ou Insert                     -- INSERÇÃO --      Inserção de texto
 de Comandos         <Esc>                           Comandos de manipulação de texto
-de Linha de comando <Esc> shift : (dois pontos)     :					Comandos de manipulação arquivo 
-de Visual           <Esc> v                         -- VISUAL --		Seleção visual de texto
-de Busca            <Esc> /                         /					Busca de padrões no texto
-de Reposição        <Esc> shift R ou Insert/Insert  -- SUBSTITUIÇÃO --	Inserção sobreescrevendo
+de Linha de comando <Esc> shift : (dois pontos)     :                   Comandos de manipulação arquivo 
+de Visual           <Esc> v                         -- VISUAL --        Seleção visual de texto
+de Busca            <Esc> /                         /                   Busca de padrões no texto
+de Reposição        <Esc> shift R ou Insert/Insert  -- SUBSTITUIÇÃO --  Inserção sobreescrevendo
 ---------------------------------------------------------------------------------------------------------
 
 #Ajuda do editor de Texto VIM (q = quit)
