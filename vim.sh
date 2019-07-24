@@ -18,7 +18,7 @@ man vim
 vim
 
 #Modos do editor de Texto VIM
-Modo 				Tecla 							Rodapé 				Descrição 
+Modo                Tecla                           Rodapé              Descrição 
 ---------------------------------------------------------------------------------------------------------
 de Inserção         i ou Insert                     -- INSERÇÃO --      Inserção de texto
 de Comandos         <Esc>                           Comandos de manipulação de texto
