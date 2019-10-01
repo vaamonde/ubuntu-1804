@@ -5,8 +5,8 @@
 # Facebook: facebook.com/BoraParaPratica
 # YouTube: youtube.com/BoraParaPratica
 # Data de criação: 10/11/2018
-# Data de atualização: 10/02/2019
-# Versão: 0.0
+# Data de atualização: 01/10/2019
+# Versão: 0.2
 # Testado e homologado para a versão do Ubuntu Server 18.04.x LTS x64
 # Kernel >= 4.15.x
 #
@@ -40,7 +40,7 @@ KERNEL=`uname -r | cut -d'.' -f1,2`
 LOG="/var/log/$(echo $0 | cut -d'/' -f2)"
 #
 # Variável do download do Webmin - (Link de download atualizado em: 20/01/2019)
-WEBMIN="https://prdownloads.sourceforge.net/webadmin/webmin_1.900_all.deb"
+WEBMIN="http://prdownloads.sourceforge.net/webadmin/webmin_1.930_all.deb"
 #
 # Verificando se o usuário e Root, Distribuição e >=18.04 e o Kernel >=4.15 <IF MELHORADO)
 # [ ] = teste de expressão, && = operador lógico AND, == comparação de string, exit 1 = A maioria dos erros comuns na execução
