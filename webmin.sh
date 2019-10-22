@@ -5,8 +5,8 @@
 # Facebook: facebook.com/BoraParaPratica
 # YouTube: youtube.com/BoraParaPratica
 # Data de criação: 10/11/2018
-# Data de atualização: 01/10/2019
-# Versão: 0.2
+# Data de atualização: 22/10/2019
+# Versão: 0.3
 # Testado e homologado para a versão do Ubuntu Server 18.04.x LTS x64
 # Kernel >= 4.15.x
 #
@@ -123,7 +123,7 @@ echo
 echo -e "Instalando o Webmin, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando dpkg: -i (install)
-	WEBMINVERSION=`echo webmin*`
+	WEBMINVERSION=`echo webmin_*`
 	dpkg -i $WEBMINVERSION &>> $LOG
 echo -e "Instalação do Webmin feita com sucesso!!!, continuando com o script..."
 sleep 5
