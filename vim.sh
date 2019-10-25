@@ -62,7 +62,7 @@ vim teste01.txt <Enter>
 
 #Habilitando recursos no editor de Texto VIM
 <Esc> shift :set number <Enter>	<-- mostra número da linha
-<Esc> shift :set ignorecase <Enter>	<-- ignora case insensitive na busca
+<Esc> shift :set ignorecase <Enter> <-- ignora case insensitive na busca
 <Esc> shift :set syntax on <Enter> <-- identificação da linguagem
 <Esc> shift :set autoindent <Enter> <-- identação automática
 <Esc> shift :set showmatch <Enter> <-- completa as chaves e colchetes quando você os fecha
@@ -77,7 +77,7 @@ vim teste01.txt <Enter>
 #Deletando caracteres e linhas no editor de Texto VIM (x = delete char | d = delete | dw = delete next word)
 <Esc> x		<-- deleta carácter por carácter
 <Esc> dw	<-- deleta palavra por palavra
-<Esc> dd	<--	deleta uma linha inteira
+<Esc> dd	<-- deleta uma linha inteira
 
 #Desfazendo uma alteração no editor de Texto VIM (u = undo | . repeat)
 <Esc> u
@@ -94,7 +94,7 @@ vim teste01.txt <Enter>
 
 #Localizando palavras no editor de Texto VIM (/ = find | n = next find)
 <Esc> /palavra <Enter>
-n			<-- localiza a próxima ocorrência
+n		<-- localiza a próxima ocorrência
 
 #Formatação de alinhamento no editor de Texto VIM
 <Esc> :left <Enter>   <-- alinhamento de texto para a esquerda
