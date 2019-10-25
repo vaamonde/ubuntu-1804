@@ -8,7 +8,10 @@
 #Data de atualização: 24/07/2019
 #Versão: 0.01
 
-#Comandos básicos de do Editor de Texto VIM
+#Indicação de site com muita informação sobre o Editor de Texto VIM: Aurelio.net
+#Link: https://aurelio.net/vim/
+
+#Comandos básicos do Editor de Texto VIM
 
 #Instalando o Editor de Texto VIM no Debian, Ubuntu ou Linux Mint
 sudo apt update && sudo apt install vim vim-common
@@ -30,27 +33,31 @@ de Reposição        <Esc> shift R ou Insert/Insert  -- SUBSTITUIÇÃO --  Inse
 
 #Ajuda do editor de Texto VIM (q = quit)
 <Esc> shift :help <Enter>
-<Esc> shift :q <Enter>
 <Esc> F1
+<Esc> shift :q <Enter>
+vimtutor
 
-#Saindo do editor de Texto VIM (q = quit | ! = forçado)
+#Saindo do editor de Texto VIM (q = quit | a = all | ! = force)
 <Esc> shift :q <Enter>
 <Esc> shift :q! <Enter>
+<Esc> shift :qa! <Enter>
 
 #Salvando arquivo no editor de Texto VIM (w = write | wq = write/quit | x = write/quit)
 <Esc> shift :w teste01.txt <Enter>
 <Esc> shift :wq <Enter>
 <Esc> shift :x <Enter>
 
-#Criando um novo arquivo no editor de Texto VIM
+#Criando um novo arquivo no editor de Texto VIM (enew = new file | w! = write/force | sav = save as)
+vim teste01.txt <Enter>
 <Esc> shift :enew <Enter>
+<Esc> shift :w! teste01.txt <Enter>
+<Esc> shift :sav teste02.txt <Enter>
 
-#Abrindo um arquivo no editor de Texto VIM (e = explorer | o = open below)
+#Abrindo um arquivo no editor de Texto VIM (e = explorer | o TAB funciona)
 <Esc> shift :e teste01.txt <Enter>
-<Esc> shift :o teste01.txt <Enter>
-<Esc> shift :e. selecione o arquivo <Enter>
+<Esc> shift :e. <Enter>
 
-#Executando comandos externos no editor de Texto VIM
+#Executando comandos externos no editor de Texto VIM (o TAB funciona)
 <Esc> shift :!ls -lh <Enter>
 
 #Habilitando recursos no editor de Texto VIM
@@ -59,19 +66,21 @@ de Reposição        <Esc> shift R ou Insert/Insert  -- SUBSTITUIÇÃO --  Inse
 <Esc> shift :set syntax on <Enter> <-- identificação da linguagem
 <Esc> shift :set autoindent <Enter> <-- identação automática
 <Esc> shift :set showmatch <Enter> <-- completa as chaves e colchetes quando você os fecha
+<Esc> shift :set autowrite <Enter> <-- salva o arquivo a cada alteração
 
-#Arquivo de confiração do VIM
-ls -lha /etc/vim/vimrc
-cat /etc/vim/vimrc
-sudo vim /etc/vim/
+#Arquivo de confiração do editor de Texto VIM
+<Esc> shift :!ls -lha /etc/vim/vimrc
+<Esc> shift :!cat /etc/vim/vimrc
+<Esc> shift :e /etc/vim/vimrc
 
 #Deletando caracteres e linhas no editor de Texto VIM (x = delete char | d = delete | dw = delete next word)
 <Esc> x		<-- deleta carácter por carácter
 <Esc> dw	<-- deleta palavra por palavra
 <Esc> dd	<--	deleta uma linha inteira
 
-#Desfazendo uma alteração no editor de Texto VIM (u = undo)
-<Esc> u	
+#Desfazendo uma alteração no editor de Texto VIM (u = undo | . repeat)
+<Esc> u
+<Esc> .
 
 #Copiando palavras ou linhas no editor de Texto VIM (y = yank)
 <Esc> v		<-- selecionar o texto com os direcionadores
@@ -79,12 +88,17 @@ sudo vim /etc/vim/
 <Esc> yy	<-- copiando a linha inteira
 
 #Colando palavras ou linhas no editor de Texto VIM (p = paste after)
-<Esc> i		<-- colar o curso no local que deseja colar
+<Esc> i		<-- colocar o curso no local que desejado para colar
 <Esc> p		<-- colar o texto
 
 #Localizando palavras no editor de Texto VIM (/ = find | n = next find)
 <Esc> /palavra <Enter>
-n			<-- localiza próxima ocorrência
+n			<-- localiza a próxima ocorrência
+
+#Formatação de alinhamento no editor de Texto VIM
+<Esc> :left <Enter>   <-- alinhamento de texto para a esquerda
+<Esc> :right <Enter>  <-- alinhamento de texto centralizado
+<Esc> :center <Enter> <-- alinhamento de texto para a direita
 
 #Dividindo a tela horizontalmente no editor de Texto VIM (split = dividir)
 :split
