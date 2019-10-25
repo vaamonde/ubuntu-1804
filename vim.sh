@@ -72,6 +72,7 @@ vim teste01.txt <Enter>
 <Esc> shift :!ls -lha /etc/vim/vimrc
 <Esc> shift :!cat /etc/vim/vimrc
 <Esc> shift :e /etc/vim/vimrc
+<Esc> shift :!sudo vim /etc/vim/vimrc
 
 #Deletando caracteres e linhas no editor de Texto VIM (x = delete char | d = delete | dw = delete next word)
 <Esc> x		<-- deleta carácter por carácter
