@@ -16,6 +16,13 @@ sudo apt update && sudo apt install mysql-workbench
 sudo apt update && sudo apt install emma
 sudo apt update && sudo apt install phpmyadmin (precisa do Apache2 e PHP)
 
+#Recomendações antes de instalar o PhpMyAdmin: 
+#1. Instalar o LAMP: sudo apt -y install lamp-server^ perl python (nesse cenário vai ser instalado o MySQL)
+#2. Instalar as Dependências do PhpMyAdmin: sudo apt -y install php-mbstring php-gettext php-dev libmcrypt-dev php-pear
+#3. Habilitar os Módulos do PHP no Apache2: sudo phpenmod mcrypt && sudo phpenmod mbstring
+#4. Reinicializar o Apache2: sudo systemctl restart apache2
+#5. Instalar o PhpMyAdmin: sudo apt update && sudo apt -y install phpmyadmin
+
 #Aplicando as políticas de segurança no SGDB MySQL ou MariaDB
 sudo mysql_secure_installation
 1. Connecting to MySQL using a blank password (Press y|Y for Yes, any other key for No:) <Enter>
