@@ -24,6 +24,8 @@ sudo apt update && sudo apt install phpmyadmin (precisa do Apache2 e PHP)
 #5. Instalar o PhpMyAdmin: sudo apt update && sudo apt -y install phpmyadmin
 
 #Aplicando as políticas de segurança no SGDB MySQL ou MariaDB
+
+#Políticas de Segurança do MySQL
 sudo mysql_secure_installation
 1. Connecting to MySQL using a blank password (Press y|Y for Yes, any other key for No:) <Enter>
 2. New password root: pti@2019 <Enter>
@@ -33,6 +35,18 @@ sudo mysql_secure_installation
 6. Remove test database and access to it? (Press y|Y for Yes, any other key for No:) <Enter>
 7. Reload privilege tables now? (Press y|Y for Yes, any other key for No:) y <Enter>
 
+#Políticas de Segurança do MariaDB
+#(Obs: na instalação é associado a senha do seu usário para o root do MariaDB)
+sudo mysql_secure_installation
+1. Enter current password for root (enter for none): pti@2019 <Enter>
+2. Change the root password? [Y/n]: y <Enter>
+3. New password: pti@2019 <Enter>
+4. Re-enter new password: pti@2019 <Enter>
+5. Remove anonymous users? [Y/n]: y <Enter>
+6. Disallow root login remotely? [Y/n]: n <Enter>
+7. Remove test database and access to it? [Y/n]: n <Enter>
+8. Reload privilege tables now? [Y/n]: y <Enter>
+
 #Verificando o Serviço do SGBD do MySQL ou MariaDB
 sudo systemctl status mysql
 sudo systemctl restart mysql
@@ -41,7 +55,10 @@ sudo systemctl start mysql
 
 #Localização dos arquivos de configuração do SGBD do MySQL ou MariaDB
 /etc/mysql
-/etc/mysql/mysql.conf.d/
+/etc/mysql/mysql.conf.d/ <-- Configurações do Servidor SGBD do MySQL
+/etc/mysql/mysql.conf.d/mysqld.cnf <-- Arquivo de configuração do Servidor SGBD do MySQL
+/etc/mysql/mariadb.conf.d/ <-- Configurações do Servidor SGBD do MariaDB
+/etc/mysql/mariadb.conf.d/ <-- Arquivo de configuração do Servidor SGBD do MariaDB
 
 #Verificando o Porta de Conexão do SGDB do MySQL ou MariaDB
 sudo netstat -an | grep 3306
