@@ -39,6 +39,10 @@ sudo systemctl restart mysql
 sudo systemctl stop mysql
 sudo systemctl start mysql
 
+#Localização dos arquivos de configuração do SGBD do MySQL ou MariaDB
+/etc/mysql
+/etc/mysql/mysql.conf.d/
+
 #Verificando o Porta de Conexão do SGDB do MySQL ou MariaDB
 sudo netstat -an | grep 3306
 
