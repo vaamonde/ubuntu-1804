@@ -4,8 +4,8 @@
 #Facebook: facebook.com/BoraParaPratica
 #YouTube: youtube.com/BoraParaPratica
 #Data de criação: 13/02/2019
-#Data de atualização: 28/10/2019
-#Versão: 0.03
+#Data de atualização: 29/10/2019
+#Versão: 0.04
 
 #Instalando o SGBD (Sistema de Gerenciamento de Banco de Dados) MySQL ou MariaDB
 sudo apt update && sudo apt install mysql-server mysql-client mysql-common
@@ -17,8 +17,8 @@ sudo apt update && sudo apt install emma
 sudo apt update && sudo apt install phpmyadmin (precisa do Apache2 e PHP)
 
 #Recomendações antes de instalar o PhpMyAdmin: 
-#1. Instalar o LAMP: sudo apt -y install lamp-server^ perl python (nesse cenário vai ser instalado o MySQL)
-#2. Instalar as Dependências do PhpMyAdmin: sudo apt -y install php-mbstring php-gettext php-dev libmcrypt-dev php-pear
+#1. Instalar o LAMP: sudo apt install lamp-server^ perl python (nesse cenário vai ser instalado o MySQL)
+#2. Instalar as Dependências do PhpMyAdmin: sudo apt install php-mbstring php-gettext php-dev libmcrypt-dev php-pear
 #3. Habilitar os Módulos do PHP no Apache2: sudo phpenmod mcrypt && sudo phpenmod mbstring
 #4. Reinicializar o Apache2: sudo systemctl restart apache2
 #5. Instalar o PhpMyAdmin: sudo apt update && sudo apt -y install phpmyadmin
@@ -54,7 +54,7 @@ sudo systemctl stop mysql
 sudo systemctl start mysql
 
 #Localização dos arquivos de configuração do SGBD do MySQL ou MariaDB
-/etc/mysql
+/etc/mysql <-- Diretório de configuração do SGBD MySQL ou MariaDB
 /etc/mysql/mysql.conf.d/ <-- Configurações do Servidor SGBD do MySQL
 /etc/mysql/mysql.conf.d/mysqld.cnf <-- Arquivo de configuração do Servidor SGBD do MySQL
 /etc/mysql/mariadb.conf.d/ <-- Configurações do Servidor SGBD do MariaDB
@@ -115,6 +115,8 @@ SELECT * FROM matriculas;
 
 #Visualizando as Tabelas Criadas no SGBD do MySQL ou MariaDB
 SHOW TABLES;
+
+#Utilizando o conceito do CRUD (Create INSERT, Read SELECT, Update UPDATE and Delete DELETE) no SGBD MySQL ou MariaDB
 
 #Inserindo dados dentro da Tabela Alunos no SGBD do MySQL ou MariaDB
 INSERT INTO alunos VALUES ('000001', 'Robson Vaamonde', 'Guarulhos');
