@@ -18,7 +18,9 @@ sudo apt update && sudo apt install phpmyadmin (precisa do Apache2 e PHP)
 
 #Recomendações antes de instalar o PhpMyAdmin: 
 #1. Instalar o LAMP: sudo apt install lamp-server^ perl python (nesse cenário vai ser instalado o MySQL)
-#2. Instalar as Dependências do PhpMyAdmin: sudo apt install php-mbstring php-gettext php-dev libmcrypt-dev php-pear
+#(caso queira o MariaDB: sudo apt install apache2 mariadb-server mariadb-client mariadb-common php7.2-fpm php7.2-common\
+#php7.2-mbstring php7.2-xmlrpc php7.2-soap php7.2-gd php7.2-xml php7.2-intl php7.2-mysql php7.2-cli php7.2-zip php7.2-curl)
+#2. Instalar as Dependências do PhpMyAdmin: sudo apt install php7.2-mbstring php-gettext php7.2-dev libmcrypt-dev php-pear
 #3. Habilitar os Módulos do PHP no Apache2: sudo phpenmod mcrypt && sudo phpenmod mbstring
 #4. Reinicializar o Apache2: sudo systemctl restart apache2
 #5. Instalar o PhpMyAdmin: sudo apt update && sudo apt -y install phpmyadmin
