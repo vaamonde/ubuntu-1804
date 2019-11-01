@@ -4,8 +4,8 @@
 # Facebook: facebook.com/BoraParaPratica
 # YouTube: youtube.com/BoraParaPratica
 # Data de criação: 28/02/2019
-# Data de atualização: 07/03/2019
-# Versão: 0.2
+# Data de atualização: 01/10/2019
+# Versão: 0.3
 # Testado e homologado para a versão do Ubuntu Server 18.04.x LTS x64
 # Kernel >= 4.15.x
 
@@ -23,6 +23,10 @@ HostKey /etc/ssh/ssh_host_ed25519_key
 
 # Configuração dos Log's do Servidor de SSH, recomendado utilizar junto com os arquivos de configuração
 # hosts.allow e hosts.deny para geração de log´s detalhados de conexão ao Servidor de SSH
+# Verificação dos log's de autenticação do SSH: sudo cat -n /var/log/auth.log | grep -i sshd
+# Verificação dos log's de serviço do SSH: sudo cat -n /var/log/syslog | grep -i ssh
+# Verificação do arquvo de Log do TCPWrappers Allow: sudo cat -n /var/log/tcpwrappers-allow-sh.log
+# Verificação do arquvo de Log do TCPWrappers Deny: sudo cat -n /var/log/tcpwrappers-deny-sh.log
 SyslogFacility AUTH
 LogLevel INFO
 
@@ -30,20 +34,20 @@ LogLevel INFO
 PermitRootLogin no
 
 # Usuários que tem permissão de acesso remoto ao Servidor de SSH, separados por espaço, deve existir no servidor
-# usuários listados no arquivo /etc/passwd
+# Usuários listados no arquivo /etc/passwd
 AllowUsers vaamonde
 
 # Grupos que tem permissão de acesso remoto ao Servidor de SSH, cuidado, se você usar a variável AllowUsers
-# o grupo padrão do usuário precisa está liberado também, separados por espaço
+# o grupo padrão do usuário precisa está liberado na linha AllowGroups, separados por espaço
 # deve existir no servidor, grupos listados no arquivo /etc/group
 AllowGroups vaamonde
 
 # Usuários que não tem permissão de acesso remoto ao Servidor de SSH, separados por espaço, deve existir no servidor
-# usuários listados no arquivo /etc/passwd
+# Usuários listados no arquivo /etc/passwd
 DenyUsers root
 
 # Grupos que não tem permissão de acesso remoto ao Servidor de SSH, cuidado, se você usar a variável DenyUsers
-# o grupo padrão do usuário precisa está bloqueado também, separados por espaço
+# o grupo padrão do usuário precisa está bloqueado na linha DenyGroups, separados por espaço
 # deve existir no servidor, grupos listados no arquivo /etc/group
 DenyGroups root
 
@@ -73,16 +77,20 @@ AllowTcpForwarding no
 X11Forwarding no
 
 # Métodos de Autenticaticação do SSH, utilizar chaves públicas e autenticação por senha
+# Por padrão o Servidor de SSH não trabalhar com Chaves Pública para autenticação, utilizando o arquivo /etc/passwd
+# para se autenticar no servidor, por motivos de segurança, e recomendado utilizar chaves públicas e senhas para se
+# autenticar no servidor
 #AuthenticationMethods publickey,password
 
-# Autenticação utilizando chaves públicas geradas no cliente com o comando ssh-keygen
+# Autenticação utilizando chaves públicas geradas no cliente com o comando ssh-keygen e exportada para o servidor
+# com o comando ssh-copy-id, localizadas em: /home/nome_usuário/.ssh/authorized_keys
 PubkeyAuthentication yes
 
-# Especifica se a autenticação por senha é permitida. O padrão é yes.
+# Especifica se a autenticação por senha é permitida. O padrão é yes. Não e recomendado mudar
 PasswordAuthentication yes
 
 # Configuração do diretório de chaves públicas para autenticar os usuários, chave deve ser exportada para
-# o Servidor de SSH utilizando o comando ssh-keygen
+# o Servidor de SSH utilizando o comando o comando ssh-copy-id
 AuthorizedKeysFile .ssh/authorized_keys
 
 # Evitar o uso de diretórios residenciais inseguros e permissões de arquivos de chaves não confiáveis
