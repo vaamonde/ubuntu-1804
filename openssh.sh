@@ -160,7 +160,7 @@ echo
 #
 echo -e "Verificando a porta de conexão do OpenSSH Server, aguarde..."
 	# opção do comando netstat: a (all), n (numeric)
-	netstat -an | grep 22
+	netstat -an | grep -i tcp | grep 22
 echo -e "Usuário criado com sucesso!!!, continuando com o script..."
 sleep 5
 echo
