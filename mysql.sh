@@ -4,8 +4,8 @@
 #Facebook: facebook.com/BoraParaPratica
 #YouTube: youtube.com/BoraParaPratica
 #Data de criação: 13/02/2019
-#Data de atualização: 29/10/2019
-#Versão: 0.04
+#Data de atualização: 03/11/2019
+#Versão: 0.05
 
 #Instalando o SGBD (Sistema de Gerenciamento de Banco de Dados) MySQL ou MariaDB
 sudo apt update && sudo apt install mysql-server mysql-client mysql-common
