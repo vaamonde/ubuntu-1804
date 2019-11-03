@@ -75,11 +75,11 @@ SHOW DATABASES;
 CREATE DATABASE aulaead;
 SHOW DATABASES;
 
-#Criando usuários no SGBD do MySQL ou MariaDB
-CREATE USER 'aulaead' IDENTIFIED BY 'aulaead';
-
 #Permitindo que o usuário Root administre o servidor Remotamente do MySQL ou MariaDB
 GRANT ALL ON *.* TO root@'%' IDENTIFIED BY 'aulaead'
+
+#Criando usuários no SGBD do MySQL ou MariaDB
+CREATE USER 'aulaead' IDENTIFIED BY 'aulaead';
 
 #Aplicando as permissões de acesso ao Banco de Dados AulaEAD no SGBD do MySQL ou MariaDB
 GRANT USAGE ON *.* TO 'aulaead' IDENTIFIED BY 'aulaead';
