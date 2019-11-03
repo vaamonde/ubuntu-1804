@@ -5,8 +5,8 @@
 # Facebook: facebook.com/BoraParaPratica
 # YouTube: youtube.com/BoraParaPratica
 # Data de criação: 28/02/2019
-# Data de atualização: 01/10/2019
-# Versão: 0.02
+# Data de atualização: 03/11/2019
+# Versão: 0.03
 # Testado e homologado para a versão do Ubuntu Server 18.04.x LTS x64
 # Kernel >= 4.15.x
 # Testado e homologado para a versão do OpenSSH Server 
@@ -110,6 +110,8 @@ echo -e "Configuração do OpenSSH Server, aguarde...\n"
 #
 echo -e "Atualizando os arquivos de configuração do OpenSSH Server, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
+	# opção do comando mv: -v (verbose)
+	# opção do comando cp: -v (verbose)
 	mv -v /etc/ssh/sshd_config /etc/ssh/sshd_config.old &>> $LOG
 	cp -v conf/sshd_config /etc/ssh/sshd_config &>> $LOG
 	cp -v conf/hosts.allow /etc/hosts.allow &>> $LOG
@@ -160,6 +162,7 @@ echo
 #
 echo -e "Verificando a porta de conexão do OpenSSH Server, aguarde..."
 	# opção do comando netstat: a (all), n (numeric)
+	# opção do comando grep: -i (ignore case)
 	netstat -an | grep -i tcp | grep 22
 echo -e "Usuário criado com sucesso!!!, continuando com o script..."
 sleep 5
