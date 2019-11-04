@@ -56,6 +56,10 @@ sudo mysql_secure_installation
 /etc/mysql/mariadb.conf.d/ <-- Configurações do Servidor SGBD do MariaDB
 /etc/mysql/mariadb.conf.d/50-server.cnf <-- Arquivo de configuração do Servidor SGBD do MariaDB
 
+#Atualizando o arquivo de configuração do SGBD do MySQL ou MariaDB
+sudo cp -v /etc/mysql/mysql.conf.d/mysqld.cnf /etc/mysql/mysql.conf.d/mysqld.cnf.old
+sudo vim /etc/mysql/mysql.conf.d/mysqld.cnf
+
 #Verificando o Serviço do SGBD do MySQL ou MariaDB
 sudo systemctl status mysql
 sudo systemctl restart mysql
@@ -63,31 +67,41 @@ sudo systemctl stop mysql
 sudo systemctl start mysql
 
 #Verificando o Porta de Conexão do SGDB do MySQL ou MariaDB
+#(opções do comando netstat: -a all | -n numeric)
 sudo netstat -an | grep 3306
 
 #Acessando o SGBD do MySQL ou MariaDB com o usuário root do MySQL/MariaDB
+#(opções do comando mysql: -u user | -p password)
 sudo mysql -u root -p
 
 #Verificando os Bancos de Dados Existentes no SGBD do MySQL ou MariaDB
 SHOW DATABASES;
 
 #Criando o nosso Banco de Dados AulaEAD no SGBD do MySQL ou MariaDB
+#Verificando o nosso Banco de Dados criado no SGBD do MySQL ou MariaDB
 CREATE DATABASE aulaead;
 SHOW DATABASES;
 
 #Permitindo que o usuário Root administre o servidor Remotamente do MySQL ou MariaDB
+#(opções do comando GRANT: grant (permissão), all (todos privilegios), on (em ou na | banco ou tabela), *.* (todos os bancos/tabelas))
+#(opções do comando GRANT: to (para), user@'%' (usuário @ localhost), identified by (indentificado por - senha do usuário))
 GRANT ALL ON *.* TO root@'%' IDENTIFIED BY 'aulaead'
 
 #Criando usuários no SGBD do MySQL ou MariaDB
+#(opções do comando CREATE: create (criação), user (usuário), identified by (indentificado por - senha do usuário))
 CREATE USER 'aulaead' IDENTIFIED BY 'aulaead';
 
 #Aplicando as permissões de acesso ao Banco de Dados AulaEAD no SGBD do MySQL ou MariaDB
+#(opções do comando GRANT: grant (permissão), usage (uso em banco ou tabela), on (em ou na | banco ou tabela), *.* (todos os bancos/tabelas))
+#(opções do comando GRANT: to (para), 'aulaead' (usuário), identified by (indentificado por - senha do usuário))
+#(opções do comando GRANT: all (todos privilegios), privileges (privilégios), on (em ou na | banco ou tabela), aulaead.* (banco/tabelas), to (para) 'aulaead' (usuário))
 GRANT USAGE ON *.* TO 'aulaead' IDENTIFIED BY 'aulaead';
 GRANT ALL PRIVILEGES ON aulaead.* TO 'aulaead';
 FLUSH PRIVILEGES;
 EXIT
 
 ##Acessando o SGBD do MySQL ou MariaDB com o usuário AulaEAD
+#(opções do comando mysql: -u user | -p password)
 mysql -u aulaead -p
 
 #Utilizando o Banco e Dados AulaEAD no SGBD do MySQL ou MariaDB
