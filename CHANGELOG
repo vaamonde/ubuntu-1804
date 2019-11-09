@@ -4,12 +4,14 @@ Facebook: facebook.com/ProcedimentosEmTI
 Facebook: facebook.com/BoraParaPratica
 YouTube: youtube.com/BoraParaPratica
 Data de criação: 29/01/2019
-Data de atualização: 25/10/2019
-Versão: 0.06
+Data de atualização: 09/11/2019
+Versão: 0.07
 Testado e homologado para a versão do Ubuntu Server 18.04.x LTS x64
 Kernel >= 4.15.x
 
 ============================================= ATUALIZAÇÕES DOS SCRIPTS =============================================
+09/11/2019 - Robson Vaamonde - Atualização do arquivo de configuração sshd_config, acréscimo das linha MaxSessions 3, 
+MaxStartups 5:60:10, AddressFamily inet, PrintLastLog yes
 
 15/10/2019 - Robosn Vaamonde - Atualização do script webmin.sh, acréscimo da dependência unzip e correção da linha de versão do 
 WEBMINVERSION=`echo webmin_*`;
