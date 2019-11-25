@@ -45,7 +45,7 @@ exit
 #Sexta Etapa: Criando o Túnel SSH com o Remote VSCode
 #-R: 		Especifica que as conexões à porta TCP fornecidos no servidor devem ser encaminhadas para o lado do cliente.
 #52698: 	Porta do Túnel Virtual que será criada no lado do servidor
-#127.0.0.1:   Endereço de Loopback do lado servidor e cliente
+#127.0.0.1:     Endereço de Loopback do lado servidor e cliente
 #52698: 	Porta Padrão do Túnel Virtual que será criada no lado do cliente utilizado pelo Remote VSCode
 ssh -R 52698:127.0.0.1:52698 vaamonde@172.16.1.20
 netstat -an | grep 52698
