@@ -1,14 +1,10 @@
 #!/bin/bash
-# Autor: Robson Vaamonde
-# Site: www.procedimentosemti.com.br
-# Facebook: facebook.com/ProcedimentosEmTI
-# Facebook: facebook.com/BoraParaPratica
-# YouTube: youtube.com/BoraParaPratica
-# Data de criação: 02/12/2018
-# Data de atualização: 10/02/2018
-# Versão: 0.06
+# Autor: Rodrigo Fernandes
+# Data de criação: 02/04/2019
+# Data de atualização: 02/04/2019
+# Versão: 0.1
 # Testado e homologado para a versão do Ubuntu Server 18.04.x LTS x64
-# Kernel >= 4.15.x
+# Kernel >= 4.18.x
 #
 # ZoneMinder é um sistema de CFTV (Circuito Fechado de televisão) Open Source, desenvolvido para sistemas 
 # operacionais Linux. Ele é liberado sob os termos da GNU General Public License (GPL). Os usuários 
@@ -23,8 +19,16 @@
 #
 # Site Oficial do ZoneMinder: https://zoneminder.com/
 #
-# Vídeo de instalação do GNU/Linux Ubuntu Server 18.04.x LTS: https://www.youtube.com/watch?v=zDdCrqNhIXI
-# Vídeo de instalação do LAMP Server no GNU/Linux Ubuntu Server 18.04.x LTS: https://www.youtube.com/watch?v=6EFUu-I3u4s
+# Antes de iniciar a instalação do ZoneMinder, utilize alguns comandos: 
+# * sudo -i = utilizar o usuário root
+# * apt-get update
+# * apt-get upgrade
+# * apt-get dist-upgrade
+# 
+# Instale alguns recursos importantes:
+# * Install Apache2
+# * Install vim
+# 
 #
 # Variável da Data Inicial para calcular o tempo de execução do script (VARIÁVEL MELHORADA)
 # opção do comando date: +%T (Time)
@@ -45,7 +49,7 @@ LOG="/var/log/$(echo $0 | cut -d'/' -f2)"
 #
 # Declarando as variaveis para criação da Base de Dados do ZoneMinder
 USER="root"
-PASSWORD="pti@2018"
+PASSWORD="zm@2019"
 DATABASE="/usr/share/zoneminder/db/zm_create.sql"
 GRANTALL="GRANT ALL PRIVILEGES ON zm.* TO 'zmuser'@'localhost' IDENTIFIED by 'zmpass';"
 FLUSH="FLUSH PRIVILEGES;"
@@ -53,17 +57,17 @@ FLUSH="FLUSH PRIVILEGES;"
 # Declarando a variável de PPA do ZoneMinder
 ZONEMINDER="ppa:iconnor/zoneminder-master"
 #
-# Verificando se o usuário e Root, Distribuição e >=18.04 e o Kernel >=4.15 <IF MELHORADO)
+# Verificando se o usuário e Root, Distribuição e >=18.04 e o Kernel >=4.18 <IF MELHORADO)
 # && = operador lógico AND, == comparação de string, exit 1 = A maioria dos erros comuns na execução
 clear
-if [ "$USUARIO" == "0" ] && [ "$UBUNTU" == "18.04" ] && [ "$KERNEL" == "4.15" ]
+if [ "$USUARIO" == "0" ] && [ "$UBUNTU" == "18.04" ] && [ "$KERNEL" == "4.18" ]
 	then
 		echo -e "O usuário e Root, continuando com o script..."
 		echo -e "Distribuição e >=18.04.x, continuando com o script..."
-		echo -e "Kernel e >= 4.15, continuando com o script..."
+		echo -e "Kernel e >= 4.18, continuando com o script..."
 		sleep 5
 	else
-		echo -e "Usuário não e Root ($USUARIO) ou Distribuição não e >=18.04.x ($UBUNTU) ou Kernel não e >=4.15 ($KERNEL)"
+		echo -e "Usuário não e Root ($USUARIO) ou Distribuição não e >=18.04.x ($UBUNTU) ou Kernel não e >=4.18 ($KERNEL)"
 		echo -e "Caso você não tenha executado o script com o comando: sudo -i"
 		echo -e "Execute novamente o script para verificar o ambiente."
 		exit 1
