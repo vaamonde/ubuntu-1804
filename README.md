@@ -6,7 +6,7 @@ Esse curso tem como objetivo de mostrar a instalação e configuração da nova 
 
 
 
-Projetada para suportar implementações On-Prime (Servidores Locais) ou em Cloud (Nuvens), possui várias ferramentas integradas e soluções desenvolvidas pela Canonical, que facilitar a implementação em larga escala e suporte a Hosts Virtual e Cloud melhorados.
+Projetada para suportar implementações On-Premise (Servidores Locais) ou em Cloud (Nuvens), possui várias ferramentas integradas e soluções desenvolvidas pela Canonical, que facilitar a implementação em larga escala e suporte a Hosts Virtual e Cloud melhorados.
 
 
 
