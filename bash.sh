@@ -5,8 +5,8 @@
 #Facebook: facebook.com/BoraParaPratica
 #YouTube: youtube.com/BoraParaPratica
 #Data de criação: 01/07/2019
-#Data de atualização: 01/07/2019
-#Versão: 0.01
+#Data de atualização: 22/07/2020
+#Versão: 0.02
 
 #Comandos básicos de Bash/Shell
 

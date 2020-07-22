@@ -5,8 +5,8 @@
 # Facebook: facebook.com/BoraParaPratica
 # YouTube: youtube.com/BoraParaPratica
 # Data de criação: 10/02/2019
-# Data de atualização: 26/02/2019
-# Versão: 0.02
+# Data de atualização: 22/07/2020
+# Versão: 0.03
 # Testado e homologado para a versão do Ubuntu Server 18.04.x LTS x64
 # Kernel >= 4.15.x
 # Testado e homologado para a versão do BareOS-18.2.x
@@ -14,7 +14,7 @@
 # O BareOS Server é uma bifurcação (fork) do projeto de código aberto Bacula versão 5.2. Em 2010, o desenvolvedor da 
 # comunidade do Bacula, Marco Van Wieringen, começou a coletar contribuições das comunidades que foram rejeitadas ou 
 # negligenciadas em começou a desenvolver sua própria vresão. Este trabalho foi mais tarde a base da criação do software 
-# BareOS e desde então foi enriquecido com varios novos recursos.
+# BareOS e desde então foi enriquecido com vários novos recursos.
 #
 # O BareOS é um conjunto de programas de computador que permite ao administrador do sistema gerenciar o backup, a recuperação
 # e a verificação de dados de computadores em uma rede de que tenha diferentes tipos de sistemas operacionais. O BareOS também
@@ -82,8 +82,8 @@ if [ "$USUARIO" == "0" ] && [ "$UBUNTU" == "18.04" ] && [ "$KERNEL" == "4.15" ]
 		exit 1
 fi
 #
-# Verificando se as dependêncais do BareOS estão instaladas
-# opção do dpkg: -s (status), opção do echo: -e (intepretador de escapes de barra invertida), -n (permite nova linha)
+# Verificando se as dependências do BareOS estão instaladas
+# opção do dpkg: -s (status), opção do echo: -e (interpretador de escapes de barra invertida), -n (permite nova linha)
 # || (operador lógico OU), 2> (redirecionar de saída de erro STDERR), && = operador lógico AND, { } = agrupa comandos em blocos
 # [ ] = testa uma expressão, retornando 0 ou 1, -ne = é diferente (NotEqual)
 echo -n "Verificando as dependências, aguarde... "

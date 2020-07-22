@@ -5,8 +5,8 @@
 # Facebook: facebook.com/BoraParaPratica
 # YouTube: youtube.com/BoraParaPratica
 # Data de criação: 04/11/2018
-# Data de atualização: 10/02/2019
-# Versão: 0.06
+# Data de atualização: 22/07/2020
+# Versão: 0.07
 # Testado e homologado para a versão do Ubuntu Server 18.04.x LTS x64
 # Kernel >= 4.15.x
 #
@@ -23,7 +23,7 @@
 # Site: http://manpages.ubuntu.com/manpages/bionic/man1/debconf-set-selections.1.html
 #
 # Opção: lamp-server^ Recurso existente no GNU/Ubuntu Server para facilitar a instalação do Servidor LAMP
-# A opção de circunflexo no final do comando e obrigatório, considerado um meta-caracter de filtragem para
+# A opção de circunflexo no final do comando e obrigatório, considerado um meta-carácter de filtragem para
 # a instalação correta de todos os serviços do LAMP.
 # Recurso faz parte do software Tasksel: https://help.ubuntu.com/community/Tasksel
 #
@@ -43,7 +43,7 @@ HORAINICIAL=`date +%T`
 # Variáveis para validar o ambiente, verificando se o usuário e "root", versão do ubuntu e kernel
 # opções do comando id: -u (user), opções do comando: lsb_release: -r (release), -s (short), 
 # opções do comando uname: -r (kernel release), opções do comando cut: -d (delimiter), -f (fields)
-# opção do caracter: | (piper) Conecta a saída padrão com a entrada padrão de outro comando
+# opção do carácter: | (piper) Conecta a saída padrão com a entrada padrão de outro comando
 # opção do shell script: acento crase ` ` = Executa comandos numa subshell, retornando o resultado
 # opção do shell script: aspas simples ' ' = Protege uma string completamente (nenhum caractere é especial)
 # opção do shell script: aspas duplas " " = Protege uma string, mas reconhece $, \ e ` como especiais
@@ -60,8 +60,8 @@ LOG="/var/log/$(echo $0 | cut -d'/' -f2)"
 USER="root"
 PASSWORD="pti@2018"
 AGAIN=$PASSWORD
-# opões do comando GRANT: grant (permissão), all (todos privilegios), on (em ou na | banco ou tabela), *.* (todos os bancos/tabelas)
-# to (para), user@'%' (usuário @ localhost), identified by (indentificado por - senha do usuário)
+# opões do comando GRANT: grant (permissão), all (todos privilégios), on (em ou na | banco ou tabela), *.* (todos os bancos/tabelas)
+# to (para), user@'%' (usuário @ localhost), identified by (identificado por - senha do usuário)
 # opção do comando FLUSH: privileges (recarregar as permissões)
 GRANTALL="GRANT ALL ON *.* TO $USER@'%' IDENTIFIED BY '$PASSWORD';"
 FLUSH="FLUSH PRIVILEGES;"
@@ -201,7 +201,7 @@ echo -e "Atualizando as dependências do PHP para o PhpMyAdmin, aguarde..."
 	cp -v conf/mcrypt.ini /etc/php/7.2/mods-available/ &>> $LOG
 	phpenmod mcrypt &>> $LOG
 	phpenmod mbstring &>> $LOG
-echo -e "Atualização das dependêncais feita com sucesso!!!, continuando com o script..."
+echo -e "Atualização das dependências feita com sucesso!!!, continuando com o script..."
 sleep 5
 echo
 #

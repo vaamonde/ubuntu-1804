@@ -5,8 +5,8 @@
 # Facebook: facebook.com/BoraParaPratica
 # YouTube: youtube.com/BoraParaPratica
 # Data de criação: 06/01/2019
-# Data de atualização: 10/02/2019
-# Versão: 0.10
+# Data de atualização: 22/07/2020
+# Versão: 0.11
 # Testado e homologado para a versão do Ubuntu Server 18.04.x LTS x64
 # Kernel >= 4.15.x
 # Testado e homologado para a versão do Asterisk 16.1.1
@@ -58,7 +58,7 @@ KERNEL=`uname -r | cut -d'.' -f1,2`
 # $0 (variável de ambiente do nome do comando)
 LOG="/var/log/$(echo $0 | cut -d'/' -f2)"
 #
-# Declarando as variaveis de Download do Asterisk: http://downloads.asterisk.org/pub/telephony/
+# Declarando as variáveis de Download do Asterisk: http://downloads.asterisk.org/pub/telephony/
 DAHDI="http://downloads.asterisk.org/pub/telephony/dahdi-linux/dahdi-linux-current.tar.gz"
 DAHDITOOLS="http://downloads.asterisk.org/pub/telephony/dahdi-tools/dahdi-tools-current.tar.gz"
 LIBPRI="http://downloads.asterisk.org/pub/telephony/libpri/libpri-current.tar.gz"
@@ -141,7 +141,7 @@ echo
 #
 echo -e "Instalando as dependências do Asterisk, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
-	# opção do comando apt: -y (yes) | $(uname -r) = kernel-release, \ (bar left) quedra de linha na opção do apt
+	# opção do comando apt: -y (yes) | $(uname -r) = kernel-release, \ (bar left) quebra de linha na opção do apt
 	apt install -y build-essential libssl-dev libelf-dev libncurses5-dev libnewt-dev libxml2-dev linux-headers-$(uname -r) \
 	libsqlite3-dev uuid-dev subversion libjansson-dev sqlite3 autoconf automake libtool libedit-dev flex bison libtool \
 	libtool-bin unzip sox openssl zlib1g-dev unixodbc unixodbc-dev &>> $LOG
@@ -251,7 +251,7 @@ echo -e "Download e instalação do Asterisk, aguarde..."
 	make samples &>> $LOG
 	# instala um conjunto de configuração básica para o Asterisk
 	make basic-pbx &>> $LOG
-	# instala um conjunto de documentção para o Asterisk
+	# instala um conjunto de documentação para o Asterisk
 	# habilitar esse recurso, o processo de compilação demora bastante
 	#make progdocs &>> $LOG
 	# instala um conjunto de scripts de inicialização do Asterisk (systemctl)
@@ -290,7 +290,7 @@ sleep 5
 echo
 #
 echo -e "Atualizando os arquivos de Ramais SIP, Plano de Discagem e Módulos, aguarde..."
-	# fazendo o backup das confgurações originais dos arquivos de configuração
+	# fazendo o backup das configurações originais dos arquivos de configuração
 	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando mv: -v (verbose)
 	# opção do comando cp: -v (verbose)

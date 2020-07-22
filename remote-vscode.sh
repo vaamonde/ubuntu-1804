@@ -5,8 +5,8 @@
 #Facebook: facebook.com/BoraParaPratica
 #YouTube: youtube.com/BoraParaPratica
 #Data de criação: 10/11/2019
-#Data de atualização: 10/11/2019
-#Versão: 0.01
+#Data de atualização: 22/07/2020
+#Versão: 0.02
 
 Link do Visual Studio Code: https://code.visualstudio.com/
 Link do Marketplace: https://marketplace.visualstudio.com/VSCode

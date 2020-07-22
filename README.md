@@ -4,15 +4,9 @@ O QUE VOCÊ VAI APRENDER NESSE CURSO
 
 Esse curso tem como objetivo de mostrar a instalação e configuração da nova versão de Servidor da Canonical, o GNU/Linux Ubuntu Server 18.04.x, essa nova versão foi projetada para uma fácil implementação, administração e instalação de serviços de redes de forma fácil e confiável.
 
-
-
 Projetada para suportar implementações On-Premise (Servidores Locais) ou em Cloud (Nuvens), possui várias ferramentas integradas e soluções desenvolvidas pela Canonical, que facilitar a implementação em larga escala e suporte a Hosts Virtual e Cloud melhorados.
 
-
-
 Para esse curso as metodologias de DevOps, utilizando o Git e Github serão empregadas de forma dinâmica, desenvolvendo scripts e automatizando todo os processos de instalação e configuração.
-
-
 
 Ideal para Estudantes e Profissionais de Redes que desejam se aprofundar nos pré-requisitos técnicos e práticos para Implementar Servidores GNU/Linux Ubuntu Server em cenários On-Prime ou em Cloud.
 

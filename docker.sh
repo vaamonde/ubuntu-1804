@@ -5,8 +5,8 @@
 # Facebook: facebook.com/BoraParaPratica
 # YouTube: youtube.com/BoraParaPratica
 # Data de criação: 12/11/2018
-# Data de atualização: 10/02/2019
-# Versão: 0.04
+# Data de atualização: 22/07/2020
+# Versão: 0.05
 # Testado e homologado para a versão do Ubuntu Server 18.04.x LTS x64
 # Kernel >= 4.15.x
 #
@@ -115,7 +115,7 @@ echo
 #
 echo -e "Instalando as dependências do Docker, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
-	# opção do comando apt: -y (yes), \ (bar left) quedra de linha na opção do apt
+	# opção do comando apt: -y (yes), \ (bar left) quebra de linha na opção do apt
 	apt -y install apt-transport-https ca-certificates curl software-properties-common linux-image-generic \
 	linux-image-extra-virtual &>> $LOG
 echo -e "Instalação das dependências feita com sucesso!!!, continuando com o script..."
@@ -124,7 +124,7 @@ echo
 #
 echo -e "Adicionando as Chaves GPG do Docker, aguarde..."
 	# opção do comando curl: -f (fail), -s (silent), -S (show-error), -L (location)
-	# opção do comando apt-key add: - (file name recebido do redicionar | )
+	# opção do comando apt-key add: - (file name recebido do redirecionador | )
 	curl -fsSL $DOCKERGPG | apt-key add -
 echo -e "Chaves adicionadas com sucesso!!!, continuando com o script..."
 sleep 5
@@ -201,7 +201,7 @@ echo -e "Instalando o Portainer, aguarde..."
 sleep 3
 echo
 #
-echo -e "Criando o volue do Portainer, aguarde..."
+echo -e "Criando o volume do Portainer, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	docker volume create portainer_data &>> $LOG
 echo -e "Volume criado com sucesso!!!, continuando com o script..."

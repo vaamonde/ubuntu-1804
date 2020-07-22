@@ -5,8 +5,8 @@
 #Facebook: facebook.com/BoraParaPratica
 #YouTube: youtube.com/BoraParaPratica
 #Data de criação: 24/07/2019
-#Data de atualização: 24/07/2019
-#Versão: 0.01
+#Data de atualização: 22/07/2020
+#Versão: 0.02
 
 #Indicação de site com muita informação sobre o Editor de Texto VIM: Aurelio.net
 #Link: https://aurelio.net/vim/
@@ -28,7 +28,7 @@ de Comandos         <Esc>                           Comandos de manipulação de
 de Linha de comando <Esc> shift : (dois pontos)     :                   Comandos de manipulação arquivo 
 de Visual           <Esc> v                         -- VISUAL --        Seleção visual de texto
 de Busca            <Esc> /                         /                   Busca de padrões no texto
-de Reposição        <Esc> shift R ou Insert/Insert  -- SUBSTITUIÇÃO --  Inserção sobreescrevendo
+de Reposição        <Esc> shift R ou Insert/Insert  -- SUBSTITUIÇÃO --  Inserção sobrescrevendo
 ---------------------------------------------------------------------------------------------------------
 
 #Ajuda do editor de Texto VIM (q = quit)
@@ -64,11 +64,11 @@ vim teste01.txt <Enter>
 <Esc> shift :set number <Enter>	<-- mostra número da linha
 <Esc> shift :set ignorecase <Enter> <-- ignora case insensitive na busca
 <Esc> shift :set syntax on <Enter> <-- identificação da linguagem
-<Esc> shift :set autoindent <Enter> <-- identação automática
+<Esc> shift :set autoindent <Enter> <-- indentação automática
 <Esc> shift :set showmatch <Enter> <-- completa as chaves e colchetes quando você os fecha
 <Esc> shift :set autowrite <Enter> <-- salva o arquivo a cada alteração
 
-#Arquivo de confiração do editor de Texto VIM
+#Arquivo de configuração do editor de Texto VIM
 <Esc> shift :!ls -lha /etc/vim/vimrc
 <Esc> shift :!cat /etc/vim/vimrc
 <Esc> shift :e /etc/vim/vimrc

@@ -4,8 +4,8 @@
 #Facebook: facebook.com/BoraParaPratica
 #YouTube: youtube.com/BoraParaPratica
 #Data de criação: 13/02/2019
-#Data de atualização: 03/11/2019
-#Versão: 0.05
+#Data de atualização: 22/07/2020
+#Versão: 0.06
 
 #Instalando o SGBD (Sistema de Gerenciamento de Banco de Dados) MySQL ou MariaDB
 sudo apt update && sudo apt install mysql-server mysql-client mysql-common
@@ -38,7 +38,7 @@ sudo mysql_secure_installation
 7. Reload privilege tables now? (Press y|Y for Yes, any other key for No:) y <Enter>
 
 #Políticas de Segurança do MariaDB
-#(Obs: na instalação é associado a senha do seu usário para o root do MariaDB)
+#(Obs: na instalação é associado a senha do seu usuário para o root do MariaDB)
 sudo mysql_secure_installation
 1. Enter current password for root (enter for none): pti@2019 <Enter>
 2. Change the root password? [Y/n]: y <Enter>
@@ -83,18 +83,18 @@ CREATE DATABASE aulaead;
 SHOW DATABASES;
 
 #Permitindo que o usuário Root administre o servidor Remotamente do MySQL ou MariaDB
-#(opções do comando GRANT: grant (permissão), all (todos privilegios), on (em ou na | banco ou tabela), *.* (todos os bancos/tabelas))
-#(opções do comando GRANT: to (para), user@'%' (usuário @ localhost), identified by (indentificado por - senha do usuário))
+#(opções do comando GRANT: grant (permissão), all (todos privilégios), on (em ou na | banco ou tabela), *.* (todos os bancos/tabelas))
+#(opções do comando GRANT: to (para), user@'%' (usuário @ localhost), identified by (identificado por - senha do usuário))
 GRANT ALL ON *.* TO root@'%' IDENTIFIED BY 'aulaead'
 
 #Criando usuários no SGBD do MySQL ou MariaDB
-#(opções do comando CREATE: create (criação), user (usuário), identified by (indentificado por - senha do usuário))
+#(opções do comando CREATE: create (criação), user (usuário), identified by (identificado por - senha do usuário))
 CREATE USER 'aulaead' IDENTIFIED BY 'aulaead';
 
 #Aplicando as permissões de acesso ao Banco de Dados AulaEAD no SGBD do MySQL ou MariaDB
 #(opções do comando GRANT: grant (permissão), usage (uso em banco ou tabela), on (em ou na | banco ou tabela), *.* (todos os bancos/tabelas))
-#(opções do comando GRANT: to (para), 'aulaead' (usuário), identified by (indentificado por - senha do usuário))
-#(opções do comando GRANT: all (todos privilegios), privileges (privilégios), on (em ou na | banco ou tabela), aulaead.* (banco/tabelas), to (para) 'aulaead' (usuário))
+#(opções do comando GRANT: to (para), 'aulaead' (usuário), identified by (identificado por - senha do usuário))
+#(opções do comando GRANT: all (todos privilégios), privileges (privilégios), on (em ou na | banco ou tabela), aulaead.* (banco/tabelas), to (para) 'aulaead' (usuário))
 GRANT USAGE ON *.* TO 'aulaead' IDENTIFIED BY 'aulaead';
 GRANT ALL PRIVILEGES ON aulaead.* TO 'aulaead';
 FLUSH PRIVILEGES;
@@ -163,7 +163,7 @@ SELECT * FROM alunos WHERE cidade LIKE 'S%';
 SELECT * FROM alunos WHERE nome LIKE '%m%' AND cidade = 'São Paulo';
 SELECT COUNT(*) FROM alunos;
 
-#Ordendando as informações das Tabelas no SGBD do MySQL ou MariaDB
+#Ordenando as informações das Tabelas no SGBD do MySQL ou MariaDB
 SELECT * FROM cursos ORDER BY codcurso DESC;
 SELECT * FROM cursos ORDER BY nomecurso DESC;
 

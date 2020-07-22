@@ -11,7 +11,7 @@
 # Kernel >= 4.15.x
 # Testado e homologado para a versão do SAMBA-4.7.x
 #
-# O SAMBA4 é uma reimplementação de software livre do protocolo de rede SMB e foi originalmente desenvolvido por
+# O SAMBA-4 é uma reimplementação de software livre do protocolo de rede SMB e foi originalmente desenvolvido por
 # Andrew Tridgell. O Samba fornece serviços de arquivo e impressão para vários clientes do Microsoft Windows e 
 # pode se integrar a um domínio do Microsoft Windows Server, como um controlador de domínio (DC) ou como um 
 # membro do domínio. A partir da versão 4, ele suporta domínios do Active Directory e do Microsoft Windows NT.
@@ -98,7 +98,7 @@ if [ "$USUARIO" == "0" ] && [ "$UBUNTU" == "18.04" ] && [ "$KERNEL" == "4.15" ]
 		exit 1
 fi
 #		
-# Script de instalação do SAMBA4 no GNU/Linux Ubuntu Server 18.04.x
+# Script de instalação do SAMBA-4 no GNU/Linux Ubuntu Server 18.04.x
 # opção do comando echo: -e (enable interpretation of backslash escapes), \n (new line)
 # opção do comando hostname: -I (all IP address)
 # opção do comando date: + (format), %d (day), %m (month), %Y (year 1970), %H (hour 24), %M (minute 60)
@@ -145,10 +145,10 @@ echo -e "Software removidos com sucesso!!!, continuando com o script..."
 sleep 5
 clear
 #
-echo -e "Instalando o SAMBA4, aguarde..."
+echo -e "Instalando o SAMBA-4, aguarde..."
 echo
 #
-echo -e "Instalando as dependências do SAMBA4, aguarde..."
+echo -e "Instalando as dependências do SAMBA-4, aguarde..."
 	# opção do comando: &>> (redirecionar a entrada padrão)
 	# opção do comando apt: -y (yes), \ (bar left) quedra de linha na opção do apt
 	apt -y install ntp ntpdate build-essential libacl1-dev libattr1-dev libblkid-dev libgnutls28-dev libreadline-dev \
@@ -186,12 +186,11 @@ clear
 echo -e "Atualizando as configurações do NTP Server, aguarde..."
 	# opção do comando: &>> (redirecionar a entrada padrão)
 	# opção do comando: > (redirecionar a entrada padrão)
-	# opção do comando cp: -v (verbose)
 	# opção do comando mv: -v (verbose)
+	# opção do comando cp: -v (verbose)
 	# opção do comando chown: -v (verbose), ntp.ntp (user e group)
-	# opção do comando ntpdate: d (debug), q (query), u (unprivileged), v (verbose)
-	# opção do comando ntpq: p (peers), n (numeric)
-	# opção do comando hwclock: --systohc (Set the Hardware Clock to the current System Time)
+	# opção do comando systemctl: stop (stop daemon - service)
+	# opção do comando timedatectl: set-timezone (Zona de Horário)
 	mv -v /etc/ntp.conf /etc/ntp.conf.old &>> $LOG
 	cp -v conf/ntp.drift /var/lib/ntp/ntp.drift &>> $LOG
 	chown -v ntp.ntp /var/lib/ntp/ntp.drift &>> $LOG
@@ -203,6 +202,10 @@ echo -e "Atualizando as configurações do NTP Server, aguarde..."
 		sleep 3
 		vim /etc/ntp.conf
 	echo -e "Arquivo editado com sucesso!!!, continuando com o script...\n"
+	# opção do comando ntpdate: d (debug), q (query), u (unprivileged), v (verbose)
+	# opção do comando systemctl: start (start daemon - service)
+	# opção do comando ntpq: p (peers), n (numeric)
+	# opção do comando hwclock: --systohc (Set the Hardware Clock to the current System Time)
 	ntpdate -dquv $NTP &>> $LOG
 	systemctl start ntp.service &>> $LOG
 	ntpq -pn &>> $LOG
@@ -218,6 +221,7 @@ clear
 echo -e "Atualizando as configurações do FSTAB, aguarde..."
 	# opção do comando: &>> (redirecionar a entrada padrão)
 	# opção do comando cp: -v (verbose)
+	# opção do comando mount: -o (options)
 	cp -v /etc/fstab /etc/fstab.old &>> $LOG
 	echo -e "Editando o arquivo de configuração do FSTAB, pressione <Enter> para continuar..."
 		read
@@ -270,7 +274,7 @@ echo -e "Atualização do NSSWITCH feita com sucesso!!!, continuando com o scrip
 sleep 5
 clear
 #
-echo -e "Instalando o SAMBA4, aguarde..."
+echo -e "Instalando o SAMBA-4, aguarde..."
 	# opção do comando: &>> (redirecionar a entrada padrão)
 	# opção do comando apt: -y (yes), \ (bar left) quedra de linha na opção do apt
 	apt -y install samba samba-common smbclient cifs-utils samba-vfs-modules samba-testsuite samba-dsdb-modules \
@@ -294,13 +298,20 @@ sleep 5
 clear
 #
 
-echo -e "Promovendo o SAMBA4 como Controlador de Domínio do Active Directory AD-DS, aguarde..."
+echo -e "Promovendo o SAMBA-4 como Controlador de Domínio do Active Directory AD-DS, aguarde..."
 	# opção do comando: &>> (redirecionar a entrada padrão)
 	# opção do comando mv: -v (verbose)
-	# opção do comando systemctl: stop (), disable (), mask (), unmask (), enable ()
-	# opção do comando samba-tool: domain (), provision ()
+	# opção do comando systemctl: stop (), start (), disable (), mask (), unmask (), enable ()
+	# opção do comando samba-tool: domain (), provision (), realm (), domain (), server-role (), dns-backend (), 
+	# use-rc2307 (), adminpass (), function-level (), site (), host-ip (), option ()
+	
+	#
 	systemctl stop samba-ad-dc.service smbd.service nmbd.service &>> $LOG
+	
+	#
 	mv -v /etc/samba/smb.conf /etc/samba/smb.conf.old &>> $LOG
+	
+	#
 	samba-tool domain provision --realm=$REALM --domain=$NETBIOS --server-role=$ROLE --dns-backend=$DNS --use-rfc2307 \
 	--adminpass=$PASSWORD --function-level=$LEVEL --site=$SITE --host-ip=$IP --option="interfaces = lo $INTERFACE" \
 	--option="bind interfaces only = yes" --option="allow dns updates = nonsecure and secure" \
@@ -308,21 +319,41 @@ echo -e "Promovendo o SAMBA4 como Controlador de Domínio do Active Directory AD
 	--option="winbind enum groups = yes" --option="winbind refresh tickets = yes" --option="server signing = auto" \
 	--option="vfs objects = acl_xattr" --option="map acl inherit = yes" --option="store dos attributes = yes" \
 	--option="client use spnego = no" --option="use spnego = no" --option="client use spnego principal = no" &>> $LOG
+	
+	#
 	samba-tool user setexpiry $USER --noexpiry &>> $LOG
+	
+	#
 	systemctl disable nmbd.service smbd.service winbind.service &>> $LOG
+	
+	#
 	systemctl mask nmbd.service smbd.service winbind.service &>> $LOG
+	
+	#
 	systemctl unmask samba-ad-dc.service &>> $LOG
+	
+	#
 	systemctl enable samba-ad-dc.service &>> $LOG
+	
+	#
 	systemctl start samba-ad-dc.service &>> $LOG
+	
+	#
 	net rpc rights grant 'PTI\Domain Admins' SeDiskOperatorPrivilege -U $USER%$PASSWORD &>> $LOG
+	
+	#
 	samba-tool dns zonecreate $DOMAIN $ARPA -U $USER --password=$PASSWORD &>> $LOG
+	
+	#
 	samba-tool dns add $DOMAIN $ARPA $ARPAIP PTR $FQDN -U $USER --password=$PASSWORD &>> $LOG
+	
+	#
 	samba_dnsupdate --use-file=/var/lib/samba/private/dns.keytab --verbose --all-names &>> $LOG
-echo -e "Controlador de Domínio SAMBA4 promivido com sucesso!!!, continuando com o script..."
+echo -e "Controlador de Domínio SAMBA-4 promovido com sucesso!!!, continuando com o script..."
 sleep 5
 echo
 #
-echo -e "Instalação do SAMBA4 feita com Sucesso!!!, recomendado reinicializar o servidor no final da instalação."
+echo -e "Instalação do SAMBA-4 feita com Sucesso!!!, recomendado reinicializar o servidor no final da instalação."
 	# script para calcular o tempo gasto (SCRIPT MELHORADO, CORRIGIDO FALHA DE HORA:MINUTO:SEGUNDOS)
 	# opção do comando date: +%T (Time)
 	HORAFINAL=`date +%T`

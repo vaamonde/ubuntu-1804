@@ -5,8 +5,8 @@
 #Facebook: facebook.com/BoraParaPratica
 #YouTube: youtube.com/BoraParaPratica
 #Data de criação: 19/07/2019
-#Data de atualização: 19/07/2019
-#Versão: 0.01
+#Data de atualização: 22/07/2020
+#Versão: 0.02
 
 #Instalando o Git no Debian, Ubuntu ou Linux Mint
 sudo apt update && sudo apt install git vim

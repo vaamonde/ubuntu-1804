@@ -5,8 +5,8 @@
 # Facebook: facebook.com/BoraParaPratica
 # YouTube: youtube.com/BoraParaPratica
 # Data de criação: 28/02/2019
-# Data de atualização: 03/11/2019
-# Versão: 0.03
+# Data de atualização: 22/07/2020
+# Versão: 0.04
 # Testado e homologado para a versão do Ubuntu Server 18.04.x LTS x64
 # Kernel >= 4.15.x
 # Testado e homologado para a versão do OpenSSH Server 
@@ -61,8 +61,8 @@ if [ "$USUARIO" == "0" ] && [ "$UBUNTU" == "18.04" ] && [ "$KERNEL" == "4.15" ]
 		exit 1
 fi
 #
-# Verificando se as dependêncais do BareOS estão instaladas
-# opção do dpkg: -s (status), opção do echo: -e (intepretador de escapes de barra invertida), -n (permite nova linha)
+# Verificando se as dependências do BareOS estão instaladas
+# opção do dpkg: -s (status), opção do echo: -e (interpretador de escapes de barra invertida), -n (permite nova linha)
 # || (operador lógico OU), 2> (redirecionar de saída de erro STDERR), && = operador lógico AND, { } = agrupa comandos em blocos
 # [ ] = testa uma expressão, retornando 0 ou 1, -ne = é diferente (NotEqual)
 echo -n "Verificando as dependências, aguarde... "

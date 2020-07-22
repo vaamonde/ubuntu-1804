@@ -5,8 +5,8 @@
 # Facebook: facebook.com/BoraParaPratica
 # YouTube: youtube.com/BoraParaPratica
 # Data de criação: 22/11/2018
-# Data de atualização: 10/02/2019
-# Versão: 0.04
+# Data de atualização: 22/07/2020
+# Versão: 0.05
 # Testado e homologado para a versão do Ubuntu Server 18.04.x LTS x64
 # Kernel >= 4.15.x
 #
@@ -40,15 +40,15 @@ KERNEL=`uname -r | cut -d'.' -f1,2`
 # $0 (variável de ambiente do nome do comando)
 LOG="/var/log/$(echo $0 | cut -d'/' -f2)"
 #
-# Declarando as variaveis para criação da Base de Dados do OpenFire
+# Declarando as variáveis para criação da Base de Dados do OpenFire
 USER="root"
 PASSWORD="pti@2018"
 # opção do comando create: create (criação), database (base de dados), base (banco de dados)
-# opção do comando create: create (criação), user (usuário), identified by (indentificado por - senha do usuário), password (senha)
-# opção do comando grant: grant (permissão), usage (uso em | uso na), *.* (todos os bancos/tabelas), to (para), user (usário)
-# identified by (indentificado por - senha do usuário), password (senha)
-# opões do comando GRANT: grant (permissão), all (todos privilegios), on (em ou na | banco ou tabela), *.* (todos os bancos/tabelas)
-# to (para), user@'%' (usuário @ localhost), identified by (indentificado por - senha do usuário), password (senha)
+# opção do comando create: create (criação), user (usuário), identified by (identificado por - senha do usuário), password (senha)
+# opção do comando grant: grant (permissão), usage (uso em | uso na), *.* (todos os bancos/tabelas), to (para), user (usuário)
+# identified by (identificado por - senha do usuário), password (senha)
+# opões do comando GRANT: grant (permissão), all (todos privilégios), on (em ou na | banco ou tabela), *.* (todos os bancos/tabelas)
+# to (para), user@'%' (usuário @ localhost), identified by (identificado por - senha do usuário), password (senha)
 # opção do comando FLUSH: flush (atualizar), privileges (recarregar as permissões)
 DATABASE="CREATE DATABASE openfire;"
 USERDATABASE="CREATE USER 'openfire' IDENTIFIED BY 'openfire';"
@@ -56,8 +56,8 @@ GRANTDATABASE="GRANT USAGE ON *.* TO 'openfire' IDENTIFIED BY 'openfire';"
 GRANTALL="GRANT ALL PRIVILEGES ON openfire.* TO 'openfire';"
 FLUSH="FLUSH PRIVILEGES;"
 #
-# Declarando a variável de download do OpenFire
-OPENFIRE="https://www.igniterealtime.org/downloadServlet?filename=openfire/openfire_4.2.3_all.deb"
+# Declarando a variável de download do OpenFire (Link atualizado no dia 22/07/2020)
+OPENFIRE="https://www.igniterealtime.org/downloadServlet?filename=openfire/openfire_4.5.2_all.deb"
 #
 # Verificando se o usuário e Root, Distribuição e >=18.04 e o Kernel >=4.15 <IF MELHORADO)
 # [ ] = teste de expressão, && = operador lógico AND, == comparação de string, exit 1 = A maioria dos erros comuns na execução
@@ -75,8 +75,8 @@ if [ "$USUARIO" == "0" ] && [ "$UBUNTU" == "18.04" ] && [ "$KERNEL" == "4.15" ]
 		exit 1
 fi
 #
-# Verificando se as dependêncais do OpenFire estão instaladas
-# opção do dpkg: -s (status), opção do echo: -e (intepretador de escapes de barra invertida), -n (permite nova linha)
+# Verificando se as dependências do OpenFire estão instaladas
+# opção do dpkg: -s (status), opção do echo: -e (interpretador de escapes de barra invertida), -n (permite nova linha)
 # || (operador lógico OU), 2> (redirecionar de saída de erro STDERR), && = operador lógico AND, { } = agrupa comandos em blocos
 # [ ] = testa uma expressão, retornando 0 ou 1, -ne = é diferente (NotEqual)
 echo -n "Verificando as dependências, aguarde... "
@@ -162,6 +162,9 @@ echo
 echo -e "Baixando o OpenFire do site oficial, aguarde..."
 	#opção do comando: &>> (redirecionar de saída padrão)
 	#opção do comando wget: -O (output document file)
+	# removendo versões anteriores baixadas do OpenFire
+	# opção do comando rm: -v (verbose)
+	rm -v openfire.deb &>> $LOG
 	wget $OPENFIRE -O openfire.deb &>> $LOG
 echo -e "OpenFire baixado com sucesso!!!, continuando com o script..."
 sleep 5

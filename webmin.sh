@@ -5,8 +5,8 @@
 # Facebook: facebook.com/BoraParaPratica
 # YouTube: youtube.com/BoraParaPratica
 # Data de criação: 10/11/2018
-# Data de atualização: 22/10/2019
-# Versão: 0.3
+# Data de atualização: 22/07/2020
+# Versão: 0.5
 # Testado e homologado para a versão do Ubuntu Server 18.04.x LTS x64
 # Kernel >= 4.15.x
 #
@@ -26,7 +26,7 @@ HORAINICIAL=`date +%T`
 # Variáveis para validar o ambiente, verificando se o usuário e "root", versão do ubuntu e kernel
 # opções do comando id: -u (user), opções do comando: lsb_release: -r (release), -s (short), 
 # opções do comando uname: -r (kernel release), opções do comando cut: -d (delimiter), -f (fields)
-# opção do caracter: | (piper) Conecta a saída padrão com a entrada padrão de outro comando
+# opção do carácter: | (piper) Conecta a saída padrão com a entrada padrão de outro comando
 # opção do shell script: acento crase ` ` = Executa comandos numa subshell, retornando o resultado
 # opção do shell script: aspas simples ' ' = Protege uma string completamente (nenhum caractere é especial)
 # opção do shell script: aspas duplas " " = Protege uma string, mas reconhece $, \ e ` como especiais
@@ -39,8 +39,8 @@ KERNEL=`uname -r | cut -d'.' -f1,2`
 # $0 (variável de ambiente do nome do comando)
 LOG="/var/log/$(echo $0 | cut -d'/' -f2)"
 #
-# Variável do download do Webmin - (Link de download atualizado em: 20/01/2019)
-WEBMIN="http://prdownloads.sourceforge.net/webadmin/webmin_1.930_all.deb"
+# Variável do download do Webmin - (Link de download atualizado em: 22/07/2020)
+WEBMIN="https://prdownloads.sourceforge.net/webadmin/webmin_1.953_all.deb"
 #
 # Verificando se o usuário e Root, Distribuição e >=18.04 e o Kernel >=4.15 <IF MELHORADO)
 # [ ] = teste de expressão, && = operador lógico AND, == comparação de string, exit 1 = A maioria dos erros comuns na execução
@@ -115,6 +115,9 @@ echo
 #
 echo -e "Fazendo o download do Webmin, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
+	# removendo versões anteriores baixadas do Webmin
+	# opção do comando rm: -v (verbose)
+	rm -v webmin_* &>> $LOG
 	wget $WEBMIN &>> $LOG
 echo -e "Download do Webmin feito com sucesso!!!, continuando com o script..."
 sleep 5

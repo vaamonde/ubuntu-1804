@@ -5,8 +5,8 @@
 # Facebook: facebook.com/BoraParaPratica
 # YouTube: youtube.com/BoraParaPratica
 # Data de criação: 08/02/2019
-# Data de atualização: 28/02/2019
-# Versão: 0.02
+# Data de atualização: 22/07/2020
+# Versão: 0.03
 # Testado e homologado para a versão do Ubuntu Server 18.04.x LTS x64
 # Kernel >= 4.15.x
 # Testado e homologado para a versão do GLPI-9.4.x
@@ -53,11 +53,11 @@ KERNEL=$(uname -r | cut -d'.' -f1,2)
 LOG="/var/log/$(echo $0 | cut -d'/' -f2)"
 #
 # opção do comando create: create (criação), database (base de dados), base (banco de dados)
-# opção do comando create: create (criação), user (usuário), identified by (indentificado por - senha do usuário), password (senha)
+# opção do comando create: create (criação), user (usuário), identified by (identificado por - senha do usuário), password (senha)
 # opção do comando grant: grant (permissão), usage (uso em | uso na), *.* (todos os bancos/tabelas), to (para), user (usuário)
-# identified by (indentificado por - senha do usuário), password (senha)
-# opões do comando GRANT: grant (permissão), all (todos privilegios), on (em ou na | banco ou tabela), *.* (todos os bancos/tabelas)
-# to (para), user@'%' (usuário @ localhost), identified by (indentificado por - senha do usuário), password (senha)
+# identified by (identificado por - senha do usuário), password (senha)
+# opões do comando GRANT: grant (permissão), all (todos privilégios), on (em ou na | banco ou tabela), *.* (todos os bancos/tabelas)
+# to (para), user@'%' (usuário @ localhost), identified by (identificado por - senha do usuário), password (senha)
 # opção do comando FLUSH: flush (atualizar), privileges (recarregar as permissões)
 USER="root"
 PASSWORD="pti@2018"
@@ -67,8 +67,8 @@ GRANTDATABASE="GRANT USAGE ON *.* TO 'glpi' IDENTIFIED BY 'glpi';"
 GRANTALL="GRANT ALL PRIVILEGES ON glpi.* TO 'glpi' IDENTIFIED BY 'glpi';"
 FLUSH="FLUSH PRIVILEGES;"
 #
-# Variáveis de instalação do GLPI
-RELEASE="https://github.com/glpi-project/glpi/releases/download/9.4.0/glpi-9.4.0.tgz"
+# Variáveis de instalação do GLPI (Link atualizado no dia 22/07/2020)
+RELEASE="https://github.com/glpi-project/glpi/releases/download/9.5.0/glpi-9.5.0.tgz"
 #
 # Verificando se o usuário e Root, Distribuição e >=18.04 e o Kernel >=4.15 <IF MELHORADO)
 # [ ] = teste de expressão, && = operador lógico AND, == comparação de string, exit 1 = A maioria dos erros comuns na execução
@@ -86,8 +86,8 @@ if [ "$USUARIO" == "0" ] && [ "$UBUNTU" == "18.04" ] && [ "$KERNEL" == "4.15" ]
 		exit 1
 fi
 #
-# Verificando se as dependêncais do GLPI estão instaladas
-# opção do dpkg: -s (status), opção do echo: -e (intepretador de escapes de barra invertida), -n (permite nova linha)
+# Verificando se as dependências do GLPI estão instaladas
+# opção do dpkg: -s (status), opção do echo: -e (interpretador de escapes de barra invertida), -n (permite nova linha)
 # || (operador lógico OU), 2> (redirecionar de saída de erro STDERR), && = operador lógico AND, { } = agrupa comandos em blocos
 # [ ] = testa uma expressão, retornando 0 ou 1, -ne = é diferente (NotEqual)
 echo -n "Verificando as dependências, aguarde... "
@@ -165,6 +165,9 @@ echo -e "Instalando o GLPI e criando a Base de Dados, aguarde..."
 	# opção do comando chown: -R (recursive), -v (verbose), www-data.www-data (user and group)
 	# opção do comando chmod: -R (recursive), -v (verbose), 755 (User=RWX, Group=R-X, Other=R-X)
 	# opção do comando mysql: -u (user), -p (password), -e (execute)
+	# removendo versões anteriores baixadas do GLPI
+	# opção do comando rm: -v (verbose)
+	rm -v glpi*.*.* &>> $LOG
 	wget $RELEASE &>> $LOG
 	GLPIFILE=`echo glpi*.*.*`
 	tar -zxvf $GLPIFILE &>> $LOG

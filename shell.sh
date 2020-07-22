@@ -5,8 +5,8 @@
 #Facebook: facebook.com/BoraParaPratica
 #YouTube: youtube.com/BoraParaPratica
 #Data de criação: 13/02/2019
-#Data de atualização: 15/02/2019
-#Versão: 0.02
+#Data de atualização: 22/07/2020
+#Versão: 0.03
 
 #Criação das variáveis locais utilizada nesse script
 USUARIO="Vaamonde"
@@ -16,7 +16,7 @@ TESTE02=$(test -f /etc/passwd ; echo $?)
 
 #Utilizando o comando echo para imprimir na tela os valores das variáveis locais
 #e variáveis especiais do Shell
-echo "Impressão na tela.............: Ola, Mundo!!!"
+echo "Impressão na tela.............: Olá Mundo!!!"
 echo "Nome do usuário...............: $USUARIO"
 echo "Nome do arquivo shell.........: $0"
 echo "Quantidade de parâmetros......: $#"
@@ -45,14 +45,14 @@ elif [ $TESTE01 -eq 1 ];
 then
 	echo "Resultado do comando test é...: FALSO"
 else
-	echo "Resultado do comando test é...: NÃO INDENTIFICADO"
+	echo "Resultado do comando test é...: NÃO IDENTIFICADO"
 fi
 
 #Utilizando o comando case para fazer os testes lógicos
 case $TESTE01 in
 	0) echo "Resultado do comando case é...: 0 - VERDADEIRO";;
 	1) echo "Resultado do comando case é...: 1 - FALSO";;
-	*) echo "Resultado do comando case é...: NÃO INDENTIFICADO"
+	*) echo "Resultado do comando case é...: NÃO IDENTIFICADO"
 esac
 
 #Utilizando o comando read para receber os valores e fazer o teste lógico com case
@@ -83,6 +83,6 @@ read -p "Digite um número de início....: " INICIO;
 read -p "Digite um número da fim.......: " FIM;
 while [ $INICIO -le $FIM ];
 do
-	echo "Valor de sequência númerica...: $INICIO"
+	echo "Valor de sequência numérica...: $INICIO"
 	let INICIO=INICIO+1
 done

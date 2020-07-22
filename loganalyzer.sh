@@ -5,8 +5,8 @@
 # Facebook: facebook.com/BoraParaPratica
 # YouTube: youtube.com/BoraParaPratica
 # Data de criação: 11/11/2018
-# Data de atualização: 10/02/2019
-# Versão: 0.03
+# Data de atualização: 22/07/2020
+# Versão: 0.04
 # Testado e homologado para a versão do Ubuntu Server 18.04.x LTS x64
 # Kernel >= 4.15.x
 #
@@ -42,21 +42,21 @@ KERNEL=`uname -r | cut -d'.' -f1,2`
 # $0 (variável de ambiente do nome do comando)
 LOG="/var/log/$(echo $0 | cut -d'/' -f2)"
 #
-# Declarando as variaveis para o download do LogAnalyzer
-LOGANALYZER="http://download.adiscon.com/loganalyzer/loganalyzer-4.1.6.tar.gz"
+# Declarando as variáveis para o download do LogAnalyzer (Link atualizado no dia 22/07/2020)
+LOGANALYZER="http://download.adiscon.com/loganalyzer/loganalyzer-4.1.11.tar.gz"
 #
-# Declarando as variaveis de autenticação no MySQL
+# Declarando as variáveis de autenticação no MySQL
 MYSQLUSER="root"
 MYSQLPASS="pti@2018"
 #
-# Declarando as variaveis para criação da Base de Dados do Syslog/Rsyslog
+# Declarando as variáveis para criação da Base de Dados do Syslog/Rsyslog
 RSYSLOGDB="syslog"
 # opção do comando create: create (criação), database (base de dados), base (banco de dados)
-# opção do comando create: create (criação), user (usuário), identified by (indentificado por - senha do usuário), password (senha)
-# opção do comando grant: grant (permissão), usage (uso em | uso na), *.* (todos os bancos/tabelas), to (para), user (usário)
-# identified by (indentificado por - senha do usuário), password (senha)
-# opões do comando GRANT: grant (permissão), all (todos privilegios), on (em ou na | banco ou tabela), *.* (todos os bancos/tabelas)
-# to (para), user@'%' (usuário @ localhost), identified by (indentificado por - senha do usuário), password (senha)
+# opção do comando create: create (criação), user (usuário), identified by (identificado por - senha do usuário), password (senha)
+# opção do comando grant: grant (permissão), usage (uso em | uso na), *.* (todos os bancos/tabelas), to (para), user (usuário)
+# identified by (identificado por - senha do usuário), password (senha)
+# opões do comando GRANT: grant (permissão), all (todos privilégios), on (em ou na | banco ou tabela), *.* (todos os bancos/tabelas)
+# to (para), user@'%' (usuário @ localhost), identified by (identificado por - senha do usuário), password (senha)
 # opção do comando FLUSH: flush (atualizar), privileges (recarregar as permissões)
 RSYSLOGDATABASE="CREATE DATABASE syslog;"
 RSYSLOGUSER="CREATE USER 'syslog' IDENTIFIED BY 'syslog';"
@@ -65,13 +65,13 @@ RSYSLOGGRANTALL="GRANT ALL PRIVILEGES ON syslog.* TO 'syslog';"
 RSYSLOGFLUSH="FLUSH PRIVILEGES;"
 RSYSLOGINSTALL="/usr/share/dbconfig-common/data/rsyslog-mysql/install/mysql"
 #
-# Declarando as variaveis para criação da Base de Dados do LogAnalyzer
+# Declarando as variáveis para criação da Base de Dados do LogAnalyzer
 # opção do comando create: create (criação), database (base de dados), base (banco de dados)
-# opção do comando create: create (criação), user (usuário), identified by (indentificado por - senha do usuário), password (senha)
-# opção do comando grant: grant (permissão), usage (uso em | uso na), *.* (todos os bancos/tabelas), to (para), user (usário)
-# identified by (indentificado por - senha do usuário), password (senha)
-# opões do comando GRANT: grant (permissão), all (todos privilegios), on (em ou na | banco ou tabela), *.* (todos os bancos/tabelas)
-# to (para), user@'%' (usuário @ localhost), identified by (indentificado por - senha do usuário), password (senha)
+# opção do comando create: create (criação), user (usuário), identified by (identificado por - senha do usuário), password (senha)
+# opção do comando grant: grant (permissão), usage (uso em | uso na), *.* (todos os bancos/tabelas), to (para), user (usuário)
+# identified by (identificado por - senha do usuário), password (senha)
+# opões do comando GRANT: grant (permissão), all (todos privilégios), on (em ou na | banco ou tabela), *.* (todos os bancos/tabelas)
+# to (para), user@'%' (usuário @ localhost), identified by (identificado por - senha do usuário), password (senha)
 # opção do comando FLUSH: flush (atualizar), privileges (recarregar as permissões)
 LOGDATABASE="CREATE DATABASE loganalyzer;"
 LOGUSERDATABASE="CREATE USER 'loganalyzer' IDENTIFIED BY 'loganalyzer';"
@@ -99,8 +99,8 @@ if [ "$USUARIO" == "0" ] && [ "$UBUNTU" == "18.04" ] && [ "$KERNEL" == "4.15" ]
 fi
 #
 #
-# Verificando se as dependêncais do LogAnalyzer estão instaladas
-# opção do dpkg: -s (status), opção do echo: -e (intepretador de escapes de barra invertida), -n (permite nova linha)
+# Verificando se as dependências do LogAnalyzer estão instaladas
+# opção do dpkg: -s (status), opção do echo: -e (interpretador de escapes de barra invertida), -n (permite nova linha)
 # || (operador lógico OU), 2> (redirecionar de saída de erro STDERR), && = operador lógico AND, { } = agrupa comandos em blocos
 # [ ] = testa uma expressão, retornando 0 ou 1, -ne = é diferente (NotEqual)
 echo -n "Verificando as dependências, aguarde... "
@@ -202,6 +202,9 @@ echo
 #
 echo -e "Baixando o LogAnalyzer do site oficial, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
+	# removendo versões anteriores baixadas do LogAnalyzer
+	# opção do comando rm: -v (verbose)
+	rm -v loganalyzer*.*.* &>> $LOG
 	wget $LOGANALYZER &>> $LOG
 echo -e "LogAnalyzer baixado com sucesso!!!, continuando com o script..."
 sleep 5

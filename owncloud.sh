@@ -45,11 +45,11 @@ KERNEL=`uname -r | cut -d'.' -f1,2`
 LOG="/var/log/$(echo $0 | cut -d'/' -f2)"
 #
 # opção do comando create: create (criação), database (base de dados), base (banco de dados)
-# opção do comando create: create (criação), user (usuário), identified by (indentificado por - senha do usuário), password (senha)
+# opção do comando create: create (criação), user (usuário), identified by (identificado por - senha do usuário), password (senha)
 # opção do comando grant: grant (permissão), usage (uso em | uso na), *.* (todos os bancos/tabelas), to (para), user (usuário)
-# identified by (indentificado por - senha do usuário), password (senha)
-# opões do comando GRANT: grant (permissão), all (todos privilegios), on (em ou na | banco ou tabela), *.* (todos os bancos/tabelas)
-# to (para), user@'%' (usuário @ localhost), identified by (indentificado por - senha do usuário), password (senha)
+# identified by (identificado por - senha do usuário), password (senha)
+# opões do comando GRANT: grant (permissão), all (todos privilégios), on (em ou na | banco ou tabela), *.* (todos os bancos/tabelas)
+# to (para), user@'%' (usuário @ localhost), identified by (identificado por - senha do usuário), password (senha)
 # opção do comando FLUSH: flush (atualizar), privileges (recarregar as permissões)
 USER="root"
 PASSWORD="pti@2018"
@@ -59,8 +59,8 @@ GRANTDATABASE="GRANT USAGE ON *.* TO 'owncloud' IDENTIFIED BY 'owncloud';"
 GRANTALL="GRANT ALL PRIVILEGES ON owncloud.* TO 'owncloud' IDENTIFIED BY 'owncloud' WITH GRANT OPTION;"
 FLUSH="FLUSH PRIVILEGES;"
 #
-# Variáveis de instalação do ownCloud
-RELEASE="https://download.owncloud.org/community/owncloud-10.1.0.tar.bz2"
+# Variáveis de instalação do ownCloud (Link atualizado no dia 22/07/2020)
+RELEASE="https://download.owncloud.org/community/owncloud-10.4.1.tar.bz2"
 #
 # Verificando se o usuário e Root, Distribuição e >=18.04 e o Kernel >=4.15 <IF MELHORADO)
 # [ ] = teste de expressão, && = operador lógico AND, == comparação de string, exit 1 = A maioria dos erros comuns na execução
@@ -79,8 +79,8 @@ if [ "$USUARIO" == "0" ] && [ "$UBUNTU" == "18.04" ] && [ "$KERNEL" == "4.15" ]
 fi
 #
 #
-# Verificando se as dependêncais do ownCloud estão instaladas
-# opção do dpkg: -s (status), opção do echo: -e (intepretador de escapes de barra invertida), -n (permite nova linha)
+# Verificando se as dependências do ownCloud estão instaladas
+# opção do dpkg: -s (status), opção do echo: -e (interpretador de escapes de barra invertida), -n (permite nova linha)
 # || (operador lógico OU), 2> (redirecionar de saída de erro STDERR), && = operador lógico AND, { } = agrupa comandos em blocos
 # [ ] = testa uma expressão, retornando 0 ou 1, -ne = é diferente (NotEqual)
 echo -n "Verificando as dependências, aguarde... "
@@ -172,6 +172,9 @@ echo -e "Instalando o ownCloud e criando a Base de Dados, aguarde..."
 	# opção do comando chown: -R (recursive), -v (verbose), www-data.www-data (user and group)
 	# opção do comando chmod: -R (recursive), -v (verbose), 755 (User=RWX, Group=R-X, Other=R-X)
 	# opção do comando mysql: -u (user), -p (password), -e (execute)
+	# removendo versões anteriores baixadas do ownCloud
+	# opção do comando rm: -v (verbose)
+	rm -v owncloud*.*.* &>> $LOG
 	wget $RELEASE &>> $LOG
 	OWNCLOUDFILE=`echo owncloud*.*.*`
 	tar -jxvf $OWNCLOUDFILE &>> $LOG
@@ -183,7 +186,7 @@ echo -e "Instalando o ownCloud e criando a Base de Dados, aguarde..."
 	mysql -u $USER -p$PASSWORD -e "$GRANTDATABASE" mysql &>> $LOG
 	mysql -u $USER -p$PASSWORD -e "$GRANTALL" mysql &>> $LOG
 	mysql -u $USER -p$PASSWORD -e "$FLUSH" mysql &>> $LOG
-echo -e "ownCLOUD instalado com sucesso!!!, continuando com o script..."
+echo -e "ownCloud instalado com sucesso!!!, continuando com o script..."
 sleep 5
 echo
 #

@@ -4,12 +4,16 @@ Facebook: facebook.com/ProcedimentosEmTI
 Facebook: facebook.com/BoraParaPratica
 YouTube: youtube.com/BoraParaPratica
 Data de criação: 29/01/2019
-Data de atualização: 30/03/2020
-Versão: 0.08
+Data de atualização: 22/07/2020
+Versão: 0.05
 Testado e homologado para a versão do Ubuntu Server 18.04.x LTS x64
 Kernel >= 4.15.x
 
 ============================================= ATUALIZAÇÕES DOS SCRIPTS =============================================
+
+22/07/2020 - Robson Vaamonde - Revisão de todos os scripts do repositórios, atualização de versões dos aplicativos e 
+correções de português nos scripts.
+
 30/03/2020 - Robson Vaamonde - Atualização do arquivo de instalação do netdata.sh, acréscimo da dependência do libuv1-dev 
 
 09/11/2019 - Robson Vaamonde - Atualização do arquivo de configuração sshd_config, acréscimo das linha MaxSessions 3, 

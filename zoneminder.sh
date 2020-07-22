@@ -5,8 +5,8 @@
 # Facebook: facebook.com/BoraParaPratica
 # YouTube: youtube.com/BoraParaPratica
 # Data de criação: 02/12/2018
-# Data de atualização: 10/02/2018
-# Versão: 0.06
+# Data de atualização: 22/07/2020
+# Versão: 0.07
 # Testado e homologado para a versão do Ubuntu Server 18.04.x LTS x64
 # Kernel >= 4.15.x
 #
@@ -33,7 +33,7 @@ HORAINICIAL=`date +%T`
 # Variáveis para validar o ambiente, verificando se o usuário e "root", versão do ubuntu e kernel
 # opções do comando id: -u (user), opções do comando: lsb_release: -r (release), -s (short), 
 # opões do comando uname: -r (kernel release), opções do comando cut: -d (delimiter), -f (fields)
-# opção do caracter: | (piper) Conecta a saída padrão com a entrada padrão de outro comando
+# opção do carácter: | (piper) Conecta a saída padrão com a entrada padrão de outro comando
 USUARIO=`id -u`
 UBUNTU=`lsb_release -rs`
 KERNEL=`uname -r | cut -d'.' -f1,2`
@@ -69,8 +69,8 @@ if [ "$USUARIO" == "0" ] && [ "$UBUNTU" == "18.04" ] && [ "$KERNEL" == "4.15" ]
 		exit 1
 fi
 #
-# Verificando se as dependêncais do ZoneMinder estão instaladas
-# opção do dpkg: -s (status), opção do echo: -e (intepretador de escapes de barra invertida), -n (permite nova linha), \n (new line)
+# Verificando se as dependências do ZoneMinder estão instaladas
+# opção do dpkg: -s (status), opção do echo: -e (interpretador de escapes de barra invertida), -n (permite nova linha), \n (new line)
 # || (operador lógico OU), 2> (redirecionar de saída de erro STDERR), && = operador lógico AND
 echo -n "Verificando as dependências, aguarde... "
 	for name in apache2 mysql-server mysql-common software-properties-common
@@ -141,7 +141,7 @@ echo -e "Listas atualizadas com sucesso!!!, continuando com o script..."
 sleep 5
 echo
 #
-echo -e "Editando as Configurações do Servidor de MySQL, perssione <Enter> para continuar"
+echo -e "Editando as Configurações do Servidor de MySQL, pressione <Enter> para continuar"
 	# opção do comando: &>> (redirecionar a saída padrão)
 	#[mysqld]
 	#sql_mode = NO_ENGINE_SUBSTITUTION
@@ -152,7 +152,7 @@ echo -e "Banco de Dados editado com sucesso!!!, continuando com o script..."
 sleep 5
 echo
 #
-echo -e "Editando as Configurações do PHP, perssione <Enter> para continuar"
+echo -e "Editando as Configurações do PHP, pressione <Enter> para continuar"
 	# opção do comando: &>> (redirecionar a saída padrão)
 	#[Date]
 	#date.timezone = America/Sao_Paulo
