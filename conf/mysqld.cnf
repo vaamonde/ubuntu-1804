@@ -19,7 +19,7 @@ socket		= /var/run/mysqld/mysqld.sock
 nice		= 0
 
 [mysqld]
-#Configuração padrão
+# Configuração padrão
 user		= mysql
 pid-file	= /var/run/mysqld/mysqld.pid
 socket		= /var/run/mysqld/mysqld.sock
@@ -31,13 +31,13 @@ lc-messages-dir	= /usr/share/mysql
 skip-external-locking
 skip-innodb
 
-#Configuração utilizada pela ZoneMinder
+# Configuração utilizada pela ZoneMinder
 sql_mode = NO_ENGINE_SUBSTITUTION
 
-#Desativado a resolução de endereço local, permitindo acesso remoto
+# Desativado a resolução de endereço local, permitindo acesso remoto
 #bind-address		= 127.0.0.1
 
-#Configurações de desempenho do MySQL, aumento do Buffer e Packet
+# Configurações de desempenho do MySQL, aumento do Buffer e Packet
 key_buffer_size		= 256M
 max_allowed_packet	= 16M
 thread_stack		= 192K
@@ -47,11 +47,11 @@ myisam-recover-options  = BACKUP
 #table_cache            = 64
 #thread_concurrency     = 10
 
-#Configuração do Cache do MySQL
+# Configuração do Cache do MySQL
 query_cache_limit	= 16M
 query_cache_size        = 48M
 
-#Configuração do arquivo de Log de Errors
+# Configuração do arquivo de Log de Errors
 log_error = /var/log/mysql/error.log
 expire_logs_days	= 10
 max_binlog_size   = 100M

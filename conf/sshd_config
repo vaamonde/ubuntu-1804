@@ -26,8 +26,8 @@ HostKey /etc/ssh/ssh_host_ed25519_key
 # hosts.allow e hosts.deny para geração de log´s detalhados de conexão ao Servidor de SSH
 # Verificação dos log's de autenticação do SSH: sudo cat -n /var/log/auth.log | grep -i sshd
 # Verificação dos log's de serviço do SSH: sudo cat -n /var/log/syslog | grep -i ssh
-# Verificação do arquvo de Log do TCPWrappers Allow: sudo cat -n /var/log/tcpwrappers-allow-sh.log
-# Verificação do arquvo de Log do TCPWrappers Deny: sudo cat -n /var/log/tcpwrappers-deny-sh.log
+# Verificação do arquivo de Log do TCPWrappers Allow: sudo cat -n /var/log/tcpwrappers-allow-sh.log
+# Verificação do arquivo de Log do TCPWrappers Deny: sudo cat -n /var/log/tcpwrappers-deny-sh.log
 SyslogFacility AUTH
 LogLevel INFO
 
@@ -63,7 +63,7 @@ LoginGraceTime 50
 ClientAliveInterval 180
 ClientAliveCountMax 0
 
-# Tentativa máxima de conexões simultaneas no Servidor de OpenSSH
+# Tentativa máxima de conexões simultâneas no Servidor de OpenSSH
 MaxAuthTries 3
 
 # Número de usuários ou sessões que podem se conectar remotamente no Servidor de OpenSSH
@@ -94,7 +94,7 @@ AllowTcpForwarding no
 # Não permitir encaminhamento de portas via Servidor de OpenSSH para os serviços de X11 (ambiente gráfico)
 X11Forwarding no
 
-# Métodos de Autenticaticação do SSH, utilizar chaves públicas e autenticação por senha
+# Métodos de Autenticação do SSH, utilizar chaves públicas e autenticação por senha
 # Por padrão o Servidor de SSH não trabalhar com Chaves Pública para autenticação, utilizando o arquivo /etc/passwd
 # para se autenticar no servidor, por motivos de segurança, e recomendado utilizar chaves públicas e senhas para se
 # autenticar no servidor
