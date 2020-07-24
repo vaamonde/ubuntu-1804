@@ -13,7 +13,7 @@
 #
 # O BareOS Server é uma bifurcação (fork) do projeto de código aberto Bacula versão 5.2. Em 2010, o desenvolvedor da 
 # comunidade do Bacula, Marco Van Wieringen, começou a coletar contribuições das comunidades que foram rejeitadas ou 
-# negligenciadas em começou a desenvolver sua própria vresão. Este trabalho foi mais tarde a base da criação do software 
+# negligenciadas em começou a desenvolver sua própria versão. Este trabalho foi mais tarde a base da criação do software 
 # BareOS e desde então foi enriquecido com vários novos recursos.
 #
 # O BareOS é um conjunto de programas de computador que permite ao administrador do sistema gerenciar o backup, a recuperação
@@ -30,6 +30,12 @@
 # Backup PC: http://backuppc.sourceforge.net/
 #
 # Site Oficial do Projeto: https://www.bareos.org/en/
+#
+# Informações que serão solicitada na configuração via Web do Bareos
+# localhost-dir
+# Username: admin
+# Password: bareos
+# Portuguese (BR)
 #
 # Vídeo de instalação do GNU/Linux Ubuntu Server 18.04.x LTS: https://www.youtube.com/watch?v=zDdCrqNhIXI
 # Vídeo de atualização do Sistema: https://www.youtube.com/watch?v=esnu8TAepHU
@@ -71,12 +77,12 @@ POSTFIX="No configuration"
 clear
 if [ "$USUARIO" == "0" ] && [ "$UBUNTU" == "18.04" ] && [ "$KERNEL" == "4.15" ]
 	then
-		echo -e "O usuário e Root, continuando com o script..."
-		echo -e "Distribuição e >=18.04.x, continuando com o script..."
-		echo -e "Kernel e >= 4.15, continuando com o script..."
+		echo -e "O usuário é Root, continuando com o script..."
+		echo -e "Distribuição é >=18.04.x, continuando com o script..."
+		echo -e "Kernel é >= 4.15, continuando com o script..."
 		sleep 5
 	else
-		echo -e "Usuário não e Root ($USUARIO) ou Distribuição não e >=18.04.x ($UBUNTU) ou Kernel não e >=4.15 ($KERNEL)"
+		echo -e "Usuário não é Root ($USUARIO) ou Distribuição não é >=18.04.x ($UBUNTU) ou Kernel não é >=4.15 ($KERNEL)"
 		echo -e "Caso você não tenha executado o script com o comando: sudo -i"
 		echo -e "Execute novamente o script para verificar o ambiente."
 		exit 1

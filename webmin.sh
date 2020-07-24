@@ -47,12 +47,12 @@ WEBMIN="https://prdownloads.sourceforge.net/webadmin/webmin_1.953_all.deb"
 clear
 if [ "$USUARIO" == "0" ] && [ "$UBUNTU" == "18.04" ] && [ "$KERNEL" == "4.15" ]
 	then
-		echo -e "O usuário e Root, continuando com o script..."
-		echo -e "Distribuição e >=18.04.x, continuando com o script..."
-		echo -e "Kernel e >= 4.15, continuando com o script..."
+		echo -e "O usuário é Root, continuando com o script..."
+		echo -e "Distribuição é >=18.04.x, continuando com o script..."
+		echo -e "Kernel é >= 4.15, continuando com o script..."
 		sleep 5
 	else
-		echo -e "Usuário não e Root ($USUARIO) ou Distribuição não e >=18.04.x ($UBUNTU) ou Kernel não e >=4.15 ($KERNEL)"
+		echo -e "Usuário não é Root ($USUARIO) ou Distribuição não é >=18.04.x ($UBUNTU) ou Kernel não é >=4.15 ($KERNEL)"
 		echo -e "Caso você não tenha executado o script com o comando: sudo -i"
 		echo -e "Execute novamente o script para verificar o ambiente."
 		exit 1
@@ -123,7 +123,7 @@ echo -e "Download do Webmin feito com sucesso!!!, continuando com o script..."
 sleep 5
 echo
 #				 
-echo -e "Instalando o Webmin, aguarde..."
+echo -e "Instalando o Webmin, esse processo demora um pouco, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando dpkg: -i (install)
 	WEBMINVERSION=`echo webmin_*`

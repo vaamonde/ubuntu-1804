@@ -9,23 +9,23 @@
 # Testado e homologado para a versão do Ubuntu Server 18.04.x LTS x64
 # Kernel >= 4.15.x
 
-# Porta de conexão padrão do Servidor de OpenSSH, por segurança e recomendado mudar o número da porta
+# Porta de conexão padrão do Servidor de OpenSSH, por segurança é recomendado mudar o número da porta
 # Caso você mude o número da porta, no cliente você precisa usar o comando: ssh -p porta usuário@ip_do_servidor
 Port 22
 
 # Versão do protocolo padrão do Servidor de OpenSSH
 Protocol 2
 
-# Localização das configurações de Chaves Públicas e Privadas do Servidor de OpenSSH
+# Localização das configurações das Chaves Públicas e Privadas do Servidor de OpenSSH
 HostKey /etc/ssh/ssh_host_rsa_key
 HostKey /etc/ssh/ssh_host_dsa_key
 HostKey /etc/ssh/ssh_host_ecdsa_key
 HostKey /etc/ssh/ssh_host_ed25519_key
 
-# Configuração dos Log's do Servidor de SSH, recomendado utilizar junto com os arquivos de configuração
-# hosts.allow e hosts.deny para geração de log´s detalhados de conexão ao Servidor de SSH
-# Verificação dos log's de autenticação do SSH: sudo cat -n /var/log/auth.log | grep -i sshd
-# Verificação dos log's de serviço do SSH: sudo cat -n /var/log/syslog | grep -i ssh
+# Configuração dos Log's do Servidor de OpenSSH, recomendado utilizar junto com os arquivos de configuração
+# hosts.allow e hosts.deny para geração de log´s detalhados das conexões ao Servidor de OpenSSH
+# Verificação dos log's de autenticação do OpenSSH: sudo cat -n /var/log/auth.log | grep -i sshd
+# Verificação dos log's de serviço do OpenSSH: sudo cat -n /var/log/syslog | grep -i ssh
 # Verificação do arquivo de Log do TCPWrappers Allow: sudo cat -n /var/log/tcpwrappers-allow-sh.log
 # Verificação do arquivo de Log do TCPWrappers Deny: sudo cat -n /var/log/tcpwrappers-deny-sh.log
 SyslogFacility AUTH
@@ -39,20 +39,20 @@ PermitRootLogin no
 AllowUsers vaamonde
 
 # Grupos que tem permissão de acesso remoto ao Servidor de OpenSSH, cuidado, se você usar a variável AllowUsers
-# o grupo padrão do usuário precisa está liberado na linha AllowGroups, separados por espaço
-# deve existir no servidor, grupos listados no arquivo /etc/group
+# o grupo padrão do usuário precisa está liberado na linha AllowGroups, separados por espaço, deve existir no servidor
+# Grupos listados no arquivo /etc/group
 AllowGroups vaamonde
 
-# Usuários que não tem permissão de acesso remoto ao Servidor de SSH, separados por espaço, deve existir no servidor
+# Usuários que não tem permissão de acesso remoto ao Servidor de OpenSSH, separados por espaço, deve existir no servidor
 # Usuários listados no arquivo /etc/passwd
 DenyUsers root
 
 # Grupos que não tem permissão de acesso remoto ao Servidor de OpenSSH, cuidado, se você usar a variável DenyUsers
-# o grupo padrão do usuário precisa está bloqueado na linha DenyGroups, separados por espaço
-# deve existir no servidor, grupos listados no arquivo /etc/group
+# o grupo padrão do usuário precisa está bloqueado na linha DenyGroups, separados por espaço, deve existir no servidor
+# Grupos listados no arquivo /etc/group
 DenyGroups root
 
-# Banner que será apresentado no momento do acesso remoto ao Servidor de OpenSSH, não e recomendado utilizar acentuação
+# Banner que será apresentado no momento do acesso remoto ao Servidor de OpenSSH, não é recomendado utilizar acentuação
 Banner /etc/issue.net
 
 # O tempo após o qual o servidor será desconectado se o usuário não tiver efetuado login com êxito.
@@ -94,21 +94,21 @@ AllowTcpForwarding no
 # Não permitir encaminhamento de portas via Servidor de OpenSSH para os serviços de X11 (ambiente gráfico)
 X11Forwarding no
 
-# Métodos de Autenticação do SSH, utilizar chaves públicas e autenticação por senha
-# Por padrão o Servidor de SSH não trabalhar com Chaves Pública para autenticação, utilizando o arquivo /etc/passwd
-# para se autenticar no servidor, por motivos de segurança, e recomendado utilizar chaves públicas e senhas para se
+# Métodos de Autenticação do OpenSSH, utilizar chaves públicas e autenticação por senha
+# Por padrão o Servidor de OpenSSH não trabalhar com Chaves Pública para autenticação, utilizando o arquivo /etc/passwd
+# para se autenticar no servidor, por motivos de segurança, é recomendado utilizar chaves públicas e senhas para se
 # autenticar no servidor
 #AuthenticationMethods publickey,password
 
-# Autenticação utilizando chaves públicas geradas no cliente com o comando ssh-keygen e exportada para o servidor
-# com o comando ssh-copy-id, localizadas em: /home/nome_usuário/.ssh/authorized_keys
+# Autenticação utilizando chaves públicas geradas no cliente com o comando: ssh-keygen e exportada para o servidor
+# com o comando: ssh-copy-id, localizadas em: /home/nome_usuário/.ssh/authorized_keys
 PubkeyAuthentication yes
 
-# Especifica se a autenticação por senha é permitida. O padrão é yes. Não e recomendado mudar
+# Especifica se a autenticação por senha é permitida. O padrão é yes. Não é recomendado mudar
 PasswordAuthentication yes
 
-# Configuração do diretório de chaves públicas para autenticar os usuários, chave deve ser exportada para
-# o Servidor de SSH utilizando o comando o comando ssh-copy-id
+# Configuração do diretório de chaves públicas para autenticar os usuários, as chaves devem ser exportada para
+# o Servidor de OpenSSH utilizando o comando o comando: ssh-copy-id
 AuthorizedKeysFile .ssh/authorized_keys
 
 # Evitar o uso de diretórios residenciais inseguros e permissões de arquivos de chaves não confiáveis

@@ -11,6 +11,8 @@ Kernel >= 4.15.x
 
 ============================================= ATUALIZAÇÕES DOS SCRIPTS =============================================
 
+24/07/2020 - Robson Vaamonde - Correção das novas dependências do Netdata, agora resolvido as falhas de Cloud.
+
 22/07/2020 - Robson Vaamonde - Revisão de todos os scripts do repositórios, atualização de versões dos aplicativos e 
 correções de português nos scripts.
 

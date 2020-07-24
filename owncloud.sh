@@ -5,16 +5,25 @@
 # Facebook: facebook.com/BoraParaPratica
 # YouTube: youtube.com/BoraParaPratica
 # Data de criação: 08/02/2019
-# Data de atualização: 25/02/2019
-# Versão: 0.04
+# Data de atualização: 23/07/2020
+# Versão: 0.05
 # Testado e homologado para a versão do Ubuntu Server 18.04.x LTS x64
 # Kernel >= 4.15.x
 # Testado e homologado para a versão do ownCLOUD-10.1.x
 #
-# O ownCloud é um sistema de computador mais conhecido como "serviço de armazenamento e sincronização de arquivos". Como tal, 
-# ownCloud é muito semelhante ao amplamente usado Dropbox, cuja principal diferença é que ownCloud é gratuito e open-source, 
-# e permitindo assim qualquer um de instalar e operar sem custo em um servidor privado, sem limite de espaço de armazenamento 
-# (com exceção da capacidade do disco rígido) ou o número de clientes conectados.
+# O ownCloud é um sistema de computador mais conhecido como "serviço de armazenamento e sincronização de arquivos". 
+# Como tal, ownCloud é muito semelhante ao amplamente usado Dropbox, cuja principal diferença é que ownCloud é gratuito
+# e open-source, e permitindo assim qualquer um de instalar e operar sem custo em um servidor privado, sem limite de 
+# espaço de armazenamento (com exceção da capacidade do disco rígido) ou o número de clientes conectados.
+#
+# Informações que serão solicitada na configuração via Web do ownCloud
+# Nome do usuário: admin
+# Senha: pti@2018
+# Pasta de dados: /var/www/html/own/data
+# Usuário do banco de dados: owncloud
+# Senha do banco de dados: owncloud
+# Nome do banco de dados: owncloud
+# Host do banco de dados: owncloud
 #
 # Vídeo de instalação do GNU/Linux Ubuntu Server 18.04.x LTS: https://www.youtube.com/watch?v=zDdCrqNhIXI
 # Vídeo de atualização do Sistema: https://www.youtube.com/watch?v=esnu8TAepHU
@@ -67,12 +76,12 @@ RELEASE="https://download.owncloud.org/community/owncloud-10.4.1.tar.bz2"
 clear
 if [ "$USUARIO" == "0" ] && [ "$UBUNTU" == "18.04" ] && [ "$KERNEL" == "4.15" ]
 	then
-		echo -e "O usuário e Root, continuando com o script..."
-		echo -e "Distribuição e >=18.04.x, continuando com o script..."
-		echo -e "Kernel e >= 4.15, continuando com o script..."
+		echo -e "O usuário é Root, continuando com o script..."
+		echo -e "Distribuição é >=18.04.x, continuando com o script..."
+		echo -e "Kernel é >= 4.15, continuando com o script..."
 		sleep 5
 	else
-		echo -e "Usuário não e Root ($USUARIO) ou Distribuição não e >=18.04.x ($UBUNTU) ou Kernel não e >=4.15 ($KERNEL)"
+		echo -e "Usuário não é Root ($USUARIO) ou Distribuição não é >=18.04.x ($UBUNTU) ou Kernel não é >=4.15 ($KERNEL)"
 		echo -e "Caso você não tenha executado o script com o comando: sudo -i"
 		echo -e "Execute novamente o script para verificar o ambiente."
 		exit 1

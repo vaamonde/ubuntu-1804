@@ -57,12 +57,12 @@ DOCKERKEY="0EBFCD88"
 clear
 if [ "$USUARIO" == "0" ] && [ "$UBUNTU" == "18.04" ] && [ "$KERNEL" == "4.15" ]
 	then
-		echo -e "O usuário e Root, continuando com o script..."
-		echo -e "Distribuição e >=18.04.x, continuando com o script..."
-		echo -e "Kernel e >= 4.15, continuando com o script..."
+		echo -e "O usuário é Root, continuando com o script..."
+		echo -e "Distribuição é >=18.04.x, continuando com o script..."
+		echo -e "Kernel é >= 4.15, continuando com o script..."
 		sleep 5
 	else
-		echo -e "Usuário não e Root ($USUARIO) ou Distribuição não e >=18.04.x ($UBUNTU) ou Kernel não e >=4.15 ($KERNEL)"
+		echo -e "Usuário não é Root ($USUARIO) ou Distribuição não é >=18.04.x ($UBUNTU) ou Kernel não é >=4.15 ($KERNEL)"
 		echo -e "Caso você não tenha executado o script com o comando: sudo -i"
 		echo -e "Execute novamente o script para verificar o ambiente."
 		exit 1
@@ -181,14 +181,18 @@ clear
 #
 echo -e "Iniciando o Container de teste do Docker, aguarde..."
 	docker run hello-world
-echo -e "Container iniciado com sucesso!!!, continuando com o script..."
+	echo
+echo -e "Container executado com sucesso!!!, continuando com o script..."
 sleep 5
 echo
 #
-echo -e "Iniciando o Container de teste do Ubuntu, aguarde..."
+echo -e "Iniciando o Container de Teste do Ubuntu, aguarde..."
+echo -e "Para sair do Container utilize o comando: exit"
+echo
 	# opção do comando docker: -i (Keep STDIN open even if not attached), -t (Allocate a pseudo-TTY)
 	docker run -it ubuntu bash
-echo -e "Container iniciado com sucesso!!!, continuando com o script..."
+	echo
+echo -e "Container executado com sucesso!!!, continuando com o script..."
 sleep 5
 echo
 #

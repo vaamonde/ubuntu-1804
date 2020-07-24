@@ -58,12 +58,12 @@ ZONEMINDER="ppa:iconnor/zoneminder-master"
 clear
 if [ "$USUARIO" == "0" ] && [ "$UBUNTU" == "18.04" ] && [ "$KERNEL" == "4.15" ]
 	then
-		echo -e "O usuário e Root, continuando com o script..."
-		echo -e "Distribuição e >=18.04.x, continuando com o script..."
-		echo -e "Kernel e >= 4.15, continuando com o script..."
+		echo -e "O usuário é Root, continuando com o script..."
+		echo -e "Distribuição é >=18.04.x, continuando com o script..."
+		echo -e "Kernel é >= 4.15, continuando com o script..."
 		sleep 5
 	else
-		echo -e "Usuário não e Root ($USUARIO) ou Distribuição não e >=18.04.x ($UBUNTU) ou Kernel não e >=4.15 ($KERNEL)"
+		echo -e "Usuário não é Root ($USUARIO) ou Distribuição não é >=18.04.x ($UBUNTU) ou Kernel não é >=4.15 ($KERNEL)"
 		echo -e "Caso você não tenha executado o script com o comando: sudo -i"
 		echo -e "Execute novamente o script para verificar o ambiente."
 		exit 1
@@ -146,7 +146,7 @@ echo -e "Editando as Configurações do Servidor de MySQL, pressione <Enter> par
 	#[mysqld]
 	#sql_mode = NO_ENGINE_SUBSTITUTION
 	read
-	vim /etc/mysql/mysql.conf.d/mysqld.cnf
+	vim /etc/mysql/mysql.conf.d/mysqld.cnf +35
 	sudo service mysql restart &>> $LOG
 echo -e "Banco de Dados editado com sucesso!!!, continuando com o script..."
 sleep 5
@@ -157,7 +157,7 @@ echo -e "Editando as Configurações do PHP, pressione <Enter> para continuar"
 	#[Date]
 	#date.timezone = America/Sao_Paulo
 	read
-	vim /etc/php/7.2/apache2/php.ini
+	vim /etc/php/7.2/apache2/php.ini +197
 echo -e "Arquivo do PHP editado com sucesso!!!, continuando com o script..."
 sleep 5
 echo

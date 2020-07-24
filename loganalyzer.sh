@@ -15,6 +15,37 @@
 # rede. Ele consolida o Syslog/Rsyslog e outros dados de eventos, fornecendo uma página web de fácil leitura. Os gráficos 
 # ajudam a ver as coisas importantes de relance.
 #
+# Informações que serão solicitada na configuração via Web do LogAnalyzer
+# Step 1 - Prerequisites: Next;
+# Step 2 - Verify File Permissions: 
+#		   file './config.php' Writeable: Next;
+# Step 3 - Basic Configuration: 
+#		   Enable User Database: Yes
+#		   Database Host: localhost
+#		   Database Port: 3306
+#		   Database Name: loganalyzer
+#		   Table prefix: logcon_
+#		   Database User: loganalyzer
+#		   Database Password: loganalyzer
+#		   Require user to be logged in: Yes
+#		   Authentication method: Internal Authentication: Next;
+# Step 4 - Create Tables: Next;
+# Step 5 - Check SQL Results: Next;
+# Step 6 - Creating the Main Useraccount
+#		   Username: admin
+#		   Password: pti@2018
+#		   Repeat Password: pti@2018: Next;
+# Step 7 - Create the first source for syslog messages
+#		   Name of the Source: ptispo01ws01
+#		   Source Type: MYSQL Native
+#		   Table type: MonitorWare
+#		   Database Host: localhost
+#		   Database Name: syslog
+#		   Database Tablename: SystemEvents
+#		   Database User: syslog
+#		   Database Password: syslog: Next;
+# Step 8 - Done: Finish.
+#
 # Site oficial: https://loganalyzer.adiscon.com/
 #
 # Vídeo de instalação do GNU/Linux Ubuntu Server 18.04.x LTS: https://www.youtube.com/watch?v=zDdCrqNhIXI
@@ -87,12 +118,12 @@ export DEBIAN_FRONTEND="noninteractive"
 clear
 if [ "$USUARIO" == "0" ] && [ "$UBUNTU" == "18.04" ] && [ "$KERNEL" == "4.15" ]
 	then
-		echo -e "O usuário e Root, continuando com o script..."
-		echo -e "Distribuição e >=18.04.x, continuando com o script..."
-		echo -e "Kernel e >= 4.15, continuando com o script..."
+		echo -e "O usuário é Root, continuando com o script..."
+		echo -e "Distribuição é >=18.04.x, continuando com o script..."
+		echo -e "Kernel é >= 4.15, continuando com o script..."
 		sleep 5
 	else
-		echo -e "Usuário não e Root ($USUARIO) ou Distribuição não e >=18.04.x ($UBUNTU) ou Kernel não e >=4.15 ($KERNEL)"
+		echo -e "Usuário não é Root ($USUARIO) ou Distribuição não é >=18.04.x ($UBUNTU) ou Kernel não é >=4.15 ($KERNEL)"
 		echo -e "Caso você não tenha executado o script com o comando: sudo -i"
 		echo -e "Execute novamente o script para verificar o ambiente."
 		exit 1

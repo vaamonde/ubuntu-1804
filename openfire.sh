@@ -16,8 +16,24 @@
 # de servidores através da internet, e usados por cerca de dez milhões de pessoas em todo mundo, de acordo com a 
 # XMPP Standards Foundation.
 #
-# O Openfire (anteriormente conhecido como Wildfire e Jive Messenger) é um servidor de mensagens instantâneas e de
+# O OpenFire (anteriormente conhecido como Wildfire e Jive Messenger) é um servidor de mensagens instantâneas e de
 # conversas em grupo que usa o servidor XMPP escrito em Java e licenciado sob a licença Apache 2.0.
+#
+# Informações que serão solicitada na configuração via Web do OpenFire
+# Welcome to Setup:
+#	Português Brasileiro (pt_BR): Continue;
+# Configurações do Servidor:
+#	Domínio: pti.intra
+#	Server Host Name (FQDN): ptispo01ws01.pti.intra
+#	Porta do Console Admin: 9090
+#	Porta Segura do Console Admin: 9091: Continue;
+# Configurações do Banco de Dados:
+#	Conexão Padrão do Banco de Dados: Continuar;
+# Configurações do Banco de Dados - Conexão Padrão:
+#	Predefinições do Driver de Banco de Dados: MySQL
+#	URL do banco de dados: jdbc:mysql://localhost:3306/openfire?
+#	Nome do Usuário: openfire
+#	Senha: openfire: Continuar;
 #
 # Site Oficial do OpenFire: https://www.igniterealtime.org/projects/openfire/
 #
@@ -51,9 +67,9 @@ PASSWORD="pti@2018"
 # to (para), user@'%' (usuário @ localhost), identified by (identificado por - senha do usuário), password (senha)
 # opção do comando FLUSH: flush (atualizar), privileges (recarregar as permissões)
 DATABASE="CREATE DATABASE openfire;"
-USERDATABASE="CREATE USER 'openfire' IDENTIFIED BY 'openfire';"
-GRANTDATABASE="GRANT USAGE ON *.* TO 'openfire' IDENTIFIED BY 'openfire';"
-GRANTALL="GRANT ALL PRIVILEGES ON openfire.* TO 'openfire';"
+USERDATABASE="CREATE USER 'openfire@localhost' IDENTIFIED BY 'openfire';"
+GRANTDATABASE="GRANT USAGE ON *.* TO 'openfire@localhost' IDENTIFIED BY 'openfire';"
+GRANTALL="GRANT ALL PRIVILEGES ON openfire.* TO 'openfire@localhost' IDENTIFIED BY 'openfire';"
 FLUSH="FLUSH PRIVILEGES;"
 #
 # Declarando a variável de download do OpenFire (Link atualizado no dia 22/07/2020)
@@ -64,12 +80,12 @@ OPENFIRE="https://www.igniterealtime.org/downloadServlet?filename=openfire/openf
 clear
 if [ "$USUARIO" == "0" ] && [ "$UBUNTU" == "18.04" ] && [ "$KERNEL" == "4.15" ]
 	then
-		echo -e "O usuário e Root, continuando com o script..."
-		echo -e "Distribuição e >=18.04.x, continuando com o script..."
-		echo -e "Kernel e >= 4.15, continuando com o script..."
+		echo -e "O usuário é Root, continuando com o script..."
+		echo -e "Distribuição é >=18.04.x, continuando com o script..."
+		echo -e "Kernel é >= 4.15, continuando com o script..."
 		sleep 5
 	else
-		echo -e "Usuário não e Root ($USUARIO) ou Distribuição não e >=18.04.x ($UBUNTU) ou Kernel não e >=4.15 ($KERNEL)"
+		echo -e "Usuário não é Root ($USUARIO) ou Distribuição não é >=18.04.x ($UBUNTU) ou Kernel não é >=4.15 ($KERNEL)"
 		echo -e "Caso você não tenha executado o script com o comando: sudo -i"
 		echo -e "Execute novamente o script para verificar o ambiente."
 		exit 1

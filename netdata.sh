@@ -52,12 +52,12 @@ NETDATA="https://github.com/firehol/netdata.git --depth=1"
 clear
 if [ "$USUARIO" == "0" ] && [ "$UBUNTU" == "18.04" ] && [ "$KERNEL" == "4.15" ]
 	then
-		echo -e "O usuário e Root, continuando com o script..."
-		echo -e "Distribuição e >=18.04.x, continuando com o script..."
-		echo -e "Kernel e >= 4.15, continuando com o script..."
+		echo -e "O usuário é Root, continuando com o script..."
+		echo -e "Distribuição é >=18.04.x, continuando com o script..."
+		echo -e "Kernel é >= 4.15, continuando com o script..."
 		sleep 5
 	else
-		echo -e "Usuário não e Root ($USUARIO) ou Distribuição não e >=18.04.x ($UBUNTU) ou Kernel não e >=4.15 ($KERNEL)"
+		echo -e "Usuário não é Root ($USUARIO) ou Distribuição não é >=18.04.x ($UBUNTU) ou Kernel não é >=4.15 ($KERNEL)"
 		echo -e "Caso você não tenha executado o script com o comando: sudo -i"
 		echo -e "Execute novamente o script para verificar o ambiente."
 		exit 1
@@ -125,12 +125,13 @@ echo -e "Instalando as dependências do Netdata, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando apt: -y (yes), \ (bar left) quebra de linha na opção do apt
 	apt -y install zlib1g-dev gcc make git autoconf autogen automake pkg-config uuid-dev python python-mysqldb python-pip \
-	python-dev python3-dev libmysqlclient-dev python-ipaddress libuv1-dev &>> $LOG
+	python-dev python3-dev libmysqlclient-dev python-ipaddress libuv1-dev libwebsockets8 libwebsockets-dev libjson-c-dev \
+	libbpfcc-dev liblz4-dev libjudy-dev libelf-dev libmnl-dev autoconf-archive curl cmake &>> $LOG
 echo -e "Instalação das dependências feita com sucesso!!!, continuando com o script..."
 sleep 5
 echo
 #
-echo -e "Fazendo a clonagem do Netdata, aguarde..."
+echo -e "Fazendo a clonagem do Netdata do Github, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	git clone $NETDATA &>> $LOG
 echo -e "Clonagem do Netdata feito com sucesso!!!, continuando com o script..."
@@ -159,9 +160,11 @@ sleep 5
 clear
 #
 echo -e "Editando o arquivo de monitoramento do MySQL, pressione <Enter> para editar"
+echo -e "Adicionar o usuário: 'root' é a senha: 'pti@2018' nas configurações do tcp:"
+echo -e "Remover os comentários das variáveis: user e pass"
 	read
 	sleep 5
-	vim /usr/lib/netdata/conf.d/python.d/mysql.conf
+	vim /usr/lib/netdata/conf.d/python.d/mysql.conf +149
 echo -e "Arquivo editado com sucesso!!!, continuando com o script..."
 sleep 5
 echo
