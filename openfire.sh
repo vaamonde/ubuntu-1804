@@ -67,9 +67,10 @@ PASSWORD="pti@2018"
 # to (para), user@'%' (usuário @ localhost), identified by (identificado por - senha do usuário), password (senha)
 # opção do comando FLUSH: flush (atualizar), privileges (recarregar as permissões)
 DATABASE="CREATE DATABASE openfire;"
-USERDATABASE="CREATE USER 'openfire@localhost' IDENTIFIED BY 'openfire';"
-GRANTDATABASE="GRANT USAGE ON *.* TO 'openfire@localhost' IDENTIFIED BY 'openfire';"
-GRANTALL="GRANT ALL PRIVILEGES ON openfire.* TO 'openfire@localhost' IDENTIFIED BY 'openfire';"
+CREATETABLE="/usr/share/openfire/resources/database/openfire_mysql.sql"
+USERDATABASE="CREATE USER 'openfire' IDENTIFIED BY 'openfire';"
+GRANTDATABASE="GRANT USAGE ON *.* TO 'openfire' IDENTIFIED BY 'openfire';"
+GRANTALL="GRANT ALL PRIVILEGES ON openfire.* TO 'openfire' IDENTIFIED BY 'openfire';"
 FLUSH="FLUSH PRIVILEGES;"
 #
 # Declarando a variável de download do OpenFire (Link atualizado no dia 22/07/2020)
@@ -162,18 +163,6 @@ echo -e "Verificando a versão do Java, aguarde..."
 echo -e "Versão verificada com sucesso!!!, continuando com o script..."
 sleep 5
 echo
-#				 
-echo -e "Criando o Banco de Dados do OpenFire, aguarde..."
-	#opção do comando: &>> (redirecionar de saída padrão)
-	#opção do comando mysql: -u (user), -p (password), -e (execute)
-	mysql -u $USER -p$PASSWORD -e "$DATABASE" mysql &>> $LOG
-	mysql -u $USER -p$PASSWORD -e "$USERDATABASE" mysql &>> $LOG
-	mysql -u $USER -p$PASSWORD -e "$GRANTDATABASE" mysql &>> $LOG
-	mysql -u $USER -p$PASSWORD -e "$GRANTALL" mysql &>> $LOG
-	mysql -u $USER -p$PASSWORD -e "$FLUSH" mysql &>> $LOG	
-echo -e "Banco de Dados criado com sucesso!!!, continuando com o script..."
-sleep 5
-echo
 #
 echo -e "Baixando o OpenFire do site oficial, aguarde..."
 	#opção do comando: &>> (redirecionar de saída padrão)
@@ -191,6 +180,19 @@ echo -e "Instalando o OpenFire, aguarde..."
 	#opção do comando dpkg: -i (install)
 	dpkg -i openfire.deb &>> $LOG
 echo -e "OpenFire instalado com sucesso!!!, continuando com o script..."
+sleep 5
+echo
+#
+echo -e "Criando o Banco de Dados do OpenFire, aguarde..."
+	#opção do comando: &>> (redirecionar de saída padrão)
+	#opção do comando mysql: -u (user), -p (password), -e (execute)
+	mysql -u $USER -p$PASSWORD -e "$DATABASE" mysql &>> $LOG
+	mysql -u $USER -p$PASSWORD -e "$USERDATABASE" mysql &>> $LOG
+	mysql -u $USER -p$PASSWORD < $CREATETABLE &>> $LOG
+	mysql -u $USER -p$PASSWORD -e "$GRANTDATABASE" mysql &>> $LOG
+	mysql -u $USER -p$PASSWORD -e "$GRANTALL" mysql &>> $LOG
+	mysql -u $USER -p$PASSWORD -e "$FLUSH" mysql &>> $LOG	
+echo -e "Banco de Dados criado com sucesso!!!, continuando com o script..."
 sleep 5
 echo
 #
