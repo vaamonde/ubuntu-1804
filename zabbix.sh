@@ -15,6 +15,25 @@
 # incluindo redes, servidores, máquinas virtuais e serviços em nuvem. O Zabbix fornece métricas de monitoramento, 
 # entre outras, utilização da rede, carga da CPU e consumo de espaço em disco.
 #
+# Informações que serão solicitada na configuração via Web do Zabbix Server
+# Welcome to Zabbix 5.0: Next step;
+# Check of pre-requisites: Next step;
+# Configure DB connection:
+#	Database type: MySQL
+#	Database host: localhost
+#	Database port: 0 (use default port: 3306)
+#	Database name: zabbix
+#	User: zabbix
+#	Password: zabbix: Next step;
+# Zabbix server details
+#	Host: localhost
+#	Port: 10051
+#	Name: ptispo01ws01: Next step;
+# Pre-installation summary: Next step.
+# Install: Finish
+# User Default: Admin
+# Password Default: zabbix
+#
 # Site Oficial do Projeto: https://www.zabbix.com/
 #
 # Vídeo de instalação do GNU/Linux Ubuntu Server 18.04.x LTS: https://www.youtube.com/watch?v=zDdCrqNhIXI
