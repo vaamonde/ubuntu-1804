@@ -31,7 +31,7 @@
 #	Conexão Padrão do Banco de Dados: Continuar;
 # Configurações do Banco de Dados - Conexão Padrão:
 #	Predefinições do Driver de Banco de Dados: MySQL
-#	URL do banco de dados: jdbc:mysql://localhost:3306/openfire?
+#	URL do banco de dados: jdbc:mysql://localhost:3306/openfire?useTimezone=true&serverTimezone=UTC
 #	Nome do Usuário: openfire
 #	Senha: openfire: Continuar;
 #
@@ -117,30 +117,30 @@ sleep 5
 echo
 #
 echo -e "Adicionando o Repositório Universal do Apt, aguarde..."
-	#opção do comando: &>> (redirecionar de saída padrão)
+	# opção do comando: &>> (redirecionar de saída padrão)
 	add-apt-repository universe &>> $LOG
 echo -e "Repositório adicionado com sucesso!!!, continuando com o script..."
 sleep 5
 echo
 #
 echo -e "Atualizando as listas do Apt, aguarde..."
-	#opção do comando: &>> (redirecionar de saída padrão)
+	# opção do comando: &>> (redirecionar de saída padrão)
 	apt update &>> $LOG
 echo -e "Listas atualizadas com sucesso!!!, continuando com o script..."
 sleep 5
 echo
 #
 echo -e "Atualizando o sistema, aguarde..."
-	#opção do comando: &>> (redirecionar de saída padrão)
-	#opção do comando apt: -y (yes)
+	# opção do comando: &>> (redirecionar de saída padrão)
+	# opção do comando apt: -y (yes)
 	apt -y upgrade &>> $LOG
 echo -e "Sistema atualizado com sucesso!!!, continuando com o script..."
 sleep 5
 echo
 #
 echo -e "Removendo software desnecessários, aguarde..."
-	#opção do comando: &>> (redirecionar de saída padrão)
-	#opção do comando apt: -y (yes)
+	# opção do comando: &>> (redirecionar de saída padrão)
+	# opção do comando apt: -y (yes)
 	apt -y autoremove &>> $LOG
 echo -e "Software removidos com sucesso!!!, continuando com o script..."
 sleep 5
@@ -150,23 +150,23 @@ echo -e "Instalando o OpenFire, aguarde..."
 echo
 #
 echo -e "Instalando as dependências do OpenFire, aguarde..."
-	#opção do comando: &>> (redirecionar de saída padrão)
-	#opção do comando apt: -y (yes)
+	# opção do comando: &>> (redirecionar de saída padrão)
+	# opção do comando apt: -y (yes)
 	apt -y install openjdk-8-jdk openjdk-8-jre &>> $LOG
 echo -e "Instalação das dependências feita com sucesso!!!, continuando com o script..."
 sleep 5
 echo
 #
 echo -e "Verificando a versão do Java, aguarde..."
-	#opção do comando: &>> (redirecionar de saída padrão)
+	# opção do comando: &>> (redirecionar de saída padrão)
 	java -version &>> $LOG
 echo -e "Versão verificada com sucesso!!!, continuando com o script..."
 sleep 5
 echo
 #
 echo -e "Baixando o OpenFire do site oficial, aguarde..."
-	#opção do comando: &>> (redirecionar de saída padrão)
-	#opção do comando wget: -O (output document file)
+	# opção do comando: &>> (redirecionar de saída padrão)
+	# opção do comando wget: -O (output document file)
 	# removendo versões anteriores baixadas do OpenFire
 	# opção do comando rm: -v (verbose)
 	rm -v openfire.deb &>> $LOG
@@ -176,19 +176,19 @@ sleep 5
 echo
 #
 echo -e "Instalando o OpenFire, aguarde..."
-	#opção do comando: &>> (redirecionar de saída padrão)
-	#opção do comando dpkg: -i (install)
+	# opção do comando: &>> (redirecionar de saída padrão)
+	# opção do comando dpkg: -i (install)
 	dpkg -i openfire.deb &>> $LOG
 echo -e "OpenFire instalado com sucesso!!!, continuando com o script..."
 sleep 5
 echo
 #
 echo -e "Criando o Banco de Dados do OpenFire, aguarde..."
-	#opção do comando: &>> (redirecionar de saída padrão)
-	#opção do comando mysql: -u (user), -p (password), -e (execute)
+	# opção do comando: &>> (redirecionar de saída padrão)
+	# opção do comando mysql: -u (user), -p (password), -e (execute)
 	mysql -u $USER -p$PASSWORD -e "$DATABASE" mysql &>> $LOG
+	mysql -u $USER -p$PASSWORD < $CREATETABLE openfire &>> $LOG
 	mysql -u $USER -p$PASSWORD -e "$USERDATABASE" mysql &>> $LOG
-	mysql -u $USER -p$PASSWORD < $CREATETABLE &>> $LOG
 	mysql -u $USER -p$PASSWORD -e "$GRANTDATABASE" mysql &>> $LOG
 	mysql -u $USER -p$PASSWORD -e "$GRANTALL" mysql &>> $LOG
 	mysql -u $USER -p$PASSWORD -e "$FLUSH" mysql &>> $LOG	
@@ -197,7 +197,7 @@ sleep 5
 echo
 #
 echo -e "Verificando a porta de conexão do OpenFire, aguarde..."
-	#opção do comando netstat: -a (all), -n (numeric)
+	# opção do comando netstat: -a (all), -n (numeric)
 	netstat -an | grep 9090
 echo -e "Porta de conexão verificada com sucesso!!!, continuando com o script..."
 sleep 5
