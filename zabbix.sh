@@ -5,7 +5,7 @@
 # Facebook: facebook.com/BoraParaPratica
 # YouTube: youtube.com/BoraParaPratica
 # Data de criação: 25/07/2020
-# Data de atualização: 23/07/2020
+# Data de atualização: 25/07/2020
 # Versão: 0.01
 # Testado e homologado para a versão do Ubuntu Server 18.04.x LTS x64
 # Kernel >= 4.15.x
@@ -49,15 +49,16 @@ LOG="/var/log/$(echo $0 | cut -d'/' -f2)"
 USER="root"
 PASSWORD="pti@2018"
 #
-# opção do comando create: create (criação), database (base de dados), base (banco de dados)
+# opção do comando create: create (criação), database (base de dados), base (banco de dados), character set (conjunto de caracteres), 
+# collate (comparar)
 # opção do comando create: create (criação), user (usuário), identified by (identificado por - senha do usuário), password (senha)
 # opção do comando grant: grant (permissão), usage (uso em | uso na), *.* (todos os bancos/tabelas), to (para), user (usuário)
 # identified by (identificado por - senha do usuário), password (senha)
 # opões do comando GRANT: grant (permissão), all (todos privilégios), on (em ou na | banco ou tabela), *.* (todos os bancos/tabelas)
 # to (para), user@'%' (usuário @ localhost), identified by (identificado por - senha do usuário), password (senha)
 # opção do comando FLUSH: flush (atualizar), privileges (recarregar as permissões)
-DATABASE="CREATE DATABASE zabbix;"
-CREATETABLE="/usr/share/doc/zabbix-server-mysql*/create.sql.gz"
+DATABASE="CREATE DATABASE zabbix character set utf8 collate utf8_bin;"
+CREATETABLE="/usr/share/doc/zabbix-server-mysql/create.sql.gz"
 USERDATABASE="CREATE USER 'zabbix' IDENTIFIED BY 'zabbix';"
 GRANTDATABASE="GRANT USAGE ON *.* TO 'zabbix' IDENTIFIED BY 'zabbix';"
 GRANTALL="GRANT ALL PRIVILEGES ON zabbix.* TO 'zabbix' IDENTIFIED BY 'zabbix';"
@@ -100,6 +101,7 @@ echo -n "Verificando as dependências, aguarde... "
 # opção do comando date: + (format), %d (day), %m (month), %Y (year 1970), %H (hour 24), %M (minute 60)
 echo -e "Início do script $0 em: `date +%d/%m/%Y-"("%H:%M")"`\n" &>> $LOG
 #
+echo
 echo -e "Instalação do Zabbix Server no GNU/Linux Ubuntu Server 18.04.x\n"
 echo -e "Após a instalação do Zabbix Server acessar a URL: http://`hostname -I | cut -d' ' -f1`/zabbix/\n"
 echo -e "Aguarde, esse processo demora um pouco dependendo do seu Link de Internet..."
@@ -131,9 +133,11 @@ clear
 echo -e "Instalando o Zabbix Server, aguarde...\n"
 #
 echo -e "Baixando e instalando o Repositório do Zabbix Server, aguarde..."
+	# removendo versões anteriores baixadas do Zabbix Server
+	# baixando os repositórios do Zabbix Server
+	# instalando os repositórios do Zabbix Server
 	# opção do comando: &>> (redirecionar de saída padrão)
 	# opção do comando wget: -O (output document file)
-	# removendo versões anteriores baixadas do OpenFire
 	# opção do comando rm: -v (verbose)
 	# opção do comando dpkg: -i (install)
 	rm -v zabbix.deb &>> $LOG
@@ -152,6 +156,7 @@ echo
 #
 echo -e "Instalando o Zabbix Server, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
+	# opção do comando apt: -y (yes)
 	apt -y install zabbix-server-mysql zabbix-frontend-php zabbix-apache-conf zabbix-agent &>> $LOG
 echo -e "Zabbix Server instalado com sucesso!!!, continuando com o script..."
 sleep 5
@@ -167,23 +172,27 @@ echo -e "Criando o Banco de Dados do Zabbix Server, aguarde..."
 	mysql -u $USER -p$PASSWORD -e "$GRANTDATABASE" mysql &>> $LOG
 	mysql -u $USER -p$PASSWORD -e "$GRANTALL" mysql &>> $LOG
 	mysql -u $USER -p$PASSWORD -e "$FLUSH" mysql &>> $LOG
-	zcat -v $CREATETABLE | mysql -uzabbix -pzabbix &>> $LOG
+	zcat -v $CREATETABLE | mysql -uzabbix -pzabbix zabbix &>> $LOG
 echo -e "Banco de Dados criado com sucesso!!!, continuando com o script..."
 sleep 5
 echo
 #
 echo -e "Editando o arquivo de configuração da Base de Dados do Zabbix Server, pressione <Enter> para continuar..."
 	# opção do comando: &>> (redirecionar a saída padrão)
+	# opção do comando vim: + (num line)
+	# descomentar a linha DBPassword= e adicionar a senha: zabbix
 	read
-	vim /etc/zabbix/zabbix_server.conf
+	vim /etc/zabbix/zabbix_server.conf +124
 echo -e "Arquivos editado com sucesso!!!, continuando com o script..."
 sleep 5
 echo
 #
 echo -e "Editando o arquivo de configuração do PHP do Zabbix Server, pressione <Enter> para continuar..."
 	# opção do comando: &>> (redirecionar a saída padrão)
+	# opção do comando vim: + (num line)
+	# descomentar as linhas php_value date.timezone do PHP5 e PHP7 e mudar para: America/Sao_Paulo
 	read
-	vim /etc/zabbix/apache.conf
+	vim /etc/zabbix/apache.conf +20
 echo -e "Arquivos editado com sucesso!!!, continuando com o script..."
 sleep 5
 echo
@@ -199,7 +208,8 @@ echo
 echo -e "Verificando as portas de conexões do Zabbix Server, aguarde..."
 	# opção do comando netstat: a (all), n (numeric)
 	# opção do comando grep: -i (ignore case)
-	netstat -an | grep -i tcp | grep 80
+	netstat -an | grep -i tcp | grep 10050
+	netstat -an | grep -i tcp | grep 10051
 echo -e "Porta verificada com sucesso!!!, continuando com o script..."
 sleep 5
 echo
