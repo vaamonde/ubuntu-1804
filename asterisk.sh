@@ -40,7 +40,7 @@
 # opção do comando date: +%T (Time)
 HORAINICIAL=`date +%T`
 #
-# Variáveis para validar o ambiente, verificando se o usuário e "root", versão do ubuntu e kernel
+# Variáveis para validar o ambiente, verificando se o usuário é "root", versão do ubuntu e kernel
 # opções do comando id: -u (user)
 # opções do comando: lsb_release: -r (release), -s (short), 
 # opões do comando uname: -r (kernel release)
@@ -71,17 +71,17 @@ COUNTRYCODE="55"
 # Exportando o recurso de Noninteractive do Debconf para não solicitar telas de configuração
 export DEBIAN_FRONTEND="noninteractive"
 #
-# Verificando se o usuário e Root, Distribuição e >=18.04 e o Kernel >=4.15 <IF MELHORADO)
+# Verificando se o usuário eé Root, Distribuição é >=18.04 e o Kernel é >=4.15 <IF MELHORADO)
 # [ ] = teste de expressão, && = operador lógico AND, == comparação de string, exit 1 = A maioria dos erros comuns na execução
 clear
 if [ "$USUARIO" == "0" ] && [ "$UBUNTU" == "18.04" ] && [ "$KERNEL" == "4.15" ]
 	then
-		echo -e "O usuário e Root, continuando com o script..."
-		echo -e "Distribuição e >=18.04.x, continuando com o script..."
+		echo -e "O usuário é Root, continuando com o script..."
+		echo -e "Distribuição é >=18.04.x, continuando com o script..."
 		echo -e "Kernel e >= 4.15, continuando com o script..."
 		sleep 5
 	else
-		echo -e "Usuário não e Root ($USUARIO) ou Distribuição não e >=18.04.x ($UBUNTU) ou Kernel não e >=4.15 ($KERNEL)"
+		echo -e "Usuário não é Root ($USUARIO) ou Distribuição não é >=18.04.x ($UBUNTU) ou Kernel não é >=4.15 ($KERNEL)"
 		echo -e "Caso você não tenha executado o script com o comando: sudo -i"
 		echo -e "Execute novamente o script para verificar o ambiente."
 		exit 1
@@ -93,6 +93,7 @@ fi
 # opção do comando date: + (format), %d (day), %m (month), %Y (year 1970), %H (hour 24), %M (minute 60)
 echo -e "Início do script $0 em: `date +%d/%m/%Y-"("%H:%M")"`\n" &>> $LOG
 #
+echo
 echo -e "Instalação do Asterisk no GNU/Linux Ubuntu Server 18.04.x\n"
 echo -e "Aguarde, esse processo demora um pouco dependendo do seu Link de Internet...\n"
 echo -e "Após a instalação, para acessar o CLI do Asterisk, digite o comando: asterisk -rvvvv"
@@ -114,7 +115,7 @@ sleep 5
 echo
 #
 echo -e "Atualizando as listas do Apt, aguarde..."
-	#opção do comando: &>> (redirecionar a saída padrão)
+	# opção do comando: &>> (redirecionar a saída padrão)
 	apt update &>> $LOG
 echo -e "Listas atualizadas com sucesso!!!, continuando com o script..."
 sleep 5
@@ -152,8 +153,8 @@ echo
 echo -e "Download e instalação do DAHDI, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando wget: -O (file)
-	wget -O dahdi-linux.tar.gz $DAHDI &>> $LOG
 	# opção do comando tar: -z (gzip), -x (extract), -v (verbose), -f (file)
+	wget -O dahdi-linux.tar.gz $DAHDI &>> $LOG
 	tar -zxvf dahdi-linux.tar.gz &>> $LOG
 	# acessando diretório do dahdi-linux
 	cd dahdi-linux*/ &>> $LOG
@@ -174,8 +175,8 @@ echo
 echo -e "Download e instalação do DAHDI Tools, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando wget: -O (file)
-	wget -O dahdi-tools.tar.gz $DAHDITOOLS &>> $LOG
 	# opção do comando tar: -z (gzip), -x (extract), -v (verbose), -f (file)
+	wget -O dahdi-tools.tar.gz $DAHDITOOLS &>> $LOG
 	tar -zxvf dahdi-tools.tar.gz &>> $LOG
 	# acessando diretório do dahdi-tools
 	cd dahdi-tools*/ &>> $LOG
@@ -198,8 +199,9 @@ echo
 echo -e "Download e instalação do LIBPRI, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando wget: -O (file)
-	wget -O libpri.tar.gz $LIBPRI &>> $LOG
 	# opção do comando tar: -z (gzip), -x (extract), -v (verbose), -f (file)
+	# opção do comando cd: .. (dois pontos sequenciais - Subir uma pasta)
+	wget -O libpri.tar.gz $LIBPRI &>> $LOG
 	tar -zxvf libpri.tar.gz &>> $LOG
 	# acessando diretório do libpri
 	cd libpri*/ &>> $LOG
@@ -211,7 +213,6 @@ echo -e "Download e instalação do LIBPRI, aguarde..."
 	make all &>> $LOG
 	# executa os comandos para instalar o programa
 	make install &>> $LOG
-	# opção do comando cd: .. (dois pontos sequenciais - Subir uma pasta)
 	cd ..
 echo -e "LIBPRI instalado com sucesso!!!, continuando com o script..."
 sleep 5
@@ -219,9 +220,12 @@ echo
 #
 echo -e "Download e instalação do Asterisk, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
+	# opção do comando | (piper): (Conecta a saída padrão com a entrada padrão de outro comando)
 	# opção do comando wget: -O (file)
-	wget -O asterisk.tar.gz $ASTERISK &>> $LOG
 	# opção do comando tar: -z (gzip), -x (extract), -v (verbose), -f (file)
+	# opção do comando yes: yes é um comando utilizado normalmente em conjunto com outro programa, para responder sempre 
+	# positivamente (ou negativamente) às perguntas do segundo programa
+	wget -O asterisk.tar.gz $ASTERISK &>> $LOG
 	tar -zxvf asterisk.tar.gz &>> $LOG
 	# acessando diretório do asterisk
 	cd asterisk*/ &>> $LOG
@@ -230,10 +234,7 @@ echo -e "Download e instalação do Asterisk, aguarde..."
 	# resolvendo as dependências do suporte ao Codec iLBC
 	bash contrib/scripts/get_ilbc_source.sh &>> $LOG
 	# instalando as dependência do MP3 e ILBC utilizando o debconf-set-selections
-	# opção do comando | (piper): (Conecta a saída padrão com a entrada padrão de outro comando)
 	echo "libvpb1 libvpb1/countrycode $COUNTRYCODE" | debconf-set-selections &>> $LOG
-	# opção do comando yes: yes é um comando utilizado, normalmente, em conjunto com outro, para responder sempre 
-	# positivamente (ou negativamente) às perguntas do segundo programa
 	yes | bash contrib/scripts/install_prereq install &>> $LOG
 	# preparação e configuração do source para compilação
 	./configure &>> $LOG
@@ -241,8 +242,11 @@ echo -e "Download e instalação do Asterisk, aguarde..."
 	make clean  &>> $LOG
 	# menu de seleção de configuração do Asterisk (recomendado)
 	make menuselect
-	clear
-	echo -e "Compilando e instalando o Asterisk, aguarde...."
+echo
+sleep 5
+#
+echo -e "Compilando e instalando o Asterisk, aguarde...."
+	# opção do comando: &>> (redirecionar a saída padrão)
 	# compila todas as opções do software marcadas nas opções do make menuselect
 	make all &>> $LOG
 	# executa os comandos para instalar o programa com as opções do make maneselect
@@ -252,7 +256,7 @@ echo -e "Download e instalação do Asterisk, aguarde..."
 	# instala um conjunto de configuração básica para o Asterisk
 	make basic-pbx &>> $LOG
 	# instala um conjunto de documentação para o Asterisk
-	# habilitar esse recurso, o processo de compilação demora bastante
+	# se você habilitar esse recurso, o processo de compilação demora bastante
 	#make progdocs &>> $LOG
 	# instala um conjunto de scripts de inicialização do Asterisk (systemctl)
 	make config &>> $LOG
@@ -269,36 +273,35 @@ echo
 echo -e "Download e configuração do Sons em Português/Brasil do Asterisk, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando mkdir: -v (verbose)
+	# opção do comando cp: -v (verbose)
+	# opção do comando wget: -O (file)
+	# opção do comando unzip: -o (overwrite)
+	# opção do comando cd: - (traço, rollback voltar a pasta anterior)
 	mkdir -v $SOUNDS &>> $LOG
 	# copiando o script convert.sh para conversão dos formatas de sons para o padrão do Asterisk
-	# opção do comando cp: -v (verbose)
 	cp -v conf/convert.sh $SOUNDS &>> $LOG
 	# acessando o diretório dos sons em pt_BR
 	cd $SOUNDS &>> $LOG
-	# opção do comando wget: -O (file)
 	wget -O core.zip $PTBRCORE &>> $LOG
 	wget -O extra.zip $PTBREXTRA &>> $LOG
-	# opção do comando unzip: -o (overwrite)
 	unzip -o core.zip &>> $LOG
 	unzip -o extra.zip &>> $LOG
 	# converte os sons da pasta para outros formatos
 	bash convert.sh &>> $LOG
-	# opção do comando cd: - (traço, rollback voltar a pasta anterior)
 	cd - &>> $LOG
 echo -e "Configuração do Sons em Português/Brasil feito com sucesso!!!!, continuado com o script..."
 sleep 5
 echo
 #
 echo -e "Atualizando os arquivos de Ramais SIP, Plano de Discagem e Módulos, aguarde..."
-	# fazendo o backup das configurações originais dos arquivos de configuração
 	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando mv: -v (verbose)
 	# opção do comando cp: -v (verbose)
+	# fazendo o backup das configurações originais dos arquivos de configuração
 	mv -v /etc/asterisk/sip.conf /etc/asterisk/sip.conf.bkp &>> $LOG
 	mv -v /etc/asterisk/extensions.conf /etc/asterisk/extensions.conf.bkp &>> $LOG
 	mv -v /etc/asterisk/modules.conf /etc/asterisk/modules.conf.bkp &>> $LOG
 	# atualizando os arquivos de configurações
-	# opção do comando cp: -v (verbose)
 	cp -v conf/sip.conf /etc/asterisk/sip.conf &>> $LOG
 	cp -v conf/extensions.conf /etc/asterisk/extensions.conf &>> $LOG
 	cp -v conf/modules.conf /etc/asterisk/modules.conf &>> $LOG
@@ -308,20 +311,20 @@ clear
 #
 echo -e "Configuração da Segurança do Asterisk, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
+	# opções do comando useradd: -r (system account), -d (home directory), -g (group GID), asterisk (user)
+	# opções do comando usermod: -a (append), -G (groups), asterisk (user)
+	# opções do comando chown: -R (recursive), -v (verbose), Asterisk.Asterisk (Usuário.Grupo)
+	# opção do comando chmod: -R (recursive), -v (verbose), 775 (Dono=RWX,Grupo=RWX=Outros=R-X)
 	# criando o grupo do asterisk
 	groupadd asterisk &>> $LOG
 	# criando o usuário asterisk
-	# opções do comando useradd: -r (system account), -d (home directory), -g (group GID), asterisk (user)
 	useradd -r -d /var/lib/asterisk -g asterisk asterisk &>> $LOG
 	# alteração do grupos do usuário asterisk
-	# opções do comando usermod: -a (append), -G (groups), asterisk (user)
 	usermod -aG audio,dialout asterisk &>> $LOG
 	# alteração do dono e grupo padrão das pastas do asterisk
-	# opções do comando chown: -R (recursive), -v (verbose), Asterisk.Asterisk (Usuário.Grupo)
 	chown -Rv asterisk.asterisk /etc/asterisk &>> $LOG
 	chown -Rv asterisk.asterisk /var/{lib,log,spool}/asterisk &>> $LOG
 	chown -Rv asterisk.asterisk /usr/lib/asterisk  &>> $LOG
-	# opção do comando chmod: -R (recursive), -v (verbose), 775 (Dono=RWX,Grupo=RWX=Outros=R-X)
 	chmod -Rv 775 /var/lib/asterisk/sounds/pt_BR &>> $LOG
 	echo -e "Editando o arquivo de configuração padrão do Asterisk, pressione <Enter> para editar"
 		read
@@ -344,7 +347,7 @@ sleep 5
 clear
 #
 echo -e "Verificando a porta de Conexão do Protocolo SIP, aguarde..."
-	#opção do comando netstat: -a (all), -n (numeric)
+	# opção do comando netstat: -a (all), -n (numeric)
 	netstat -an | grep 5060
 echo -e "Porta de conexão verificada com sucesso!!!, continuando com o script..."
 sleep 5
