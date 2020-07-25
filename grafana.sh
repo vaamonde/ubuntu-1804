@@ -9,13 +9,18 @@
 # Versão: 0.01
 # Testado e homologado para a versão do Ubuntu Server 18.04.x LTS x64
 # Kernel >= 4.15.x
-# Testado e homologado para a versão do Grafana  
+# Testado e homologado para a versão do Grafana 7.1.1
 #
 # Grafana é uma aplicação web de análise de código aberto multiplataforma e visualização interativa da web. 
 # Ele fornece tabelas, gráficos e alertas para a Web quando conectado a fontes de dados suportadas. É expansível 
 # através de um sistema de plug-in.
 #
 # Informações que serão solicitada na configuração via Web do Grafana
+# Email or username: admin
+# Password: admin
+# Change Password
+#	New password: pti@2018
+#	Confirm new password: pti@2018
 #
 # Site Oficial do Projeto: https://grafana.com/
 #
@@ -49,6 +54,7 @@ LOG="/var/log/$(echo $0 | cut -d'/' -f2)"
 #
 # Declarando as variáveis para o download do Grafana (Link atualizado no dia 25/07/2020)
 GPGKEY="https://packages.grafana.com/gpg.key"
+GRAFANA="deb https://packages.grafana.com/oss/deb stable main"
 #
 # Verificando se o usuário é Root, Distribuição é >=18.04 e o Kernel é >=4.15 <IF MELHORADO)
 # [ ] = teste de expressão, && = operador lógico AND, == comparação de string, exit 1 = A maioria dos erros comuns na execução
@@ -86,7 +92,7 @@ echo -e "Início do script $0 em: `date +%d/%m/%Y-"("%H:%M")"`\n" &>> $LOG
 #
 echo
 echo -e "Instalação do Grafana no GNU/Linux Ubuntu Server 18.04.x\n"
-echo -e "Após a instalação do Grafana acessar a URL: http://`hostname -I | cut -d' ' -f1`/???/\n"
+echo -e "Após a instalação do Grafana acessar a URL: http://`hostname -I | cut -d' ' -f1`:3000\n"
 echo -e "Aguarde, esse processo demora um pouco dependendo do seu Link de Internet..."
 sleep 5
 #
@@ -120,10 +126,11 @@ echo -e "Baixando e instalando o Repositório do Grafana, aguarde..."
 	# instalando os repositórios do Grafana
 	# opção do comando: &>> (redirecionar de saída padrão)
 	# opção do comando: | piper (conecta a saída padrão com a entrada padrão de outro comando)
-	# opção do comando wget: -O (output document file)
+	# opção do comando wget: -q (quiet) -O (output document file)
 	# opção do comando apt-key: - (keyring)
-	wget -O - $GPGKEY | apt-key add - &>> $LOG
-	apt-key list &>> $LOG
+	wget -q -O - $GPGKEY | apt-key add -
+	apt-key list | grep grafana &>> $LOG
+	add-apt-repository "$GRAFANA" &>> $LOG
 echo -e "Repositório instalado com sucesso!!!, continuando com o script..."
 sleep 5
 echo
@@ -145,7 +152,6 @@ echo
 #
 echo -e "Editando o arquivo de configuração Grafana, pressione <Enter> para continuar..."
 	# opção do comando: &>> (redirecionar a saída padrão)
-	# opção do comando vim: + (num line)
 	read
 	vim /etc/default/grafana-server
 echo -e "Arquivo editado com sucesso!!!, continuando com o script..."

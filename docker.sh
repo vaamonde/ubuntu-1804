@@ -9,6 +9,8 @@
 # Versão: 0.05
 # Testado e homologado para a versão do Ubuntu Server 18.04.x LTS x64
 # Kernel >= 4.15.x
+# Testado e homologado para a versão do Docker 19.03.x
+# Testado e homologado para a versão do Portainer 1.24.x
 #
 # O Docker é uma tecnologia de software que fornece contêineres, promovido pela empresa Docker, Inc. O Docker fornece uma 
 # camada adicional de abstração e automação de virtualização de nível de sistema operacional no Windows e no Linux. O Docker
@@ -29,7 +31,7 @@
 # opção do comando date: +%T (Time)
 HORAINICIAL=`date +%T`
 #
-# Variáveis para validar o ambiente, verificando se o usuário e "root", versão do ubuntu e kernel
+# Variáveis para validar o ambiente, verificando se o usuário é "root", versão do ubuntu e kernel
 # opções do comando id: -u (user)
 # opções do comando: lsb_release: -r (release), -s (short), 
 # opões do comando uname: -r (kernel release)
@@ -52,7 +54,7 @@ DOCKERGPG="https://download.docker.com/linux/ubuntu/gpg"
 DOCKERDEB="deb [arch=amd64] https://download.docker.com/linux/ubuntu bionic stable"
 DOCKERKEY="0EBFCD88"
 #
-# Verificando se o usuário e Root, Distribuição e >=18.04 e o Kernel >=4.15 <IF MELHORADO)
+# Verificando se o usuário é Root, Distribuição é >=18.04 e o Kernel é >=4.15 <IF MELHORADO)
 # [ ] = teste de expressão, && = operador lógico AND, == comparação de string, exit 1 = A maioria dos erros comuns na execução
 clear
 if [ "$USUARIO" == "0" ] && [ "$UBUNTU" == "18.04" ] && [ "$KERNEL" == "4.15" ]
@@ -214,7 +216,8 @@ echo
 #
 echo -e "Criando o Container do Portainer, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
-	# opção do comando docker: -d (Run container in background and print container ID), -p (Publish a container’s port(s) to the host), -v (Bind mount a volume)
+	# opção do comando docker: -d (Run container in background and print container ID), -p (Publish a container’s port(s) 
+	# to the host), -v (Bind mount a volume)
 	docker run --name portainer -d -p 9000:9000 -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data portainer/portainer &>> $LOG
 echo -e "Container criado com sucesso!!!, continuando com o script..."
 sleep 5

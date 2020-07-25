@@ -9,37 +9,15 @@
 # Versão: 0.05
 # Testado e homologado para a versão do Ubuntu Server 18.04.x LTS x64
 # Kernel >= 4.15.x
-# Testado e homologado para a versão do Tomcat 4.5.x
+# Testado e homologado para a versão do Tomcat 9.0.x
 #
-# Extensible Messaging and Presence Protocol (XMPP) (conhecido anteriormente como Jabber) é um protocolo aberto,
-# extensível, baseado em XML, para sistemas de mensagens instantâneas, desenvolvido originalmente para mensagens
-# instantâneas e informação de presença formalizado pelo IETF. Softwares com base XMPP são distribuídos em milhares
-# de servidores através da internet, e usados por cerca de dez milhões de pessoas em todo mundo, de acordo com a 
-# XMPP Standards Foundation.
+# O Tomcat é um servidor web Java, mais especificamente, um container de servlets. O Tomcat implementa, dentre outras 
+# de menor relevância, as tecnologias Java Servlet e JavaServer Pages e não é um container Enterprise JavaBeans. 
+# Desenvolvido pela Apache Software Foundation, é distribuído como software livre.
 #
-# O OpenFire (anteriormente conhecido como Wildfire e Jive Messenger) é um servidor de mensagens instantâneas e de
-# conversas em grupo que usa o servidor XMPP escrito em Java e licenciado sob a licença Apache 2.0.
-#
-# Informações que serão solicitada na configuração via Web do OpenFire
-# Welcome to Setup:
-#	Português Brasileiro (pt_BR): Continue;
-# Configurações do Servidor:
-#	Domínio: pti.intra
-#	Server Host Name (FQDN): ptispo01ws01.pti.intra
-#	Porta do Console Admin: 9090
-#	Porta Segura do Console Admin: 9091: Continue;
-# Configurações do Banco de Dados:
-#	Conexão Padrão do Banco de Dados: Continuar;
-# Configurações do Banco de Dados - Conexão Padrão:
-#	Predefinições do Driver de Banco de Dados: MySQL
-#	URL do banco de dados: jdbc:mysql://localhost:3306/openfire?useTimezone=true&serverTimezone=UTC
-#	Nome do Usuário: openfire
-#	Senha: openfire: Continuar;
-#
-# Site Oficial do OpenFire: https://www.igniterealtime.org/projects/openfire/
+# Site Oficial do Tomcat: http://tomcat.apache.org/
 #
 # Vídeo de instalação do GNU/Linux Ubuntu Server 18.04.x LTS: https://www.youtube.com/watch?v=zDdCrqNhIXI
-# Vídeo de instalação do LAMP Server no GNU/Linux Ubuntu Server 18.04.x LTS: https://www.youtube.com/watch?v=6EFUu-I3u4s
 #
 # Variável da Data Inicial para calcular o tempo de execução do script (VARIÁVEL MELHORADA)
 # opção do comando date: +%T (Time)
@@ -57,27 +35,7 @@ KERNEL=`uname -r | cut -d'.' -f1,2`
 # $0 (variável de ambiente do nome do comando)
 LOG="/var/log/$(echo $0 | cut -d'/' -f2)"
 #
-# Declarando as variáveis para criação da Base de Dados do OpenFire
-USER="root"
-PASSWORD="pti@2018"
-# opção do comando create: create (criação), database (base de dados), base (banco de dados)
-# opção do comando create: create (criação), user (usuário), identified by (identificado por - senha do usuário), password (senha)
-# opção do comando grant: grant (permissão), usage (uso em | uso na), *.* (todos os bancos/tabelas), to (para), user (usuário)
-# identified by (identificado por - senha do usuário), password (senha)
-# opões do comando GRANT: grant (permissão), all (todos privilégios), on (em ou na | banco ou tabela), *.* (todos os bancos/tabelas)
-# to (para), user@'%' (usuário @ localhost), identified by (identificado por - senha do usuário), password (senha)
-# opção do comando FLUSH: flush (atualizar), privileges (recarregar as permissões)
-DATABASE="CREATE DATABASE openfire;"
-CREATETABLE="/usr/share/openfire/resources/database/openfire_mysql.sql"
-USERDATABASE="CREATE USER 'openfire' IDENTIFIED BY 'openfire';"
-GRANTDATABASE="GRANT USAGE ON *.* TO 'openfire' IDENTIFIED BY 'openfire';"
-GRANTALL="GRANT ALL PRIVILEGES ON openfire.* TO 'openfire' IDENTIFIED BY 'openfire';"
-FLUSH="FLUSH PRIVILEGES;"
-#
-# Declarando a variável de download do OpenFire (Link atualizado no dia 22/07/2020)
-OPENFIRE="https://www.igniterealtime.org/downloadServlet?filename=openfire/openfire_4.5.2_all.deb"
-#
-# Verificando se o usuário e Root, Distribuição e >=18.04 e o Kernel >=4.15 <IF MELHORADO)
+# Verificando se o usuário é Root, Distribuição é >=18.04 e o Kernel é >=4.15 <IF MELHORADO)
 # [ ] = teste de expressão, && = operador lógico AND, == comparação de string, exit 1 = A maioria dos erros comuns na execução
 clear
 if [ "$USUARIO" == "0" ] && [ "$UBUNTU" == "18.04" ] && [ "$KERNEL" == "4.15" ]
@@ -93,26 +51,26 @@ if [ "$USUARIO" == "0" ] && [ "$UBUNTU" == "18.04" ] && [ "$KERNEL" == "4.15" ]
 		exit 1
 fi
 #
-# Verificando se as dependências do OpenFire estão instaladas
+# Verificando se as dependências do Tomcat estão instaladas
 # opção do dpkg: -s (status), opção do echo: -e (interpretador de escapes de barra invertida), -n (permite nova linha)
 # || (operador lógico OU), 2> (redirecionar de saída de erro STDERR), && = operador lógico AND, { } = agrupa comandos em blocos
 # [ ] = testa uma expressão, retornando 0 ou 1, -ne = é diferente (NotEqual)
 echo -n "Verificando as dependências, aguarde... "
-	for name in mysql-server mysql-common
+	for name in openjdk-8-jdk openjdk-8-jre
 	do
   		[[ $(dpkg -s $name 2> /dev/null) ]] || { echo -en "\n\nO software: $name precisa ser instalado. \nUse o comando 'apt install $name'\n";deps=1; }
 	done
 		[[ $deps -ne 1 ]] && echo "Dependências.: OK" || { echo -en "\nInstale as dependências acima e execute novamente este script\n";exit 1; }
 		sleep 5
 #		
-# Script de instalação do OpenFire no GNU/Linux Ubuntu Server 18.04.x
+# Script de instalação do Tomcat no GNU/Linux Ubuntu Server 18.04.x
 # opção do comando echo: -e (enable interpretation of backslash escapes), \n (new line)
 # opção do comando hostname: -I (all IP address)
 # opção do comando date: + (format), %d (day), %m (month), %Y (year 1970), %H (hour 24), %M (minute 60)
 echo -e "Início do script $0 em: `date +%d/%m/%Y-"("%H:%M")"`\n" &>> $LOG
 clear
-echo -e "Instalação do OpenFire no GNU/Linux Ubuntu Server 18.04.x\n"
-echo -e "Após a instalação do OpenFire acessar a URL: http://`hostname -I | cut -d' ' -f1`:9090/\n"
+echo -e "Instalação do Tomcat no GNU/Linux Ubuntu Server 18.04.x\n"
+echo -e "Após a instalação do Tomcat acessar a URL: http://`hostname -I | cut -d' ' -f1`:8080/\n"
 echo -e "Aguarde, esse processo demora um pouco dependendo do seu Link de Internet..."
 sleep 5
 echo
@@ -147,64 +105,42 @@ echo -e "Software removidos com sucesso!!!, continuando com o script..."
 sleep 5
 echo
 #
-echo -e "Instalando o OpenFire, aguarde..."
+echo -e "Instalando o Tomcat, aguarde..."
 echo
 #
-echo -e "Instalando as dependências do OpenFire, aguarde..."
+echo -e "Instalando as dependências do Tomcat, aguarde..."
 	# opção do comando: &>> (redirecionar de saída padrão)
 	# opção do comando apt: -y (yes)
-	apt -y install openjdk-8-jdk openjdk-8-jre &>> $LOG
+	apt -y install default-jdk &>> $LOG
 echo -e "Instalação das dependências feita com sucesso!!!, continuando com o script..."
 sleep 5
 echo
 #
 echo -e "Verificando a versão do Java, aguarde..."
 	# opção do comando: &>> (redirecionar de saída padrão)
+	# opção do comando update-java-alternatives: -l (list)
 	java -version &>> $LOG
+	update-java-alternatives -l &>> $LOG
 echo -e "Versão verificada com sucesso!!!, continuando com o script..."
 sleep 5
 echo
 #
-echo -e "Baixando o OpenFire do site oficial, aguarde..."
+echo -e "Instalando o Tomcat, aguarde..."
 	# opção do comando: &>> (redirecionar de saída padrão)
-	# opção do comando wget: -O (output document file)
-	# removendo versões anteriores baixadas do OpenFire
-	# opção do comando rm: -v (verbose)
-	rm -v openfire.deb &>> $LOG
-	wget $OPENFIRE -O openfire.deb &>> $LOG
-echo -e "OpenFire baixado com sucesso!!!, continuando com o script..."
+	# opção do comando apt: -y (yes)
+	apt -y install tomcat9 tomcat9-admin tomcat9-common tomcat9-docs tomcat9-examples tomcat9-user &>> $LOG
+echo -e "Tomcat instalado com sucesso!!!, continuando com o script..."
 sleep 5
 echo
 #
-echo -e "Instalando o OpenFire, aguarde..."
-	# opção do comando: &>> (redirecionar de saída padrão)
-	# opção do comando dpkg: -i (install)
-	dpkg -i openfire.deb &>> $LOG
-echo -e "OpenFire instalado com sucesso!!!, continuando com o script..."
-sleep 5
-echo
-#
-echo -e "Criando o Banco de Dados do OpenFire, aguarde..."
-	# opção do comando: &>> (redirecionar de saída padrão)
-	# opção do comando mysql: -u (user), -p (password), -e (execute)
-	mysql -u $USER -p$PASSWORD -e "$DATABASE" mysql &>> $LOG
-	mysql -u $USER -p$PASSWORD < $CREATETABLE openfire &>> $LOG
-	mysql -u $USER -p$PASSWORD -e "$USERDATABASE" mysql &>> $LOG
-	mysql -u $USER -p$PASSWORD -e "$GRANTDATABASE" mysql &>> $LOG
-	mysql -u $USER -p$PASSWORD -e "$GRANTALL" mysql &>> $LOG
-	mysql -u $USER -p$PASSWORD -e "$FLUSH" mysql &>> $LOG	
-echo -e "Banco de Dados criado com sucesso!!!, continuando com o script..."
-sleep 5
-echo
-#
-echo -e "Verificando a porta de conexão do OpenFire, aguarde..."
+echo -e "Verificando a porta de conexão do Tomcat, aguarde..."
 	# opção do comando netstat: -a (all), -n (numeric)
-	netstat -an | grep 9090
+	netstat -an | grep 8080
 echo -e "Porta de conexão verificada com sucesso!!!, continuando com o script..."
 sleep 5
 echo
 #
-echo -e "Instalação do OpenFire feita com Sucesso!!!"
+echo -e "Instalação do Tomcat feita com Sucesso!!!"
 	# script para calcular o tempo gasto (SCRIPT MELHORADO, CORRIGIDO FALHA DE HORA:MINUTO:SEGUNDOS)
 	# opção do comando date: +%T (Time)
 	HORAFINAL=`date +%T`

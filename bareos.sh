@@ -9,7 +9,7 @@
 # Versão: 0.03
 # Testado e homologado para a versão do Ubuntu Server 18.04.x LTS x64
 # Kernel >= 4.15.x
-# Testado e homologado para a versão do BareOS-18.2.x
+# Testado e homologado para a versão do BareOS 18.2.x
 #
 # O BareOS Server é uma bifurcação (fork) do projeto de código aberto Bacula versão 5.2. Em 2010, o desenvolvedor da 
 # comunidade do Bacula, Marco Van Wieringen, começou a coletar contribuições das comunidades que foram rejeitadas ou 
@@ -47,7 +47,7 @@
 # opção do comando date: +%T (Time)
 HORAINICIAL=$(date +%T)
 #
-# Variáveis para validar o ambiente, verificando se o usuário e "root", versão do ubuntu e kernel
+# Variáveis para validar o ambiente, verificando se o usuário é "root", versão do ubuntu e kernel
 # opções do comando id: -u (user)
 # opções do comando: lsb_release: -r (release), -s (short), 
 # opões do comando uname: -r (kernel release)
@@ -72,7 +72,7 @@ PASSWD="bareos"
 PROFILE="webui-admin"
 POSTFIX="No configuration"
 #
-# Verificando se o usuário e Root, Distribuição e >=18.04 e o Kernel >=4.15 <IF MELHORADO)
+# Verificando se o usuário é Root, Distribuição é >=18.04 e o Kernel é >=4.15 <IF MELHORADO)
 # [ ] = teste de expressão, && = operador lógico AND, == comparação de string, exit 1 = A maioria dos erros comuns na execução
 clear
 if [ "$USUARIO" == "0" ] && [ "$UBUNTU" == "18.04" ] && [ "$KERNEL" == "4.15" ]
