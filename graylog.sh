@@ -17,6 +17,8 @@
 # O software usa uma arquitetura de três camadas de armazenamento escalável baseado no Elasticsearch e no MongoDB.
 #
 # Site Oficial do Projeto: https://www.graylog.org/
+# Site Oficial do MongoDB: https://www.mongodb.com/
+# Site Oficial do Elasticsearch: https://www.elastic.co/pt/
 #
 # Vídeo de instalação do GNU/Linux Ubuntu Server 18.04.x LTS: https://www.youtube.com/watch?v=zDdCrqNhIXI
 # Vídeo de atualização do Sistema: https://www.youtube.com/watch?v=esnu8TAepHU
@@ -49,6 +51,7 @@ LOG="/var/log/$(echo $0 | cut -d'/' -f2)"
 KEYSRVMONGODB="https://www.mongodb.org/static/pgp/server-4.2.asc"
 KEYELASTICSEARCH="https://artifacts.elastic.co/GPG-KEY-elasticsearch"
 REPGRAYLOG="https://packages.graylog2.org/repo/packages/graylog-3.3-repository_latest.deb"
+USERGRAYLOG="graylog"
 #
 # Verificando se o usuário é Root, Distribuição é >=18.04 e o Kernel é >=4.15 <IF MELHORADO)
 # [ ] = teste de expressão, && = operador lógico AND, == comparação de string, exit 1 = A maioria dos erros comuns na execução
@@ -152,7 +155,7 @@ echo -e "Adicionando o repositório do Graylog, aguarde..."
 	rm -v graylog.deb &>> $LOG
 	wget $REPGRAYLOG -O graylog.deb &>> $LOG
 	dpkg -i graylog.deb &>> $LOG
-echo -e "Repositório do Elasticsearch adicionado com sucesso!!!, continuando com o script..."
+echo -e "Repositório do Graylog adicionado com sucesso!!!, continuando com o script..."
 sleep 5
 echo
 #
@@ -163,7 +166,7 @@ echo -e "Instalando as dependências do Graylog, aguarde..."
 	apt update &>> $LOG
 	apt -y upgrade &>> $LOG
   	apt -y install gnupg apt-transport-https openjdk-8-jdk openjdk-8-jre openjdk-8-jre-headless default-jdk \
-	default-jre uuid-runtime pwgen &>> $LOG
+	default-jre uuid-runtime pwgen ca-certificates-java &>> $LOG
 	java -version &>> $LOG
 	update-java-alternatives -l &>> $LOG
 echo -e "Dependências do Graylog instaladas com sucesso!!!, continuando com o script..."
@@ -185,8 +188,8 @@ echo -e "Instalando o Elasticsearch, aguarde..."
 	# opção do comando apt: -y (yes)
 	# opção do comando cp: -v (verbose)
 	apt -y install elasticsearch-oss &>> $LOG
-	#cp -v conf/elasticsearch.yml /etc/elasticsearch/elasticsearch.yml
-	#cp -v conf/jvm.options /etc/elasticsearch/jvm.options
+	cp -v conf/elasticsearch.yml /etc/elasticsearch/elasticsearch.yml &>> $LOG
+	cp -v conf/jvm.options /etc/elasticsearch/jvm.options &>> $LOG
 	systemctl enable elasticsearch
 	systemctl restart elasticsearch
 echo -e "Elasticsearch instalado com sucesso!!!, continuando com o script..."
@@ -195,12 +198,25 @@ echo
 #
 echo -e "Instalando o Graylog, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
+	# opção do comando: | piper (conecta a saída padrão com a entrada padrão de outro comando)
 	# opção do comando apt: -y (yes)
-	apt install -y graylog-server graylog-integrations-plugins
-	#cp -v conf/server.conf /etc/graylog/server/server.conf
+	# opção do comando pwgen: -N (num passwords), -s (secure)
+	# opção do comando tr: -d (delete)
+	# opção do comando cut: -d (delimiter), -f (fields)
+	apt install -y graylog-server graylog-integrations-plugins &>> $LOG
+	pwgen -N 1 -s 96 >> /etc/graylog/server/server.conf
+	echo $USERGRAYLOG | tr -d '\n' | sha256sum | cut -d" " -f1 >> /etc/graylog/server/server.conf
+echo -e "Graylog instalado com sucesso!!!, continuando com o script..."
+sleep 5
+echo
+#
+echo -e "Editando o arquivo de configuração do Graylog, pressione <Enter> para editar..."
+	# opção do comando: &>> (redirecionar a saída padrão)
+	# variáveis de configura do Graylog: 
+	vim /etc/graylog/server/server.conf
 	systemctl enable graylog-server &>> $LOG
 	systemctl restart graylog-server &>> $LOG
-echo -e "Graylog instalado com sucesso!!!, continuando com o script..."
+echo -e "Arquivo do Graylog editado com sucesso!!!, continuando com o script..."
 sleep 5
 echo
 #
