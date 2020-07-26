@@ -5,8 +5,8 @@
 # Facebook: facebook.com/BoraParaPratica
 # YouTube: youtube.com/BoraParaPratica
 # Data de criação: 08/02/2019
-# Data de atualização: 22/07/2020
-# Versão: 0.03
+# Data de atualização: 26/07/2020
+# Versão: 0.04
 # Testado e homologado para a versão do Ubuntu Server 18.04.x LTS x64
 # Kernel >= 4.15.x
 # Testado e homologado para a versão do GLPI-9.4.x
@@ -20,6 +20,27 @@
 # dos sistemas auxiliam os administradores de TI a criar um banco de dados de recursos técnicos, além de um gerenciamento e 
 # histórico de ações de manutenções. Os usuários podem declarar incidentes ou solicitações (com base no ativo ou não) graças
 # ao recurso de Helpdesk.
+#
+# Informações que serão solicitada na configuração via Web do GLPI
+# GLPI Setup
+# Select your language: Português do Brasil: OK;
+# Licença: Eu li e ACEITO os termos de licença acima: Continuar;
+# Início da instalação: Instalar;
+# Etapa 0: Verificação do ambiente: Continuar;
+# Etapa 1: Instalação da conexão com o bando de dados:
+#	SQL server(MariaDB ou MySQL): localhost
+#	Usuário SQL: glpi
+#	Senha SQL: glpi: Continuar;
+# Etapa 2: Conexão com banco de dados: glpi: Continuar;
+# Etapa 3: Iniciando banco de dados: Continuar;
+# Etapa 4: Coletar dados: Continuar;
+# Etapa 5: Uma última coisa antes de começar: Continuar;
+# Etapa 6: A instalação foi concluída: Usar GLPI
+#
+# Usuário/Senha: glpi/glpi - conta do usuário administrador
+# Usuário/Senha: tech/tech - conta do usuário técnico
+# Usuário/Senha: normal/normal - conta do usuário normal
+# Usuário/Senha: post-only/postonly - conta do usuário postonly
 #
 # Site oficial: https://glpi-project.org/pt-br/
 #
@@ -52,6 +73,9 @@ KERNEL=$(uname -r | cut -d'.' -f1,2)
 # $0 (variável de ambiente do nome do comando)
 LOG="/var/log/$(echo $0 | cut -d'/' -f2)"
 #
+# Declarando as variáveis para criação da Base de Dados do GLPI
+USER="root"
+PASSWORD="pti@2018"
 # opção do comando create: create (criação), database (base de dados), base (banco de dados)
 # opção do comando create: create (criação), user (usuário), identified by (identificado por - senha do usuário), password (senha)
 # opção do comando grant: grant (permissão), usage (uso em | uso na), *.* (todos os bancos/tabelas), to (para), user (usuário)
@@ -59,15 +83,13 @@ LOG="/var/log/$(echo $0 | cut -d'/' -f2)"
 # opões do comando GRANT: grant (permissão), all (todos privilégios), on (em ou na | banco ou tabela), *.* (todos os bancos/tabelas)
 # to (para), user@'%' (usuário @ localhost), identified by (identificado por - senha do usuário), password (senha)
 # opção do comando FLUSH: flush (atualizar), privileges (recarregar as permissões)
-USER="root"
-PASSWORD="pti@2018"
 DATABASE="CREATE DATABASE glpi;"
 USERDATABASE="CREATE USER 'glpi' IDENTIFIED BY 'glpi';"
 GRANTDATABASE="GRANT USAGE ON *.* TO 'glpi' IDENTIFIED BY 'glpi';"
 GRANTALL="GRANT ALL PRIVILEGES ON glpi.* TO 'glpi' IDENTIFIED BY 'glpi';"
 FLUSH="FLUSH PRIVILEGES;"
 #
-# Variáveis de instalação do GLPI (Link atualizado no dia 22/07/2020)
+# Declarando a variável de download do GLPI (Link atualizado no dia 22/07/2020)
 RELEASE="https://github.com/glpi-project/glpi/releases/download/9.5.0/glpi-9.5.0.tgz"
 #
 # Verificando se o usuário é Root, Distribuição é >=18.04 e o Kernel é >=4.15 <IF MELHORADO)
@@ -75,12 +97,12 @@ RELEASE="https://github.com/glpi-project/glpi/releases/download/9.5.0/glpi-9.5.0
 clear
 if [ "$USUARIO" == "0" ] && [ "$UBUNTU" == "18.04" ] && [ "$KERNEL" == "4.15" ]
 	then
-		echo -e "O usuário e Root, continuando com o script..."
-		echo -e "Distribuição e >=18.04.x, continuando com o script..."
-		echo -e "Kernel e >= 4.15, continuando com o script..."
+		echo -e "O usuário é Root, continuando com o script..."
+		echo -e "Distribuição é >=18.04.x, continuando com o script..."
+		echo -e "Kernel é >= 4.15, continuando com o script..."
 		sleep 5
 	else
-		echo -e "Usuário não e Root ($USUARIO) ou Distribuição não e >=18.04.x ($UBUNTU) ou Kernel não e >=4.15 ($KERNEL)"
+		echo -e "Usuário não é Root ($USUARIO) ou Distribuição não é >=18.04.x ($UBUNTU) ou Kernel não é >=4.15 ($KERNEL)"
 		echo -e "Caso você não tenha executado o script com o comando: sudo -i"
 		echo -e "Execute novamente o script para verificar o ambiente."
 		exit 1
@@ -104,6 +126,7 @@ echo -n "Verificando as dependências, aguarde... "
 # opção do comando date: + (format), %d (day), %m (month), %Y (year 1970), %H (hour 24), %M (minute 60)
 echo -e "Início do script $0 em: `date +%d/%m/%Y-"("%H:%M")"`\n" &>> $LOG
 #
+echo
 echo -e "Instalação do GLPI no GNU/Linux Ubuntu Server 18.04.x\n"
 echo -e "Após a instalação do GLPI acessar a URL: http://`hostname -I | cut -d' ' -f1`/glpi/\n"
 echo -e "Aguarde, esse processo demora um pouco dependendo do seu Link de Internet...\n"
@@ -154,32 +177,51 @@ echo -e "Instalando as dependências do GLPI, aguarde..."
 	apt -y install php-curl php-gd php-intl php-pear php-imagick php-imap php-memcache php-pspell php-mysql \
 	php-recode php-tidy php-xmlrpc php-xsl php-mbstring php-gettext php-ldap php-cas php-apcu libapache2-mod-php \
 	php-json php-iconv php-xml &>> $LOG
-echo -e "Source List criado com sucesso!!!, continuando com o script..."
+echo -e "Dependências instaladas com sucesso!!!, continuando com o script..."
 sleep 5
 echo
 #
-echo -e "Instalando o GLPI e criando a Base de Dados, aguarde..."
+echo -e "Baixando o GLPI do site Oficial, aguarde..."
+	# removendo versões anteriores baixadas do GLPI
+	# baixando a versão do GLPI
+	# opção do comando: &>> (redirecionar a saida padrão)
+	# opção do comando rm: -v (verbose)
+	# opção do comando wget: - O (output document file)
+	rm -v glpi.tgz &>> $LOG
+	wget $RELEASE -O glpi.tgz &>> $LOG
+echo -e "GLPI baixado com sucesso!!!, continuando com o script..."
+sleep 5
+echo
+#
+echo -e "Instalando o GLPI,  aguarde..."
+	# descompactando o GLPI
+	# movendo o diretório do GLPI para o diretório da raiz do Apache
+	# alterando o dono do diretório do GLPI
+	# alterando as permissões do diretório do GLPI
 	# opção do comando: &>> (redirecionar a saida padrão)
 	# opção do comando tar: -j (bzip2), -x (extract), -v (verbose), -f (file)
 	# opção do comando mv: -v (verbose)
 	# opção do comando chown: -R (recursive), -v (verbose), www-data.www-data (user and group)
 	# opção do comando chmod: -R (recursive), -v (verbose), 755 (User=RWX, Group=R-X, Other=R-X)
-	# opção do comando mysql: -u (user), -p (password), -e (execute)
-	# removendo versões anteriores baixadas do GLPI
-	# opção do comando rm: -v (verbose)
-	rm -v glpi*.*.* &>> $LOG
-	wget $RELEASE &>> $LOG
-	GLPIFILE=`echo glpi*.*.*`
-	tar -zxvf $GLPIFILE &>> $LOG
+	tar -zxvf glpi.tgz &>> $LOG
 	mv -v glpi/ /var/www/html/glpi/ &>> $LOG
 	chown -Rv www-data:www-data /var/www/html/glpi/ &>> $LOG
 	chmod -Rv 755 /var/www/html/glpi/ &>> $LOG
+echo -e "GLPI instalado com sucesso!!!, continuando com o script..."
+sleep 5
+echo
+#
+
+echo -e "Criando o Banco de Dados do GLPI, aguarde..."
+	# criando a base de dados do GLPI
+	# opção do comando: &>> (redirecionar a saida padrão)
+	# opção do comando mysql: -u (user), -p (password), -e (execute)
 	mysql -u $USER -p$PASSWORD -e "$DATABASE" mysql &>> $LOG
 	mysql -u $USER -p$PASSWORD -e "$USERDATABASE" mysql &>> $LOG
 	mysql -u $USER -p$PASSWORD -e "$GRANTDATABASE" mysql &>> $LOG
 	mysql -u $USER -p$PASSWORD -e "$GRANTALL" mysql &>> $LOG
 	mysql -u $USER -p$PASSWORD -e "$FLUSH" mysql &>> $LOG
-echo -e "GLPI instalado com sucesso!!!, continuando com o script..."
+echo -e "Banco de Dados criado com sucesso!!!, continuando com o script..."
 sleep 5
 echo
 #
@@ -189,10 +231,10 @@ echo -e "Habilitando os recursos do Apache2 para suportar o GLPI, aguarde..."
 	# opção do comando phpenmod: (habilitar módulos do PHP)
 	# opção do comando a2enconf: (habilitar arquivo de configuração de site do Apache2)
 	# opção do comando systemctl: restart (reinicializar o serviço)
-	cp -v conf/glpi.conf /etc/apache2/conf-available/
-	cp -v conf/glpi-cron /etc/cron.d/ 
-	phpenmod apcu
-	a2enconf glpi
+	cp -v conf/glpi.conf /etc/apache2/conf-available/ &>> $LOG
+	cp -v conf/glpi-cron /etc/cron.d/ &>> $LOG
+	phpenmod apcu &>> $LOG
+	a2enconf glpi &>> $LOG
 	systemctl restart apache2 &>> $LOG
 echo -e "Recursos habilitados com sucesso!!!, continuando com o script..."
 sleep 5

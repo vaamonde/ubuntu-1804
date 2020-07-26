@@ -77,7 +77,7 @@ FLUSH="FLUSH PRIVILEGES;"
 # Declarando a variável de download do OpenFire (Link atualizado no dia 22/07/2020)
 OPENFIRE="https://www.igniterealtime.org/downloadServlet?filename=openfire/openfire_4.5.2_all.deb"
 #
-# Verificando se o usuário e Root, Distribuição e >=18.04 e o Kernel >=4.15 <IF MELHORADO)
+# Verificando se o usuário é Root, Distribuição é >=18.04 e o Kernel é >=4.15 <IF MELHORADO)
 # [ ] = teste de expressão, && = operador lógico AND, == comparação de string, exit 1 = A maioria dos erros comuns na execução
 clear
 if [ "$USUARIO" == "0" ] && [ "$UBUNTU" == "18.04" ] && [ "$KERNEL" == "4.15" ]

@@ -58,7 +58,7 @@ KERNEL=`uname -r | cut -d'.' -f1,2`
 # $0 (variável de ambiente do nome do comando)
 LOG="/var/log/$(echo $0 | cut -d'/' -f2)"
 #
-# Variáveis de instalação do Ansible
+# Declarando a variável de download do Ansible (Link atualizado no dia 22/07/2020)
 PPA="ppa:ansible/ansible"
 #
 # Verificando se o usuário é Root, Distribuição é >=18.04 e o Kernel é >=4.15 <IF MELHORADO)
