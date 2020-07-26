@@ -5,19 +5,31 @@
 # Facebook: facebook.com/BoraParaPratica
 # YouTube: youtube.com/BoraParaPratica
 # Data de criação: 10/02/2019
-# Data de atualização: 10/02/2019
-# Versão: 0.01
+# Data de atualização: 23/07/2020
+# Versão: 0.02
 # Testado e homologado para a versão do Ubuntu Server 18.04.x LTS x64
 # Kernel >= 4.15.x
-# Testado e homologado para a versão do Ansible>=2.7
+# Testado e homologado para a versão do Ansible 2.7.x
 #
-# O Ansible é uma ferramenta de provisionamento de software de código aberto, gerenciamento de configuração e implementação
-# de aplicativos. Ele é executado em muitos sistemas semelhantes ao Unix/Linux e pode configurar tanto sistemas semelhantes
-# ao Unix/Linux quanto o Microsoft Windows. Inclui sua própria linguagem declarativa para descrever a configuração do sistema.
-# Foi escrito por Michael DeHaan e adquirido pela Red Hat em 2015. Ao contrário dos produtos concorrentes, a Ansible não tem 
-# agente - conectando remotamente via SSH ou PowerShell para executar suas tarefas.
+# O Ansible é uma ferramenta de provisionamento de software de código aberto, gerenciamento de configuração e 
+# implementação de aplicativos. Ele é executado em muitos sistemas semelhantes ao Unix/Linux e pode configurar 
+# tanto sistemas semelhantes ao Unix/Linux quanto o Microsoft Windows. Inclui sua própria linguagem declarativa 
+# para descrever a configuração do sistema. Foi escrito por Michael DeHaan e adquirido pela Red Hat em 2015. Ao 
+# contrário dos produtos concorrentes, o Ansible não tem agente ele se conecta remotamente via SSH ou PowerShell 
+# para executar suas tarefas.
 #
 # Site Oficial do Projeto: https://www.ansible.com/
+#
+# O AWX Project (AWX) é um projeto de código aberto do software Ansible Tower patrocinado pela Red Hat. Ele nos 
+# permite controlar melhor o uso do projeto Ansible em ambientes de TI, fornecendo uma interface de usuário baseada 
+# na web e um mecanismo de tarefas baseados no Ansible. É uma ferramenta de automatização de tarefas, nos permitindo 
+# fazer o deploy de aplicações, provisionar servidores, automatizar tarefas, e outras funções.
+#
+# Site Oficial do Projeto: https://github.com/ansible/awx
+#
+# Outros projeto de Front End para o Ansible
+# Rundeck: https://www.rundeck.com/
+# Polemarch: https://polemarch.org/
 #
 # Vídeo de instalação do GNU/Linux Ubuntu Server 18.04.x LTS: https://www.youtube.com/watch?v=zDdCrqNhIXI
 # Vídeo de atualização do Sistema: https://www.youtube.com/watch?v=esnu8TAepHU
@@ -28,7 +40,7 @@
 # opção do comando date: +%T (Time)
 HORAINICIAL=`date +%T`
 #
-# Variáveis para validar o ambiente, verificando se o usuário e "root", versão do ubuntu e kernel
+# Variáveis para validar o ambiente, verificando se o usuário é "root", versão do ubuntu e kernel
 # opções do comando id: -u (user)
 # opções do comando: lsb_release: -r (release), -s (short), 
 # opões do comando uname: -r (kernel release)
@@ -49,7 +61,7 @@ LOG="/var/log/$(echo $0 | cut -d'/' -f2)"
 # Variáveis de instalação do Ansible
 PPA="ppa:ansible/ansible"
 #
-# Verificando se o usuário e Root, Distribuição e >=18.04 e o Kernel >=4.15 <IF MELHORADO)
+# Verificando se o usuário é Root, Distribuição é >=18.04 e o Kernel é >=4.15 <IF MELHORADO)
 # [ ] = teste de expressão, && = operador lógico AND, == comparação de string, exit 1 = A maioria dos erros comuns na execução
 clear
 if [ "$USUARIO" == "0" ] && [ "$UBUNTU" == "18.04" ] && [ "$KERNEL" == "4.15" ]

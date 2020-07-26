@@ -110,7 +110,7 @@ export DEBIAN_FRONTEND="noninteractive"
 echo -e "Início do script $0 em: `date +%d/%m/%Y-"("%H:%M")"`\n" &>> $LOG
 #
 echo -e "Instalação do BareOS no GNU/Linux Ubuntu Server 18.04.x\n"
-echo -e "Após a instalação do BareOS acessar a URL: http://`hostname -I`/bareos-webui\n"
+echo -e "Após a instalação do BareOS acessar a URL: http://`hostname -I | cut -d' ' -f1`/bareos-webui\n"
 echo -e "Aguarde, esse processo demora um pouco dependendo do seu Link de Internet...\n"
 sleep 5
 #

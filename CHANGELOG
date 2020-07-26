@@ -13,7 +13,7 @@ Kernel >= 4.15.x
 
 24/07/2020 - Robson Vaamonde - Correção das novas dependências do Netdata, agora resolvido as falhas de Cloud.
 
-22/07/2020 - Robson Vaamonde - Revisão de todos os scripts do repositórios, atualização de versões dos aplicativos e 
+22/07/2020 - Robson Vaamonde - Revisão de todos os scripts do repositórios, atualização das versões dos aplicativos e 
 correções de português nos scripts.
 
 30/03/2020 - Robson Vaamonde - Atualização do arquivo de instalação do netdata.sh, acréscimo da dependência do libuv1-dev 

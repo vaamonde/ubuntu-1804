@@ -33,7 +33,7 @@
 # opção do comando date: +%T (Time)
 HORAINICIAL=$(date +%T)
 #
-# Variáveis para validar o ambiente, verificando se o usuário e "root", versão do ubuntu e kernel
+# Variáveis para validar o ambiente, verificando se o usuário é "root", versão do ubuntu e kernel
 # opções do comando id: -u (user)
 # opções do comando: lsb_release: -r (release), -s (short), 
 # opões do comando uname: -r (kernel release)
@@ -70,7 +70,7 @@ FLUSH="FLUSH PRIVILEGES;"
 # Variáveis de instalação do GLPI (Link atualizado no dia 22/07/2020)
 RELEASE="https://github.com/glpi-project/glpi/releases/download/9.5.0/glpi-9.5.0.tgz"
 #
-# Verificando se o usuário e Root, Distribuição e >=18.04 e o Kernel >=4.15 <IF MELHORADO)
+# Verificando se o usuário é Root, Distribuição é >=18.04 e o Kernel é >=4.15 <IF MELHORADO)
 # [ ] = teste de expressão, && = operador lógico AND, == comparação de string, exit 1 = A maioria dos erros comuns na execução
 clear
 if [ "$USUARIO" == "0" ] && [ "$UBUNTU" == "18.04" ] && [ "$KERNEL" == "4.15" ]
@@ -91,7 +91,7 @@ fi
 # || (operador lógico OU), 2> (redirecionar de saída de erro STDERR), && = operador lógico AND, { } = agrupa comandos em blocos
 # [ ] = testa uma expressão, retornando 0 ou 1, -ne = é diferente (NotEqual)
 echo -n "Verificando as dependências, aguarde... "
-	for name in mysql-server mysql-common apache2
+	for name in mysql-server mysql-common apache2 php
 	do
   		[[ $(dpkg -s $name 2> /dev/null) ]] || { echo -en "\n\nO software: $name precisa ser instalado. \nUse o comando 'apt install $name'\n";deps=1; }
 	done
@@ -105,7 +105,7 @@ echo -n "Verificando as dependências, aguarde... "
 echo -e "Início do script $0 em: `date +%d/%m/%Y-"("%H:%M")"`\n" &>> $LOG
 #
 echo -e "Instalação do GLPI no GNU/Linux Ubuntu Server 18.04.x\n"
-echo -e "Após a instalação do GLPI acessar a URL: http://`hostname -I`/glpi/\n"
+echo -e "Após a instalação do GLPI acessar a URL: http://`hostname -I | cut -d' ' -f1`/glpi/\n"
 echo -e "Aguarde, esse processo demora um pouco dependendo do seu Link de Internet...\n"
 sleep 5
 #

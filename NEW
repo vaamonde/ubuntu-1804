@@ -11,7 +11,7 @@ Kernel >= 4.15.x
 
 ============================================= CRIAÇÃO DE NOVOS SCRIPTS =============================================
 
-05/05/2019 - Robson Vaamonde - Voltando a ativa, trabalhando na criação do script de criação de certificado para o LAMP Server usando OpenSSL
+05/05/2019 - Robson Vaamonde - Voltando a ativa, trabalhando na criação do script de certificado para o LAMP Server usando OpenSSL
 05/05/2019 - Robson Vaamonde - Voltando a ativa, trabalhando na criação do script de automatização do Certbot Client versão >=
 05/05/2019 - Robson Vaamonde - Voltando a ativa, trabalhando na criação do script de automatização do NTP Server versão >=
 05/05/2019 - Robson Vaamonde - Voltando a ativa, trabalhando na criação do script de automatização do FusionInventory version >=9.4
@@ -34,4 +34,4 @@ Kernel >= 4.15.x
 11/02/2019 - Robson Vaamonde - Trabalhando na criação do script de automatização do Ansible versão >= 2.7.x
 10/02/2019 - Robson Vaamonde - Trabalhando na criação do script de automatização do BareOS versão >= 18.2.x
 08/02/2019 - Robson Vaamonde - Trabalhando na criação do script de automatização do ownCloud versão >= 10.1.x
-29/01/2019 - Robson Vaamonde - Trabalhando na criação do script de automatização do SAMBA4 versão >= 4.7.x
+29/01/2019 - Robson Vaamonde - Trabalhando na criação do script de automatização do SAMBA 4 versão >= 4.7.x
