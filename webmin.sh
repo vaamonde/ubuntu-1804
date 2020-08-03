@@ -15,6 +15,10 @@
 # servidores, fornecendo uma interface amigável, e que quando configurado com um servidor web, pode ser acessado de qualquer
 # local, através de um navegador: https:\\(ip do servidor):(porta de utilização). Exemplo: https:\\172.16.1.20:10000
 #
+# Informações que serão solicitadas na configuração via Web do Webmin
+# Username: vaamonde
+# Password: pti@2018: Sign In
+#
 # Site oficial: http://www.webmin.com/
 #
 # Vídeo de instalação do GNU/Linux Ubuntu Server 18.04.x LTS: https://www.youtube.com/watch?v=zDdCrqNhIXI
