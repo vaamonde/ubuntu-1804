@@ -58,7 +58,7 @@ LOG="/var/log/$(echo $0 | cut -d'/' -f2)"
 #
 # Declarando a variável de download do Ansible e do Rundeck (Link atualizado no dia 22/07/2020)
 PPA="ppa:ansible/ansible"
-RUNDECK="https://dl.bintray.com/rundeck/rundeck-deb/:rundeck_3.3.1.20200727-1_all.deb"
+RUNDECK="https://dl.bintray.com/rundeck/rundeck-deb/rundeck_3.3.1.20200727-1_all.deb"
 PLUGIN="https://github.com/Batix/rundeck-ansible-plugin/releases/download/3.1.1/ansible-plugin-3.1.1.jar"
 #
 # Verificando se o usuário é Root, Distribuição é >=18.04 e o Kernel é >=4.15 <IF MELHORADO)
