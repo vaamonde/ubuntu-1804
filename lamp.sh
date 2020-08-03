@@ -5,8 +5,8 @@
 # Facebook: facebook.com/BoraParaPratica
 # YouTube: youtube.com/BoraParaPratica
 # Data de criação: 04/11/2018
-# Data de atualização: 22/07/2020
-# Versão: 0.07
+# Data de atualização: 03/08/2020
+# Versão: 0.08
 # Testado e homologado para a versão do Ubuntu Server 18.04.x LTS x64
 # Kernel >= 4.15.x
 #
@@ -23,7 +23,7 @@
 # Site: http://manpages.ubuntu.com/manpages/bionic/man1/debconf-set-selections.1.html
 #
 # Opção: lamp-server^ Recurso existente no GNU/Ubuntu Server para facilitar a instalação do Servidor LAMP
-# A opção de circunflexo no final do comando e obrigatório, considerado um meta-carácter de filtragem para
+# A opção de circunflexo no final do comando é obrigatória, considerado um meta-carácter de filtragem para
 # a instalação correta de todos os serviços do LAMP.
 # Recurso faz parte do software Tasksel: https://help.ubuntu.com/community/Tasksel
 #
@@ -33,6 +33,14 @@
 # Observação: Nesse script está sendo feito a instalação do Oracle MySQL, hoje os desenvolvedores estão migrando
 # para o MariaDB, nesse script o mesmo deve ser reconfigurado para instalar e configurar o MariaDB no Ubuntu.
 # sudo apt update && sudo apt install mariadb-server mariadb-client mariadb-common
+#
+# Site oficial: https://www.apache.org/
+# Site oficial: https://www.mysql.com/
+# Site oficial: https://mariadb.org/
+# Site oficial: https://www.php.net/
+# Site oficial: https://www.perl.org/
+# Site oficial: https://www.python.org/
+# Site oficial: https://www.phpmyadmin.net/
 #
 # Vídeo de instalação do GNU/Linux Ubuntu Server 18.04.x LTS: https://www.youtube.com/watch?v=zDdCrqNhIXI
 #
@@ -76,7 +84,7 @@ WEBSERVER="apache2"
 # Exportando o recurso de Noninteractive do Debconf para não solicitar telas de configuração
 export DEBIAN_FRONTEND="noninteractive"
 #
-# Verificando se o usuário e Root, Distribuição e >=18.04 e o Kernel >=4.15 <IF MELHORADO)
+# Verificando se o usuário é Root, Distribuição é >=18.04 e o Kernel é >=4.15 <IF MELHORADO)
 # [ ] = teste de expressão, && = operador lógico AND, == comparação de string, exit 1 = A maioria dos erros comuns na execução
 clear
 if [ "$USUARIO" == "0" ] && [ "$UBUNTU" == "18.04" ] && [ "$KERNEL" == "4.15" ]
@@ -97,19 +105,20 @@ fi
 # opção do comando hostname: -I (all IP address)
 # opção do comando sleep: 5 (seconds)
 # opção do comando date: + (format), %d (day), %m (month), %Y (year 1970), %H (hour 24), %M (minute 60)
+# opção do comando cut: -d (delimiter), -f (fields)
 echo -e "Início do script $0 em: `date +%d/%m/%Y-"("%H:%M")"`\n" &>> $LOG
 clear
 #
 clear
 echo -e "Instalação do LAMP-SERVER no GNU/Linux Ubuntu Server 18.04.x\n"
 echo -e "APACHE (Apache HTTP Server) - Servidor de Hospedagem de Páginas Web - Porta 80/443"
-echo -e "Após a instalação do Apache2 acessar a URL: http://`hostname -I`/\n"
+echo -e "Após a instalação do Apache2 acessar a URL: http://`hostname -I | cut -d ' ' -f1`/\n"
 echo -e "MYSQL (SGBD) - Sistemas de Gerenciamento de Banco de Dados - Porta 3306\n"
 echo -e "PHP (Personal Home Page - PHP: Hypertext Preprocessor) - Linguagem de Programação Dinâmica para Web\n"
 echo -e "PERL - Linguagem de programação multi-plataforma\n"
 echo -e "PYTHON - Linguagem de programação de alto nível\n"
 echo -e "PhpMyAdmin - Aplicativo desenvolvido em PHP para administração do MySQL pela Internet"
-echo -e "Após a instalação do PhpMyAdmin acessar a URL: http://`hostname -I`/phpmyadmin\n"
+echo -e "Após a instalação do PhpMyAdmin acessar a URL: http://`hostname -I | cut -d ' ' -f1`/phpmyadmin\n"
 echo -e "Aguarde, esse processo demora um pouco dependendo do seu Link de Internet..."
 sleep 5
 echo
@@ -144,9 +153,6 @@ echo -e "Software removidos com Sucesso!!!, continuando com o script..."
 sleep 5
 echo
 #
-echo -e "Instalando o LAMP-SERVER, aguarde..."
-echo
-#
 echo -e "Configurando as variáveis do Debconf do MySQL para o Apt, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando | (piper): (Conecta a saída padrão com a entrada padrão de outro comando)
@@ -164,9 +170,6 @@ echo -e "Instalando o LAMP-SERVER, aguarde..."
 	apt -y install lamp-server^ perl python &>> $LOG
 echo -e "Instalação do LAMP-SERVER feito com sucesso!!!, continuando com o script..."
 sleep 5
-echo
-#
-echo -e "Instalando o PhpMyAdmin, aguarde..."
 echo
 #
 echo -e "Configurando as variáveis do Debconf do PhpMyAdmin para o Apt, aguarde..."

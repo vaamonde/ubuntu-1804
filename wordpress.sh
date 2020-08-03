@@ -5,15 +5,24 @@
 # Facebook: facebook.com/BoraParaPratica
 # YouTube: youtube.com/BoraParaPratica
 # Data de criação: 09/11/2018
-# Data de atualização: 22/07/2020
-# Versão: 0.06
+# Data de atualização: 03/08/2020
+# Versão: 0.07
 # Testado e homologado para a versão do Ubuntu Server 18.04.x LTS x64
 # Kernel >= 4.15.x
 #
-# Wordpress: é um sistema livre e aberto de gestão de conteúdo para internet (do inglês: Content Management System - CMS),
+# WordPress: é um sistema livre e aberto de gestão de conteúdo para internet (do inglês: Content Management System - CMS),
 # baseado em PHP com banco de dados MySQL, executado em um servidor interpretador, voltado principalmente para a criação de
 # páginas eletrônicas (sites) e blogs online. Criado a partir do extinto b2/cafelog, por Ryan Boren e Matthew Mullenweg, e
 # distribuído gratuitamente sob a GNU General Public License.
+#
+# Informações que serão solicitadas na configuração via Web do WordPress
+# Português do Brasil: Continuar;
+# Informação necessária
+#	Título do site: Bora para Prática;
+#	Nome de usuário: admin;
+#	Senha: pti@2018;
+#	Confirme a senha: Confirmar o uso de uma senha fraca;
+#	O seu e-mail: vaamonde@vaamonde.pti; Instalar WordPress.
 #
 # Site oficial: https://wordpress.org/
 #
@@ -92,6 +101,7 @@ echo -n "Verificando as dependências, aguarde... "
 # opção do comando hostname: -I (all IP address)
 # opção do comando sleep: 5 (seconds
 # opção do comando date: + (format), %d (day), %m (month), %Y (year 1970), %H (hour 24), %M (minute 60)
+# opção do comando cut: -d (delimiter), -f (fields)
 echo -e "Início do script $0 em: `date +%d/%m/%Y-"("%H:%M")"`\n" &>> $LOG
 clear
 #

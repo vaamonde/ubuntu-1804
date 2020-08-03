@@ -5,8 +5,8 @@
 # Facebook: facebook.com/BoraParaPratica
 # YouTube: youtube.com/BoraParaPratica
 # Data de criação: 11/11/2018
-# Data de atualização: 22/07/2020
-# Versão: 0.04
+# Data de atualização: 03/08/2020
+# Versão: 0.06
 # Testado e homologado para a versão do Ubuntu Server 18.04.x LTS x64
 # Kernel >= 4.15.x
 #
@@ -16,10 +16,16 @@
 # ajudam a ver as coisas importantes de relance.
 #
 # Informações que serão solicitada na configuração via Web do LogAnalyzer
+# Step 0 - Errordetails: Click here to Install Adiscon LogAnalyzer!
 # Step 1 - Prerequisites: Next;
 # Step 2 - Verify File Permissions: 
 #		   file './config.php' Writeable: Next;
 # Step 3 - Basic Configuration: 
+#		   Number of syslog messages per page: 50
+#		   Message character limit for the main view: 80
+#          Character display limit for all string type fields: 30
+#          Show message details popup: Yes
+#          Automatically resolved IP Addresses (inline): Yes
 #		   Enable User Database: Yes
 #		   Database Host: localhost
 #		   Database Port: 3306
@@ -38,12 +44,14 @@
 # Step 7 - Create the first source for syslog messages
 #		   Name of the Source: ptispo01ws01
 #		   Source Type: MYSQL Native
+#          Select View: Syslog Fields
 #		   Table type: MonitorWare
 #		   Database Host: localhost
 #		   Database Name: syslog
 #		   Database Tablename: SystemEvents
 #		   Database User: syslog
 #		   Database Password: syslog: Next;
+#          Enable Row Counting: Yes
 # Step 8 - Done: Finish.
 #
 # Site oficial: https://loganalyzer.adiscon.com/
@@ -75,6 +83,7 @@ LOG="/var/log/$(echo $0 | cut -d'/' -f2)"
 #
 # Declarando as variáveis para o download do LogAnalyzer (Link atualizado no dia 22/07/2020)
 LOGANALYZER="http://download.adiscon.com/loganalyzer/loganalyzer-4.1.11.tar.gz"
+PTBR="https://loganalyzer.adiscon.com/plugins/files/translations/loganalyzer_lang_pt_BR_3.2.3.zip"
 #
 # Declarando as variáveis de autenticação no MySQL
 MYSQLUSER="root"
@@ -113,7 +122,7 @@ LOGFLUSH="FLUSH PRIVILEGES;"
 # Exportando o recurso de Noninteractive do Debconf para não solicitar telas de configuração
 export DEBIAN_FRONTEND="noninteractive"
 #
-# Verificando se o usuário e Root, Distribuição e >=18.04 e o Kernel >=4.15 <IF MELHORADO)
+# Verificando se o usuário é Root, Distribuição é >=18.04 e o Kernel é >=4.15 <IF MELHORADO)
 # [ ] = teste de expressão, && = operador lógico AND, == comparação de string, exit 1 = A maioria dos erros comuns na execução
 clear
 if [ "$USUARIO" == "0" ] && [ "$UBUNTU" == "18.04" ] && [ "$KERNEL" == "4.15" ]
@@ -146,10 +155,11 @@ echo -n "Verificando as dependências, aguarde... "
 # opção do comando echo: -e (enable interpretation of backslash escapes), \n (new line)
 # opção do comando hostname: -I (all IP address)
 # opção do comando date: + (format), %d (day), %m (month), %Y (year 1970), %H (hour 24), %M (minute 60)
+# opção do comando cut: -d (delimiter), -f (fields)
 echo -e "Início do script $0 em: `date +%d/%m/%Y-"("%H:%M")"`\n" &>> $LOG
 clear
 echo -e "Instalação do LogAnalyzer no GNU/Linux Ubuntu Server 18.04.x\n"
-echo -e "Após a instalação do LogAnalyzer acessar a URL: http://`hostname -I`/log/\n"
+echo -e "Após a instalação do LogAnalyzer acessar a URL: http://`hostname -I | cut -d ' ' -f1`/log/\n"
 echo -e "Aguarde, esse processo demora um pouco dependendo do seu Link de Internet..."
 sleep 5
 echo
@@ -235,8 +245,10 @@ echo -e "Baixando o LogAnalyzer do site oficial, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	# removendo versões anteriores baixadas do LogAnalyzer
 	# opção do comando rm: -v (verbose)
-	rm -v loganalyzer*.*.* &>> $LOG
-	wget $LOGANALYZER &>> $LOG
+	rm -v loganalyzer.tar.gz &>> $LOG
+	rm -v pt_BR.zip &>> $LOG
+	wget $LOGANALYZER -O loganalyzer.tar.gz &>> $LOG
+	wget $PTBR -O pt_BR.zip &>> $LOG
 echo -e "LogAnalyzer baixado com sucesso!!!, continuando com o script..."
 sleep 5
 echo
@@ -244,8 +256,8 @@ echo
 echo -e "Descompactando o LogAnalyzer, aguarde..."
 	# opção do comando: &>> (redirecionar a entrada padrão)
 	# opção do comando tar: -z (gzip), -x (extract), -v (verbose), -f (file)
-	LOGANALYZERFILE=`echo loganalyzer*.*.*`
-	tar -xzvf $LOGANALYZERFILE &>> $LOG
+	tar -xzvf loganalyzer.tar.gz &>> $LOG
+	unzip pt_BR.zip &>> $LOG
 echo -e "Descompactação do LogAnalyzer feita com sucesso!!!, continuando com o script..."
 sleep 5
 echo
@@ -260,6 +272,7 @@ echo -e "Copiando os arquivos de configuração do LogAnalyzer, aguarde..."
 	SOURCE="src/*"
 	mkdir -v /var/www/html/log &>> $LOG
 	cp -Rv $LOGANALYZERDIR$SOURCE /var/www/html/log/ &>> $LOG
+	mv -v pt_BR/ /var/www/html/log/lang &>> $LOG
 	touch /var/www/html/log/config.php &>> $LOG
 	chmod -v 666 /var/www/html/log/config.php &>> $LOG
 	chown -Rv www-data.www-data /var/www/html/log/ &>> $LOG

@@ -48,7 +48,7 @@ Vídeo mostrando os procedimentos básicos para instalar o GNU/Linux Ubuntu Serv
 
 Link da vídeo aula: https://www.youtube.com/watch?v=zDdCrqNhIXI&t
 
-Link do script utilizado nesse vídeo: 
+Link do script utilizado nesse vídeo: https://github.com/vaamonde/ubuntu-1804/blob/master/Apt-Get.sh
 
 ## **COMO instalar a versão Mini (Netboot - Netinstall) do GNU/Linux Ubuntu Server 18.04 LTS**
 
@@ -56,4 +56,5 @@ Vídeo mostrando os procedimentos básicos para instalar a versão Mini (Netboot
 
 Link da vídeo aula: https://www.youtube.com/watch?v=l-AVJE3DZfw&t
 
-Link do script utilizado nesse vídeo: 
+Link do script utilizado nesse vídeo: https://github.com/vaamonde/ubuntu-1804/blob/master/Netboot.sh
+

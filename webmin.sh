@@ -5,8 +5,8 @@
 # Facebook: facebook.com/BoraParaPratica
 # YouTube: youtube.com/BoraParaPratica
 # Data de criação: 10/11/2018
-# Data de atualização: 22/07/2020
-# Versão: 0.5
+# Data de atualização: 03/08/2020
+# Versão: 0.6
 # Testado e homologado para a versão do Ubuntu Server 18.04.x LTS x64
 # Kernel >= 4.15.x
 #
@@ -15,9 +15,10 @@
 # servidores, fornecendo uma interface amigável, e que quando configurado com um servidor web, pode ser acessado de qualquer
 # local, através de um navegador: https:\\(ip do servidor):(porta de utilização). Exemplo: https:\\172.16.1.20:10000
 #
+# Site oficial: http://www.webmin.com/
+#
 # Vídeo de instalação do GNU/Linux Ubuntu Server 18.04.x LTS: https://www.youtube.com/watch?v=zDdCrqNhIXI
 # Vídeo de instalação do LAMP Server no Ubuntu Server 18.04.x LTS: https://www.youtube.com/watch?v=6EFUu-I3u4s
-# Vídeo de instalação do Wordpress no LAMP do Ubuntu Server 18.04.x LTS: https://www.youtube.com/watch?v=Fs2B7kLdlm4
 #
 # Variável da Data Inicial para calcular o tempo de execução do script (VARIÁVEL MELHORADA)
 # opção do comando date: +%T (Time)
@@ -42,7 +43,7 @@ LOG="/var/log/$(echo $0 | cut -d'/' -f2)"
 # Variável do download do Webmin - (Link de download atualizado em: 22/07/2020)
 WEBMIN="https://prdownloads.sourceforge.net/webadmin/webmin_1.953_all.deb"
 #
-# Verificando se o usuário e Root, Distribuição e >=18.04 e o Kernel >=4.15 <IF MELHORADO)
+# Verificando se o usuário é Root, Distribuição é >=18.04 e o Kernel é >=4.15 <IF MELHORADO)
 # [ ] = teste de expressão, && = operador lógico AND, == comparação de string, exit 1 = A maioria dos erros comuns na execução
 clear
 if [ "$USUARIO" == "0" ] && [ "$UBUNTU" == "18.04" ] && [ "$KERNEL" == "4.15" ]
@@ -62,11 +63,12 @@ fi
 # opção do comando echo: -e (enable interpretation of backslash escapes), \n (new line)
 # opção do comando hostname: -I (all IP address)
 # opção do comando date: + (format), %d (day), %m (month), %Y (year 1970), %H (hour 24), %M (minute 60)
+# opção do comando cut: -d (delimiter), -f (fields)
 echo -e "Início do script $0 em: `date +%d/%m/%Y-"("%H:%M")"`\n" &>> $LOG
 clear
 #
 echo -e "Instalação do Webmin no GNU/Linux Ubuntu Server 18.04.x\n"
-echo -e "Após a instalação do Webmin acessar a URL: https://`hostname -I`:10000/\n"
+echo -e "Após a instalação do Webmin acessar a URL: http://`hostname -I | cut -d ' ' -f1`:10000/\n"
 echo -e "Aguarde, esse processo demora um pouco dependendo do seu Link de Internet..."
 sleep 5
 echo

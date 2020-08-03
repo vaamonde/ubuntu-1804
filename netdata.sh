@@ -5,8 +5,8 @@
 # Facebook: facebook.com/BoraParaPratica
 # YouTube: youtube.com/BoraParaPratica
 # Data de criação: 11/11/2018
-# Data de atualização: 22/07/2020
-# Versão: 0.07
+# Data de atualização: 03/08/2020
+# Versão: 0.08
 # Testado e homologado para a versão do Ubuntu Server 18.04.x LTS x64
 # Kernel >= 4.15.x
 #
@@ -47,7 +47,7 @@ LOG="/var/log/$(echo $0 | cut -d'/' -f2)"
 # opção do comando git clone --depth=1: Crie um clone superficial com um histórico truncado para o número especificado de confirmações
 NETDATA="https://github.com/firehol/netdata.git --depth=1"
 #
-# Verificando se o usuário e Root, Distribuição e >=18.04 e o Kernel >=4.15 <IF MELHORADO)
+# Verificando se o usuário é Root, Distribuição é >=18.04 e o Kernel é >=4.15 <IF MELHORADO)
 # [ ] = teste de expressão, && = operador lógico AND, == comparação de string, exit 1 = A maioria dos erros comuns na execução
 clear
 if [ "$USUARIO" == "0" ] && [ "$UBUNTU" == "18.04" ] && [ "$KERNEL" == "4.15" ]
@@ -80,10 +80,11 @@ echo -n "Verificando as dependências, aguarde... "
 # opção do comando echo: -e (enable interpretation of backslash escapes), \n (new line)
 # opção do comando hostname: -I (all IP address)
 # opção do comando date: + (format), %d (day), %m (month), %Y (year 1970), %H (hour 24), %M (minute 60)
+# opção do comando cut: -d (delimiter), -f (fields)
 echo -e "Início do script $0 em: `date +%d/%m/%Y-"("%H:%M")"`\n" &>> $LOG
 clear
 echo -e "Instalação do Netdata no GNU/Linux Ubuntu Server 18.04.x\n"
-echo -e "Após a instalação do Netdata acessar a URL: http://`hostname -I`:19999/\n"
+echo -e "Após a instalação do Netdata acessar a URL: http://`hostname -I | cut -d ' ' -f1`:19999/\n"
 echo -e "Aguarde, esse processo demora um pouco dependendo do seu Link de Internet..."
 sleep 5
 echo

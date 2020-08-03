@@ -5,8 +5,8 @@
 # Facebook: facebook.com/BoraParaPratica
 # YouTube: youtube.com/BoraParaPratica
 # Data de criação: 12/11/2018
-# Data de atualização: 22/07/2020
-# Versão: 0.05
+# Data de atualização: 03/08/2020
+# Versão: 0.06
 # Testado e homologado para a versão do Ubuntu Server 18.04.x LTS x64
 # Kernel >= 4.15.x
 # Testado e homologado para a versão do Docker 19.03.x
@@ -49,7 +49,7 @@ KERNEL=`uname -r | cut -d'.' -f1,2`
 # $0 (variável de ambiente do nome do comando)
 LOG="/var/log/$(echo $0 | cut -d'/' -f2)"
 #
-# Variável do download do Docker
+# Declarando as variáveis para o download Docker (Link atualizado no dia 22/07/2020)
 DOCKERGPG="https://download.docker.com/linux/ubuntu/gpg"
 DOCKERDEB="deb [arch=amd64] https://download.docker.com/linux/ubuntu bionic stable"
 DOCKERKEY="0EBFCD88"
@@ -74,10 +74,11 @@ fi
 # opção do comando echo: -e (enable interpretation of backslash escapes), \n (new line)
 # opção do comando hostname: -I (all IP address)
 # opção do comando date: + (format), %d (day), %m (month), %Y (year 1970), %H (hour 24), %M (minute 60)
+# opção do comando cut: -d (delimiter), -f (fields)
 echo -e "Início do script $0 em: `date +%d/%m/%Y-"("%H:%M")"`\n" &>> $LOG
 clear
 echo -e "Instalação do Docker e Portainer no GNU/Linux Ubuntu Server 18.04.x\n"
-echo -e "Após a instalação do Portainer acessar a URL: http://`hostname -I`:9000/\n"
+echo -e "Após a instalação do Portainer acessar a URL: http://`hostname -I | cut -d ' ' -f1`:9000/\n"
 echo -e "Aguarde, esse processo demora um pouco dependendo do seu Link de Internet..."
 sleep 5
 echo
@@ -220,6 +221,16 @@ echo -e "Criando o Container do Portainer, aguarde..."
 	# to the host), -v (Bind mount a volume)
 	docker run --name portainer -d -p 9000:9000 -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data portainer/portainer &>> $LOG
 echo -e "Container criado com sucesso!!!, continuando com o script..."
+sleep 5
+echo
+#
+echo -e "Criando o Serviço de Inicialização Automática do Portainer, aguarde..."
+	# opção do comando: &>> (redirecionar a saída padrão)
+	# opção do comando cp: -v (verbose)
+	cp -v conf/portainer.service /etc/systemd/system/ &>> $LOG
+	systemctl daemon-reload &>> $LOG
+	systemctl enable portainer &>> $LOG
+echo -e "Porta de conexão verificada com sucesso!!!, continuando com o script..."
 sleep 5
 echo
 #
