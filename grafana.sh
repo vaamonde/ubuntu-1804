@@ -5,8 +5,8 @@
 # Facebook: facebook.com/BoraParaPratica
 # YouTube: youtube.com/BoraParaPratica
 # Data de criação: 25/07/2020
-# Data de atualização: 25/07/2020
-# Versão: 0.01
+# Data de atualização: 03/08/2020
+# Versão: 0.02
 # Testado e homologado para a versão do Ubuntu Server 18.04.x LTS x64
 # Kernel >= 4.15.x
 # Testado e homologado para a versão do Grafana 7.1.1
@@ -15,7 +15,7 @@
 # Ele fornece tabelas, gráficos e alertas para a Web quando conectado a fontes de dados suportadas. É expansível 
 # através de um sistema de plug-in.
 #
-# Informações que serão solicitada na configuração via Web do Grafana
+# Informações que serão solicitadas na configuração via Web do Grafana
 # Email or username: admin
 # Password: admin
 # Change Password
@@ -25,9 +25,6 @@
 # Site Oficial do Projeto: https://grafana.com/
 #
 # Vídeo de instalação do GNU/Linux Ubuntu Server 18.04.x LTS: https://www.youtube.com/watch?v=zDdCrqNhIXI
-# Vídeo de atualização do Sistema: https://www.youtube.com/watch?v=esnu8TAepHU
-# Vídeo de configuração da Placa de Rede: https://www.youtube.com/watch?v=zSUd4k108Zk
-# Vídeo de configuração do Hostname e Hosts: https://www.youtube.com/watch?v=J7eyb5ynjZA
 # Vídeo de instalação do LAMP Server no Ubuntu Server 18.04.x LTS: https://www.youtube.com/watch?v=6EFUu-I3u4s
 #
 # Variável da Data Inicial para calcular o tempo de execução do script (VARIÁVEL MELHORADA)
@@ -90,6 +87,7 @@ echo -n "Verificando as dependências, aguarde... "
 # opção do comando date: + (format), %d (day), %m (month), %Y (year 1970), %H (hour 24), %M (minute 60)
 echo -e "Início do script $0 em: `date +%d/%m/%Y-"("%H:%M")"`\n" &>> $LOG
 #
+clear
 echo
 echo -e "Instalação do Grafana no GNU/Linux Ubuntu Server 18.04.x\n"
 echo -e "Após a instalação do Grafana acessar a URL: http://`hostname -I | cut -d' ' -f1`:3000\n"
@@ -169,7 +167,7 @@ echo
 echo -e "Verificando as portas de conexões do Grafana, aguarde..."
 	# opção do comando netstat: a (all), n (numeric)
 	# opção do comando grep: -i (ignore case)
-	netstat -an | grep -i tcp | grep 3000
+	netstat -an | grep 3000
 echo -e "Porta verificada com sucesso!!!, continuando com o script..."
 sleep 5
 echo

@@ -5,8 +5,8 @@
 # Facebook: facebook.com/BoraParaPratica
 # YouTube: youtube.com/BoraParaPratica
 # Data de criação: 08/02/2019
-# Data de atualização: 26/07/2020
-# Versão: 0.04
+# Data de atualização: 03/08/2020
+# Versão: 0.05
 # Testado e homologado para a versão do Ubuntu Server 18.04.x LTS x64
 # Kernel >= 4.15.x
 # Testado e homologado para a versão do GLPI-9.4.x
@@ -21,7 +21,7 @@
 # histórico de ações de manutenções. Os usuários podem declarar incidentes ou solicitações (com base no ativo ou não) graças
 # ao recurso de Helpdesk.
 #
-# Informações que serão solicitada na configuração via Web do GLPI
+# Informações que serão solicitadas na configuração via Web do GLPI
 # GLPI Setup
 # Select your language: Português do Brasil: OK;
 # Licença: Eu li e ACEITO os termos de licença acima: Continuar;
@@ -45,9 +45,6 @@
 # Site oficial: https://glpi-project.org/pt-br/
 #
 # Vídeo de instalação do GNU/Linux Ubuntu Server 18.04.x LTS: https://www.youtube.com/watch?v=zDdCrqNhIXI
-# Vídeo de atualização do Sistema: https://www.youtube.com/watch?v=esnu8TAepHU
-# Vídeo de configuração da Placa de Rede: https://www.youtube.com/watch?v=zSUd4k108Zk
-# Vídeo de configuração do Hostname e Hosts: https://www.youtube.com/watch?v=J7eyb5ynjZA
 # Vídeo de instalação do LAMP Server no Ubuntu Server 18.04.x LTS: https://www.youtube.com/watch?v=6EFUu-I3
 #
 # Variável da Data Inicial para calcular o tempo de execução do script (VARIÁVEL MELHORADA)
@@ -126,6 +123,7 @@ echo -n "Verificando as dependências, aguarde... "
 # opção do comando date: + (format), %d (day), %m (month), %Y (year 1970), %H (hour 24), %M (minute 60)
 echo -e "Início do script $0 em: `date +%d/%m/%Y-"("%H:%M")"`\n" &>> $LOG
 #
+clear
 echo
 echo -e "Instalação do GLPI no GNU/Linux Ubuntu Server 18.04.x\n"
 echo -e "Após a instalação do GLPI acessar a URL: http://`hostname -I | cut -d' ' -f1`/glpi/\n"
@@ -186,7 +184,7 @@ echo -e "Baixando o GLPI do site Oficial, aguarde..."
 	# baixando a versão do GLPI
 	# opção do comando: &>> (redirecionar a saida padrão)
 	# opção do comando rm: -v (verbose)
-	# opção do comando wget: - O (output document file)
+	# opção do comando wget: -O (output document file)
 	rm -v glpi.tgz &>> $LOG
 	wget $RELEASE -O glpi.tgz &>> $LOG
 echo -e "GLPI baixado com sucesso!!!, continuando com o script..."

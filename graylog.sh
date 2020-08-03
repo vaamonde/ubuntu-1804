@@ -21,9 +21,6 @@
 # Site Oficial do Elasticsearch: https://www.elastic.co/pt/
 #
 # Vídeo de instalação do GNU/Linux Ubuntu Server 18.04.x LTS: https://www.youtube.com/watch?v=zDdCrqNhIXI
-# Vídeo de atualização do Sistema: https://www.youtube.com/watch?v=esnu8TAepHU
-# Vídeo de configuração da Placa de Rede: https://www.youtube.com/watch?v=zSUd4k108Zk
-# Vídeo de configuração do Hostname e Hosts: https://www.youtube.com/watch?v=J7eyb5ynjZA
 #
 # Variável da Data Inicial para calcular o tempo de execução do script (VARIÁVEL MELHORADA)
 # opção do comando date: +%T (Time)
@@ -75,9 +72,10 @@ fi
 # opção do comando date: + (format), %d (day), %m (month), %Y (year 1970), %H (hour 24), %M (minute 60)
 echo -e "Início do script $0 em: `date +%d/%m/%Y-"("%H:%M")"`\n" &>> $LOG
 #
+clear
 echo
 echo -e "Instalação do Graylog no GNU/Linux Ubuntu Server 18.04.x\n"
-echo -e "Após a instalação do OpenFire acessar a URL: http://`hostname -I | cut -d' ' -f1`:9000/\n"
+echo -e "Após a instalação do OpenFire acessar a URL: http://`hostname -I | cut -d' ' -f1`:19000/\n"
 echo -e "Aguarde, esse processo demora um pouco dependendo do seu Link de Internet...\n"
 sleep 5
 #
@@ -222,7 +220,7 @@ echo
 #
 echo -e "Verificando a porta de conexão do Graylog, MongoDB e Elasticsearch, aguarde..."
 	# opção do comando netstat: -a (all), -n (numeric)
-	netstat -an | grep 9000
+	netstat -an | grep 19000
 	netstat -an | grep 27017
 	netstat -an | grep 9200
 echo -e "Portas de conexões verificadas com sucesso!!!, continuando com o script..."
