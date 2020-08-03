@@ -6,7 +6,7 @@
 # YouTube: youtube.com/BoraParaPratica
 # Data de criação: 12/11/2018
 # Data de atualização: 03/08/2020
-# Versão: 0.06
+# Versão: 0.07
 # Testado e homologado para a versão do Ubuntu Server 18.04.x LTS x64
 # Kernel >= 4.15.x
 # Testado e homologado para a versão do Docker 19.03.x
@@ -22,6 +22,12 @@
 #
 # O Portainer.io uma solução de gerenciamento para o Docker, com ele é possível gerenciar facilmente os seus hosts Docker e 
 # clusters com Docker Swarm através de uma interface web limpa, simples e intuitiva.
+#
+# Informações que serão solicitadas na configuração via Web do Portainer
+# Username: admin;
+# Password: pti@2018;
+# Confirm password: pti@2018: Create User;
+# Connect Portainer to the Docker environment you want to manage: Local: Connect
 #
 # Site oficial: https://portainer.io/
 #
@@ -230,7 +236,7 @@ echo -e "Criando o Serviço de Inicialização Automática do Portainer, aguarde
 	cp -v conf/portainer.service /etc/systemd/system/ &>> $LOG
 	systemctl daemon-reload &>> $LOG
 	systemctl enable portainer &>> $LOG
-echo -e "Porta de conexão verificada com sucesso!!!, continuando com o script..."
+echo -e "Serviço criado com sucesso!!!, continuando com o script..."
 sleep 5
 echo
 #

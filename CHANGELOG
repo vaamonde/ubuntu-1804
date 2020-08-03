@@ -11,9 +11,12 @@ Kernel >= 4.15.x
 
 ============================================= ATUALIZAÇÕES DOS SCRIPTS =============================================
 
+03/08/2020 - Robson Vaamonde - Criação da Variável PTBR no script do loganalyzer.sh para adicionar o recurso de tradução
+03/08/2020 - Robson Vaamonde - Criação do arquivo do Systemd do Portainer para inicializar automático o Container
+
 24/07/2020 - Robson Vaamonde - Correção das novas dependências do Netdata, agora resolvido as falhas de Cloud.
 
-22/07/2020 - Robson Vaamonde - Revisão de todos os scripts do repositórios, atualização das versões dos aplicativos e 
+22/07/2020 - Robson Vaamonde - Revisão de todos os scripts do repositório, atualização das versões dos aplicativos e 
 correções de português nos scripts.
 
 30/03/2020 - Robson Vaamonde - Atualização do arquivo de instalação do netdata.sh, acréscimo da dependência do libuv1-dev 

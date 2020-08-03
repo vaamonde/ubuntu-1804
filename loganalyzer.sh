@@ -15,7 +15,7 @@
 # rede. Ele consolida o Syslog/Rsyslog e outros dados de eventos, fornecendo uma página web de fácil leitura. Os gráficos 
 # ajudam a ver as coisas importantes de relance.
 #
-# Informações que serão solicitada na configuração via Web do LogAnalyzer
+# Informações que serão solicitadas na configuração via Web do LogAnalyzer
 # Step 0 - Errordetails: Click here to Install Adiscon LogAnalyzer!
 # Step 1 - Prerequisites: Next;
 # Step 2 - Verify File Permissions: 

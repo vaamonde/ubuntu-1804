@@ -5,8 +5,8 @@
 # Facebook: facebook.com/BoraParaPratica
 # YouTube: youtube.com/BoraParaPratica
 # Data de criação: 22/11/2018
-# Data de atualização: 22/07/2020
-# Versão: 0.05
+# Data de atualização: 03/08/2020
+# Versão: 0.06
 # Testado e homologado para a versão do Ubuntu Server 18.04.x LTS x64
 # Kernel >= 4.15.x
 # Testado e homologado para a versão do Tomcat 4.5.x
@@ -20,7 +20,7 @@
 # O OpenFire (anteriormente conhecido como Wildfire e Jive Messenger) é um servidor de mensagens instantâneas e de
 # conversas em grupo que usa o servidor XMPP escrito em Java e licenciado sob a licença Apache 2.0.
 #
-# Informações que serão solicitada na configuração via Web do OpenFire
+# Informações que serão solicitadas na configuração via Web do OpenFire
 # Welcome to Setup:
 #	Português Brasileiro (pt_BR): Continue;
 # Configurações do Servidor:
@@ -35,6 +35,12 @@
 #	URL do banco de dados: jdbc:mysql://localhost:3306/openfire?useTimezone=true&serverTimezone=UTC
 #	Nome do Usuário: openfire
 #	Senha: openfire: Continuar;
+# Configurações de Perfis:
+#	Padrão: Continuar;
+# Conta do Administrador:
+#	Endereço de e-mail do Admin: vaamonde@pti.intra
+#	Nova senha: pti@2018
+#	Confirme a senha: pti@2018: Continuar;
 #
 # Site Oficial do OpenFire: https://www.igniterealtime.org/projects/openfire/
 #

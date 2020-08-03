@@ -1,4 +1,4 @@
-# Curso GRÁTIS Laboratório de GNU/Linux Ubuntu Server 18.04.x LTS DevOps
+# Curso GRÁTIS de GNU/Linux Ubuntu Server 18.04.x LTS DevOps
 
 ## 💰 Ajude o projeto Bora para Prática a continuar fazendo vídeos gratuitos para o Canal, acessando o link de doação do PagSeguro: https://pag.ae/bjlSJcH
 
@@ -30,7 +30,7 @@ Oracle VirtualBOX: https://www.virtualbox.org/
 ## **Playlist do YouTUBE com todos os Vídeos do GNU/Linux Ubuntu Server 18.04.x LTS DevOps:**
 Link da Playlist: https://www.youtube.com/playlist?list=PLozhsZB1lLUOjGzjGO4snI34V0zINevDm
 
-## **APRESENTAÇÃO do CURSO de GNU/Linux Ubuntu Server 18.04.x LTS**
+## **APRESENTAÇÃO do CURSO de GNU/Linux Ubuntu Server 18.04.x LTS DevOps**
 
 DevOps Github APRESENTAÇÃO do CURSO de GNU/Linux Ubuntu Server 18.04.x LTS, vídeo mostrando os detalhes do curso e informações extras.
 

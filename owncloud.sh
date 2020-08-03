@@ -5,8 +5,8 @@
 # Facebook: facebook.com/BoraParaPratica
 # YouTube: youtube.com/BoraParaPratica
 # Data de criação: 08/02/2019
-# Data de atualização: 23/07/2020
-# Versão: 0.05
+# Data de atualização: 03/08/2020
+# Versão: 0.06
 # Testado e homologado para a versão do Ubuntu Server 18.04.x LTS x64
 # Kernel >= 4.15.x
 # Testado e homologado para a versão do ownCLOUD-10.1.x
@@ -16,7 +16,7 @@
 # e open-source, e permitindo assim qualquer um de instalar e operar sem custo em um servidor privado, sem limite de 
 # espaço de armazenamento (com exceção da capacidade do disco rígido) ou o número de clientes conectados.
 #
-# Informações que serão solicitada na configuração via Web do ownCloud
+# Informações que serão solicitadas na configuração via Web do ownCloud
 # Nome do usuário: admin
 # Senha: pti@2018
 # Pasta de dados: /var/www/html/own/data
@@ -26,9 +26,6 @@
 # Host do banco de dados: owncloud
 #
 # Vídeo de instalação do GNU/Linux Ubuntu Server 18.04.x LTS: https://www.youtube.com/watch?v=zDdCrqNhIXI
-# Vídeo de atualização do Sistema: https://www.youtube.com/watch?v=esnu8TAepHU
-# Vídeo de configuração da Placa de Rede: https://www.youtube.com/watch?v=zSUd4k108Zk
-# Vídeo de configuração do Hostname e Hosts: https://www.youtube.com/watch?v=J7eyb5ynjZA
 # Vídeo de instalação do LAMP Server no Ubuntu Server 18.04.x LTS: https://www.youtube.com/watch?v=6EFUu-I3
 #
 # Variável da Data Inicial para calcular o tempo de execução do script (VARIÁVEL MELHORADA)
@@ -71,7 +68,7 @@ FLUSH="FLUSH PRIVILEGES;"
 # Variáveis de instalação do ownCloud (Link atualizado no dia 22/07/2020)
 RELEASE="https://download.owncloud.org/community/owncloud-10.4.1.tar.bz2"
 #
-# Verificando se o usuário e Root, Distribuição e >=18.04 e o Kernel >=4.15 <IF MELHORADO)
+# Verificando se o usuário é Root, Distribuição é >=18.04 e o Kernel é >=4.15 <IF MELHORADO)
 # [ ] = teste de expressão, && = operador lógico AND, == comparação de string, exit 1 = A maioria dos erros comuns na execução
 clear
 if [ "$USUARIO" == "0" ] && [ "$UBUNTU" == "18.04" ] && [ "$KERNEL" == "4.15" ]
@@ -104,10 +101,11 @@ echo -n "Verificando as dependências, aguarde... "
 # opção do comando echo: -e (enable interpretation of backslash escapes), \n (new line)
 # opção do comando hostname: -I (all IP address)
 # opção do comando date: + (format), %d (day), %m (month), %Y (year 1970), %H (hour 24), %M (minute 60)
+# opção do comando cut: -d (delimiter), -f (fields)
 echo -e "Início do script $0 em: `date +%d/%m/%Y-"("%H:%M")"`\n" &>> $LOG
 #
 echo -e "Instalação do ownCloud no GNU/Linux Ubuntu Server 18.04.x\n"
-echo -e "Após a instalação do ownCloud acessar a URL: http://`hostname -I`/own/\n"
+echo -e "Após a instalação do ownCloud acessar a URL: http://`hostname -I | cut -d ' ' -f1`/own/\n"
 echo -e "Aguarde, esse processo demora um pouco dependendo do seu Link de Internet...\n"
 sleep 5
 #
@@ -175,27 +173,33 @@ echo -e "Source List criado com sucesso!!!, continuando com o script..."
 sleep 5
 echo
 #
-echo -e "Instalando o ownCloud e criando a Base de Dados, aguarde..."
+echo -e "Baixando e Instalando o ownCloud, aguarde..."
 	# opção do comando: &>> (redirecionar a saida padrão)
 	# opção do comando tar: -j (bzip2), -x (extract), -v (verbose), -f (file)
 	# opção do comando chown: -R (recursive), -v (verbose), www-data.www-data (user and group)
 	# opção do comando chmod: -R (recursive), -v (verbose), 755 (User=RWX, Group=R-X, Other=R-X)
 	# opção do comando mysql: -u (user), -p (password), -e (execute)
-	# removendo versões anteriores baixadas do ownCloud
 	# opção do comando rm: -v (verbose)
-	rm -v owncloud*.*.* &>> $LOG
-	wget $RELEASE &>> $LOG
-	OWNCLOUDFILE=`echo owncloud*.*.*`
-	tar -jxvf $OWNCLOUDFILE &>> $LOG
+	# opção do comando wget: -O (output document file))
+	rm -v owncloud.tar.bz2 &>> $LOG
+	wget $RELEASE -O owncloud.tar.bz2 &>> $LOG
+	tar -jxvf owncloud.tar.bz2 &>> $LOG
 	mv -v owncloud/ /var/www/html/own/ &>> $LOG
 	chown -Rv www-data:www-data /var/www/html/own/ &>> $LOG
 	chmod -Rv 755 /var/www/html/own/ &>> $LOG
+echo -e "ownCloud instalado com sucesso!!!, continuando com o script..."
+sleep 5
+echo
+#
+echo -e "Criando o Banco de Dados do ownCloud, aguarde..."
+	# opção do comando: &>> (redirecionar de saída padrão)
+	# opção do comando mysql: -u (user), -p (password), -e (execute)
 	mysql -u $USER -p$PASSWORD -e "$DATABASE" mysql &>> $LOG
 	mysql -u $USER -p$PASSWORD -e "$USERDATABASE" mysql &>> $LOG
 	mysql -u $USER -p$PASSWORD -e "$GRANTDATABASE" mysql &>> $LOG
 	mysql -u $USER -p$PASSWORD -e "$GRANTALL" mysql &>> $LOG
 	mysql -u $USER -p$PASSWORD -e "$FLUSH" mysql &>> $LOG
-echo -e "ownCloud instalado com sucesso!!!, continuando com o script..."
+echo -e "Banco de Dados criado com sucesso!!!, continuando com o script..."
 sleep 5
 echo
 #
