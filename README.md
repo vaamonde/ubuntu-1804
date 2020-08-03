@@ -1,6 +1,15 @@
-<h1>Curso GRÁTIS DE Linux Ubuntu Server</h1>
+# Curso GRÁTIS Laboratório de GNU/Linux Ubuntu Server 18.04.x LTS DevOps
 
-O QUE VOCÊ VAI APRENDER NESSE CURSO
+## 💰 Ajude o projeto Bora para Prática a continuar fazendo vídeos gratuitos para o Canal, acessando o link de doação do PagSeguro: https://pag.ae/bjlSJcH
+
+Robson Vaamonde<br>
+Procedimentos em TI: http://procedimentosemti.com.br<br>
+Bora para Prática: http://boraparapratica.com.br<br>
+Robson Vaamonde: http://vaamonde.com.br<br>
+Facebook Procedimentos em TI: https://www.facebook.com/ProcedimentosEmTi<br>
+Facebook Bora para Prática: https://www.facebook.com/boraparapratica<br>
+Instagram Procedimentos em TI: https://www.instagram.com/procedimentoem<br>
+YouTUBE Bora Para Prática: https://www.youtube.com/boraparapratica<br>
 
 Esse curso tem como objetivo de mostrar a instalação e configuração da nova versão de Servidor da Canonical, o GNU/Linux Ubuntu Server 18.04.x, essa nova versão foi projetada para uma fácil implementação, administração e instalação de serviços de redes de forma fácil e confiável.
 
@@ -10,43 +19,41 @@ Para esse curso as metodologias de DevOps, utilizando o Git e Github serão empr
 
 Ideal para Estudantes e Profissionais de Redes que desejam se aprofundar nos pré-requisitos técnicos e práticos para Implementar Servidores GNU/Linux Ubuntu Server em cenários On-Prime ou em Cloud.
 
-PRÉ-REQUISITO
+## **Links Oficiais do Ubuntu, Mint, pfSense, Microsoft e VirtualBOX:**
+Canonical: https://canonical.com/<br>
+Linux Ubuntu: https://ubuntu.com/<br>
+Linux Mint: https://www.linuxmint.com/<br>
+pfSense: https://www.pfsense.org/<br>
+Microsoft Windows:  https://www.microsoft.com/pt-br/windows<br>
+Oracle VirtualBOX: https://www.virtualbox.org/
 
-Desejável conhecimentos básicos em Virtualização, Sistemas Operacionais GNU/Linux Mint e Ubuntu Desktop, Servidores GNU/Linux, Infraestrutura de Redes de Computadores e Hardware e Software de Servidores. Faça GRATUITAMENTE os cursos indicados na aula de "Recomendações de Cursos antes de Prosseguir", para adquirir a base necessária para este treinamento. Os softwares utilizados pelo aluno, durante o desenvolvimento do curso são de inteira responsabilidade do mesmo.
+## **Playlist do YouTUBE com todos os Vídeos do GNU/Linux Ubuntu Server 18.04.x LTS DevOps:**
+Link da Playlist: https://www.youtube.com/playlist?list=PLozhsZB1lLUOjGzjGO4snI34V0zINevDm
 
-IDADE MÍNIMA: 14 ANOS.
+## **APRESENTAÇÃO do CURSO de GNU/Linux Ubuntu Server 18.04.x LTS**
 
-PÚBLICO ALVO
-Qualquer pessoa que queira conhecer a distribuição de Servidores GNU/Linux Ubuntu Server, seus recursos, ferramentas de integrações, alertas e muito mais.
+DevOps Github APRESENTAÇÃO do CURSO de GNU/Linux Ubuntu Server 18.04.x LTS, vídeo mostrando os detalhes do curso e informações extras.
 
-MATERIAL DIDÁTICO
-Apostila em formato digital oferecida pelo Site Procedimentos em TI em parceria com AulaEAD.com.
+Link da vídeo aula: https://www.youtube.com/watch?v=qvUVWUz1MmY
 
-METODOLOGIA DO CURSO
-Curso a distância que será desenvolvido no ambiente aulaead.com através de vídeo aulas que ajudarão na compreensão dos conceitos e práticas, fornecendo as habilidades e conhecimentos necessários para o aluno dar os primeiros passos na utilização do Servidor GNU/Linux Ubuntu Server.
+## **APRESENTAÇÃO do CENÁRIO do Curso de GNU/Linux Ubuntu Server 18.04.x LTS**
 
-RECOMENDAÇÕES
-Fazer os cursos: Curso de Virtualização com Oracle VirtualBOX do Prof. Leandro Ramos.
+Vídeo mostrando o cenário das máquinas virtuais utilizadas no Curso de DevOps Github GNU/Linux Ubuntu Server 18.04.x LTS
 
-CERTIFICADO DE CONCLUSÃO
-O Certificado Digital contabilizará um total de 40 horas que incluem:
+Link da vídeo aula: https://www.youtube.com/watch?v=8AaHNXcrxag
 
-Vídeo Aulas – Disponíveis no Ambiente aulaead.com
-Leitura e estudo dos documentos – Disponíveis exclusivamente no Ambiente aulaead.com
-Execução dos Laboratórios e Testes (Virtualizados).
-Questionários de Avaliação – Disponíveis exclusivamente no Ambiente aulaead.com
-Você pode utilizar tanto o certificado digital quanto o impresso para:
+## **COMO instalar o GNU/Linux Ubuntu Server 18.04.x LTS**
 
-Completar horas extra-curriculares na Faculdade;
-Preencher exigências em Concursos Públicos;
-Participar de Progressão Funcional;
-Provas de Título;
-ou até mesmo para subir de cargo na sua empresa.
-O certificado tem validade para fins curriculares e em provas de títulos, como certificado de atualização/aperfeiçoamento, respeitando a carga-horária descrita e não podendo ser usado para outros fins. Por isso, destacamos que NÃO é um certificado técnico profissionalizante ou de graduação ou de pós-graduação e não dá direito de assumir responsabilidades técnicas.
+Vídeo mostrando os procedimentos básicos para instalar o GNU/Linux Ubuntu Server 18.04.x LTS no VirtualBOX. Versões LTS (Long-term support) da Distribuição Ubuntu são recomendadas devido ao suporte ser de 5 anos da data de lançamento. A nova versão do GNU/Linux Ubuntu Server 18.04.1 LTS trás um novo instalador, vários recursos novos e várias tecnologias que facilita a implementação de serviços em rede, Cloud e Segurança de forma rápida e eficiente para pequenas, médias e grandes empresas.
 
-INFORMAÇÕES GERAIS
-Este Curso EAD Gratuito não fornece qualquer tipo de suporte técnico ou pedagógico (educacional), além do conteúdo gravado no produto.
+Link da vídeo aula: https://www.youtube.com/watch?v=zDdCrqNhIXI&t
 
-Todos os outros nomes de produtos referidos ao longo deste curso têm uma finalidade meramente informativa, podendo ser marcas comerciais dos respectivos proprietários. O site www.aulaead.com não detém quaisquer direitos sobre essas marcas.
+Link do script utilizado nesse vídeo: 
 
-Todos os softwares utilizados pelo aluno, durante o desenvolvimento do curso, são de inteira responsabilidade do mesmo.
+## **COMO instalar a versão Mini (Netboot - Netinstall) do GNU/Linux Ubuntu Server 18.04 LTS**
+
+Vídeo mostrando os procedimentos básicos para instalar a versão Mini (Netboot - Netinstall) do GNU/Linux Ubuntu Server 18.04 LTS. A versão Mini também conhecida como Netboot ou Netinstall possui os recursos mínimo para a instalação do Server ou Desktop Ubuntu, essa versão e indicada para instalação vida Rede, utilizando os Protocolos DHCP, TFTP e PXE e também indicada para customizações de sistema ou servidores de virtualização e cloud.
+
+Link da vídeo aula: https://www.youtube.com/watch?v=l-AVJE3DZfw&t
+
+Link do script utilizado nesse vídeo: 
