@@ -119,8 +119,9 @@ echo -e "Fazendo o download do Webmin, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	# removendo versões anteriores baixadas do Webmin
 	# opção do comando rm: -v (verbose)
-	rm -v webmin_* &>> $LOG
-	wget $WEBMIN &>> $LOG
+	# opção do comando wget: -O (output document file)
+	rm -v webmin.deb &>> $LOG
+	wget $WEBMIN -O webmin.deb &>> $LOG
 echo -e "Download do Webmin feito com sucesso!!!, continuando com o script..."
 sleep 5
 echo
@@ -128,8 +129,7 @@ echo
 echo -e "Instalando o Webmin, esse processo demora um pouco, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando dpkg: -i (install)
-	WEBMINVERSION=`echo webmin_*`
-	dpkg -i $WEBMINVERSION &>> $LOG
+	dpkg -i webmin.deb &>> $LOG
 echo -e "Instalação do Webmin feita com sucesso!!!, continuando com o script..."
 sleep 5
 echo

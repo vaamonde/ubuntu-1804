@@ -245,6 +245,7 @@ echo -e "Baixando o LogAnalyzer do site oficial, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	# removendo versões anteriores baixadas do LogAnalyzer
 	# opção do comando rm: -v (verbose)
+	# opção do comando wget: -O (output document file)
 	rm -v loganalyzer.tar.gz &>> $LOG
 	rm -v pt_BR.zip &>> $LOG
 	wget $LOGANALYZER -O loganalyzer.tar.gz &>> $LOG

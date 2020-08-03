@@ -4,17 +4,18 @@ Facebook: facebook.com/ProcedimentosEmTI
 Facebook: facebook.com/BoraParaPratica
 YouTube: youtube.com/BoraParaPratica
 Data de criação: 29/01/2019
-Data de atualização: 22/07/2020
-Versão: 0.05
+Data de atualização: 03/08/2020
+Versão: 0.06
 Testado e homologado para a versão do Ubuntu Server 18.04.x LTS x64
 Kernel >= 4.15.x
 
 ============================================= ATUALIZAÇÕES DOS SCRIPTS =============================================
 
+03/08/2020 - Robson Vaamonde - Criação dos scripts: ansible.sh, glpi.sh, grafana.sh, graylog.sh, tomcat.sh, zabbix.sh.
 03/08/2020 - Robson Vaamonde - Criação da Variável PTBR no script do loganalyzer.sh para adicionar o recurso de tradução
 03/08/2020 - Robson Vaamonde - Criação do arquivo do Systemd do Portainer para inicializar automático o Container
 
-24/07/2020 - Robson Vaamonde - Correção das novas dependências do Netdata, agora resolvido as falhas de Cloud.
+24/07/2020 - Robson Vaamonde - Correção das novas dependências do Netdata, resolvido as falhas de dependência do Cloud.
 
 22/07/2020 - Robson Vaamonde - Revisão de todos os scripts do repositório, atualização das versões dos aplicativos e 
 correções de português nos scripts.

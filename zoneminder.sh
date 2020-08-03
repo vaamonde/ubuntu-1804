@@ -5,8 +5,8 @@
 # Facebook: facebook.com/BoraParaPratica
 # YouTube: youtube.com/BoraParaPratica
 # Data de criação: 02/12/2018
-# Data de atualização: 22/07/2020
-# Versão: 0.07
+# Data de atualização: 03/08/2020
+# Versão: 0.08
 # Testado e homologado para a versão do Ubuntu Server 18.04.x LTS x64
 # Kernel >= 4.15.x
 #
@@ -20,6 +20,9 @@
 # CCTV / CFTV = (Closed-Circuit Television - Circuito fechado de televisão);
 # PTZ Pan/Tilt/Zoom (Uma câmera de rede PTZ oferece funcionalidade de vídeo em rede combinada com o recurso
 # de movimento horizontal, vertical e de zoom - Pan = Panorâmica Horizontal - Tilt = Vertical | Zoom - Aproximar)
+#
+# Informações que serão solicitadas na configuração via Web do ZoneMinder
+# Privacy: Accept: Apply
 #
 # Site Oficial do ZoneMinder: https://zoneminder.com/
 #
@@ -43,7 +46,7 @@ KERNEL=`uname -r | cut -d'.' -f1,2`
 # $0 (variável de ambiente do nome do comando)
 LOG="/var/log/$(echo $0 | cut -d'/' -f2)"
 #
-# Declarando as variaveis para criação da Base de Dados do ZoneMinder
+# Declarando as variáveis para criação da Base de Dados do ZoneMinder
 USER="root"
 PASSWORD="pti@2018"
 DATABASE="/usr/share/zoneminder/db/zm_create.sql"
@@ -53,7 +56,7 @@ FLUSH="FLUSH PRIVILEGES;"
 # Declarando a variável de PPA do ZoneMinder
 ZONEMINDER="ppa:iconnor/zoneminder-master"
 #
-# Verificando se o usuário e Root, Distribuição e >=18.04 e o Kernel >=4.15 <IF MELHORADO)
+# Verificando se o usuário é Root, Distribuição é >=18.04 e o Kernel é >=4.15 <IF MELHORADO)
 # && = operador lógico AND, == comparação de string, exit 1 = A maioria dos erros comuns na execução
 clear
 if [ "$USUARIO" == "0" ] && [ "$UBUNTU" == "18.04" ] && [ "$KERNEL" == "4.15" ]
@@ -84,11 +87,12 @@ echo -n "Verificando as dependências, aguarde... "
 # opção do comando echo: -e (enable interpretation of backslash escapes), \n (new line)
 # opção do comando hostname: -I (all IP address)
 # opção do comando date: + (format), %d (day), %m (month), %Y (year 1970), %H (hour 24), %M (minute 60)
+# opção do comando cut: -d (delimiter), -f (fields)
 echo -e "Início do script $0 em: `date +%d/%m/%Y-"("%H:%M")"`\n" &>> $LOG
 clear
 #
 echo -e "Instalação do ZoneMinder no GNU/Linux Ubuntu Server 18.04.x\n"
-echo -e "Após a instalação do ZoneMinder acessar a URL: http://`hostname -I`/zm/\n"
+echo -e "Após a instalação do ZoneMinder acessar a URL: http://`hostname -I | cut -d ' ' -f1`/zm/\n"
 echo -e "Aguarde, esse processo demora um pouco dependendo do seu Link de Internet..."
 sleep 5
 echo

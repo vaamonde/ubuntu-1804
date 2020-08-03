@@ -23,7 +23,7 @@
 # Usuário do banco de dados: owncloud
 # Senha do banco de dados: owncloud
 # Nome do banco de dados: owncloud
-# Host do banco de dados: owncloud
+# Host do banco de dados: owncloud: Concluir Configuração
 #
 # Vídeo de instalação do GNU/Linux Ubuntu Server 18.04.x LTS: https://www.youtube.com/watch?v=zDdCrqNhIXI
 # Vídeo de instalação do LAMP Server no Ubuntu Server 18.04.x LTS: https://www.youtube.com/watch?v=6EFUu-I3
@@ -104,6 +104,7 @@ echo -n "Verificando as dependências, aguarde... "
 # opção do comando cut: -d (delimiter), -f (fields)
 echo -e "Início do script $0 em: `date +%d/%m/%Y-"("%H:%M")"`\n" &>> $LOG
 #
+clear
 echo -e "Instalação do ownCloud no GNU/Linux Ubuntu Server 18.04.x\n"
 echo -e "Após a instalação do ownCloud acessar a URL: http://`hostname -I | cut -d ' ' -f1`/own/\n"
 echo -e "Aguarde, esse processo demora um pouco dependendo do seu Link de Internet...\n"
@@ -180,7 +181,8 @@ echo -e "Baixando e Instalando o ownCloud, aguarde..."
 	# opção do comando chmod: -R (recursive), -v (verbose), 755 (User=RWX, Group=R-X, Other=R-X)
 	# opção do comando mysql: -u (user), -p (password), -e (execute)
 	# opção do comando rm: -v (verbose)
-	# opção do comando wget: -O (output document file))
+	# opção do comando wget: -O (output document file)
+	# opção do comando mv: -v (verbose)
 	rm -v owncloud.tar.bz2 &>> $LOG
 	wget $RELEASE -O owncloud.tar.bz2 &>> $LOG
 	tar -jxvf owncloud.tar.bz2 &>> $LOG

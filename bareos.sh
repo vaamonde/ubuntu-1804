@@ -5,8 +5,8 @@
 # Facebook: facebook.com/BoraParaPratica
 # YouTube: youtube.com/BoraParaPratica
 # Data de criação: 10/02/2019
-# Data de atualização: 22/07/2020
-# Versão: 0.03
+# Data de atualização: 03/08/2020
+# Versão: 0.04
 # Testado e homologado para a versão do Ubuntu Server 18.04.x LTS x64
 # Kernel >= 4.15.x
 # Testado e homologado para a versão do BareOS 18.2.x
@@ -24,6 +24,12 @@
 # o BareOS é escalonável para pequenos sistemas de computadores individuais a sistemas que consistem em centenas de 
 # computadores localizados em uma grande rede.
 #
+# Informações que serão solicitadas na configuração via Web do Bareos
+# Please choose a director: localhost-dir
+# Username: admin
+# Password: bareos
+# Please choose a language: Portuguese (BR): Login
+#
 # Soluções de Backup Open Source:
 # Bacula: https://www.bacula.org/
 # Amanda: http://www.amanda.org/
@@ -31,16 +37,7 @@
 #
 # Site Oficial do Projeto: https://www.bareos.org/en/
 #
-# Informações que serão solicitada na configuração via Web do Bareos
-# localhost-dir
-# Username: admin
-# Password: bareos
-# Portuguese (BR)
-#
 # Vídeo de instalação do GNU/Linux Ubuntu Server 18.04.x LTS: https://www.youtube.com/watch?v=zDdCrqNhIXI
-# Vídeo de atualização do Sistema: https://www.youtube.com/watch?v=esnu8TAepHU
-# Vídeo de configuração da Placa de Rede: https://www.youtube.com/watch?v=zSUd4k108Zk
-# Vídeo de configuração do Hostname e Hosts: https://www.youtube.com/watch?v=J7eyb5ynjZA
 # Vídeo de instalação do LAMP Server no Ubuntu Server 18.04.x LTS: https://www.youtube.com/watch?v=6EFUu-I3
 #
 # Variável da Data Inicial para calcular o tempo de execução do script (VARIÁVEL MELHORADA)
@@ -109,6 +106,7 @@ export DEBIAN_FRONTEND="noninteractive"
 # opção do comando date: + (format), %d (day), %m (month), %Y (year 1970), %H (hour 24), %M (minute 60)
 echo -e "Início do script $0 em: `date +%d/%m/%Y-"("%H:%M")"`\n" &>> $LOG
 #
+clear
 echo -e "Instalação do BareOS no GNU/Linux Ubuntu Server 18.04.x\n"
 echo -e "Após a instalação do BareOS acessar a URL: http://`hostname -I | cut -d' ' -f1`/bareos-webui\n"
 echo -e "Aguarde, esse processo demora um pouco dependendo do seu Link de Internet...\n"

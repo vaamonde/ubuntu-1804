@@ -5,8 +5,8 @@
 # Facebook: facebook.com/BoraParaPratica
 # YouTube: youtube.com/BoraParaPratica
 # Data de criação: 10/02/2019
-# Data de atualização: 23/07/2020
-# Versão: 0.02
+# Data de atualização: 03/08/2020
+# Versão: 0.03
 # Testado e homologado para a versão do Ubuntu Server 18.04.x LTS x64
 # Kernel >= 4.15.x
 # Testado e homologado para a versão do Ansible 2.7.x
@@ -20,21 +20,19 @@
 #
 # Site Oficial do Projeto: https://www.ansible.com/
 #
-# O AWX Project (AWX) é um projeto de código aberto do software Ansible Tower patrocinado pela Red Hat. Ele nos 
-# permite controlar melhor o uso do projeto Ansible em ambientes de TI, fornecendo uma interface de usuário baseada 
-# na web e um mecanismo de tarefas baseados no Ansible. É uma ferramenta de automatização de tarefas, nos permitindo 
-# fazer o deploy de aplicações, provisionar servidores, automatizar tarefas, e outras funções.
+# O Rundeck é uma aplicação java de código aberto que automatiza processos e rotinas nos mais variados ambientes, 
+# gerenciado via interface gráfica fica extremamente simples de verificar status de execuções, saídas de erro, etc. 
+# Muito utilizado quando se trata de ambientes DevOps, principalmente em uma abordagem de Entrega Contínua, onde em 
+# pequenos ciclos novas versões de software são construídas, testadas e liberadas de forma confiável e em curtos 
+# períodos de tempo.
 #
-# Site Oficial do Projeto: https://github.com/ansible/awx
+# Site Oficial do Projeto: https://www.rundeck.com/open-source
 #
 # Outros projeto de Front End para o Ansible
-# Rundeck: https://www.rundeck.com/
+# Ansible AWX: https://github.com/ansible/awx
 # Polemarch: https://polemarch.org/
 #
 # Vídeo de instalação do GNU/Linux Ubuntu Server 18.04.x LTS: https://www.youtube.com/watch?v=zDdCrqNhIXI
-# Vídeo de atualização do Sistema: https://www.youtube.com/watch?v=esnu8TAepHU
-# Vídeo de configuração da Placa de Rede: https://www.youtube.com/watch?v=zSUd4k108Zk
-# Vídeo de configuração do Hostname e Hosts: https://www.youtube.com/watch?v=J7eyb5ynjZA
 #
 # Variável da Data Inicial para calcular o tempo de execução do script (VARIÁVEL MELHORADA)
 # opção do comando date: +%T (Time)
@@ -58,32 +56,49 @@ KERNEL=`uname -r | cut -d'.' -f1,2`
 # $0 (variável de ambiente do nome do comando)
 LOG="/var/log/$(echo $0 | cut -d'/' -f2)"
 #
-# Declarando a variável de download do Ansible (Link atualizado no dia 22/07/2020)
+# Declarando a variável de download do Ansible e do Rundeck (Link atualizado no dia 22/07/2020)
 PPA="ppa:ansible/ansible"
+RUNDECK="https://dl.bintray.com/rundeck/rundeck-deb/rundeck_3.3.1.20200701-1_all.deb"
+PLUGIN="https://github.com/Batix/rundeck-ansible-plugin/releases/download/3.1.1/ansible-plugin-3.1.1.jar"
 #
 # Verificando se o usuário é Root, Distribuição é >=18.04 e o Kernel é >=4.15 <IF MELHORADO)
 # [ ] = teste de expressão, && = operador lógico AND, == comparação de string, exit 1 = A maioria dos erros comuns na execução
 clear
 if [ "$USUARIO" == "0" ] && [ "$UBUNTU" == "18.04" ] && [ "$KERNEL" == "4.15" ]
 	then
-		echo -e "O usuário e Root, continuando com o script..."
-		echo -e "Distribuição e >=18.04.x, continuando com o script..."
-		echo -e "Kernel e >= 4.15, continuando com o script..."
+		echo -e "O usuário é Root, continuando com o script..."
+		echo -e "Distribuição é >=18.04.x, continuando com o script..."
+		echo -e "Kernel é >= 4.15, continuando com o script..."
 		sleep 5
 	else
-		echo -e "Usuário não e Root ($USUARIO) ou Distribuição não e >=18.04.x ($UBUNTU) ou Kernel não e >=4.15 ($KERNEL)"
+		echo -e "Usuário não é Root ($USUARIO) ou Distribuição não é >=18.04.x ($UBUNTU) ou Kernel não é >=4.15 ($KERNEL)"
 		echo -e "Caso você não tenha executado o script com o comando: sudo -i"
 		echo -e "Execute novamente o script para verificar o ambiente."
 		exit 1
 fi
 #
-# Script de instalação do Ansible no GNU/Linux Ubuntu Server 18.04.x
+# Verificando se as dependências do Rundeck estão instaladas
+# opção do dpkg: -s (status), opção do echo: -e (interpretador de escapes de barra invertida), -n (permite nova linha)
+# || (operador lógico OU), 2> (redirecionar de saída de erro STDERR), && = operador lógico AND, { } = agrupa comandos em blocos
+# [ ] = testa uma expressão, retornando 0 ou 1, -ne = é diferente (NotEqual)
+echo -n "Verificando as dependências, aguarde... "
+	for name in openjdk-8-jdk openjdk-8-jre
+	do
+  		[[ $(dpkg -s $name 2> /dev/null) ]] || { echo -en "\n\nO software: $name precisa ser instalado. \nUse o comando 'apt install $name'\n";deps=1; }
+	done
+		[[ $deps -ne 1 ]] && echo "Dependências.: OK" || { echo -en "\nInstale as dependências acima e execute novamente este script\n";exit 1; }
+		sleep 5
+#
+# Script de instalação do Ansible e do Rundeck no GNU/Linux Ubuntu Server 18.04.x
 # opção do comando echo: -e (enable interpretation of backslash escapes), \n (new line)
 # opção do comando hostname: -I (all IP address)
 # opção do comando date: + (format), %d (day), %m (month), %Y (year 1970), %H (hour 24), %M (minute 60)
+# opção do comando cut: -d (delimiter), -f (fields)
 echo -e "Início do script $0 em: `date +%d/%m/%Y-"("%H:%M")"`\n" &>> $LOG
 #
+clear
 echo -e "Instalação do Ansible no GNU/Linux Ubuntu Server 18.04.x\n"
+echo -e "Após a instalação do Rundeck acessar a URL: http://`hostname -I | cut -d' ' -f1`:4440/\n"
 echo -e "Aguarde, esse processo demora um pouco dependendo do seu Link de Internet...\n"
 sleep 5
 #
@@ -124,38 +139,94 @@ echo -e "Software removidos com sucesso!!!, continuando com o script..."
 sleep 5
 clear
 #
-echo -e "Instalando o Ansible é o AWX, aguarde...\n"
+echo -e "Instalando o Ansible, aguarde...\n"
 #
 echo -e "Adicionando o repositório do Ansible, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
-  	apt-add-repository -y $PPA
-  	apt update
+	# opção do comando apt-add-repository: -y (yes)
+  	apt-add-repository -y $PPA &>> $LOG
+  	apt update &>> $LOG
 echo -e "Repositório do Ansible adicionado com sucesso!!!, continuando com o script..."
 sleep 5
 echo
 #
 echo -e "Instalando as dependências do Ansible, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
-  	apt -y install software-properties-common python
+	# opção do comando apt: -y (yes)
+  	apt -y install software-properties-common python &>> $LOG
 echo -e "Dependências do Ansible instaladas com sucesso!!!, continuando com o script..."
 sleep 5
 echo
 #
 echo -e "Instalando o Ansible, aguarde..."
 	# opção do comando: &>> (redirecionar a saida padrão)
-  	apt -y install ansible
+	# opção do comando apt: -y (yes)
+  	apt -y install ansible &>> $LOG
 echo -e "Ansible instalado com sucesso!!!, continuando com o script..."
 sleep 5
 echo
 #
-echo -e "Instalando o Front End do Ansible, aguarde..."
+echo -e "Instalando o Rundeck, aguarde...\n"
+#
+echo -e "Verificando a versão do Java instalado, aguarde..."
 	# opção do comando: &>> (redirecionar a saida padrão)
-  	apt -y install
-echo -e "Front End do Ansible instalado com sucesso!!!, continuando com o script..."
+	java -version &>> $LOG
+echo -e "Versão do Java verificada com sucesso!!!, continuando com o script..."
 sleep 5
 echo
 #
-echo -e "Instalação do Ansible feita com Sucesso!!!."
+echo -e "Instalando as dependências do Rundeck, aguarde..."
+	# opção do comando: &>> (redirecionar a saída padrão)
+	# opção do comando apt: -y (yes)
+  	apt -y openjdk-8-jdk-headless &>> $LOG
+echo -e "Dependências do Rundeck instaladas com sucesso!!!, continuando com o script..."
+sleep 5
+echo
+#
+echo -e "Baixando o Rundeck do site Oficial, aguarde..."
+	# opção do comando: &>> (redirecionar a saída padrão)
+	# opção do comando rm: -v (verbose)
+	# opção do comando wget: -O (output document file)
+	rm -v rundeck.deb &>> $LOG
+	wget $RUNDECK -O rundeck.deb &>> $LOG
+echo -e "Rundeck baixado com sucesso!!!, continuando com o script..."
+sleep 5
+echo
+#
+echo -e "Instalando o Rundeck, aguarde..."
+	# opção do comando: &>> (redirecionar a saida padrão)
+	# opção do comando apt: -y (yes)
+  	apt -y install rundeck.deb &>> $LOG
+echo -e "Rundeck instalado com sucesso!!!, continuando com o script..."
+sleep 5
+echo
+#
+echo -e "Verificando a porta de conexão do Rundeck, aguarde..."
+	# opção do comando netstat: -a (all), -n (numeric)
+	netstat -an | grep 4440
+echo -e "Porta de conexão verificada com sucesso!!!, continuando com o script..."
+sleep 5
+echo
+#
+echo -e "Baixando o Plugin do Ansible do Rundeck do Github, aguarde..."
+	# opção do comando: &>> (redirecionar a saída padrão)
+	# opção do comando rm: -v (verbose)
+	# opção do comando wget: -O ()
+	rm -v ansible.jar &>> $LOG
+	wget $PLUGIN -O ansible.jar &>> $LOG
+echo -e "Plugin do Ansible do Rundeck baixado com sucesso!!!, continuando com o script..."
+sleep 5
+echo
+#
+echo -e "Instalando o Plugin do Ansible do Rundeck, aguarde..."
+	# opção do comando: &>> (redirecionar a saida padrão)
+	# opção do comando cp: -v (verbose)
+  	cp -v ansible.jar /var/lib/rundeck/libext/ &>> $LOG
+echo -e "Plugin do Ansible do Rundeck instalado com sucesso!!!, continuando com o script..."
+sleep 5
+echo
+#
+echo -e "Instalação do Ansible e do Rundeck feita com Sucesso!!!."
 	# script para calcular o tempo gasto (SCRIPT MELHORADO, CORRIGIDO FALHA DE HORA:MINUTO:SEGUNDOS)
 	# opção do comando date: +%T (Time)
 	HORAFINAL=`date +%T`
