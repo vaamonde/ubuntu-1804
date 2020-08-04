@@ -119,6 +119,7 @@ echo -n "Verificando as dependências, aguarde... "
 # opção do comando cut: -d (delimiter), -f (fields)
 echo -e "Início do script $0 em: `date +%d/%m/%Y-"("%H:%M")"`\n" &>> $LOG
 #
+clear
 echo
 echo -e "Instalação do Zabbix Server no GNU/Linux Ubuntu Server 18.04.x\n"
 echo -e "Após a instalação do Zabbix Server acesse a URL: http://`hostname -I | cut -d' ' -f1`/zabbix/\n"
@@ -172,7 +173,7 @@ echo
 echo -e "Instalando o Zabbix Server, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando apt: -y (yes)
-	apt -y install zabbix-server-mysql zabbix-frontend-php zabbix-apache-conf zabbix-agent &>> $LOG
+	apt -y install zabbix-server-mysql zabbix-frontend-php zabbix-apache-conf zabbix-agent traceroute &>> $LOG
 echo -e "Zabbix Server instalado com sucesso!!!, continuando com o script..."
 sleep 5
 echo
@@ -205,7 +206,7 @@ echo
 echo -e "Editando o arquivo de configuração do PHP do Zabbix Server, pressione <Enter> para continuar..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando vim: + (num line)
-	# descomentar as linhas php_value date.timezone do PHP5 e PHP7 e mudar para: America/Sao_Paulo
+	# descomentar as linhas php_value date.timezone do PHP5 e PHP7, mudar para: America/Sao_Paulo
 	read
 	vim /etc/zabbix/apache.conf +20
 echo -e "Arquivos editado com sucesso!!!, continuando com o script..."
