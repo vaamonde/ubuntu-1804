@@ -137,11 +137,12 @@ echo
 echo -e "Configurando o usuário e senha do Tomcat, pressione <Enter> para continuar"
 	# opção do comando: &>> (redirecionar de saída padrão)
 	# opção do comando apt: -y (yes)
-	#read
-	#cp -v &>> $LOG
-	#cp -v conf/tomcat-users.xml &>> $LOG
-	#vim /tomcat-users.xml
-	#systemctl restart tomcat
+	# opção do comando cp: -v (verbose)
+	read
+	cp -v /etc/tomcat9/tomcat-users.xml /etc/tomcat9/tomcat-users.xml.bkp &>> $LOG
+	cp -v conf/tomcat-users.xml /etc/tomcat9/tomcat-users.xml &>> $LOG
+	vim /etc/tomcat9/tomcat-users.xml
+	systemctl restart tomcat9
 echo -e "Usuário do Tomcat configurado com sucesso!!!, continuando com o script..."
 sleep 5
 echo

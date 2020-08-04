@@ -5,8 +5,8 @@
 # Facebook: facebook.com/BoraParaPratica
 # YouTube: youtube.com/BoraParaPratica
 # Data de criação: 25/07/2020
-# Data de atualização: 25/07/2020
-# Versão: 0.01
+# Data de atualização: 03/08/2020
+# Versão: 0.02
 # Testado e homologado para a versão do Ubuntu Server 18.04.x LTS x64
 # Kernel >= 4.15.x
 # Testado e homologado para a versão do OpenSSH Server 
@@ -38,9 +38,6 @@
 # Site Oficial do Projeto: https://www.zabbix.com/
 #
 # Vídeo de instalação do GNU/Linux Ubuntu Server 18.04.x LTS: https://www.youtube.com/watch?v=zDdCrqNhIXI
-# Vídeo de atualização do Sistema: https://www.youtube.com/watch?v=esnu8TAepHU
-# Vídeo de configuração da Placa de Rede: https://www.youtube.com/watch?v=zSUd4k108Zk
-# Vídeo de configuração do Hostname e Hosts: https://www.youtube.com/watch?v=J7eyb5ynjZA
 # Vídeo de instalação do LAMP Server no Ubuntu Server 18.04.x LTS: https://www.youtube.com/watch?v=6EFUu-I3u4s
 #
 # Variável da Data Inicial para calcular o tempo de execução do script (VARIÁVEL MELHORADA)
@@ -119,11 +116,12 @@ echo -n "Verificando as dependências, aguarde... "
 # opção do comando echo: -e (enable interpretation of backslash escapes), \n (new line)
 # opção do comando hostname: -I (all IP address)
 # opção do comando date: + (format), %d (day), %m (month), %Y (year 1970), %H (hour 24), %M (minute 60)
+# opção do comando cut: -d (delimiter), -f (fields)
 echo -e "Início do script $0 em: `date +%d/%m/%Y-"("%H:%M")"`\n" &>> $LOG
 #
 echo
 echo -e "Instalação do Zabbix Server no GNU/Linux Ubuntu Server 18.04.x\n"
-echo -e "Após a instalação do Zabbix Server acessar a URL: http://`hostname -I | cut -d' ' -f1`/zabbix/\n"
+echo -e "Após a instalação do Zabbix Server acesse a URL: http://`hostname -I | cut -d' ' -f1`/zabbix/\n"
 echo -e "Aguarde, esse processo demora um pouco dependendo do seu Link de Internet..."
 sleep 5
 #
@@ -153,9 +151,6 @@ clear
 echo -e "Instalando o Zabbix Server, aguarde...\n"
 #
 echo -e "Baixando e instalando o Repositório do Zabbix Server, aguarde..."
-	# removendo versões anteriores baixadas do Zabbix Server
-	# baixando os repositórios do Zabbix Server
-	# instalando os repositórios do Zabbix Server
 	# opção do comando: &>> (redirecionar de saída padrão)
 	# opção do comando wget: -O (output document file)
 	# opção do comando rm: -v (verbose)
@@ -227,10 +222,9 @@ echo
 #
 echo -e "Verificando as portas de conexões do Zabbix Server, aguarde..."
 	# opção do comando netstat: a (all), n (numeric)
-	# opção do comando grep: -i (ignore case)
-	netstat -an | grep -i tcp | grep 10050
-	netstat -an | grep -i tcp | grep 10051
-echo -e "Porta verificada com sucesso!!!, continuando com o script..."
+	# opção do comando grep: -i (ignore case), \| (função OU)
+	netstat -an | grep -i tcp | grep '10050\|10051'
+echo -e "Portas verificadas com sucesso!!!, continuando com o script..."
 sleep 5
 echo
 #
