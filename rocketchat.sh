@@ -72,9 +72,8 @@ fi
 echo -e "Início do script $0 em: `date +%d/%m/%Y-"("%H:%M")"`\n" &>> $LOG
 #
 clear
-echo
 echo -e "Instalação do Rocket.Chat no GNU/Linux Ubuntu Server 18.04.x\n"
-echo -e "Após a instalação do Rocket.Chat acesse a URL: http://`hostname -I | cut -d' ' -f1`:3000\n"
+echo -e "Após a instalação do Rocket.Chat acesse a URL: http://`hostname -I | cut -d' ' -f1`:30000\n"
 echo -e "Aguarde, esse processo demora um pouco dependendo do seu Link de Internet..."
 sleep 5
 #
@@ -135,9 +134,25 @@ echo -e "Instalando o MongoDB, aguarde..."
   	apt -y install mongodb-org build-essential &>> $LOG
 	cp -v /etc/mongod.conf /etc/mongod.conf.bkp &>> $LOG
 	cp -v conf/mongod.conf /etc/mongod.conf &>> $LOG
+echo -e "MongoDB instalado com sucesso!!!, continuando com o script..."
+sleep 5
+echo
+#
+echo -e "Editando o arquivo de configuração do MongoDB, aguarde..."
+	# opção do comando: &>> (redirecionar a saida padrão)
+  	vim /etc/mongod.conf
 	systemctl enable mongod &>> $LOG
 	systemctl restart mongod &>> $LOG
-echo -e "MongoDB instalado com sucesso!!!, continuando com o script..."
+echo -e "Arquivo editado com sucesso!!!, continuando com o script..."
+sleep 5
+echo
+#
+echo -e "Configurando o conjunto de Réplicas do MongoDB, pressione <Enter> para acessar o MongoDB"
+	# opção do comando: &>> (redirecionar a saida padrão)
+	read
+	mongo
+	# digite o comando: rs.initiate() - após o término digite o comando: exit
+echo -e "Conjunto de Réplicas do MongoDB configurada com sucesso!!!, continuando com o script..."
 sleep 5
 echo
 #
@@ -156,7 +171,7 @@ $
 echo -e "Instalando o Node.js, aguarde..."
 	# opção do comando: &>> (redirecionar a saida padrão)
 	# opção do comando apt: -y (yes)
-  	apt -y install nodejs graphicsmagick &>> $LOG
+  	apt -y install nodejs software-properties-common graphicsmagick &>> $LOG
 echo -e "Node.js instalado com sucesso!!!, continuando com o script..."
 sleep 5
 echo
@@ -177,10 +192,10 @@ echo -e "Instalando o Rocket.Chat, aguarde..."
 	# opção do comando: &>> (redirecionar a saida padrão)
 	# opção do comando cd: - (return to source directory)
 	# opção do comando mv: -v (verbose)
-	cd bundle/programs/server &>> $LOG
+	mv -v bundle/ /opt/Rocket.Chat &>> $LOG
+	cd /opt/Rocket.Chat/programs/server &>> $LOG
 	npm install &>> $LOG
 	cd - &>> $LOG
-	mv -v bundle/ /opt/Rocket.Chat &>> $LOG
 echo -e "Rocket.chat instalado com sucesso!!!, continuando com o script..."
 sleep 5
 echo
@@ -197,12 +212,24 @@ echo -e "Segurança do Rocket.chat configurada com sucesso!!!, continuando com o
 sleep 5
 echo
 #
+echo -e "Definindo as Variáveis de Ambiente de Teste do Rocket.Chat, aguarde..."
+	export PORT=30000
+	export ROOT_URL=http://0.0.0.0:30000/
+	export MONGO_URL=mongodb://localhost:27017/rocketchat
+	export MONGO_OPLOG_URL=mongodb://localhost:27017/local?replSet=rs01
+	cd /opt/Rocket.Chat
+	node main.js
+	cd - &>> $LOG
+echo -e "Variáveis do Rocket.chat configuradas com sucesso!!!, continuando com o script..."
+sleep 5
+echo
+#	
 echo -e "Configurando o serviço Rocket.Chat, aguarde..."
 	# opção do comando: &>> (redirecionar a saida padrão)
 	cp -v conf/rocketchat.service /etc/systemd/system/ &>> $LOG
 	systemctl daemon-reload &>> $LOG
 	systemctl enable rocketchat &>> $LOG
-	systemctl restart rocketchat &>> $LOG
+	systemctl start rocketchat &>> $LOG
 echo -e "Serviço do Rocket.chat configurado com sucesso!!!, continuando com o script..."
 sleep 5
 echo
@@ -210,7 +237,7 @@ echo
 echo -e "Verificando as portas de conexão do Rocket.Chat, aguarde..."
 	# opção do comando netstat: a (all), n (numeric)
 	# opção do comando grep: \| (função OU)
-	netstat -an | grep '3000\|27017'
+	netstat -an | grep '30000\|27017'
 echo -e "Portas verificadas com sucesso!!!, continuando com o script..."
 sleep 5
 echo
