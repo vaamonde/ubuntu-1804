@@ -9,6 +9,7 @@
 # Versão: 0.07
 # Testado e homologado para a versão do Ubuntu Server 18.04.x LTS x64
 # Kernel >= 4.15.x
+# Testado e homologado para a versão do Wordpress 5.4.x
 #
 # WordPress: é um sistema livre e aberto de gestão de conteúdo para internet (do inglês: Content Management System - CMS),
 # baseado em PHP com banco de dados MySQL, executado em um servidor interpretador, voltado principalmente para a criação de
@@ -49,7 +50,7 @@ KERNEL=`uname -r | cut -d'.' -f1,2`
 # $0 (variável de ambiente do nome do comando)
 LOG="/var/log/$(echo $0 | cut -d'/' -f2)"
 #
-# Declarando as variáveis para o download do Wordpress
+# Declarando as variáveis para o download do Wordpress (Link atualizado no dia 22/07/2020)
 WORDPRESS="https://wordpress.org/latest.zip"
 #
 # Declarando as variáveis para criação da Base de Dados do Wordpress
@@ -67,6 +68,9 @@ USERDATABASE="CREATE USER 'wordpress' IDENTIFIED BY 'wordpress';"
 GRANTDATABASE="GRANT USAGE ON *.* TO 'wordpress' IDENTIFIED BY 'wordpress';"
 GRANTALL="GRANT ALL PRIVILEGES ON wordpress.* TO 'wordpress';"
 FLUSH="FLUSH PRIVILEGES;"
+#
+# Exportando o recurso de Noninteractive do Debconf para não solicitar telas de configuração
+export DEBIAN_FRONTEND="noninteractive"
 #
 # Verificando se o usuário é Root, Distribuição é >=18.04 e o Kernel é >=4.15 <IF MELHORADO)
 # [ ] = teste de expressão, && = operador lógico AND, == comparação de string, exit 1 = A maioria dos erros comuns na execução
@@ -105,9 +109,18 @@ echo -n "Verificando as dependências, aguarde... "
 echo -e "Início do script $0 em: `date +%d/%m/%Y-"("%H:%M")"`\n" &>> $LOG
 clear
 #
+echo
 echo -e "Instalação do Wordpress no GNU/Linux Ubuntu Server 18.04.x\n"
 echo -e "Após a instalação do Wordpress acessar a URL: http://`hostname -I | cut -d ' ' -f1`/wp/\n"
 echo -e "Aguarde, esse processo demora um pouco dependendo do seu Link de Internet..."
+sleep 5
+echo
+#
+#
+echo -e "Adicionando o Repositório Universal do Apt, aguarde..."
+	# opção do comando: &>> (redirecionar a saída padrão)
+	add-apt-repository universe &>> $LOG
+echo -e "Repositório adicionado com sucesso!!!, continuando com o script..."
 sleep 5
 echo
 #
@@ -145,13 +158,12 @@ echo
 echo -e "Instalando o Wordpress, aguarde..."
 echo
 #
-echo -e "Baixando o Wordpress do site oficial, aguarde..."
+echo -e "Fazendo o download do Wordpress do site oficial, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
-	# removendo versões anteriores baixadas do Wordpress
 	# opção do comando rm: -v (verbose)
 	rm -v latest.zip &>> $LOG
 	wget $WORDPRESS &>> $LOG
-echo -e "Wordpress baixado com sucesso!!!, continuando com o script..."
+echo -e "Download do Wordpress feito com sucesso!!!, continuando com o script..."
 sleep 5
 echo
 #

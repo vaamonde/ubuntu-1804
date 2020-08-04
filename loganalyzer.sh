@@ -9,6 +9,7 @@
 # Versão: 0.06
 # Testado e homologado para a versão do Ubuntu Server 18.04.x LTS x64
 # Kernel >= 4.15.x
+# Testado e homologado para a versão do LogAnalyzer 4.1.x
 #
 # O LogAnalyzer é uma interface da Web para o Syslog/Rsyslog e outros dados de eventos da rede. Ele fornece fácil navegação
 # análise de eventos de rede em tempo real e serviços de relatórios. Os relatórios ajudam a manter um visão na atividade da
@@ -158,6 +159,8 @@ echo -n "Verificando as dependências, aguarde... "
 # opção do comando cut: -d (delimiter), -f (fields)
 echo -e "Início do script $0 em: `date +%d/%m/%Y-"("%H:%M")"`\n" &>> $LOG
 clear
+#
+echo
 echo -e "Instalação do LogAnalyzer no GNU/Linux Ubuntu Server 18.04.x\n"
 echo -e "Após a instalação do LogAnalyzer acessar a URL: http://`hostname -I | cut -d ' ' -f1`/log/\n"
 echo -e "Aguarde, esse processo demora um pouco dependendo do seu Link de Internet..."
@@ -241,7 +244,7 @@ echo -e "Instalando o LogAnalyzer, aguarde..."
 sleep 5
 echo
 #
-echo -e "Baixando o LogAnalyzer do site oficial, aguarde..."
+echo -e "Fazendo o download do LogAnalyzer do site oficial, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	# removendo versões anteriores baixadas do LogAnalyzer
 	# opção do comando rm: -v (verbose)
@@ -250,7 +253,7 @@ echo -e "Baixando o LogAnalyzer do site oficial, aguarde..."
 	rm -v pt_BR.zip &>> $LOG
 	wget $LOGANALYZER -O loganalyzer.tar.gz &>> $LOG
 	wget $PTBR -O pt_BR.zip &>> $LOG
-echo -e "LogAnalyzer baixado com sucesso!!!, continuando com o script..."
+echo -e "Download LogAnalyzer feito com sucesso!!!, continuando com o script..."
 sleep 5
 echo
 #

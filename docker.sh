@@ -9,8 +9,7 @@
 # Versão: 0.07
 # Testado e homologado para a versão do Ubuntu Server 18.04.x LTS x64
 # Kernel >= 4.15.x
-# Testado e homologado para a versão do Docker 19.03.x
-# Testado e homologado para a versão do Portainer 1.24.x
+# Testado e homologado para a versão do Docker 19.03.x, Portainer 1.24.x
 #
 # O Docker é uma tecnologia de software que fornece contêineres, promovido pela empresa Docker, Inc. O Docker fornece uma 
 # camada adicional de abstração e automação de virtualização de nível de sistema operacional no Windows e no Linux. O Docker
@@ -60,6 +59,9 @@ DOCKERGPG="https://download.docker.com/linux/ubuntu/gpg"
 DOCKERDEB="deb [arch=amd64] https://download.docker.com/linux/ubuntu bionic stable"
 DOCKERKEY="0EBFCD88"
 #
+# Exportando o recurso de Noninteractive do Debconf para não solicitar telas de configuração
+export DEBIAN_FRONTEND="noninteractive"
+#
 # Verificando se o usuário é Root, Distribuição é >=18.04 e o Kernel é >=4.15 <IF MELHORADO)
 # [ ] = teste de expressão, && = operador lógico AND, == comparação de string, exit 1 = A maioria dos erros comuns na execução
 clear
@@ -83,6 +85,8 @@ fi
 # opção do comando cut: -d (delimiter), -f (fields)
 echo -e "Início do script $0 em: `date +%d/%m/%Y-"("%H:%M")"`\n" &>> $LOG
 clear
+#
+echo
 echo -e "Instalação do Docker e Portainer no GNU/Linux Ubuntu Server 18.04.x\n"
 echo -e "Após a instalação do Portainer acessar a URL: http://`hostname -I | cut -d ' ' -f1`:9000/\n"
 echo -e "Aguarde, esse processo demora um pouco dependendo do seu Link de Internet..."
@@ -236,6 +240,7 @@ echo -e "Criando o Serviço de Inicialização Automática do Portainer, aguarde
 	cp -v conf/portainer.service /etc/systemd/system/ &>> $LOG
 	systemctl daemon-reload &>> $LOG
 	systemctl enable portainer &>> $LOG
+	systemctl start portainer &>> $LOG
 echo -e "Serviço criado com sucesso!!!, continuando com o script..."
 sleep 5
 echo

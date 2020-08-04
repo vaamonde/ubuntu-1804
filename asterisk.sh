@@ -9,7 +9,7 @@
 # Versão: 0.11
 # Testado e homologado para a versão do Ubuntu Server 18.04.x LTS x64
 # Kernel >= 4.15.x
-# Testado e homologado para a versão do Asterisk 16.1.1
+# Testado e homologado para a versão do Asterisk 16.1.x
 #
 # O Asterisk é um software livre, de código aberto, que implementa em software os recursos encontrados em um PABX 
 # convencional, utilizando tecnologia de VoIP. Ele foi criado pelo Mark Spencer em 1999.
@@ -31,6 +31,28 @@
 #
 # H.323 =  é um conjunto de padrões da ITU-T que define um conjunto de protocolos para o fornecimento de comunicação de áudio 
 # e vídeo numa rede de computadores. O H.323 é um protocolo relativamente antigo que está atualmente sendo substituído pelo SIP.
+#
+# Informações que serão solicitadas na configuração via dos Módulos do Asterisk:
+# Add-ons (See README-addons.txt): --- Extended ---
+#	* chan_ooh323
+#	* format_mp3
+# Applications: --- Core ---
+#	* app_skel
+#	* app_ivrdemo
+#	* app_meetme
+#	* app_saycounted
+#	* app_statsd
+# Resource Modules: --- Core ---
+#	* res_wmi_external
+#	* res_wmi_external_ami
+#	* res_chan_stats
+#	* res_corosynsc
+# 	* res_endpoint_stats
+#	* res_pktccops
+#	* res_remb_modifier
+# Utilities: --- Extended ---
+#	* check_expr
+#	* check_expr2
 #
 # Site Oficial do Asterisk: https://www.asterisk.org/
 #
@@ -58,7 +80,7 @@ KERNEL=`uname -r | cut -d'.' -f1,2`
 # $0 (variável de ambiente do nome do comando)
 LOG="/var/log/$(echo $0 | cut -d'/' -f2)"
 #
-# Declarando as variáveis de Download do Asterisk: http://downloads.asterisk.org/pub/telephony/
+# Declarando as variáveis de Download do Asterisk (Link atualizado no dia 22/07/2020)
 DAHDI="http://downloads.asterisk.org/pub/telephony/dahdi-linux/dahdi-linux-current.tar.gz"
 DAHDITOOLS="http://downloads.asterisk.org/pub/telephony/dahdi-tools/dahdi-tools-current.tar.gz"
 LIBPRI="http://downloads.asterisk.org/pub/telephony/libpri/libpri-current.tar.gz"
@@ -78,7 +100,7 @@ if [ "$USUARIO" == "0" ] && [ "$UBUNTU" == "18.04" ] && [ "$KERNEL" == "4.15" ]
 	then
 		echo -e "O usuário é Root, continuando com o script..."
 		echo -e "Distribuição é >=18.04.x, continuando com o script..."
-		echo -e "Kernel e >= 4.15, continuando com o script..."
+		echo -e "Kernel é >= 4.15, continuando com o script..."
 		sleep 5
 	else
 		echo -e "Usuário não é Root ($USUARIO) ou Distribuição não é >=18.04.x ($UBUNTU) ou Kernel não é >=4.15 ($KERNEL)"
@@ -92,6 +114,7 @@ fi
 # opção do comando hostname: -I (all IP address)
 # opção do comando date: + (format), %d (day), %m (month), %Y (year 1970), %H (hour 24), %M (minute 60)
 echo -e "Início do script $0 em: `date +%d/%m/%Y-"("%H:%M")"`\n" &>> $LOG
+clear
 #
 echo
 echo -e "Instalação do Asterisk no GNU/Linux Ubuntu Server 18.04.x\n"
@@ -150,7 +173,7 @@ echo -e "Dependências instaladas com sucesso!!!, continuando com o script..."
 sleep 5
 echo
 #
-echo -e "Download e instalação do DAHDI, aguarde..."
+echo -e "Fazendo o download e instalação do DAHDI do site Oficial, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando wget: -O (file)
 	# opção do comando tar: -z (gzip), -x (extract), -v (verbose), -f (file)
@@ -168,11 +191,11 @@ echo -e "Download e instalação do DAHDI, aguarde..."
 	make install  &>> $LOG
 	# opção do comando cd: .. (dois pontos sequenciais - Subir uma pasta)
 	cd ..
-echo -e "DAHDI instalado com sucesso!!!, continuando com o script..."
+echo -e "Download e instalação do DAHDI feita com sucesso!!!, continuando com o script..."
 sleep 5
 echo	
 #
-echo -e "Download e instalação do DAHDI Tools, aguarde..."
+echo -e "Fazendo o download e instalação do DAHDI Tools, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando wget: -O (file)
 	# opção do comando tar: -z (gzip), -x (extract), -v (verbose), -f (file)
@@ -192,11 +215,11 @@ echo -e "Download e instalação do DAHDI Tools, aguarde..."
 	make install  &>> $LOG
 	# opção do comando cd: .. (dois pontos sequenciais - Subir uma pasta)
 	cd ..
-echo -e "DAHDI Tools instalado com sucesso!!!, continuando com o script..."
+echo -e "Download e instalação do DAHDI Tools feita com sucesso!!!, continuando com o script..."
 sleep 5
 echo	
 #
-echo -e "Download e instalação do LIBPRI, aguarde..."
+echo -e "Fazendo o download e instalação do LIBPRI, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando wget: -O (file)
 	# opção do comando tar: -z (gzip), -x (extract), -v (verbose), -f (file)
@@ -214,11 +237,11 @@ echo -e "Download e instalação do LIBPRI, aguarde..."
 	# executa os comandos para instalar o programa
 	make install &>> $LOG
 	cd ..
-echo -e "LIBPRI instalado com sucesso!!!, continuando com o script..."
+echo -e "Download e instalação do LIBPRI feita com sucesso!!!, continuando com o script..."
 sleep 5
 echo
 #
-echo -e "Download e instalação do Asterisk, aguarde..."
+echo -e "Fazendo o download e instalação do Asterisk, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando | (piper): (Conecta a saída padrão com a entrada padrão de outro comando)
 	# opção do comando wget: -O (file)
@@ -266,11 +289,11 @@ echo -e "Compilando e instalando o Asterisk, aguarde...."
 	sudo systemctl start asterisk &>> $LOG
 	# opção do comando cd: .. (dois pontos sequenciais - Subir uma pasta)
 	cd ..
-echo -e "Asterisk instalado com sucesso!!!, continuando com o script..."
+echo -e "Download e instalação do Asterisk feita com sucesso!!!, continuando com o script..."
 sleep 5
 echo		
 #
-echo -e "Download e configuração do Sons em Português/Brasil do Asterisk, aguarde..."
+echo -e "Fazendo o download e configuração do Sons em Português/Brasil do Asterisk, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando mkdir: -v (verbose)
 	# opção do comando cp: -v (verbose)
@@ -289,7 +312,7 @@ echo -e "Download e configuração do Sons em Português/Brasil do Asterisk, agu
 	# converte os sons da pasta para outros formatos
 	bash convert.sh &>> $LOG
 	cd - &>> $LOG
-echo -e "Configuração do Sons em Português/Brasil feito com sucesso!!!!, continuado com o script..."
+echo -e "Download e configuração do Sons em Português/Brasil feito com sucesso!!!!, continuado com o script..."
 sleep 5
 echo
 #

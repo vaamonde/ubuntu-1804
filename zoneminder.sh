@@ -9,6 +9,7 @@
 # Versão: 0.08
 # Testado e homologado para a versão do Ubuntu Server 18.04.x LTS x64
 # Kernel >= 4.15.x
+# Testado e homologado para a versão do ZoneMinder 1.35.x
 #
 # ZoneMinder é um sistema de CFTV (Circuito Fechado de televisão) Open Source, desenvolvido para sistemas 
 # operacionais Linux. Ele é liberado sob os termos da GNU General Public License (GPL). Os usuários 
@@ -53,11 +54,14 @@ DATABASE="/usr/share/zoneminder/db/zm_create.sql"
 GRANTALL="GRANT ALL PRIVILEGES ON zm.* TO 'zmuser'@'localhost' IDENTIFIED by 'zmpass';"
 FLUSH="FLUSH PRIVILEGES;"
 #
-# Declarando a variável de PPA do ZoneMinder
+# Declarando as variáveis para o download do PPA do ZoneMinder (Link atualizado no dia 22/07/2020)
 ZONEMINDER="ppa:iconnor/zoneminder-master"
 #
+# Exportando o recurso de Noninteractive do Debconf para não solicitar telas de configuração
+export DEBIAN_FRONTEND="noninteractive"
+#
 # Verificando se o usuário é Root, Distribuição é >=18.04 e o Kernel é >=4.15 <IF MELHORADO)
-# && = operador lógico AND, == comparação de string, exit 1 = A maioria dos erros comuns na execução
+# [ ] = teste de expressão, && = operador lógico AND, == comparação de string, exit 1 = A maioria dos erros comuns na execução
 clear
 if [ "$USUARIO" == "0" ] && [ "$UBUNTU" == "18.04" ] && [ "$KERNEL" == "4.15" ]
 	then
@@ -166,7 +170,7 @@ echo -e "Arquivo do PHP editado com sucesso!!!, continuando com o script..."
 sleep 5
 echo
 #
-echo -e "Instalando o ZoneMinder, aguarde..."
+echo -e "Instalando o ZoneMinder, esse processo demora um pouco, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando apt: -y (yes)
 	apt -y install zoneminder &>> $LOG

@@ -9,7 +9,7 @@
 # Versão: 0.06
 # Testado e homologado para a versão do Ubuntu Server 18.04.x LTS x64
 # Kernel >= 4.15.x
-# Testado e homologado para a versão do Tomcat 4.5.x
+# Testado e homologado para a versão do OpenFire 4.5.x
 #
 # Extensible Messaging and Presence Protocol (XMPP) (conhecido anteriormente como Jabber) é um protocolo aberto,
 # extensível, baseado em XML, para sistemas de mensagens instantâneas, desenvolvido originalmente para mensagens
@@ -22,17 +22,19 @@
 #
 # Informações que serão solicitadas na configuração via Web do OpenFire
 # Welcome to Setup:
-#	Português Brasileiro (pt_BR): Continue;
+#	Português Brasileiro (pt_BR): Continuar;
 # Configurações do Servidor:
 #	Domínio: pti.intra
 #	Server Host Name (FQDN): ptispo01ws01.pti.intra
 #	Porta do Console Admin: 9090
-#	Porta Segura do Console Admin: 9091: Continue;
+#	Porta Segura do Console Admin: 9091: 
+#	Blowfish: Continuar;
 # Configurações do Banco de Dados:
 #	Conexão Padrão do Banco de Dados: Continuar;
 # Configurações do Banco de Dados - Conexão Padrão:
 #	Predefinições do Driver de Banco de Dados: MySQL
-#	URL do banco de dados: jdbc:mysql://localhost:3306/openfire?useTimezone=true&serverTimezone=UTC
+#	Classe do Driver JDBC: com.mysql.cj.jdbc.Driver
+#	URL do banco de dados: jdbc:mysql://localhost:3306/openfire?rewriteBatchedStatements=true&characterEncoding=UTF-8&characterSetResults=UTF-8&serverTimezone=UTC
 #	Nome do Usuário: openfire
 #	Senha: openfire: Continuar;
 # Configurações de Perfis:
@@ -83,6 +85,9 @@ FLUSH="FLUSH PRIVILEGES;"
 # Declarando a variável de download do OpenFire (Link atualizado no dia 22/07/2020)
 OPENFIRE="https://www.igniterealtime.org/downloadServlet?filename=openfire/openfire_4.5.2_all.deb"
 #
+# Exportando o recurso de Noninteractive do Debconf para não solicitar telas de configuração
+export DEBIAN_FRONTEND="noninteractive"
+#
 # Verificando se o usuário é Root, Distribuição é >=18.04 e o Kernel é >=4.15 <IF MELHORADO)
 # [ ] = teste de expressão, && = operador lógico AND, == comparação de string, exit 1 = A maioria dos erros comuns na execução
 clear
@@ -115,8 +120,11 @@ echo -n "Verificando as dependências, aguarde... "
 # opção do comando echo: -e (enable interpretation of backslash escapes), \n (new line)
 # opção do comando hostname: -I (all IP address)
 # opção do comando date: + (format), %d (day), %m (month), %Y (year 1970), %H (hour 24), %M (minute 60)
+# opção do comando cut: -d (delimiter), -f (fields)
 echo -e "Início do script $0 em: `date +%d/%m/%Y-"("%H:%M")"`\n" &>> $LOG
 clear
+#
+echo
 echo -e "Instalação do OpenFire no GNU/Linux Ubuntu Server 18.04.x\n"
 echo -e "Após a instalação do OpenFire acessar a URL: http://`hostname -I | cut -d' ' -f1`:9090/\n"
 echo -e "Aguarde, esse processo demora um pouco dependendo do seu Link de Internet..."
@@ -171,14 +179,13 @@ echo -e "Versão verificada com sucesso!!!, continuando com o script..."
 sleep 5
 echo
 #
-echo -e "Baixando o OpenFire do site oficial, aguarde..."
+echo -e "Fazendo o download do OpenFire do site oficial, aguarde..."
 	# opção do comando: &>> (redirecionar de saída padrão)
 	# opção do comando wget: -O (output document file)
-	# removendo versões anteriores baixadas do OpenFire
 	# opção do comando rm: -v (verbose)
 	rm -v openfire.deb &>> $LOG
 	wget $OPENFIRE -O openfire.deb &>> $LOG
-echo -e "OpenFire baixado com sucesso!!!, continuando com o script..."
+echo -e "Download do OpenFire feito com sucesso!!!, continuando com o script..."
 sleep 5
 echo
 #

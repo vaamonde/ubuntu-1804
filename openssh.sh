@@ -9,7 +9,7 @@
 # Versão: 0.05
 # Testado e homologado para a versão do Ubuntu Server 18.04.x LTS x64
 # Kernel >= 4.15.x
-# Testado e homologado para a versão do OpenSSH Server 
+# Testado e homologado para a versão do OpenSSH Server 7.6.x
 #
 # OpenSSH (Open Secure Shell) é um conjunto de utilitários de rede relacionado à segurança que provém a criptografia 
 # em sessões de comunicações em uma rede de computadores usando o protocolo SSH. Foi criado com um código aberto 
@@ -45,6 +45,9 @@ KERNEL=$(uname -r | cut -d'.' -f1,2)
 # $0 (variável de ambiente do nome do comando)
 LOG="/var/log/$(echo $0 | cut -d'/' -f2)"
 #
+# Exportando o recurso de Noninteractive do Debconf para não solicitar telas de configuração
+export DEBIAN_FRONTEND="noninteractive"
+#
 # Verificando se o usuário é Root, Distribuição é >=18.04 e o Kernel é >=4.15 <IF MELHORADO)
 # [ ] = teste de expressão, && = operador lógico AND, == comparação de string, exit 1 = A maioria dos erros comuns na execução
 clear
@@ -61,7 +64,7 @@ if [ "$USUARIO" == "0" ] && [ "$UBUNTU" == "18.04" ] && [ "$KERNEL" == "4.15" ]
 		exit 1
 fi
 #
-# Verificando se as dependências do BareOS estão instaladas
+# Verificando se as dependências do OpenSSH estão instaladas
 # opção do dpkg: -s (status), opção do echo: -e (interpretador de escapes de barra invertida), -n (permite nova linha)
 # || (operador lógico OU), 2> (redirecionar de saída de erro STDERR), && = operador lógico AND, { } = agrupa comandos em blocos
 # [ ] = testa uma expressão, retornando 0 ou 1, -ne = é diferente (NotEqual)
@@ -78,11 +81,20 @@ echo -n "Verificando as dependências, aguarde... "
 # opção do comando hostname: -I (all IP address)
 # opção do comando date: + (format), %d (day), %m (month), %Y (year 1970), %H (hour 24), %M (minute 60)
 echo -e "Início do script $0 em: `date +%d/%m/%Y-"("%H:%M")"`\n" &>> $LOG
-#
 clear
+#
+echo
 echo -e "Configuração do OpenSSH Server no GNU/Linux Ubuntu Server 18.04.x\n"
-echo -e "Após a configuração do OpenSSH Server, a porta padrão de conexão é: 22\n"
+echo -e "Após a configuração do OpenSSH Server sua porta padrão de conexão é: 22\n"
 sleep 5
+#
+#
+echo -e "Adicionando o Repositório Universal do Apt, aguarde..."
+	# opção do comando: &>> (redirecionar a saída padrão)
+	add-apt-repository universe &>> $LOG
+echo -e "Repositório adicionado com sucesso!!!, continuando com o script..."
+sleep 5
+echo
 #
 echo -e "Atualizando as listas do Apt, aguarde..."
 	#opção do comando: &>> (redirecionar a saída padrão)

@@ -9,6 +9,7 @@
 # Versão: 0.08
 # Testado e homologado para a versão do Ubuntu Server 18.04.x LTS x64
 # Kernel >= 4.15.x
+# Testado e homologado para a versão do Netdata 1.23.x
 #
 # O Netdata é uma ferramenta para visualizar e monitorar métricas em tempo real, otimizado para acumular todos os tipos de
 # dados, como uso da CPU, atividade do disco, consultas SQL, visitas a um site, etc. A ferramenta é projetada para visualizar 
@@ -43,9 +44,12 @@ KERNEL=`uname -r | cut -d'.' -f1,2`
 # $0 (variável de ambiente do nome do comando)
 LOG="/var/log/$(echo $0 | cut -d'/' -f2)"
 #
-# Variável do download do Netdata
+# Declarando as variáveis para o download do Netdata (Link atualizado no dia 22/07/2020)
 # opção do comando git clone --depth=1: Crie um clone superficial com um histórico truncado para o número especificado de confirmações
 NETDATA="https://github.com/firehol/netdata.git --depth=1"
+#
+# Exportando o recurso de Noninteractive do Debconf para não solicitar telas de configuração
+export DEBIAN_FRONTEND="noninteractive"
 #
 # Verificando se o usuário é Root, Distribuição é >=18.04 e o Kernel é >=4.15 <IF MELHORADO)
 # [ ] = teste de expressão, && = operador lógico AND, == comparação de string, exit 1 = A maioria dos erros comuns na execução
@@ -83,6 +87,8 @@ echo -n "Verificando as dependências, aguarde... "
 # opção do comando cut: -d (delimiter), -f (fields)
 echo -e "Início do script $0 em: `date +%d/%m/%Y-"("%H:%M")"`\n" &>> $LOG
 clear
+#
+echo
 echo -e "Instalação do Netdata no GNU/Linux Ubuntu Server 18.04.x\n"
 echo -e "Após a instalação do Netdata acessar a URL: http://`hostname -I | cut -d ' ' -f1`:19999/\n"
 echo -e "Aguarde, esse processo demora um pouco dependendo do seu Link de Internet..."
@@ -135,11 +141,11 @@ echo
 echo -e "Fazendo a clonagem do Netdata do Github, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	git clone $NETDATA &>> $LOG
-echo -e "Clonagem do Netdata feito com sucesso!!!, continuando com o script..."
+echo -e "Clonagem do Netdata feita com sucesso!!!, continuando com o script..."
 sleep 5
 echo
 #				 
-echo -e "Instalando o Netdata, aguarde..."
+echo -e "Instalando o Netdata, esse processo demora um pouco, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando echo |: faz a função de Enter no Script
 	cd netdata/
@@ -165,24 +171,18 @@ echo -e "Adicionar o usuário: 'root' é a senha: 'pti@2018' nas configurações
 echo -e "Remover os comentários das variáveis: user e pass"
 	read
 	sleep 5
-	vim /usr/lib/netdata/conf.d/python.d/mysql.conf +149
+	vim /usr/lib/netdata/conf.d/python.d/mysql.conf +151
 echo -e "Arquivo editado com sucesso!!!, continuando com o script..."
 sleep 5
 echo
 #
 echo -e "Reinicializando o serviço do Netdata, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
-	sudo service netdata restart &>> $LOG
+	systemctl restart netdata &>> $LOG
 echo -e "Serviço reinicializado com sucesso!!!, continuando com o script..."
 sleep 5
 echo
 #
-echo -e "Verificando a porta de conexão do Netdata"
-	# opção do comando: a (all) | n (number)
-	netstat -an | grep 19999
-echo -e "Porta de conexão listada com sucesso!!!, continuando com o script..."
-sleep 5
-echo
 echo -e "Instalação do Netdata feita com Sucesso!!!"
 	# script para calcular o tempo gasto (SCRIPT MELHORADO, CORRIGIDO FALHA DE HORA:MINUTO:SEGUNDOS)
 	# opção do comando date: +%T (Time)

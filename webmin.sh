@@ -9,6 +9,7 @@
 # Versão: 0.6
 # Testado e homologado para a versão do Ubuntu Server 18.04.x LTS x64
 # Kernel >= 4.15.x
+# Testado e homologado para a versão do Webmin 1.953.x
 #
 # Webmin é um programa de gerenciamento de servidor, que roda em plataformas Unix/Linux. Com ele você pode usar também o 
 # Usermin e o Virtualmin. O Webmin funciona como um centralizador de configurações do sistema, monitoração dos serviços e de
@@ -44,8 +45,11 @@ KERNEL=`uname -r | cut -d'.' -f1,2`
 # $0 (variável de ambiente do nome do comando)
 LOG="/var/log/$(echo $0 | cut -d'/' -f2)"
 #
-# Variável do download do Webmin - (Link de download atualizado em: 22/07/2020)
+# Declarando as variáveis para o download do Webmin (Link atualizado no dia 22/07/2020)
 WEBMIN="https://prdownloads.sourceforge.net/webadmin/webmin_1.953_all.deb"
+#
+# Exportando o recurso de Noninteractive do Debconf para não solicitar telas de configuração
+export DEBIAN_FRONTEND="noninteractive"
 #
 # Verificando se o usuário é Root, Distribuição é >=18.04 e o Kernel é >=4.15 <IF MELHORADO)
 # [ ] = teste de expressão, && = operador lógico AND, == comparação de string, exit 1 = A maioria dos erros comuns na execução
@@ -71,8 +75,9 @@ fi
 echo -e "Início do script $0 em: `date +%d/%m/%Y-"("%H:%M")"`\n" &>> $LOG
 clear
 #
+echo
 echo -e "Instalação do Webmin no GNU/Linux Ubuntu Server 18.04.x\n"
-echo -e "Após a instalação do Webmin acessar a URL: http://`hostname -I | cut -d ' ' -f1`:10000/\n"
+echo -e "Após a instalação do Webmin acessar a URL: https://`hostname -I | cut -d ' ' -f1`:10000/\n"
 echo -e "Aguarde, esse processo demora um pouco dependendo do seu Link de Internet..."
 sleep 5
 echo
@@ -119,7 +124,7 @@ echo -e "Instalação das dependências feita com sucesso!!!, continuando com o 
 sleep 5
 echo
 #
-echo -e "Fazendo o download do Webmin, aguarde..."
+echo -e "Fazendo o download do Webmin do site Oficial, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	# removendo versões anteriores baixadas do Webmin
 	# opção do comando rm: -v (verbose)
@@ -140,7 +145,8 @@ echo
 #
 echo -e "Verificando a porta de conexão do Webmin, aguarde..."
 	# opção do comando netstat: -a (all), -n (numeric)
-	netstat -an | grep 10000
+	# opção do comando grep: -i (ignore case)
+	netstat -an | grep -i tcp | grep 10000
 echo -e "Porta de conexão verificada com sucesso!!!, continuando com o script..."
 sleep 5
 echo
