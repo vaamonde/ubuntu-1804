@@ -5,8 +5,8 @@
 # Facebook: facebook.com/BoraParaPratica
 # YouTube: youtube.com/BoraParaPratica
 # Data de criação: 22/11/2018
-# Data de atualização: 22/07/2020
-# Versão: 0.05
+# Data de atualização: 03/08/2020
+# Versão: 0.06
 # Testado e homologado para a versão do Ubuntu Server 18.04.x LTS x64
 # Kernel >= 4.15.x
 # Testado e homologado para a versão do Tomcat 9.0.x
@@ -67,6 +67,7 @@ echo -n "Verificando as dependências, aguarde... "
 # opção do comando echo: -e (enable interpretation of backslash escapes), \n (new line)
 # opção do comando hostname: -I (all IP address)
 # opção do comando date: + (format), %d (day), %m (month), %Y (year 1970), %H (hour 24), %M (minute 60)
+# opção do comando cut: -d (delimiter), -f (fields)
 echo -e "Início do script $0 em: `date +%d/%m/%Y-"("%H:%M")"`\n" &>> $LOG
 clear
 echo -e "Instalação do Tomcat no GNU/Linux Ubuntu Server 18.04.x\n"
@@ -130,6 +131,18 @@ echo -e "Instalando o Tomcat, aguarde..."
 	# opção do comando apt: -y (yes)
 	apt -y install tomcat9 tomcat9-admin tomcat9-common tomcat9-docs tomcat9-examples tomcat9-user &>> $LOG
 echo -e "Tomcat instalado com sucesso!!!, continuando com o script..."
+sleep 5
+echo
+#
+echo -e "Configurando o usuário e senha do Tomcat, pressione <Enter> para continuar"
+	# opção do comando: &>> (redirecionar de saída padrão)
+	# opção do comando apt: -y (yes)
+	#read
+	#cp -v &>> $LOG
+	#cp -v conf/tomcat-users.xml &>> $LOG
+	#vim /tomcat-users.xml
+	#systemctl restart tomcat
+echo -e "Usuário do Tomcat configurado com sucesso!!!, continuando com o script..."
 sleep 5
 echo
 #

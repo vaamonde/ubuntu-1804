@@ -188,8 +188,8 @@ echo -e "Instalando o Elasticsearch, aguarde..."
 	apt -y install elasticsearch-oss &>> $LOG
 	cp -v conf/elasticsearch.yml /etc/elasticsearch/elasticsearch.yml &>> $LOG
 	cp -v conf/jvm.options /etc/elasticsearch/jvm.options &>> $LOG
-	systemctl enable elasticsearch
-	systemctl restart elasticsearch
+	systemctl enable elasticsearch &>> $LOG
+	systemctl restart elasticsearch &>> $LOG
 echo -e "Elasticsearch instalado com sucesso!!!, continuando com o script..."
 sleep 5
 echo
@@ -198,31 +198,41 @@ echo -e "Instalando o Graylog, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando: | piper (conecta a saída padrão com a entrada padrão de outro comando)
 	# opção do comando apt: -y (yes)
-	# opção do comando pwgen: -N (num passwords), -s (secure)
-	# opção do comando tr: -d (delete)
-	# opção do comando cut: -d (delimiter), -f (fields)
 	apt install -y graylog-server graylog-integrations-plugins &>> $LOG
-	pwgen -N 1 -s 96 >> /etc/graylog/server/server.conf
-	echo $USERGRAYLOG | tr -d '\n' | sha256sum | cut -d" " -f1 >> /etc/graylog/server/server.conf
 echo -e "Graylog instalado com sucesso!!!, continuando com o script..."
 sleep 5
 echo
 #
 echo -e "Editando o arquivo de configuração do Graylog, pressione <Enter> para editar..."
+	read
 	# opção do comando: &>> (redirecionar a saída padrão)
-	# variáveis de configura do Graylog: 
+	# opção do comando pwgen: -N (num passwords), -s (secure)
+	# opção do comando tr: -d (delete)
+	# opção do comando cut: -d (delimiter), -f (fields)
+	# opção do comando cp: -v (verbose)
+	cp -v /etc/graylog/server/server.conf /etc/graylog/server/server.conf.bkp &>> $LOG
+	cp -v conf/server.conf /etc/graylog/server/server.conf &>> $LOG
+	# senha utilizada na opção de: password_secret
+	pwgen -N 1 -s 96 >> /etc/graylog/server/server.conf
+	# senha utilizada na opção de: root_password_sh2
+	echo $USERGRAYLOG | tr -d '\n' | sha256sum | cut -d" " -f1 >> /etc/graylog/server/server.conf
 	vim /etc/graylog/server/server.conf
+echo -e "Arquivo do Graylog editado com sucesso!!!, continuando com o script..."
+sleep 5
+echo
+#
+echo -e "Habilitando o Serviço do Graylog, aguarde..."
+	# opção do comando: &>> (redirecionar a saída padrão)
 	systemctl enable graylog-server &>> $LOG
 	systemctl restart graylog-server &>> $LOG
-echo -e "Arquivo do Graylog editado com sucesso!!!, continuando com o script..."
+echo -e "Serviço do Graylog habilitado com sucesso!!!, continuando com o script..."
 sleep 5
 echo
 #
 echo -e "Verificando a porta de conexão do Graylog, MongoDB e Elasticsearch, aguarde..."
 	# opção do comando netstat: -a (all), -n (numeric)
-	netstat -an | grep 19000
-	netstat -an | grep 27017
-	netstat -an | grep 9200
+	# opção do comando grep: \| (função OU)
+	netstat -an | grep ':19000\|27017\|9200'
 echo -e "Portas de conexões verificadas com sucesso!!!, continuando com o script..."
 sleep 5
 echo
