@@ -9,7 +9,7 @@
 # Versão: 0.02
 # Testado e homologado para a versão do Ubuntu Server 18.04.x LTS x64
 # Kernel >= 4.15.x
-# Testado e homologado para a versão do Grafana 7.1.1
+# Testado e homologado para a versão do Grafana 7.1.x
 #
 # Grafana é uma aplicação web de análise de código aberto multiplataforma e visualização interativa da web. 
 # Ele fornece tabelas, gráficos e alertas para a Web quando conectado a fontes de dados suportadas. É expansível 
@@ -53,6 +53,9 @@ LOG="/var/log/$(echo $0 | cut -d'/' -f2)"
 GPGKEY="https://packages.grafana.com/gpg.key"
 GRAFANA="deb https://packages.grafana.com/oss/deb stable main"
 #
+# Exportando o recurso de Noninteractive do Debconf para não solicitar telas de configuração
+export DEBIAN_FRONTEND="noninteractive"
+#
 # Verificando se o usuário é Root, Distribuição é >=18.04 e o Kernel é >=4.15 <IF MELHORADO)
 # [ ] = teste de expressão, && = operador lógico AND, == comparação de string, exit 1 = A maioria dos erros comuns na execução
 clear
@@ -85,9 +88,10 @@ echo -n "Verificando as dependências, aguarde... "
 # opção do comando echo: -e (enable interpretation of backslash escapes), \n (new line)
 # opção do comando hostname: -I (all IP address)
 # opção do comando date: + (format), %d (day), %m (month), %Y (year 1970), %H (hour 24), %M (minute 60)
+# opção do comando cut: -d (delimiter), -f (fields)
 echo -e "Início do script $0 em: `date +%d/%m/%Y-"("%H:%M")"`\n" &>> $LOG
-#
 clear
+#
 echo
 echo -e "Instalação do Grafana no GNU/Linux Ubuntu Server 18.04.x\n"
 echo -e "Após a instalação do Grafana acessar a URL: http://`hostname -I | cut -d' ' -f1`:3000\n"

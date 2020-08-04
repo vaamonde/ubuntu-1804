@@ -244,3 +244,53 @@ O BareOS é um conjunto de programas de computador que permite ao administrador 
 Link da vídeo aula: https://www.youtube.com/watch?v=82bdWnMlJq8
 
 Link do script utilizado nesse vídeo: https://github.com/vaamonde/ubuntu-1804/blob/master/bareos.sh
+
+================================= VÍDEOS EM DESENVOLVIMENTO =================================
+
+## **COMO instalar o ANSIBLE e RUNDECK no GNU/Linux Ubuntu Server 18.04.x LTS**
+
+Vídeo mostrando os procedimentos básicos para instalar o Ansible e o Rundeck no GNU/Linux Ubuntu Server 18.04 LTS
+
+Link da vídeo aula: 
+
+Link do script utilizado nesse vídeo: https://github.com/vaamonde/ubuntu-1804/blob/master/ansible.sh
+
+## **COMO instalar o GLPI HELP DESK no GNU/Linux Ubuntu Server 18.04.x LTS**
+
+Vídeo mostrando os procedimentos básicos para instalar o GLPI Help Desk no GNU/Linux Ubuntu Server 18.04 LTS
+
+Link da vídeo aula: 
+
+Link do script utilizado nesse vídeo: https://github.com/vaamonde/ubuntu-1804/blob/master/glpi.sh
+
+## **COMO instalar o GRAFANA no GNU/Linux Ubuntu Server 18.04.x LTS**
+
+Vídeo mostrando os procedimentos básicos para instalar o Grafana no GNU/Linux Ubuntu Server 18.04 LTS
+
+Link da vídeo aula: 
+
+Link do script utilizado nesse vídeo: https://github.com/vaamonde/ubuntu-1804/blob/master/grafana.sh
+
+## **COMO instalar o GRAYLOG no GNU/Linux Ubuntu Server 18.04.x LTS**
+
+Vídeo mostrando os procedimentos básicos para instalar o Graylog no GNU/Linux Ubuntu Server 18.04 LTS
+
+Link da vídeo aula: 
+
+Link do script utilizado nesse vídeo: https://github.com/vaamonde/ubuntu-1804/blob/master/graylog.sh
+
+## **COMO instalar o ZABBIX no GNU/Linux Ubuntu Server 18.04.x LTS**
+
+Vídeo mostrando os procedimentos básicos para instalar o Zabbix no GNU/Linux Ubuntu Server 18.04 LTS
+
+Link da vídeo aula: 
+
+Link do script utilizado nesse vídeo: https://github.com/vaamonde/ubuntu-1804/blob/master/zabbix.sh
+
+## **COMO instalar o TOMCAT no GNU/Linux Ubuntu Server 18.04.x LTS**
+
+Vídeo mostrando os procedimentos básicos para instalar o Tomcat no GNU/Linux Ubuntu Server 18.04 LTS
+
+Link da vídeo aula: 
+
+Link do script utilizado nesse vídeo: https://github.com/vaamonde/ubuntu-1804/blob/master/tomcat.sh

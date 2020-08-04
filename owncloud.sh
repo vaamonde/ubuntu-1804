@@ -9,7 +9,7 @@
 # Versão: 0.06
 # Testado e homologado para a versão do Ubuntu Server 18.04.x LTS x64
 # Kernel >= 4.15.x
-# Testado e homologado para a versão do ownCLOUD-10.1.x
+# Testado e homologado para a versão do ownCloud 10.4.x
 #
 # O ownCloud é um sistema de computador mais conhecido como "serviço de armazenamento e sincronização de arquivos". 
 # Como tal, ownCloud é muito semelhante ao amplamente usado Dropbox, cuja principal diferença é que ownCloud é gratuito
@@ -23,7 +23,7 @@
 # Usuário do banco de dados: owncloud
 # Senha do banco de dados: owncloud
 # Nome do banco de dados: owncloud
-# Host do banco de dados: owncloud: Concluir Configuração
+# Host do banco de dados: localhost: Concluir Configuração
 #
 # Vídeo de instalação do GNU/Linux Ubuntu Server 18.04.x LTS: https://www.youtube.com/watch?v=zDdCrqNhIXI
 # Vídeo de instalação do LAMP Server no Ubuntu Server 18.04.x LTS: https://www.youtube.com/watch?v=6EFUu-I3
@@ -65,8 +65,11 @@ GRANTDATABASE="GRANT USAGE ON *.* TO 'owncloud' IDENTIFIED BY 'owncloud';"
 GRANTALL="GRANT ALL PRIVILEGES ON owncloud.* TO 'owncloud' IDENTIFIED BY 'owncloud' WITH GRANT OPTION;"
 FLUSH="FLUSH PRIVILEGES;"
 #
-# Variáveis de instalação do ownCloud (Link atualizado no dia 22/07/2020)
+# Declarando a variável de download do ownCloud (Link atualizado no dia 22/07/2020)
 RELEASE="https://download.owncloud.org/community/owncloud-10.4.1.tar.bz2"
+#
+# Exportando o recurso de Noninteractive do Debconf para não solicitar telas de configuração
+export DEBIAN_FRONTEND="noninteractive"
 #
 # Verificando se o usuário é Root, Distribuição é >=18.04 e o Kernel é >=4.15 <IF MELHORADO)
 # [ ] = teste de expressão, && = operador lógico AND, == comparação de string, exit 1 = A maioria dos erros comuns na execução
@@ -103,8 +106,9 @@ echo -n "Verificando as dependências, aguarde... "
 # opção do comando date: + (format), %d (day), %m (month), %Y (year 1970), %H (hour 24), %M (minute 60)
 # opção do comando cut: -d (delimiter), -f (fields)
 echo -e "Início do script $0 em: `date +%d/%m/%Y-"("%H:%M")"`\n" &>> $LOG
-#
 clear
+#
+echo
 echo -e "Instalação do ownCloud no GNU/Linux Ubuntu Server 18.04.x\n"
 echo -e "Após a instalação do ownCloud acessar a URL: http://`hostname -I | cut -d ' ' -f1`/own/\n"
 echo -e "Aguarde, esse processo demora um pouco dependendo do seu Link de Internet...\n"

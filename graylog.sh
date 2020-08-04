@@ -50,6 +50,9 @@ KEYELASTICSEARCH="https://artifacts.elastic.co/GPG-KEY-elasticsearch"
 REPGRAYLOG="https://packages.graylog2.org/repo/packages/graylog-3.3-repository_latest.deb"
 USERGRAYLOG="graylog"
 #
+# Exportando o recurso de Noninteractive do Debconf para não solicitar telas de configuração
+export DEBIAN_FRONTEND="noninteractive"
+#
 # Verificando se o usuário é Root, Distribuição é >=18.04 e o Kernel é >=4.15 <IF MELHORADO)
 # [ ] = teste de expressão, && = operador lógico AND, == comparação de string, exit 1 = A maioria dos erros comuns na execução
 clear
@@ -70,9 +73,10 @@ fi
 # opção do comando echo: -e (enable interpretation of backslash escapes), \n (new line)
 # opção do comando hostname: -I (all IP address)
 # opção do comando date: + (format), %d (day), %m (month), %Y (year 1970), %H (hour 24), %M (minute 60)
+# opção do comando cut: -d (delimiter), -f (fields)
 echo -e "Início do script $0 em: `date +%d/%m/%Y-"("%H:%M")"`\n" &>> $LOG
-#
 clear
+#
 echo
 echo -e "Instalação do Graylog no GNU/Linux Ubuntu Server 18.04.x\n"
 echo -e "Após a instalação do OpenFire acessar a URL: http://`hostname -I | cut -d' ' -f1`:19000/\n"
