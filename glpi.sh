@@ -168,7 +168,6 @@ echo -e "Removendo software desnecessários, aguarde..."
 	apt -y autoremove &>> $LOG
 echo -e "Software removidos com sucesso!!!, continuando com o script..."
 sleep 5
-clear
 #
 echo -e "Instalando o GLPI, aguarde...\n"
 #
@@ -194,7 +193,7 @@ echo -e "Download do GLPI feito com sucesso!!!, continuando com o script..."
 sleep 5
 echo
 #
-echo -e "Instalando o GLPI,  aguarde..."
+echo -e "Instalando o GLPI, aguarde..."
 	# descompactando o GLPI
 	# movendo o diretório do GLPI para o diretório da raiz do Apache
 	# alterando o dono do diretório do GLPI

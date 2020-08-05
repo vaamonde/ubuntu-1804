@@ -95,7 +95,7 @@ clear
 echo
 echo -e "Instalação do Grafana no GNU/Linux Ubuntu Server 18.04.x\n"
 echo -e "Após a instalação do Grafana acessar a URL: http://`hostname -I | cut -d' ' -f1`:3000\n"
-echo -e "Aguarde, esse processo demora um pouco dependendo do seu Link de Internet..."
+echo -e "Aguarde, esse processo demora um pouco dependendo do seu Link de Internet...\n"
 sleep 5
 #
 echo -e "Atualizando as listas do Apt, aguarde..."
@@ -119,7 +119,6 @@ echo -e "Removendo software desnecessários, aguarde..."
 	apt -y autoremove &>> $LOG
 echo -e "Software removidos com sucesso!!!, continuando com o script..."
 sleep 5
-clear
 #
 echo -e "Instalando o Grafana, aguarde...\n"
 #
@@ -128,7 +127,7 @@ echo -e "Fazendo o download e instalando o Repositório do Grafana, aguarde..."
 	# opção do comando: | piper (conecta a saída padrão com a entrada padrão de outro comando)
 	# opção do comando wget: -q (quiet) -O (output document file)
 	# opção do comando apt-key: - (keyring)
-	wget -q -O - $GPGKEY | apt-key add -
+	wget -q -O - $GPGKEY | apt-key add - &>> $LOG
 	apt-key list | grep grafana &>> $LOG
 	add-apt-repository "$GRAFANA" &>> $LOG
 echo -e "Repositório instalado com sucesso!!!, continuando com o script..."
@@ -152,7 +151,10 @@ echo
 #
 echo -e "Editando o arquivo de configuração Grafana, pressione <Enter> para continuar..."
 	# opção do comando: &>> (redirecionar a saída padrão)
+	# opção do comando cp: -v (verbose)
 	read
+	cp -v /etc/default/grafana-server /etc/default/grafana-server.bkp &>> $LOG
+	cp -v conf/grafana-server /etc/default/grafana-server &>> $LOG
 	vim /etc/default/grafana-server
 echo -e "Arquivo editado com sucesso!!!, continuando com o script..."
 sleep 5
@@ -168,7 +170,6 @@ echo
 #
 echo -e "Verificando as portas de conexões do Grafana, aguarde..."
 	# opção do comando netstat: a (all), n (numeric)
-	# opção do comando grep: -i (ignore case)
 	netstat -an | grep 3000
 echo -e "Porta verificada com sucesso!!!, continuando com o script..."
 sleep 5
