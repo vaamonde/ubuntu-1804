@@ -190,11 +190,32 @@ echo -e "Instalando o Elasticsearch, aguarde..."
 	# opção do comando apt: -y (yes)
 	# opção do comando cp: -v (verbose)
 	apt -y install elasticsearch-oss &>> $LOG
+echo -e "Elasticsearch instalado com sucesso!!!, continuando com o script..."
+sleep 5
+echo
+#
+echo -e "Atualizando os arquivos de configuração do Elasticsearch, aguarde..."
+	# opção do comando: &>> (redirecionar a saída padrão)
+	# opção do comando cp: -v (verbose)
+	# opção do comando vim: + (number line)
+	cp -v /etc/elasticsearch/elasticsearch.yml /etc/elasticsearch/elasticsearch.yml.bkp &>> $LOG
+	cp -v /etc/elasticsearch/jvm.options /etc/elasticsearch/jvm.options.bkp &>> $LOG
 	cp -v conf/elasticsearch.yml /etc/elasticsearch/elasticsearch.yml &>> $LOG
 	cp -v conf/jvm.options /etc/elasticsearch/jvm.options &>> $LOG
+echo -e "Arquivos atualizados com sucesso!!!, continuando com o script...\n"
+	echo -e "Editando o arquivo de configuração do Elasticsearch, pressione <Enter> para continuar"
+		read
+		sleep 3
+		vim /etc/elasticsearch/elasticsearch.yml +14
+	echo -e "Arquivo editado com sucesso!!!, continuando com o script...\n"
+	echo -e "Editando o arquivo de configuração do Java do Elasticsearch, pressione <Enter> para continuar"
+		read
+		sleep 3
+		vim /etc/elasticsearch/jvm.options +15
+	echo -e "Arquivo editado com sucesso!!!, continuando com o script...\n"
 	systemctl enable elasticsearch &>> $LOG
 	systemctl restart elasticsearch &>> $LOG
-echo -e "Elasticsearch instalado com sucesso!!!, continuando com o script..."
+echo -e "Arquivos atualizados com com sucesso!!!, continuando com o script..."
 sleep 5
 echo
 #

@@ -211,10 +211,14 @@ sleep 5
 echo
 #
 echo -e "Editando o arquivo de configuração do Rundeck, pressione <Enter> para continuar"
+	# opção do comando: &>> (redirecionar a saida padrão)
+	# opção do comand cp: -v (verbose)
 	# opção do comando vim: + (number line)
 	read
 	sleep 3
-  	vim /etc/rundeck/rundeck-config.properties +8
+	cp -v /etc/rundeck/rundeck-config.properties /etc/rundeck/rundeck-config.properties.bkp &>> $LOG
+	cp -v conf/rundeck-config.properties /etc/rundeck/rundeck-config.properties &>> $LOG
+  	vim /etc/rundeck/rundeck-config.properties +21
 	systemctl restart rundeckd &>> $LOG
 echo -e "Rundeck instalado com sucesso!!!, continuando com o script..."
 sleep 5
@@ -223,7 +227,7 @@ echo
 echo -e "Baixando o Plugin do Ansible do Rundeck do Github, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando rm: -v (verbose)
-	# opção do comando wget: -O ()
+	# opção do comando wget: -O (output document file)
 	rm -v ansible.jar &>> $LOG
 	wget $PLUGIN -O ansible.jar &>> $LOG
 echo -e "Plugin do Ansible do Rundeck baixado com sucesso!!!, continuando com o script..."

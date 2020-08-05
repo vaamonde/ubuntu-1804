@@ -9,7 +9,7 @@
 # Testado e homologado para a versão do Ubuntu Server 18.04 LTS x64
 # Kernel >= 4.4.x
 #
-# Agendamento das atualização de Registros do GLPI a cada 1 minuto, todos os dias
+# Agendamento das atualização dos Registros do GLPI a cada 1 minuto, todos os dias
 */1 * * * * root /usr/bin/php7.0 /var/www/html/glpi/front/cron.php &> /dev/null
 
 #Fim do agendamento, obrigatório ter uma linha em branco no final do arquivo para a execução correta.
