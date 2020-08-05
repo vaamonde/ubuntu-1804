@@ -16,6 +16,10 @@
 # centralizar a pesquisa e a análise de logs em tempo real de qualquer componente da infraestrutura e aplicativos de TI. 
 # O software usa uma arquitetura de três camadas de armazenamento escalável baseado no Elasticsearch e no MongoDB.
 #
+# Informações que serão solicitadas na configuração via Web do Graylog
+# Username: admin
+# Password: graylog: Sign In
+#
 # Site Oficial do Projeto: https://www.graylog.org/
 # Site Oficial do MongoDB: https://www.mongodb.com/
 # Site Oficial do Elasticsearch: https://www.elastic.co/pt/
@@ -85,7 +89,7 @@ clear
 #
 echo
 echo -e "Instalação do Graylog no GNU/Linux Ubuntu Server 18.04.x\n"
-echo -e "Após a instalação do OpenFire acessar a URL: http://`hostname -I | cut -d' ' -f1`:19000/\n"
+echo -e "Após a instalação do Graylog acessar a URL: http://`hostname -I | cut -d' ' -f1`:19000/\n"
 echo -e "Aguarde, esse processo demora um pouco dependendo do seu Link de Internet...\n"
 sleep 5
 #
@@ -243,8 +247,8 @@ echo -e "Editando o arquivo de configuração do Graylog, pressione <Enter> para
 	read
 	cp -v /etc/graylog/server/server.conf /etc/graylog/server/server.conf.bkp &>> $LOG
 	cp -v conf/server.conf /etc/graylog/server/server.conf &>> $LOG
-	sed "s/password_secret =/password_secret = $SECRET/" server.conf > server.conf.old
-	sed "s/root_password_sha2 =/root_password_sha2 = $SHA2/" server.conf.old > server.conf
+	sed "s/password_secret =/password_secret = $SECRET/" /etc/graylog/server/server.conf > /tmp/server.conf.old
+	sed "s/root_password_sha2 =/root_password_sha2 = $SHA2/" /tmp/server.conf.old > /etc/graylog/server/server.conf
 	vim /etc/graylog/server/server.conf
 echo -e "Arquivo do Graylog editado com sucesso!!!, continuando com o script..."
 sleep 5
