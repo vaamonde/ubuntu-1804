@@ -123,7 +123,7 @@ clear
 echo
 echo -e "Instalação do Zabbix Server no GNU/Linux Ubuntu Server 18.04.x\n"
 echo -e "Após a instalação do Zabbix Server acesse a URL: http://`hostname -I | cut -d' ' -f1`/zabbix/\n"
-echo -e "Aguarde, esse processo demora um pouco dependendo do seu Link de Internet..."
+echo -e "Aguarde, esse processo demora um pouco dependendo do seu Link de Internet...\n"
 sleep 5
 #
 echo -e "Atualizando as listas do Apt, aguarde..."
@@ -147,7 +147,6 @@ echo -e "Removendo software desnecessários, aguarde..."
 	apt -y autoremove &>> $LOG
 echo -e "Software removidos com sucesso!!!, continuando com o script..."
 sleep 5
-clear
 #
 echo -e "Instalando o Zabbix Server, aguarde...\n"
 #
@@ -173,7 +172,7 @@ echo
 echo -e "Instalando o Zabbix Server, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando apt: -y (yes)
-	apt -y install zabbix-server-mysql zabbix-frontend-php zabbix-apache-conf zabbix-agent traceroute &>> $LOG
+	apt -y install zabbix-server-mysql zabbix-frontend-php zabbix-apache-conf zabbix-agent traceroute nmap &>> $LOG
 echo -e "Zabbix Server instalado com sucesso!!!, continuando com o script..."
 sleep 5
 echo
@@ -195,21 +194,34 @@ echo
 #
 echo -e "Editando o arquivo de configuração da Base de Dados do Zabbix Server, pressione <Enter> para continuar..."
 	# opção do comando: &>> (redirecionar a saída padrão)
-	# opção do comando vim: + (num line)
-	# descomentar a linha DBPassword= e adicionar a senha: zabbix
+	# opção do comando cp: -v (verbose)
 	read
-	vim /etc/zabbix/zabbix_server.conf +124
-echo -e "Arquivos editado com sucesso!!!, continuando com o script..."
+	cp -v /etc/zabbix/zabbix_server.conf /etc/zabbix/zabbix_server.conf.bkp &>> $LOG
+	cp -v conf/zabbix_server.conf /etc/zabbix/zabbix_server.conf &>> $LOG
+	vim /etc/zabbix/zabbix_server.conf
+echo -e "Arquivo editado com sucesso!!!, continuando com o script..."
 sleep 5
 echo
 #
 echo -e "Editando o arquivo de configuração do PHP do Zabbix Server, pressione <Enter> para continuar..."
 	# opção do comando: &>> (redirecionar a saída padrão)
-	# opção do comando vim: + (num line)
-	# descomentar as linhas php_value date.timezone do PHP5 e PHP7, mudar para: America/Sao_Paulo
+	# opção do comando cp: -v (verbose)
 	read
-	vim /etc/zabbix/apache.conf +20
-echo -e "Arquivos editado com sucesso!!!, continuando com o script..."
+	cp -v /etc/zabbix/apache.conf /etc/zabbix/apache.conf.bkp &>> $LOG
+	cp -v conf/apache.conf /etc/zabbix/apache.conf &>> $LOG
+	vim /etc/zabbix/apache.conf
+echo -e "Arquivo editado com sucesso!!!, continuando com o script..."
+sleep 5
+echo
+#
+echo -e "Editando o arquivo de configuração do Zabbix Agent, pressione <Enter> para continuar..."
+	# opção do comando: &>> (redirecionar a saída padrão)
+	# opção do comando cp: -v (verbose)
+	read
+	cp -v /etc/zabbix/zabbix_agentd.conf /etc/zabbix/zabbix_agentd.conf.bkp &>> $LOG
+	cp -v conf/zabbix_agentd.conf /etc/zabbix/zabbix_agentd.conf &>> $LOG
+	vim /etc/zabbix/zabbix_agentd.conf
+echo -e "Arquivo editado com sucesso!!!, continuando com o script..."
 sleep 5
 echo
 #
