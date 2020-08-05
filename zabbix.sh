@@ -151,7 +151,7 @@ clear
 #
 echo -e "Instalando o Zabbix Server, aguarde...\n"
 #
-echo -e "Baixando e instalando o Repositório do Zabbix Server, aguarde..."
+echo -e "Fazendo o download e instalando o Repositório do Zabbix Server, aguarde..."
 	# opção do comando: &>> (redirecionar de saída padrão)
 	# opção do comando wget: -O (output document file)
 	# opção do comando rm: -v (verbose)
@@ -159,7 +159,7 @@ echo -e "Baixando e instalando o Repositório do Zabbix Server, aguarde..."
 	rm -v zabbix.deb &>> $LOG
 	wget $ZABBIX -O zabbix.deb &>> $LOG
 	dpkg -i zabbix.deb &>> $LOG
-echo -e "Arquivos baixados e instalados com sucesso!!!, continuando com o script..."
+echo -e "Repositório instalado com sucesso!!!, continuando com o script..."
 sleep 5
 echo
 #

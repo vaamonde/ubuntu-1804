@@ -70,6 +70,8 @@ echo -n "Verificando as dependências, aguarde... "
 # opção do comando cut: -d (delimiter), -f (fields)
 echo -e "Início do script $0 em: `date +%d/%m/%Y-"("%H:%M")"`\n" &>> $LOG
 clear
+#
+echo
 echo -e "Instalação do Tomcat no GNU/Linux Ubuntu Server 18.04.x\n"
 echo -e "Após a instalação do Tomcat acessar a URL: http://`hostname -I | cut -d' ' -f1`:8080/\n"
 echo -e "Aguarde, esse processo demora um pouco dependendo do seu Link de Internet..."

@@ -191,13 +191,13 @@ echo -e "Dependências do Rundeck instaladas com sucesso!!!, continuando com o s
 sleep 5
 echo
 #
-echo -e "Baixando o Rundeck do site Oficial, aguarde..."
+echo -e "Fazendo o download do Rundeck do site Oficial, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando rm: -v (verbose)
 	# opção do comando wget: -O (output document file)
 	rm -v rundeck.deb &>> $LOG
 	wget $RUNDECK -O rundeck.deb &>> $LOG
-echo -e "Rundeck baixado com sucesso!!!, continuando com o script..."
+echo -e "Download do Rundeck feito com sucesso!!!, continuando com o script..."
 sleep 5
 echo
 #
@@ -224,13 +224,13 @@ echo -e "Rundeck instalado com sucesso!!!, continuando com o script..."
 sleep 5
 echo
 #
-echo -e "Baixando o Plugin do Ansible do Rundeck do Github, aguarde..."
+echo -e "Fazendo o download do Ansible Plugin para o Rundeck do Github, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando rm: -v (verbose)
 	# opção do comando wget: -O (output document file)
 	rm -v ansible.jar &>> $LOG
 	wget $PLUGIN -O ansible.jar &>> $LOG
-echo -e "Plugin do Ansible do Rundeck baixado com sucesso!!!, continuando com o script..."
+echo -e "Download do Plugin do Ansible do Rundeck feito com sucesso!!!, continuando com o script..."
 sleep 5
 echo
 #

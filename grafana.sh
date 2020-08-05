@@ -123,9 +123,7 @@ clear
 #
 echo -e "Instalando o Grafana, aguarde...\n"
 #
-echo -e "Baixando e instalando o Repositório do Grafana, aguarde..."
-	# baixando os repositórios do Grafana
-	# instalando os repositórios do Grafana
+echo -e "Fazendo o download e instalando o Repositório do Grafana, aguarde..."
 	# opção do comando: &>> (redirecionar de saída padrão)
 	# opção do comando: | piper (conecta a saída padrão com a entrada padrão de outro comando)
 	# opção do comando wget: -q (quiet) -O (output document file)

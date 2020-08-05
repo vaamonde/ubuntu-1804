@@ -182,7 +182,7 @@ echo -e "Dependências instaladas com sucesso!!!, continuando com o script..."
 sleep 5
 echo
 #
-echo -e "Baixando o GLPI do site Oficial, aguarde..."
+echo -e "Fazendo o download o GLPI do site Oficial, aguarde..."
 	# removendo versões anteriores baixadas do GLPI
 	# baixando a versão do GLPI
 	# opção do comando: &>> (redirecionar a saida padrão)
@@ -190,7 +190,7 @@ echo -e "Baixando o GLPI do site Oficial, aguarde..."
 	# opção do comando wget: -O (output document file)
 	rm -v glpi.tgz &>> $LOG
 	wget $RELEASE -O glpi.tgz &>> $LOG
-echo -e "GLPI baixado com sucesso!!!, continuando com o script..."
+echo -e "Download do GLPI feito com sucesso!!!, continuando com o script..."
 sleep 5
 echo
 #
@@ -236,12 +236,28 @@ echo -e "Habilitando os recursos do Apache2 para suportar o GLPI, aguarde..."
 	cp -v conf/glpi-cron /etc/cron.d/ &>> $LOG
 	phpenmod apcu &>> $LOG
 	a2enconf glpi &>> $LOG
-	systemctl restart apache2 &>> $LOG
 echo -e "Recursos habilitados com sucesso!!!, continuando com o script..."
 sleep 5
 echo
 #
-echo -e "Instalação do GLPI feita com Sucesso!!!."
+echo -e "Editando o arquivo de configuração do Apache2 do GLPI, pressione <Enter> para continuar"
+	read
+	sleep 3
+	vim /etc/apache2/conf-available/glpi.conf
+	systemctl restart apache2 &>> $LOG
+echo -e "Arquivo editado com sucesso!!!, continuando com o script..."
+sleep 5
+echo
+#
+echo -e "Editando o arquivo de agendamento do GLPI, pressione <Enter> para continuar"
+	read
+	sleep 3
+	vim /etc/cron.d/glpi-cron
+echo -e "Arquivo editado com sucesso!!!, continuando com o script..."
+sleep 5
+echo
+#
+echo -e "Instalação do GLPI Help Desk feita com Sucesso!!!."
 	# script para calcular o tempo gasto (SCRIPT MELHORADO, CORRIGIDO FALHA DE HORA:MINUTO:SEGUNDOS)
 	# opção do comando date: +%T (Time)
 	HORAFINAL=$(date +%T)

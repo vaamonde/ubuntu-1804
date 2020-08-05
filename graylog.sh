@@ -45,10 +45,16 @@ KERNEL=`uname -r | cut -d'.' -f1,2`
 LOG="/var/log/$(echo $0 | cut -d'/' -f2)"
 #
 # Declarando as variáveis de download do Graylog (Links atualizados no dia 22/07/2020)
+# opção do comando pwgen: -N (num passwords), -s (secure)
+# opção do comando tr: -d (delete)
+# opção do comando cut: -d (delimiter), -f (fields)
 KEYSRVMONGODB="https://www.mongodb.org/static/pgp/server-4.2.asc"
 KEYELASTICSEARCH="https://artifacts.elastic.co/GPG-KEY-elasticsearch"
 REPGRAYLOG="https://packages.graylog2.org/repo/packages/graylog-3.3-repository_latest.deb"
 USERGRAYLOG="graylog"
+SECRET=$(pwgen -N 1 -s 96)
+SHA2=$(echo $USERGRAYLOG | tr -d '\n' | sha256sum | cut -d" " -f1)
+#
 #
 # Exportando o recurso de Noninteractive do Debconf para não solicitar telas de configuração
 export DEBIAN_FRONTEND="noninteractive"
@@ -229,18 +235,17 @@ sleep 5
 echo
 #
 echo -e "Editando o arquivo de configuração do Graylog, pressione <Enter> para editar..."
-	read
 	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando pwgen: -N (num passwords), -s (secure)
 	# opção do comando tr: -d (delete)
 	# opção do comando cut: -d (delimiter), -f (fields)
 	# opção do comando cp: -v (verbose)
+	# opção do comando sed: s (replacement)
+	read
 	cp -v /etc/graylog/server/server.conf /etc/graylog/server/server.conf.bkp &>> $LOG
 	cp -v conf/server.conf /etc/graylog/server/server.conf &>> $LOG
-	# senha utilizada na opção de: password_secret
-	pwgen -N 1 -s 96 >> /etc/graylog/server/server.conf
-	# senha utilizada na opção de: root_password_sh2
-	echo $USERGRAYLOG | tr -d '\n' | sha256sum | cut -d" " -f1 >> /etc/graylog/server/server.conf
+	sed "s/password_secret =/password_secret = $SECRET/" server.conf > server.conf.old
+	sed "s/root_password_sha2 =/root_password_sha2 = $SHA2/" server.conf.old > server.conf
 	vim /etc/graylog/server/server.conf
 echo -e "Arquivo do Graylog editado com sucesso!!!, continuando com o script..."
 sleep 5
