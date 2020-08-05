@@ -222,7 +222,14 @@ echo -e "Criando o usuário de administração do BareOS Webgui, aguarde..."
 echo -e "Usuário criado com sucesso!!!, continuando com o script..."
 sleep 5
 echo
-#	
+#
+echo -e "Verificando as portas de Conexões do BareOS, aguarde..."
+	# opção do comando netstat: -a (all), -n (numeric)
+	netstat -an | grep '9102\|9103'
+echo -e "Portas de conexões verificadas com sucesso!!!, continuando com o script..."
+sleep 5
+echo
+#
 echo -e "Instalação do BareOS feita com Sucesso!!!."
 	# script para calcular o tempo gasto (SCRIPT MELHORADO, CORRIGIDO FALHA DE HORA:MINUTO:SEGUNDOS)
 	# opção do comando date: +%T (Time)

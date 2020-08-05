@@ -195,7 +195,7 @@ echo -e "Download e instalação do DAHDI feita com sucesso!!!, continuando com 
 sleep 5
 echo	
 #
-echo -e "Fazendo o download e instalação do DAHDI Tools, aguarde..."
+echo -e "Fazendo o download e instalação do DAHDI Tools do site Oficial, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando wget: -O (file)
 	# opção do comando tar: -z (gzip), -x (extract), -v (verbose), -f (file)
@@ -219,7 +219,7 @@ echo -e "Download e instalação do DAHDI Tools feita com sucesso!!!, continuand
 sleep 5
 echo	
 #
-echo -e "Fazendo o download e instalação do LIBPRI, aguarde..."
+echo -e "Fazendo o download e instalação do LIBPRI do site Oficial, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando wget: -O (file)
 	# opção do comando tar: -z (gzip), -x (extract), -v (verbose), -f (file)
@@ -241,7 +241,7 @@ echo -e "Download e instalação do LIBPRI feita com sucesso!!!, continuando com
 sleep 5
 echo
 #
-echo -e "Fazendo o download e instalação do Asterisk, aguarde..."
+echo -e "Fazendo o download e configurando o Asterisk do site Oficial, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando | (piper): (Conecta a saída padrão com a entrada padrão de outro comando)
 	# opção do comando wget: -O (file)
@@ -267,8 +267,9 @@ echo -e "Fazendo o download e instalação do Asterisk, aguarde..."
 	make menuselect
 echo
 sleep 5
+clear
 #
-echo -e "Compilando e instalando o Asterisk, aguarde...."
+echo -e "Compilando e instalando o Asterisk, esse processo demora um pouco, aguarde...."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	# compila todas as opções do software marcadas nas opções do make menuselect
 	make all &>> $LOG
@@ -289,7 +290,7 @@ echo -e "Compilando e instalando o Asterisk, aguarde...."
 	sudo systemctl start asterisk &>> $LOG
 	# opção do comando cd: .. (dois pontos sequenciais - Subir uma pasta)
 	cd ..
-echo -e "Download e instalação do Asterisk feita com sucesso!!!, continuando com o script..."
+echo -e "Compilação e instalação do Asterisk feita com sucesso!!!, continuando com o script..."
 sleep 5
 echo		
 #
