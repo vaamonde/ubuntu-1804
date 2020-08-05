@@ -213,12 +213,11 @@ echo
 echo -e "Editando o arquivo de configuração do Rundeck, pressione <Enter> para continuar"
 	# opção do comando: &>> (redirecionar a saida padrão)
 	# opção do comand cp: -v (verbose)
-	# opção do comando vim: + (number line)
 	read
 	sleep 3
 	cp -v /etc/rundeck/rundeck-config.properties /etc/rundeck/rundeck-config.properties.bkp &>> $LOG
 	cp -v conf/rundeck-config.properties /etc/rundeck/rundeck-config.properties &>> $LOG
-  	vim /etc/rundeck/rundeck-config.properties +21
+  	vim /etc/rundeck/rundeck-config.properties
 	systemctl restart rundeckd &>> $LOG
 echo -e "Rundeck instalado com sucesso!!!, continuando com o script..."
 sleep 5
@@ -244,6 +243,7 @@ echo
 #
 echo -e "Verificando a porta de conexão do Rundeck, aguarde..."
 	# opção do comando netstat: -a (all), -n (numeric)
+	sleep 3
 	netstat -an | grep 4440
 echo -e "Porta de conexão verificada com sucesso!!!, continuando com o script..."
 sleep 5
