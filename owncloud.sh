@@ -149,7 +149,6 @@ echo -e "Removendo software desnecessários, aguarde..."
 	apt -y autoremove &>> $LOG
 echo -e "Software removidos com sucesso!!!, continuando com o script..."
 sleep 5
-clear
 #
 echo -e "Instalando o ownCloud, aguarde...\n"
 #
@@ -178,7 +177,7 @@ echo -e "Source List criado com sucesso!!!, continuando com o script..."
 sleep 5
 echo
 #
-echo -e "Baixando e Instalando o ownCloud, aguarde..."
+echo -e "Fazendo o download e Instalando o ownCloud do site Oficial, aguarde..."
 	# opção do comando: &>> (redirecionar a saida padrão)
 	# opção do comando tar: -j (bzip2), -x (extract), -v (verbose), -f (file)
 	# opção do comando chown: -R (recursive), -v (verbose), www-data.www-data (user and group)
@@ -193,7 +192,7 @@ echo -e "Baixando e Instalando o ownCloud, aguarde..."
 	mv -v owncloud/ /var/www/html/own/ &>> $LOG
 	chown -Rv www-data:www-data /var/www/html/own/ &>> $LOG
 	chmod -Rv 755 /var/www/html/own/ &>> $LOG
-echo -e "ownCloud instalado com sucesso!!!, continuando com o script..."
+echo -e "Download e instalação do ownCloud feito com sucesso!!!, continuando com o script..."
 sleep 5
 echo
 #

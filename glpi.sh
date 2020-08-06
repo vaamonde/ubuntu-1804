@@ -181,7 +181,7 @@ echo -e "Dependências instaladas com sucesso!!!, continuando com o script..."
 sleep 5
 echo
 #
-echo -e "Fazendo o download o GLPI do site Oficial, aguarde..."
+echo -e "Fazendo o download do GLPI do site Oficial, aguarde..."
 	# removendo versões anteriores baixadas do GLPI
 	# baixando a versão do GLPI
 	# opção do comando: &>> (redirecionar a saida padrão)
