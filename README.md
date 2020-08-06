@@ -245,15 +245,19 @@ Link da vídeo aula: https://www.youtube.com/watch?v=82bdWnMlJq8
 
 Link do script utilizado nesse vídeo: https://github.com/vaamonde/ubuntu-1804/blob/master/bareos.sh
 
-================================= VÍDEOS EM DESENVOLVIMENTO =================================
-
 ## **COMO instalar o ANSIBLE e RUNDECK no GNU/Linux Ubuntu Server 18.04.x LTS**
 
-Vídeo mostrando os procedimentos básicos para instalar o Ansible e o Rundeck no GNU/Linux Ubuntu Server 18.04 LTS
+Vídeo mostrando os procedimentos básicos para instalar o Ansible e o Rundeck no GNU/Linux Ubuntu Server 18.04 LTS.
 
-Link da vídeo aula: 
+O Ansible é uma ferramenta de provisionamento de software de código aberto, gerenciamento de configuração e implementação de aplicativos. Ele é executado em muitos sistemas semelhantes ao Unix/Linux e pode configurar  tanto sistemas semelhantes ao Unix/Linux quanto o Microsoft Windows. Inclui sua própria linguagem declarativa para descrever a configuração do sistema. Foi escrito por Michael DeHaan e adquirido pela Red Hat em 2015. Ao contrário dos produtos concorrentes, o Ansible não tem agente ele se conecta remotamente via SSH ou PowerShell para executar suas tarefas.
+
+O Rundeck é uma aplicação java de código aberto que automatiza processos e rotinas nos mais variados ambientes, gerenciado via interface gráfica fica extremamente simples de verificar status de execuções, saídas de erro, etc. Muito utilizado quando se trata de ambientes DevOps, principalmente em uma abordagem de Entrega Contínua, onde em pequenos ciclos novas versões de software são construídas, testadas e liberadas de forma confiável e em curtos períodos de tempo.
+
+Link da vídeo aula: https://www.youtube.com/watch?v=s7v9Mb0dMeE&t
 
 Link do script utilizado nesse vídeo: https://github.com/vaamonde/ubuntu-1804/blob/master/ansible.sh
+
+========================= VÍDEOS EM DESENVOLVIMENTO =========================
 
 ## **COMO instalar o GLPI HELP DESK no GNU/Linux Ubuntu Server 18.04.x LTS**
 
