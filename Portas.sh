@@ -9,7 +9,6 @@
 # Versão: 0.03
 # Testado e homologado para a versão do Ubuntu Server 18.04.x LTS x64
 # Kernel >= 4.15.x
-# Testado e homologado para a versão do Ansible 2.7.x, Rundeck 
 
 001: openssh.sh;		22
 002: lamp.sh;			80, 3306
@@ -28,3 +27,5 @@
 015: graylog.sh;		19000, 27017, 9200
 016: tomcat.sh;			8080
 017: zabbix.sh;			10050, 10051
+018: fusion.sh;         80
+019: ntopng.sh;		    3001
