@@ -257,15 +257,19 @@ Link da vídeo aula: https://www.youtube.com/watch?v=s7v9Mb0dMeE&t
 
 Link do script utilizado nesse vídeo: https://github.com/vaamonde/ubuntu-1804/blob/master/ansible.sh
 
-========================= VÍDEOS EM DESENVOLVIMENTO =========================
-
 ## **COMO instalar o GLPI HELP DESK no GNU/Linux Ubuntu Server 18.04.x LTS**
 
-Vídeo mostrando os procedimentos básicos para instalar o GLPI Help Desk no GNU/Linux Ubuntu Server 18.04 LTS
+Vídeo mostrando os procedimentos básicos para instalar o GLPI Help Desk no GNU/Linux Ubuntu Server 18.04 LTS.
 
-Link da vídeo aula: 
+GLPI (sigla em francês: Gestionnaire Libre de Parc Informatique, ou "Free IT Equipment Manager" em inglês) é um sistema gratuito de Gerenciamento de Ativos de TI, sistema de rastreamento de problemas e central de atendimento. Este software de código aberto é escrito em PHP e distribuído sob a Licença Pública Geral GNU.
+
+O GLPI é um aplicativo baseado na Web que ajuda as empresas a gerenciar seu sistema de informações. A solução é capaz de criar um inventário de todos os ativos da organização e gerenciar tarefas administrativas e financeiras. As funcionalidades dos sistemas auxiliam os administradores de TI a criar um banco de dados de recursos técnicos, além de um gerenciamento e histórico de ações de manutenções. Os usuários podem declarar incidentes ou solicitações (com base no ativo ou não) graças ao recurso de Helpdesk.
+
+Link da vídeo aula: https://www.youtube.com/watch?v=6T9dMwJMeDw&t
 
 Link do script utilizado nesse vídeo: https://github.com/vaamonde/ubuntu-1804/blob/master/glpi.sh
+
+========================= VÍDEOS EM DESENVOLVIMENTO =========================
 
 ## **COMO instalar o GRAFANA no GNU/Linux Ubuntu Server 18.04.x LTS**
 
@@ -283,6 +287,14 @@ Link da vídeo aula:
 
 Link do script utilizado nesse vídeo: https://github.com/vaamonde/ubuntu-1804/blob/master/graylog.sh
 
+## **COMO instalar o TOMCAT no GNU/Linux Ubuntu Server 18.04.x LTS**
+
+Vídeo mostrando os procedimentos básicos para instalar o Tomcat no GNU/Linux Ubuntu Server 18.04 LTS
+
+Link da vídeo aula: 
+
+Link do script utilizado nesse vídeo: https://github.com/vaamonde/ubuntu-1804/blob/master/tomcat.sh
+
 ## **COMO instalar o ZABBIX no GNU/Linux Ubuntu Server 18.04.x LTS**
 
 Vídeo mostrando os procedimentos básicos para instalar o Zabbix no GNU/Linux Ubuntu Server 18.04 LTS
@@ -291,10 +303,18 @@ Link da vídeo aula:
 
 Link do script utilizado nesse vídeo: https://github.com/vaamonde/ubuntu-1804/blob/master/zabbix.sh
 
-## **COMO instalar o TOMCAT no GNU/Linux Ubuntu Server 18.04.x LTS**
+## **COMO instalar o NTOPNG no GNU/Linux Ubuntu Server 18.04.x LTS**
 
-Vídeo mostrando os procedimentos básicos para instalar o Tomcat no GNU/Linux Ubuntu Server 18.04 LTS
+Vídeo mostrando os procedimentos básicos para instalar o NTop-NG no GNU/Linux Ubuntu Server 18.04 LTS
 
 Link da vídeo aula: 
 
-Link do script utilizado nesse vídeo: https://github.com/vaamonde/ubuntu-1804/blob/master/tomcat.sh
+Link do script utilizado nesse vídeo: https://github.com/vaamonde/ubuntu-1804/blob/master/ntopng.sh
+
+## **COMO instalar o FUSIONINVENTORY no GNU/Linux Ubuntu Server 18.04.x LTS**
+
+Vídeo mostrando os procedimentos básicos para instalar o FusionInventory no GNU/Linux Ubuntu Server 18.04 LTS
+
+Link da vídeo aula: 
+
+Link do script utilizado nesse vídeo: https://github.com/vaamonde/ubuntu-1804/blob/master/fusion.sh

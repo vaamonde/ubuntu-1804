@@ -11,13 +11,15 @@
 # Kernel >= 4.15.x
 # Testado e homologado para a versão do NTopNG 4.0.x
 #
-# NTop-NG é um software de computador para monitorar o tráfego em uma rede de computadores. Ele foi projetado 
-# para ser um substituto de alto desempenho e baixo recurso para o ntop. O nome é derivado da próxima geração. 
-# O NTop-NG é um software de código aberto lançado sob a Licença Pública Geral GNU (GPLv3) para software. 
-# Versões de código-fonte estão disponíveis para os sistemas operacionais: Unix, Linux, BSD, Mac OS X e Windows. 
-# Versões binárias estão disponíveis para CentOS, Ubuntu e OS X. Um binário de demonstração está disponível para
-# o Windows que limita a análise a 2.000 pacotes. O mecanismo do ntopng é escrito na linguagem de programação C ++.
-# A interface da web opcional é desenvolvida em Lua.
+# NTop-NG é um software para monitorar o tráfego em uma rede de computadores. Ele foi projetado para ser um 
+# substituto de alto desempenho e baixo recurso para o NTop. O NTop-NG é um software de código aberto lançado 
+# sob a Licença Pública Geral GNU (GPLv3) para software. Versões de código-fonte estão disponíveis para os 
+# sistemas operacionais: Unix, Linux, BSD, Mac OS X e Windows. O mecanismo do NTop-NG é escrito na linguagem 
+# de programação C ++, sua interface da web é opcional e foi desenvolvida na linguagem Lua.
+#
+# OBSERVAÇÃO IMPORTANTE: para o NTop-NG funcionar corretamente em um Infraestrutura de Redes de Computadores,
+# recomendamos que a Porta de Conexão do Switch que vai conectar o Servidor do NTop-NG seja configurada no
+# Modo Mirroring/Monitoring (ou em alguns casos no modo Trunk)
 #
 # Informações que serão solicitadas na configuração via Web do NTopNG
 #
