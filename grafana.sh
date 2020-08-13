@@ -17,10 +17,10 @@
 #
 # Informações que serão solicitadas na configuração via Web do Grafana
 # Email or username: admin
-# Password: admin
+# Password: admin: (Log In)
 # Change Password
 #	New password: pti@2018
-#	Confirm new password: pti@2018
+#	Confirm new password: pti@2018: (Submit)
 #
 # Site Oficial do Projeto: https://grafana.com/
 #
@@ -119,6 +119,7 @@ echo -e "Removendo software desnecessários, aguarde..."
 	apt -y autoremove &>> $LOG
 echo -e "Software removidos com sucesso!!!, continuando com o script..."
 sleep 5
+echo
 #
 echo -e "Instalando o Grafana, aguarde...\n"
 #

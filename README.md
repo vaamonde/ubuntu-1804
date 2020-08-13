@@ -269,15 +269,17 @@ Link da vídeo aula: https://www.youtube.com/watch?v=6T9dMwJMeDw&t
 
 Link do script utilizado nesse vídeo: https://github.com/vaamonde/ubuntu-1804/blob/master/glpi.sh
 
-========================= VÍDEOS EM DESENVOLVIMENTO =========================
-
 ## **COMO instalar o GRAFANA no GNU/Linux Ubuntu Server 18.04.x LTS**
 
 Vídeo mostrando os procedimentos básicos para instalar o Grafana no GNU/Linux Ubuntu Server 18.04 LTS
 
-Link da vídeo aula: 
+O Grafana é uma aplicação web de análise de código aberto multiplataforma e visualização interativa da web. Ele fornece tabelas, gráficos e alertas para a Web quando conectado a fontes de dados suportadas. É expansível através de um sistema de plug-in, como por exemplo: MySQL, GLPI, Zimbra, Zabbix, etc.
+
+Link da vídeo aula: https://www.youtube.com/watch?v=kFoJZqQD1lM
 
 Link do script utilizado nesse vídeo: https://github.com/vaamonde/ubuntu-1804/blob/master/grafana.sh
+
+========================= VÍDEOS EM DESENVOLVIMENTO =========================
 
 ## **COMO instalar o GRAYLOG no GNU/Linux Ubuntu Server 18.04.x LTS**
 
