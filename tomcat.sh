@@ -11,9 +11,9 @@
 # Kernel >= 4.15.x
 # Testado e homologado para a versão do Tomcat 9.0.x
 #
-# O Tomcat é um servidor web Java, mais especificamente, um container de servlets. O Tomcat implementa, dentre outras 
-# de menor relevância, as tecnologias Java Servlet e JavaServer Pages e não é um container Enterprise JavaBeans. 
-# Desenvolvido pela Apache Software Foundation, é distribuído como software livre.
+# O software Tomcat, desenvolvido pela Fundação Apache, permite a execução de aplicações para web. 
+# Sua principal característica técnica é estar centrada na linguagem de programação Java, mais especificamente 
+# nas tecnologias de Servlets e de Java Server Pages (JSP).
 #
 # Site Oficial do Tomcat: http://tomcat.apache.org/
 #
