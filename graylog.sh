@@ -11,10 +11,10 @@
 # Kernel >= 4.15.x
 # Testado e homologado para a versão do Graylog 3.3.x
 #
-# Graylog é uma empresa de software de gerenciamento de logs com sede em Houston, Texas. Graylog, foi fundada em 2009 
-# e começou como um projeto de código aberto em Hamburgo, Alemanha. O software Graylog captura, armazena e permite 
-# centralizar a pesquisa e a análise de logs em tempo real de qualquer componente da infraestrutura e aplicativos de TI. 
-# O software usa uma arquitetura de três camadas de armazenamento escalável baseado no Elasticsearch e no MongoDB.
+# O Graylog captura, armazena e permite centralizar a pesquisa e a análise de logs em tempo real de qualquer 
+# componente da infraestrutura e aplicativos de TI. O software utiliza uma arquitetura de três camadas de 
+# armazenamento escalável baseado no ElasticSearch (Elasticsearch é um servidor de buscas distribuído baseado 
+# no Apache Lucene)e no MongoDB (MongoDB é um software de banco de dados orientado a documentos NoSQL).
 #
 # Informações que serão solicitadas na configuração via Web do Graylog
 # Username: admin
@@ -58,7 +58,6 @@ REPGRAYLOG="https://packages.graylog2.org/repo/packages/graylog-3.3-repository_l
 USERGRAYLOG="graylog"
 SECRET=$(pwgen -N 1 -s 96)
 SHA2=$(echo $USERGRAYLOG | tr -d '\n' | sha256sum | cut -d" " -f1)
-#
 #
 # Exportando o recurso de Noninteractive do Debconf para não solicitar telas de configuração
 export DEBIAN_FRONTEND="noninteractive"
@@ -128,6 +127,7 @@ echo -e "Removendo software desnecessários, aguarde..."
 	apt -y autoremove &>> $LOG
 echo -e "Software removidos com sucesso!!!, continuando com o script..."
 sleep 5
+echo
 #
 echo -e "Instalando o Graylog, aguarde...\n"
 #

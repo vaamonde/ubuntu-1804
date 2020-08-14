@@ -52,6 +52,9 @@ LOG="/var/log/$(echo $0 | cut -d'/' -f2)"
 # Declarando as variáveis de download do NTopNG (Links atualizados no dia 09/08/2020)
 NTOPNG="http://apt-stable.ntop.org/18.04/all/apt-ntop-stable.deb"
 #
+# Exportando o recurso de Noninteractive do Debconf para não solicitar telas de configuração
+export DEBIAN_FRONTEND="noninteractive"
+#
 # Verificando se o usuário é Root, Distribuição é >=18.04 e o Kernel é >=4.15 <IF MELHORADO)
 # [ ] = teste de expressão, && = operador lógico AND, == comparação de string, exit 1 = A maioria dos erros comuns na execução
 clear
@@ -149,7 +152,7 @@ echo
 echo -e "Instalando o NTopNG, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando apt: -y (yes)
-	apt -y install ntopng ntopng-data cento &>> $LOG
+	apt -y install ntopng ntopng-data &>> $LOG
 echo -e "NTopNG instalado com sucesso!!!, continuando com o script..."
 sleep 5
 echo

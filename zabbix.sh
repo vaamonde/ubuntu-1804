@@ -84,13 +84,16 @@ FLUSH="FLUSH PRIVILEGES;"
 # Declarando as variáveis para o download do Zabbix Server (Link atualizado no dia 25/07/2020)
 ZABBIX="https://repo.zabbix.com/zabbix/5.0/ubuntu/pool/main/z/zabbix-release/zabbix-release_5.0-1+bionic_all.deb"
 #
+# Exportando o recurso de Noninteractive do Debconf para não solicitar telas de configuração
+export DEBIAN_FRONTEND="noninteractive"
+#
 # Verificando se o usuário é Root, Distribuição é >=18.04 e o Kernel é >=4.15 <IF MELHORADO)
 # [ ] = teste de expressão, && = operador lógico AND, == comparação de string, exit 1 = A maioria dos erros comuns na execução
 clear
 if [ "$USUARIO" == "0" ] && [ "$UBUNTU" == "18.04" ] && [ "$KERNEL" == "4.15" ]
 	then
 		echo -e "O usuário é Root, continuando com o script..."
-		echo -e "Distribuição é >=18.04.x, continuando com o script..."
+		echo -e "Distribuição é >= 18.04.x, continuando com o script..."
 		echo -e "Kernel é >= 4.15, continuando com o script..."
 		sleep 5
 	else
@@ -126,6 +129,20 @@ echo -e "Após a instalação do Zabbix Server acesse a URL: http://`hostname -I
 echo -e "Aguarde, esse processo demora um pouco dependendo do seu Link de Internet...\n"
 sleep 5
 #
+echo -e "Adicionando o Repositório Universal do Apt, aguarde..."
+	# opção do comando: &>> (redirecionar de saída padrão)
+	add-apt-repository universe &>> $LOG
+echo -e "Repositório adicionado com sucesso!!!, continuando com o script..."
+sleep 5
+echo
+#
+echo -e "Adicionando o Repositório Multiversão do Apt, aguarde..."
+	# opção do comando: &>> (redirecionar a saída padrão)
+	add-apt-repository multiverse &>> $LOG
+echo -e "Repositório adicionado com sucesso!!!, continuando com o script..."
+sleep 5
+echo
+#
 echo -e "Atualizando as listas do Apt, aguarde..."
 	#opção do comando: &>> (redirecionar a saída padrão)
 	apt update &>> $LOG
@@ -147,6 +164,7 @@ echo -e "Removendo software desnecessários, aguarde..."
 	apt -y autoremove &>> $LOG
 echo -e "Software removidos com sucesso!!!, continuando com o script..."
 sleep 5
+echo
 #
 echo -e "Instalando o Zabbix Server, aguarde...\n"
 #
@@ -177,7 +195,7 @@ echo -e "Zabbix Server instalado com sucesso!!!, continuando com o script..."
 sleep 5
 echo
 #
-echo -e "Criando o Banco de Dados do Zabbix Server, aguarde..."
+echo -e "Criando o Banco de Dados e Populando as Tabelas do Zabbix Server, aguarde..."
 	# opção do comando: &>> (redirecionar de saída padrão)
 	# opção do comando: | piper (conecta a saída padrão com a entrada padrão de outro comando)
 	# opção do comando mysql: -u (user), -p (password), -e (execute)
