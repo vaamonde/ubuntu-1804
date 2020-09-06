@@ -11,13 +11,13 @@ Facebook Bora para Prática: https://www.facebook.com/boraparapratica<br>
 Instagram Procedimentos em TI: https://www.instagram.com/procedimentoem<br>
 YouTUBE Bora Para Prática: https://www.youtube.com/boraparapratica<br>
 
-Esse curso tem como objetivo de mostrar a instalação e configuração da nova versão de Servidor da Canonical, o GNU/Linux Ubuntu Server 18.04.x, essa nova versão foi projetada para uma fácil implementação, administração e instalação de serviços de redes de forma fácil e confiável.
+Esse curso tem como objetivo de mostrar a instalação e configuração da nova versão de Servidor da Canonical o GNU/Linux Ubuntu Server 18.04.x, essa nova versão foi projetada para uma fácil implementação, administração e configuração dos serviços de rede de forma fácil e confiável.
 
-Projetada para suportar implementações On-Premise (Servidores Locais) ou em Cloud (Nuvens), possui várias ferramentas integradas e soluções desenvolvidas pela Canonical, que facilitar a implementação em larga escala e suporte a Hosts Virtual e Cloud melhorados.
+Projetado para suportar implementações On-Premise (Servidores Locais) ou em Cloud (Nuvens), possui várias ferramentas integradas e soluções desenvolvidas pela Canonical que facilitar a implementação em larga escala e suporte a Hosts Virtual e Cloud melhorados.
 
 Para esse curso as metodologias de DevOps, utilizando o Git e Github serão empregadas de forma dinâmica, desenvolvendo scripts e automatizando todo os processos de instalação e configuração.
 
-Ideal para Estudantes e Profissionais de Redes que desejam se aprofundar nos pré-requisitos técnicos e práticos para Implementar Servidores GNU/Linux Ubuntu Server em cenários On-Prime ou em Cloud.
+Ideal para Estudantes e Profissionais de Redes que desejam se aprofundar nos pré-requisitos técnicos e práticos para Implementar Servidores GNU/Linux Ubuntu Server em cenários On-Premise ou Cloud.
 
 ## **Links Oficiais do Ubuntu, Mint, pfSense, Microsoft e VirtualBOX:**
 Canonical: https://canonical.com/<br>
@@ -44,7 +44,7 @@ Link da vídeo aula: https://www.youtube.com/watch?v=8AaHNXcrxag
 
 ## **COMO instalar o GNU/Linux Ubuntu Server 18.04.x LTS**
 
-Vídeo mostrando os procedimentos básicos para instalar o GNU/Linux Ubuntu Server 18.04.x LTS no VirtualBOX. Versões LTS (Long-term support) da Distribuição Ubuntu são recomendadas devido ao suporte ser de 5 anos da data de lançamento. A nova versão do GNU/Linux Ubuntu Server 18.04.1 LTS trás um novo instalador, vários recursos novos e várias tecnologias que facilita a implementação de serviços em rede, Cloud e Segurança de forma rápida e eficiente para pequenas, médias e grandes empresas.
+Vídeo mostrando os procedimentos básicos para instalar o GNU/Linux Ubuntu Server 18.04.x LTS no VirtualBOX. Versões LTS (Long-term support) do Ubuntu são recomendadas devido ao suporte de 5 anos da data de lançamento. A nova versão do GNU/Linux Ubuntu Server 18.04.1 LTS trás um novo instalador, vários recursos novos e várias tecnologias que facilitam a implementação de serviços em rede, Cloud e Segurança de forma rápida, fácil e eficiente para pequenas, médias e grandes empresas.
 
 Link da vídeo aula: https://www.youtube.com/watch?v=zDdCrqNhIXI&t
 
@@ -52,7 +52,7 @@ Link do script utilizado nesse vídeo: https://github.com/vaamonde/ubuntu-1804/b
 
 ## **COMO instalar a versão Mini (Netboot - Netinstall) do GNU/Linux Ubuntu Server 18.04 LTS**
 
-Vídeo mostrando os procedimentos básicos para instalar a versão Mini (Netboot - Netinstall) do GNU/Linux Ubuntu Server 18.04 LTS. A versão Mini também conhecida como Netboot ou Netinstall possui os recursos mínimo para a instalação do Server ou Desktop Ubuntu, essa versão e indicada para instalação vida Rede, utilizando os Protocolos DHCP, TFTP e PXE e também indicada para customizações de sistema ou servidores de virtualização e cloud.
+Vídeo mostrando os procedimentos básicos para instalar a versão Mini (Netboot - Netinstall) do GNU/Linux Ubuntu Server 18.04 LTS. A versão Mini também conhecida como Netboot ou Netinstall possui os recursos mínimos para a instalação do Server ou Desktop Ubuntu, essa versão e indicada para instalação via Rede, utilizando os Protocolos DHCP, TFTP e PXE, indicada para customizações de sistema ou servidores de virtualização e cloud.
 
 Link da vídeo aula: https://www.youtube.com/watch?v=l-AVJE3DZfw&t
 
@@ -86,7 +86,7 @@ Link do script utilizado nesse vídeo: https://github.com/vaamonde/ubuntu-1804/b
 
 ## **COMO configurar o Hostname, Hosts e TCP Wrappers no GNU/Linux Ubuntu Server 18.04.x LTS**
 
-Vídeo mostrando os procedimentos básicos para configurar os parâmetros de redes no GNU/Linux Ubuntu Server 18.04.x LTS
+Vídeo mostrando os procedimentos básicos para configurar os parâmetros de rede no GNU/Linux Ubuntu Server 18.04.x LTS
 
 Link da vídeo aula: https://www.youtube.com/watch?v=J7eyb5ynjZA
 
@@ -100,9 +100,9 @@ Link da vídeo aula: https://www.youtube.com/watch?v=laiuH1zgg3U&t
 
 Link do script utilizado nesse vídeo: https://github.com/vaamonde/ubuntu-1804/blob/master/LocaleTimezoneKeyboard.sh 
 
-## **SEQUÊNCIA DE VÍDEOS DA INSTALAÇÃO DOS SERVIÇOS DE REDES NO GNU/LINUX UBUNTU SERVER 18.04.x LTS**
+## **SEQUÊNCIA DOS VÍDEOS DE INSTALAÇÃO DOS SERVIÇOS DE REDE NO GNU/LINUX UBUNTU SERVER 18.04.x LTS**
 
-Recomendo seguir a sequência de vídeos abaixo para a implementação dos Serviços de Redes no Servidor Ubuntu 18.04.x, alguns script possuem dependências dos scripts anteriores, cada script complementa o serviço instalado e configurado.
+Recomendo seguir a sequência de vídeos abaixo para a implementação dos Serviços de Rede no Servidor Ubuntu 18.04.x, alguns script possuem dependências dos scripts anteriores, cada script complementa o serviço instalado e configurado.
 
 ## **COMO configurar o OpenSSH no GNU/Linux Ubuntu Server 18.04.x LTS**
 
@@ -295,6 +295,8 @@ Link do script utilizado nesse vídeo: https://github.com/vaamonde/ubuntu-1804/b
 
 Vídeo mostrando os procedimentos básicos para instalar o Graylog no GNU/Linux Ubuntu Server 18.04 LTS
 
+O Graylog captura, armazena e permite centralizar a pesquisa e a análise de logs em tempo real de qualquer componente da infraestrutura e aplicativos de TI. O software utiliza uma arquitetura de três camadas de armazenamento escalável baseado no ElasticSearch (Elasticsearch é um servidor de buscas distribuído baseado no Apache Lucene) e no MongoDB (MongoDB é um software de banco de dados orientado a documentos NoSQL).
+
 Link da vídeo aula: 
 
 Link do script utilizado nesse vídeo: https://github.com/vaamonde/ubuntu-1804/blob/master/graylog.sh
@@ -302,6 +304,8 @@ Link do script utilizado nesse vídeo: https://github.com/vaamonde/ubuntu-1804/b
 ## **COMO instalar o ZABBIX no GNU/Linux Ubuntu Server 18.04.x LTS**
 
 Vídeo mostrando os procedimentos básicos para instalar o Zabbix no GNU/Linux Ubuntu Server 18.04 LTS
+
+O Zabbix é uma ferramenta de software de monitoramento de código aberto para diversos componentes de TI, incluindo redes, servidores, máquinas virtuais e serviços em nuvem. O Zabbix fornece métricas de monitoramento, utilização da largura de banda da rede, carga de uso da CPU e consumo de espaço em disco, entre vários outros recursos de monitoramento e alertas.
 
 Link da vídeo aula: 
 
@@ -311,6 +315,8 @@ Link do script utilizado nesse vídeo: https://github.com/vaamonde/ubuntu-1804/b
 
 Vídeo mostrando os procedimentos básicos para instalar o NTop-NG no GNU/Linux Ubuntu Server 18.04 LTS
 
+NTop-NG é um software para monitorar o tráfego em uma rede de computadores. Ele foi projetado para ser um substituto de alto desempenho e baixo recurso para o NTop. O NTop-NG é um software de código aberto lançado sob a Licença Pública Geral GNU (GPLv3) para software. Versões de código-fonte estão disponíveis para os sistemas operacionais: Unix, Linux, BSD, Mac OS X e Windows. O mecanismo do NTop-NG é escrito na linguagem de programação C ++, sua interface da web é opcional e foi desenvolvida na linguagem Lua.
+
 Link da vídeo aula: 
 
 Link do script utilizado nesse vídeo: https://github.com/vaamonde/ubuntu-1804/blob/master/ntopng.sh
@@ -319,6 +325,18 @@ Link do script utilizado nesse vídeo: https://github.com/vaamonde/ubuntu-1804/b
 
 Vídeo mostrando os procedimentos básicos para instalar o FusionInventory no GNU/Linux Ubuntu Server 18.04 LTS
 
+O FusionInventory Agent é um agente multiplataforma genérico. Ele pode executar uma grande variedade de tarefas de gerenciamento, como inventário local, implantação de software ou descoberta de rede. Ele pode ser usado autônomo ou em combinação com um servidor compatível (OCS Inventory, GLPI, OTRS, Uranos, ...) atuando como um ponto de controle centralizado.
+
 Link da vídeo aula: 
 
 Link do script utilizado nesse vídeo: https://github.com/vaamonde/ubuntu-1804/blob/master/fusion.sh
+
+## **COMO instalar o ROCKET.CHAT no GNU/Linux Ubuntu Server 18.04.x LTS**
+
+Vídeo mostrando os procedimentos básicos para instalar o Rocket.Chat no GNU/Linux Ubuntu Server 18.04 LTS
+
+O Rocket.Chat é um servidor de bate-papo na Web, desenvolvido em JavaScript, usando a estrutura de pilha completa do Meteor. É uma ótima solução para comunidades e empresas que desejam hospedar seu próprio serviço de bate-papo em particular ou para desenvolvedores que desejam criar e evoluir suas próprias plataformas de bate-papo.
+
+Link da vídeo aula: 
+
+Link do script utilizado nesse vídeo: https://github.com/vaamonde/ubuntu-1804/blob/master/rocketchat.sh
