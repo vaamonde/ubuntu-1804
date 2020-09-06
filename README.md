@@ -279,6 +279,16 @@ Link da vídeo aula: https://www.youtube.com/watch?v=kFoJZqQD1lM
 
 Link do script utilizado nesse vídeo: https://github.com/vaamonde/ubuntu-1804/blob/master/grafana.sh
 
+## **COMO instalar o TOMCAT no GNU/Linux Ubuntu Server 18.04.x LTS**
+
+Vídeo mostrando os procedimentos básicos para instalar o Tomcat no GNU/Linux Ubuntu Server 18.04 LTS
+
+O software Tomcat, desenvolvido pela Fundação Apache, permite a execução de aplicações para web. Sua principal característica técnica é estar centrada na linguagem de programação Java, mais especificamente nas tecnologias de Servlets e de Java Server Pages (JSP).
+
+Link da vídeo aula: https://www.youtube.com/watch?v=yXc3v3HAG5w
+
+Link do script utilizado nesse vídeo: https://github.com/vaamonde/ubuntu-1804/blob/master/tomcat.sh
+
 ========================= VÍDEOS EM DESENVOLVIMENTO =========================
 
 ## **COMO instalar o GRAYLOG no GNU/Linux Ubuntu Server 18.04.x LTS**
@@ -288,14 +298,6 @@ Vídeo mostrando os procedimentos básicos para instalar o Graylog no GNU/Linux 
 Link da vídeo aula: 
 
 Link do script utilizado nesse vídeo: https://github.com/vaamonde/ubuntu-1804/blob/master/graylog.sh
-
-## **COMO instalar o TOMCAT no GNU/Linux Ubuntu Server 18.04.x LTS**
-
-Vídeo mostrando os procedimentos básicos para instalar o Tomcat no GNU/Linux Ubuntu Server 18.04 LTS
-
-Link da vídeo aula: 
-
-Link do script utilizado nesse vídeo: https://github.com/vaamonde/ubuntu-1804/blob/master/tomcat.sh
 
 ## **COMO instalar o ZABBIX no GNU/Linux Ubuntu Server 18.04.x LTS**
 
