@@ -165,7 +165,7 @@ network:
 
 #Configurações de vlans:
 
-#Configurações de wifis:
+#Configurações de wi-fi:
 network:
 	wifis:
 		wlp2s0b1:

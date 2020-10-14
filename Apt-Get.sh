@@ -5,13 +5,16 @@
 # Facebook: facebook.com/BoraParaPratica
 # YouTube: youtube.com/BoraParaPratica
 # Data de criação: 04/11/2018
-# Data de atualização: 22/07/2020
-# Versão: 0.07
+# Data de atualização: 14/09/2020
+# Versão: 0.08
 # Testado e homologado para a versão do Ubuntu Server 18.04.x LTS x64
 # Kernel >= 4.15.x
 
 #é usado para baixar informações de pacotes de todas as fontes configuradas.
 sudo apt update
+
+#é usado para listar todos os software que serão atualizados no sistema.
+sudo apt list --upgradable
  
 #é usado para instalar atualizações disponíveis de todos os pacotes atualmente 
 #instalados no sistema a partir das fontes configuradas via sources.list
