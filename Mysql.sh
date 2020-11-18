@@ -4,8 +4,8 @@
 #Facebook: facebook.com/BoraParaPratica
 #YouTube: youtube.com/BoraParaPratica
 #Data de criação: 13/02/2019
-#Data de atualização: 22/07/2020
-#Versão: 0.06
+#Data de atualização: 18/11/2020
+#Versão: 0.07
 
 #Instalando o SGBD (Sistema de Gerenciamento de Banco de Dados) MySQL ou MariaDB
 sudo apt update && sudo apt install mysql-server mysql-client mysql-common
@@ -86,8 +86,8 @@ SHOW DATABASES;
 #(opções do comando GRANT: grant (permissão), all (todos privilégios), on (em ou na | banco ou tabela), *.* (todos os bancos/tabelas))
 #(opções do comando GRANT: to (para), user@'%' (usuário @ localhost), identified by (identificado por - senha do usuário))
 #Obs: no MySQL versão >= 8.0.x o comando de permissão para o usuário root mudou:
-#Primeiro cirar o usuário: CREATE USER 'root'@'%' IDENTIFIED BY 'root';
-#Segundo aplicar as permissões: GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' WITH GRANT OPTION;
+#Primeiro cirar o usuário: CREATE USER 'vaamonde'@'localhost' IDENTIFIED WITH mysql_native_password BY 'vaamonde';
+#Segundo aplicar as permissões: GRANT ALL PRIVILEGES ON *.* TO 'vaamonde'@'localhost';
 #Terceiro aplicar todas as mudanças: FLUSH PRIVILEGES;
 GRANT ALL ON *.* TO root@'%' IDENTIFIED BY 'aulaead'
 
