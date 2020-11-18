@@ -85,6 +85,10 @@ SHOW DATABASES;
 #Permitindo que o usuário Root administre o servidor Remotamente do MySQL ou MariaDB
 #(opções do comando GRANT: grant (permissão), all (todos privilégios), on (em ou na | banco ou tabela), *.* (todos os bancos/tabelas))
 #(opções do comando GRANT: to (para), user@'%' (usuário @ localhost), identified by (identificado por - senha do usuário))
+#Obs: no MySQL versão >= 8.0.x o comando de permissão para o usuário root mudou:
+#Primeiro cirar o usuário: CREATE USER 'root'@'%' IDENTIFIED BY 'root';
+#Segundo aplicar as permissões: GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' WITH GRANT OPTION;
+#Terceiro aplicar todas as mudanças: FLUSH PRIVILEGES;
 GRANT ALL ON *.* TO root@'%' IDENTIFIED BY 'aulaead'
 
 #Criando usuários no SGBD do MySQL ou MariaDB
