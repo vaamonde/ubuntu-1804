@@ -33,7 +33,7 @@ sudo mysql_secure_installation
 2. New password root: aulaead <Enter>
 3. Re-enter new password root: aulaead <Enter>
 4. Remove anonymous users? (Press y|Y for Yes, any other key for No:) y <Enter>
-5. Disalow root login remotely (Press y|Y for Yes, any other key for No:) <Enter>
+5. Disallow root login remotely (Press y|Y for Yes, any other key for No:) <Enter>
 6. Remove test database and access to it? (Press y|Y for Yes, any other key for No:) <Enter>
 7. Reload privilege tables now? (Press y|Y for Yes, any other key for No:) y <Enter>
 

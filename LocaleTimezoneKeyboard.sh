@@ -48,11 +48,13 @@ sudo cat /etc/default/keyboard
 	XKBLAYOUT="br" (Layout de Teclado Português Brasileiro ABNT2)
 
 sudo dpkg-reconfigure keyboard-configuration
-	Generic 105-Key PC (intl <- Internacional) <Enter>;
-	Portuguese (Brazil) <Enter>;
-	Portuguese (Brazil) (Padrão ABNT-2) <Enter>;
-	The Default for the Keyboard Layout (O padrão para o layout do teclado) <Enter>;
+	Keyboard model: Generic 105-Key PC (intl <- Internacional) <Enter>;
+	Country of origin for the keyboard: Portuguese (Brazil) <Enter>;
+	Keyboard layout: Portuguese (Brazil) (Padrão ABNT-2) <Enter>;
+	Key to function as AltGr: Right Alt (AltGr) <Enter>;
+		(The Default for the Keyboard Layout (O padrão para o layout do teclado));
 	No Compose Key (Nenhuma combinação de composição) <Enter>.
+reboot
 
 #Configuração do UTF-8 (8-bit Unicode Transformation Format) e Console (Bash/Shell)
 sudo cat /etc/default/console-setup
