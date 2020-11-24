@@ -86,8 +86,8 @@ GRANTDATABASE="GRANT USAGE ON *.* TO 'glpi' IDENTIFIED BY 'glpi';"
 GRANTALL="GRANT ALL PRIVILEGES ON glpi.* TO 'glpi' IDENTIFIED BY 'glpi';"
 FLUSH="FLUSH PRIVILEGES;"
 #
-# Declarando a variável de download do GLPI (Link atualizado no dia 22/07/2020)
-RELEASE="https://github.com/glpi-project/glpi/releases/download/9.5.0/glpi-9.5.0.tgz"
+# Declarando a variável de download do GLPI (Link atualizado no dia 24/11/2020)
+RELEASE="https://github.com/glpi-project/glpi/releases/download/9.5.2/glpi-9.5.2.tgz"
 #
 # Exportando o recurso de Noninteractive do Debconf para não solicitar telas de configuração
 export DEBIAN_FRONTEND="noninteractive"

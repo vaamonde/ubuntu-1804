@@ -45,8 +45,8 @@ KERNEL=`uname -r | cut -d'.' -f1,2`
 # $0 (variável de ambiente do nome do comando)
 LOG="/var/log/$(echo $0 | cut -d'/' -f2)"
 #
-# Declarando as variáveis para o download do Webmin (Link atualizado no dia 22/07/2020)
-WEBMIN="https://prdownloads.sourceforge.net/webadmin/webmin_1.953_all.deb"
+# Declarando as variáveis para o download do Webmin (Link atualizado no dia 24/11/2020)
+WEBMIN="https://prdownloads.sourceforge.net/webadmin/webmin_1.962_all.deb"
 #
 # Exportando o recurso de Noninteractive do Debconf para não solicitar telas de configuração
 export DEBIAN_FRONTEND="noninteractive"

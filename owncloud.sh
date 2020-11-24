@@ -65,8 +65,8 @@ GRANTDATABASE="GRANT USAGE ON *.* TO 'owncloud' IDENTIFIED BY 'owncloud';"
 GRANTALL="GRANT ALL PRIVILEGES ON owncloud.* TO 'owncloud' IDENTIFIED BY 'owncloud' WITH GRANT OPTION;"
 FLUSH="FLUSH PRIVILEGES;"
 #
-# Declarando a variável de download do ownCloud (Link atualizado no dia 22/07/2020)
-RELEASE="https://download.owncloud.org/community/owncloud-10.4.1.tar.bz2"
+# Declarando a variável de download do ownCloud (Link atualizado no dia 24/11/2020)
+RELEASE="https://download.owncloud.org/community/owncloud-10.5.0.tar.bz2"
 #
 # Exportando o recurso de Noninteractive do Debconf para não solicitar telas de configuração
 export DEBIAN_FRONTEND="noninteractive"
