@@ -83,6 +83,7 @@ echo -e "Instalação do NTopNG no GNU/Linux Ubuntu Server 18.04.x\n"
 echo -e "Após a instalação do NTopNG acesse a URL: http://`hostname -I | cut -d' ' -f1`:3001\n"
 echo -e "Aguarde, esse processo demora um pouco dependendo do seu Link de Internet..."
 sleep 5
+echo
 #
 echo -e "Adicionando o Repositório Universal do Apt, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
@@ -119,8 +120,10 @@ echo -e "Removendo software desnecessários, aguarde..."
 	apt -y autoremove &>> $LOG
 echo -e "Software removidos com sucesso!!!, continuando com o script..."
 sleep 5
+echo
 #
 echo -e "Instalando o NTopNG, aguarde...\n"
+echo
 #
 echo -e "Fazendo o download do Repositório do NTopNG do site Oficial, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
@@ -144,7 +147,7 @@ echo
 echo -e "Instalando as Dependências do NTopNG, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando apt: -y (yes)
-	apt -y install software-properties-common wget &>> $LOG
+	apt -y install software-properties-common &>> $LOG
 echo -e "Dependências instaladas com sucesso!!!, continuando com o script..."
 sleep 5
 echo
@@ -162,9 +165,9 @@ echo -e "Configurando o NTopNG, pressione <Enter> para continuar."
 	# opção do comando cp: -v (verbose)
 	read
 	sleep 3
-	cp -v /etc/ntopong/ntopng.conf /etc/ntopong/ntopng.conf.bkp &>> $LOG
-	cp -v conf/ntopng.conf /etc/ntopong/ntopng.conf &>> $LOG
-	vim /etc/ntopong/ntopng.conf
+	cp -v /etc/ntopng/ntopng.conf /etc/ntopng/ntopng.conf.bkp &>> $LOG
+	cp -v conf/ntopng.conf /etc/ntopng/ntopng.conf &>> $LOG
+	vim /etc/ntopng/ntopng.conf
 echo -e "NTopNG configurado com sucesso!!!, continuando com o script..."
 sleep 5
 echo
@@ -174,8 +177,8 @@ echo -e "Configurando a Interface do NTopNG, pressione <Enter> para continuar."
 	# opção do comando cp: -v (verbose)
 	read
 	sleep 3
-	cp -v conf/ntopng.start /etc/ntopong/ntopng.start &>> $LOG
-	vim /etc/ntopong/ntopng.start
+	cp -v conf/ntopng.start /etc/ntopng/ntopng.start &>> $LOG
+	vim /etc/ntopng/ntopng.start
 echo -e "Interface do NTopNG configurada com sucesso!!!, continuando com o script..."
 sleep 5
 echo
@@ -183,7 +186,7 @@ echo
 echo -e "Iniciando o serviço do NTopNG, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	systemctl enable ntopng &>> $LOG
-	systemctl restart ntopng &>> $LOG
+	systemctl start ntopng &>> $LOG
 echo -e "Serviço do NTopNG iniciado com sucesso!!!, continuando com o script..."
 sleep 5
 echo

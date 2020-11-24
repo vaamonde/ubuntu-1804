@@ -24,15 +24,19 @@
 #	Database host: localhost
 #	Database port: 0 (use default port: 3306)
 #	Database name: zabbix
+#	Store credentials in: Plain text 
 #	User: zabbix
 #	Password: zabbix: Next step;
 # Zabbix server details
 #	Host: localhost
 #	Port: 10051
 #	Name: ptispo01ws01: Next step;
+# GUI settings
+#	Default time zone: System
+#	Default theme: Dark: NExt step;
 # Pre-installation summary: Next step.
 # Install: Finish
-# User Default: Admin
+# User Default: Admin (com A maiúsculo)
 # Password Default: zabbix
 #
 # Site Oficial do Projeto: https://www.zabbix.com/
@@ -190,12 +194,12 @@ echo
 echo -e "Instalando o Zabbix Server, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando apt: -y (yes)
-	apt -y install zabbix-server-mysql zabbix-frontend-php zabbix-apache-conf zabbix-agent traceroute nmap &>> $LOG
+	apt -y install zabbix-server-mysql zabbix-frontend-php zabbix-apache-conf zabbix-agent traceroute nmap snmp snmpd snmp-mibs-downloader &>> $LOG
 echo -e "Zabbix Server instalado com sucesso!!!, continuando com o script..."
 sleep 5
 echo
 #
-echo -e "Criando o Banco de Dados e Populando as Tabelas do Zabbix Server, aguarde..."
+echo -e "Criando o Banco de Dados e Populando as Tabelas do Zabbix Server, aguarde esse processo demora um pouco..."
 	# opção do comando: &>> (redirecionar de saída padrão)
 	# opção do comando: | piper (conecta a saída padrão com a entrada padrão de outro comando)
 	# opção do comando mysql: -u (user), -p (password), -e (execute)
