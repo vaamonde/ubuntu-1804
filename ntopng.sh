@@ -23,6 +23,14 @@
 #
 # Informações que serão solicitadas na configuração via Web do NTopNG
 #
+# Username: admin
+# Password: admin (Login)
+#
+# Change Password
+#	Password: 123456
+#	Confirm Password: 123456
+#	Language: English (Change Password)
+#
 # Site Oficial do Projeto: https://www.ntop.org/
 #
 # Vídeo de instalação do GNU/Linux Ubuntu Server 18.04.x LTS: https://www.youtube.com/watch?v=zDdCrqNhIXI

@@ -47,6 +47,8 @@ KERNEL=$(uname -r | cut -d'.' -f1,2)
 LOG="/var/log/$(echo $0 | cut -d'/' -f2)"
 #
 # Declarando as variáveis de download do FusionInventory (Links atualizados no dia 14/08/2020)
+# OBSERVAÇÃO: O FusionInventory depende do GLPI para funcionar corretamente, recomendo sempre manter o GLPI
+# é o FusionInventory atualizados para as últimas versões.
 FUSIONSERVER="https://github.com/fusioninventory/fusioninventory-for-glpi/releases/download/glpi9.5.0%2B1.0/fusioninventory-9.5.0+1.0.tar.bz2"
 FUSIONAGENT="https://github.com/fusioninventory/fusioninventory-agent/releases/download/2.5.2/fusioninventory-agent_2.5.2-1_all.deb"
 FUSIONCOLLECT="https://github.com/fusioninventory/fusioninventory-agent/releases/download/2.5.2/fusioninventory-agent-task-collect_2.5.2-1_all.deb"
@@ -189,7 +191,7 @@ echo -e "Instalando as Dependências do FusionInventory Server e Agent, aguarde.
 	apt -y install dmidecode hwdata ucf hdparm perl libuniversal-require-perl libwww-perl libparse-edid-perl \
 	libproc-daemon-perl libfile-which-perl libhttp-daemon-perl libxml-treepp-perl libyaml-perl libnet-cups-perl \
 	libnet-ip-perl libdigest-sha-perl libsocket-getaddrinfo-perl libtext-template-perl libxml-xpath-perl \
-	libyaml-tiny-perl &>> $LOG
+	libyaml-tiny-perl libio-socket-ssl-perl libnet-ssleay-perl libcrypt-ssleay-perl &>> $LOG
 	# FusionInventory Task Network
 	apt -y install libnet-snmp-perl libcrypt-des-perl libnet-nbname-perl &>> $LOG
 	# FusionInventory SNMPv3 
@@ -241,7 +243,7 @@ echo
 echo -e "Iniciando o serviço do FusionInventory Agent, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	systemctl enable fusioninventory-agent &>> $LOG
-	systemctl restart fusioninventory-agent &>> $LOG
+	systemctl start fusioninventory-agent &>> $LOG
 echo -e "Serviço do FusionInventory Agent iniciado com sucesso!!!, continuando com o script..."
 sleep 5
 echo
