@@ -81,8 +81,8 @@ GRANTDATABASE="GRANT USAGE ON *.* TO 'zabbix' IDENTIFIED BY 'zabbix';"
 GRANTALL="GRANT ALL PRIVILEGES ON zabbix.* TO 'zabbix' IDENTIFIED BY 'zabbix';"
 FLUSH="FLUSH PRIVILEGES;"
 #
-# Declarando as variáveis para o download do Zabbix Server (Link atualizado no dia 25/07/2020)
-ZABBIX="https://repo.zabbix.com/zabbix/5.0/ubuntu/pool/main/z/zabbix-release/zabbix-release_5.0-1+bionic_all.deb"
+# Declarando as variáveis para o download do Zabbix Server (Link atualizado no dia 24/11/2020)
+ZABBIX="https://repo.zabbix.com/zabbix/5.2/ubuntu/pool/main/z/zabbix-release/zabbix-release_5.2-1%2Bubuntu18.04_all.deb"
 #
 # Exportando o recurso de Noninteractive do Debconf para não solicitar telas de configuração
 export DEBIAN_FRONTEND="noninteractive"
