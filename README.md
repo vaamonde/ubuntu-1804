@@ -100,9 +100,15 @@ Link da vídeo aula: https://www.youtube.com/watch?v=laiuH1zgg3U&t
 
 Link do script utilizado nesse vídeo: https://github.com/vaamonde/ubuntu-1804/blob/master/LocaleTimezoneKeyboard.sh 
 
+## **COMO fazer SNAPSHOTS no VIRTUALBOX do Curso de GNU/Linux Ubuntu Server 18.04.x LTS**
+
+Vídeo mostrando os procedimentos básicos para criar o Snapshoot da Máquina Virtual do Oracle do VirtualBOX do Servidor GNU/Linux Ubuntu Server 18.04.x LTS, esse recurso é importante, pois se tiver alguma falha você consegue voltar a imagens anterior se perder todos os procedimentos executados anteriormente.
+
+Link da vídeo aula: https://www.youtube.com/watch?v=Ypi9wntITpM
+
 ## **SEQUÊNCIA DOS VÍDEOS DE INSTALAÇÃO DOS SERVIÇOS DE REDE NO GNU/LINUX UBUNTU SERVER 18.04.x LTS**
 
-Recomendo seguir a sequência de vídeos abaixo para a implementação dos Serviços de Rede no Servidor Ubuntu 18.04.x, alguns script possuem dependências dos scripts anteriores, cada script complementa o serviço instalado e configurado.
+OBSERVAÇÃO IMPORTANTE: Recomendo seguir a sequência de vídeos abaixo para a implementação dos Serviços de Rede no Servidor Ubuntu 18.04.x, alguns script possuem dependências dos scripts anteriores, cada script complementa o serviço instalado e configurado.
 
 ## **COMO configurar o OpenSSH no GNU/Linux Ubuntu Server 18.04.x LTS**
 
