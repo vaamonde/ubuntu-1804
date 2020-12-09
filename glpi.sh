@@ -5,11 +5,11 @@
 # Facebook: facebook.com/BoraParaPratica
 # YouTube: youtube.com/BoraParaPratica
 # Data de criação: 08/02/2019
-# Data de atualização: 03/08/2020
-# Versão: 0.05
+# Data de atualização: 09/12/2020
+# Versão: 0.06
 # Testado e homologado para a versão do Ubuntu Server 18.04.x LTS x64
 # Kernel >= 4.15.x
-# Testado e homologado para a versão do GLPI-9.4.x
+# Testado e homologado para a versão do GLPI-9.5.x
 #
 # GLPI (sigla em francês: Gestionnaire Libre de Parc Informatique, ou "Free IT Equipment Manager" em inglês) é um sistema
 # gratuito de Gerenciamento de Ativos de TI, sistema de rastreamento de problemas e central de atendimento. Este software
@@ -86,8 +86,8 @@ GRANTDATABASE="GRANT USAGE ON *.* TO 'glpi' IDENTIFIED BY 'glpi';"
 GRANTALL="GRANT ALL PRIVILEGES ON glpi.* TO 'glpi' IDENTIFIED BY 'glpi';"
 FLUSH="FLUSH PRIVILEGES;"
 #
-# Declarando a variável de download do GLPI (Link atualizado no dia 24/11/2020)
-RELEASE="https://github.com/glpi-project/glpi/releases/download/9.5.2/glpi-9.5.2.tgz"
+# Declarando a variável de download do GLPI (Link atualizado no dia 09/12/2020)
+RELEASE="https://github.com/glpi-project/glpi/releases/download/9.5.3/glpi-9.5.3.tgz"
 #
 # Exportando o recurso de Noninteractive do Debconf para não solicitar telas de configuração
 export DEBIAN_FRONTEND="noninteractive"
@@ -176,7 +176,7 @@ echo -e "Instalando as dependências do GLPI, aguarde..."
 	# opção do comando apt: -y (yes), \ (faz a função de quebra de pagina no comando apt)
 	apt -y install php-curl php-gd php-intl php-pear php-imagick php-imap php-memcache php-pspell php-mysql \
 	php-recode php-tidy php-xmlrpc php-xsl php-mbstring php-gettext php-ldap php-cas php-apcu libapache2-mod-php \
-	php-json php-iconv php-xml &>> $LOG
+	php-json php-iconv php-xml php-cli xmlrpc-api-utils &>> $LOG
 echo -e "Dependências instaladas com sucesso!!!, continuando com o script..."
 sleep 5
 echo

@@ -5,11 +5,11 @@
 # Facebook: facebook.com/BoraParaPratica
 # YouTube: youtube.com/BoraParaPratica
 # Data de criação: 06/08/2020
-# Data de atualização: 14/08/2020
-# Versão: 0.02
+# Data de atualização: 09/12/2020
+# Versão: 0.03
 # Testado e homologado para a versão do Ubuntu Server 18.04.x LTS x64
 # Kernel >= 4.15.x
-# Testado e homologado para a versão do FusionInventory Server 9.5.x, Agent 2.5.x, GLPI 9.4.x
+# Testado e homologado para a versão do FusionInventory Server 9.5.x, Agent 2.5.x, GLPI 9.5.x
 #
 # O FusionInventory Agent é um agente multiplataforma genérico. Ele pode executar uma grande variedade de 
 # tarefas de gerenciamento, como inventário local, implantação de software ou descoberta de rede. Ele pode 
@@ -57,6 +57,8 @@ FUSIONDEPLOY="https://github.com/fusioninventory/fusioninventory-agent/releases/
 AGENTWINDOWS32="https://github.com/fusioninventory/fusioninventory-agent/releases/download/2.5.2/fusioninventory-agent_windows-x86_2.5.2.exe"
 AGENTWINDOWS64="https://github.com/fusioninventory/fusioninventory-agent/releases/download/2.5.2/fusioninventory-agent_windows-x64_2.5.2.exe"
 AGENTMACOS="https://github.com/fusioninventory/fusioninventory-agent/releases/download/2.5.2/FusionInventory-Agent-2.5.2-1.dmg"
+#
+# Localização padrão do diretório de instalação do GLPI Help Desk utilizado no script glpi.sh
 GLPI="/var/www/html/glpi"
 #
 # Exportando o recurso de Noninteractive do Debconf para não solicitar telas de configuração
@@ -187,19 +189,19 @@ echo
 echo -e "Instalando as Dependências do FusionInventory Server e Agent, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando apt: -y (yes)
-	# FusionInventory Agent
+	# dependências do FusionInventory Agent
 	apt -y install dmidecode hwdata ucf hdparm perl libuniversal-require-perl libwww-perl libparse-edid-perl \
 	libproc-daemon-perl libfile-which-perl libhttp-daemon-perl libxml-treepp-perl libyaml-perl libnet-cups-perl \
 	libnet-ip-perl libdigest-sha-perl libsocket-getaddrinfo-perl libtext-template-perl libxml-xpath-perl \
 	libyaml-tiny-perl libio-socket-ssl-perl libnet-ssleay-perl libcrypt-ssleay-perl &>> $LOG
-	# FusionInventory Task Network
+	# dependências do FusionInventory Task Network
 	apt -y install libnet-snmp-perl libcrypt-des-perl libnet-nbname-perl &>> $LOG
-	# FusionInventory SNMPv3 
-	apt -y install libdigest-hmac-perl &>> $LOG
-	# FusionInventory Agent Task Deploy
+	# dependências do FusionInventory Task Deploy
 	apt -y install libfile-copy-recursive-perl libparallel-forkmanager-perl &>> $LOG
-	# FusionInventory WakeOnLan Task
+	# dependências do FusionInventory Task WakeOnLan
 	apt -y install libwrite-net-perl &>> $LOG
+    # dependências do FusionInventory SNMPv3
+	apt -y install libdigest-hmac-perl &>> $LOG
 echo -e "Dependências instaladas com sucesso!!!, continuando com o script..."
 sleep 5
 echo
