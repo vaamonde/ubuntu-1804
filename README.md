@@ -108,7 +108,43 @@ Link da vídeo aula: https://www.youtube.com/watch?v=Ypi9wntITpM
 
 ## **SEQUÊNCIA DOS VÍDEOS DE INSTALAÇÃO DOS SERVIÇOS DE REDE NO GNU/LINUX UBUNTU SERVER 18.04.x LTS**
 
-OBSERVAÇÃO IMPORTANTE: Recomendo seguir a sequência de vídeos abaixo para a implementação dos Serviços de Rede no Servidor Ubuntu 18.04.x, alguns script possuem dependências dos scripts anteriores, cada script complementa o serviço instalado e configurado.
+OBSERVAÇÃO IMPORTANTE: Recomendo seguir a sequência dos vídeos abaixo para a implementação dos Serviços de Rede no Servidor Ubuntu 18.04.x, alguns script possuem dependências dos scripts anteriores, cada script complementa o serviço instalado e configurado.
+
+## **BASH SHELL Básico com o Linux Mint 19.1 Tessa**
+
+Vídeo mostrando os procedimentos básicos para a utilização do Bash/Shell no GNU/Linux, esse vídeo tem como objetivo auxiliar nos primeiros passos no Terminal do GNU/Liux, facilitando o entendimento dos comandos digitados nesse curso.
+
+O bash é um interpretador de comandos, um entre os diversos tradutores entre o usuário e o sistema operacional conhecidos como shell.
+
+Acrônimo para "Bourne-Again SHell, o bash é uma evolução retro-compatível muito mais interativa do Bourne Shell (sh). Os shells Bourne permitem a execução de sequências de comandos inseridos diretamente na linha de comandos ("prompt") ou ainda lidos de arquivos de texto conhecidos como shell scripts. Neles se podem invocar comandos internos aos próprios shells (conhecidos como comandos "builtins") ou ainda arquivos binários ou scripts de terceiros arquivados nos dispositivos de armazenamento do sistema.
+
+Link da vídeo aula: https://www.youtube.com/watch?v=xs1zGEBf-wc&t
+
+Link do script utilizado nesse vídeo: https://github.com/vaamonde/ubuntu-1804/blob/master/Bash.sh
+
+## **SHELL SCRIPT Básico com o Linux Mint 19.1 Tessa**
+
+Vídeo mostrando os procedimentos básicos para a programação Shell Script no GNU/Linux, esse vídeo tem como objetivo auxiliar nos primeiros passos na criação dos primeiros scripts em shell, facilitando o entendimento dos scripts criados nesse curso.
+
+Shell script é uma linguagem de script usada em vários sistemas operacionais, dependendo do interpretador de comandos utilizado. Um exemplo de interpretador de comandos é o bash, usado na grande maioria das distribuições GNU/Linux.
+
+A maior parte dos usuários classificam shell script como uma linguagem de fácil aprendizagem. O primeiro passo é, saber o que se deseja fazer, então ver qual o código que executa este comando em shell e aí criar, basta escrever o código em algum editor de texto e salvar.
+
+Link da vídeo aula: https://www.youtube.com/watch?v=MkKkZA8wxHU&t
+
+Link do script utilizado nesse vídeo: https://github.com/vaamonde/ubuntu-1804/blob/master/Shell.sh
+
+## **GIT e GITHUB Básico com o Linux Mint 19.1 Tessa**
+
+Vídeo mostrando os procedimentos básicos para utilizar o comando Git e o site Github no GNU/Linux, esse vídeo tem como objetivo auxiliar nos primeiros passos na utilização do site do Github e os principais parâmetros e configurações do comando Git, facilitando o entendimento dos scripts criados nesse curso.
+
+O Git é um sistema de controle de versões distribuído, usado principalmente no desenvolvimento de software, mas pode ser usado para registrar o histórico de edições de qualquer tipo de arquivo. O Git foi inicialmente projetado e desenvolvido por Linus Torvalds para o desenvolvimento do kernel Linux, mas foi adotado por muitos outros projetos.
+
+O GitHub é uma plataforma de hospedagem de código-fonte com controle de versão usando o Git. Ele permite que programadores, utilitários ou qualquer usuário cadastrado na plataforma contribuam em projetos privados e/ou Open Source de qualquer lugar do mundo. 
+
+Link da vídeo aula: https://www.youtube.com/watch?v=hrmqRD2k5P0&t
+
+Link do script utilizado nesse vídeo: https://github.com/vaamonde/ubuntu-1804/blob/master/Git-Github.sh
 
 ## **COMO configurar o OpenSSH no GNU/Linux Ubuntu Server 18.04.x LTS**
 
