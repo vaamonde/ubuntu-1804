@@ -11,9 +11,9 @@ Facebook Bora para Prática: https://www.facebook.com/boraparapratica<br>
 Instagram Procedimentos em TI: https://www.instagram.com/procedimentoem<br>
 YouTUBE Bora Para Prática: https://www.youtube.com/boraparapratica<br>
 
-Esse curso tem como objetivo de mostrar a instalação e configuração da nova versão de Servidor da Canonical o GNU/Linux Ubuntu Server 18.04.x, essa nova versão foi projetada para uma fácil implementação, administração e configuração dos serviços de rede de forma fácil e confiável.
+Esse curso tem como objetivo demonstrar a instalação e configuração da nova versão de Servidor da Canonical o GNU/Linux Ubuntu Server 18.04.x, essa versão foi projetada para uma fácil implementação, administração e configuração dos principais serviços de rede de forma fácil e confiável.
 
-Projetado para suportar implementações On-Premise (Servidores Locais) ou em Cloud (Nuvens), possui várias ferramentas integradas e soluções desenvolvidas pela Canonical que facilitar a implementação em larga escala e suporte a Hosts Virtual e Cloud melhorados.
+Projetado para suportar implementações On-Premise (Servidores Locais) ou Cloud (Nuvens), possui várias ferramentas integradas e soluções desenvolvidas pela Canonical que facilita a implementação em larga escala e suporte a Hosts Virtual e Cloud melhorados.
 
 Para esse curso as metodologias de DevOps, utilizando o Git e Github serão empregadas de forma dinâmica, desenvolvendo scripts e automatizando todo os processos de instalação e configuração.
 
