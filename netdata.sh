@@ -5,8 +5,8 @@
 # Facebook: facebook.com/BoraParaPratica
 # YouTube: youtube.com/BoraParaPratica
 # Data de criação: 11/11/2018
-# Data de atualização: 03/08/2020
-# Versão: 0.08
+# Data de atualização: 10/12/2020
+# Versão: 0.09
 # Testado e homologado para a versão do Ubuntu Server 18.04.x LTS x64
 # Kernel >= 4.15.x
 # Testado e homologado para a versão do Netdata 1.23.x
@@ -72,12 +72,19 @@ fi
 # opção do dpkg: -s (status), opção do echo: -e (interpretador de escapes de barra invertida), -n (permite nova linha)
 # || (operador lógico OU), 2> (redirecionar de saída de erro STDERR), && = operador lógico AND, { } = agrupa comandos em blocos
 # [ ] = testa uma expressão, retornando 0 ou 1, -ne = é diferente (NotEqual)
-echo -n "Verificando as dependências, aguarde... "
+echo -n "Verificando as dependências do Netdata, aguarde... "
 	for name in mysql-server mysql-common apache2
 	do
-  		[[ $(dpkg -s $name 2> /dev/null) ]] || { echo -en "\n\nO software: $name precisa ser instalado. \nUse o comando 'apt install $name'\n";deps=1; }
+  		[[ $(dpkg -s $name 2> /dev/null) ]] || { 
+              echo -en "\n\nO software: $name precisa ser instalado. \nUse o comando 'apt install $name'\n";
+              deps=1; 
+              }
 	done
-		[[ $deps -ne 1 ]] && echo "Dependências.: OK" || { echo -en "\nInstale as dependências acima e execute novamente este script\n";exit 1; }
+		[[ $deps -ne 1 ]] && echo "Dependências.: OK" || { 
+            echo -en "\nInstale as dependências acima e execute novamente este script\n";
+            echo -en "Recomendo utilizar o script: lamp.sh para resolver as dependências."
+            exit 1; 
+            }
 		sleep 5
 #
 # Script de instalação do Netdata no GNU/Linux Ubuntu Server 18.04.x
