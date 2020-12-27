@@ -11,9 +11,9 @@ Facebook Bora para Prática: https://www.facebook.com/boraparapratica<br>
 Instagram Procedimentos em TI: https://www.instagram.com/procedimentoem<br>
 YouTUBE Bora Para Prática: https://www.youtube.com/boraparapratica<br>
 
-Esse curso tem como objetivo demonstrar a instalação e configuração da nova versão de Servidor da Canonical o GNU/Linux Ubuntu Server 18.04.x, essa versão foi projetada para uma fácil implementação, administração e configuração dos principais serviços de rede de forma fácil e confiável.
+Esse curso tem como objetivo demonstrar a instalação e configuração da nova versão de Servidor da Canonical o GNU/Linux Ubuntu Server 18.04.x, essa versão foi projetada para uma fácil implementação, administração e configuração dos principais serviços de rede de utilizados no nosso dia a dia.
 
-Projetado para suportar implementações On-Premise (Servidores Locais) ou Cloud (Nuvens), possui várias ferramentas integradas e soluções desenvolvidas pela Canonical que facilita a implementação em larga escala e suporte a Hosts Virtual e Cloud melhorados.
+Projetado para suportar implementações On-Premise (Servidores Locais) ou Cloud (Nuvens), essa versão possui várias ferramentas integradas e soluções desenvolvidas pela Canonical que facilita a implementação em larga escala e suporte a Hosts Virtual e Cloud melhorados.
 
 Para esse curso as metodologias de DevOps, utilizando o Git e Github serão empregadas de forma dinâmica, desenvolvendo scripts e automatizando todo os processos de instalação e configuração.
 
@@ -102,7 +102,7 @@ Link do script utilizado nesse vídeo: https://github.com/vaamonde/ubuntu-1804/b
 
 ## **COMO fazer SNAPSHOTS no VIRTUALBOX do Curso de GNU/Linux Ubuntu Server 18.04.x LTS**
 
-Vídeo mostrando os procedimentos básicos para criar o Snapshoot da Máquina Virtual do Oracle do VirtualBOX do Servidor GNU/Linux Ubuntu Server 18.04.x LTS, esse recurso é importante, pois se tiver alguma falha você consegue voltar a imagens anterior se perder todos os procedimentos executados anteriormente.
+Vídeo mostrando os procedimentos básicos para criar o Snapshot da Máquina Virtual do Oracle do VirtualBOX do Servidor GNU/Linux Ubuntu Server 18.04.x LTS, esse recurso é importante, pois se tiver alguma falha você consegue voltar a imagens anterior se perder todos os procedimentos executados anteriormente.
 
 Link da vídeo aula: https://www.youtube.com/watch?v=Ypi9wntITpM
 
@@ -112,7 +112,7 @@ OBSERVAÇÃO IMPORTANTE: Recomendo seguir a sequência dos vídeos abaixo para a
 
 ## **BASH SHELL Básico com o Linux Mint 19.1 Tessa**
 
-Vídeo mostrando os procedimentos básicos para a utilização do Bash/Shell no GNU/Linux, esse vídeo tem como objetivo auxiliar nos primeiros passos no Terminal do GNU/Liux, facilitando o entendimento dos comandos digitados nesse curso.
+Vídeo mostrando os procedimentos básicos para a utilização do Bash/Shell no GNU/Linux, esse vídeo tem como objetivo auxiliar nos primeiros passos no Terminal do GNU/Linux, facilitando o entendimento dos comandos digitados nesse curso.
 
 O bash é um interpretador de comandos, um entre os diversos tradutores entre o usuário e o sistema operacional conhecidos como shell.
 
@@ -145,6 +145,20 @@ O GitHub é uma plataforma de hospedagem de código-fonte com controle de versã
 Link da vídeo aula: https://www.youtube.com/watch?v=hrmqRD2k5P0&t
 
 Link do script utilizado nesse vídeo: https://github.com/vaamonde/ubuntu-1804/blob/master/Git-Github.sh
+
+## **VIM Básico com Linux Mint 19.2 Tina x64**
+
+Vídeo mostrando os procedimentos básicos para utilizar editor de texto por linha de comando VIM no GNU/Linux, esse vídeo tem como objetivo auxiliar nos primeiros passos na utilização do editor de texto vim, facilitando na utilização da edição dos scripts criados nesse curso.
+
+O editor de Texto VIM (um acrônimo de Vi IMproved , em português Vi Melhorado) é um clone do  editor de textos VI para Unix. O VIM foi projetado para ser utilizado em linha de comando ou como um aplicativo independente em uma interface gráfica. O VIM é um software livre e de código fonte aberto (Free Software e Open Source).
+
+Desde o seu lançamento para a plataforma do Amiga (em 1991), o seu desenvolvimento permitiu está disponível em vários sistemas operacionais diferentes (como por exemplo o Microsoft Windows). Em 2006, foi eleito o editor de texto mais popular entre os leitores do Linux Journal; em 2015, a pesquisa de desenvolvedores do Stack Overflow descobriu que o VIM era o terceiro editor de texto mais popular e o quinto ambiente de desenvolvimento mais popular em 2019.
+
+Por causa disso, o editor de Texto VIM é o principal Software utilizado em Desktop e Servidores GNU/Linux para a criação de script e modificação de arquivos conf.
+
+Link da vídeo aula: https://www.youtube.com/watch?v=u6Or0rFgltY&t
+
+Link do script utilizado nesse vídeo: https://github.com/vaamonde/ubuntu-1804/blob/master/Vim.sh
 
 ## **COMO configurar o OpenSSH no GNU/Linux Ubuntu Server 18.04.x LTS**
 
@@ -269,7 +283,7 @@ Link do script utilizado nesse vídeo: https://github.com/vaamonde/ubuntu-1804/b
 
 ## **COMO instalar o OWNCLOUD no GNU/Linux Ubuntu Server 18.04.x LTS**
 
-Vídeo mostrando os procedimentos básicos para instalar o owncloud no GNU/Linux Ubuntu Server 18.04 LTS
+Vídeo mostrando os procedimentos básicos para instalar o ownCloud no GNU/Linux Ubuntu Server 18.04 LTS
 
 O ownCloud é um sistema de computador mais conhecido como "serviço de armazenamento e sincronização de arquivos". Como tal, ownCloud é muito semelhante ao amplamente usado Dropbox, cuja principal diferença é que ownCloud é gratuito e open-source, e permitindo assim qualquer um de instalar e operar sem custo em um servidor privado, sem limite de espaço de armazenamento (com exceção da capacidade do disco rígido) ou o número de clientes conectados.
 
