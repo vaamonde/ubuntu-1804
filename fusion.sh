@@ -5,8 +5,8 @@
 # Facebook: facebook.com/BoraParaPratica
 # YouTube: youtube.com/BoraParaPratica
 # Data de criação: 06/08/2020
-# Data de atualização: 10/12/2020
-# Versão: 0.04
+# Data de atualização: 01/01/2021
+# Versão: 0.05
 # Testado e homologado para a versão do Ubuntu Server 18.04.x LTS x64
 # Kernel >= 4.15.x
 # Testado e homologado para a versão do FusionInventory Server 9.5.x, Agent 2.5.x, GLPI 9.5.x
@@ -17,6 +17,10 @@
 # atuando como um ponto de controle centralizado.
 #
 # Informações que serão solicitadas na configuração via Web do FusionInventory no GLPI
+# Configurar
+#   Plug-ins
+#       FusionInventory: Instalar
+#       FusionInventory: Habilitar 
 #
 # Site Oficial do Projeto: http://fusioninventory.org/
 #
@@ -239,9 +243,12 @@ echo
 #
 echo -e "Configurando o FusionInventory Agent, pressione <Enter> para continuar."
 	# opção do comando: &>> (redirecionar a saída padrão)
+    # opção do comando mkdir: -v (verbose)
 	# opção do comando cp: -v (verbose)
 	read
 	sleep 3
+    mkdir -v /var/log/fusioninventory-agent/ &>> $LOG
+    touch /var/log/fusioninventory-agent/fusioninventory.log &>> $LOG
 	cp -v /etc/fusioninventory/agent.cfg /etc/fusioninventory/agent.cfg.bkp &>> $LOG
 	cp -v conf/agent.cfg /etc/fusioninventory/agent.cfg &>> $LOG
 	vim /etc/fusioninventory/agent.cfg

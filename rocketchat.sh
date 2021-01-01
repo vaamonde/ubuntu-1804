@@ -149,9 +149,9 @@ echo
 #
 echo -e "Configurando o conjunto de Réplicas do MongoDB, pressione <Enter> para acessar o MongoDB"
 	# opção do comando: &>> (redirecionar a saida padrão)
+    # digite o comando: rs.initiate() - após o término digite o comando: exit
 	read
 	mongo
-	# digite o comando: rs.initiate() - após o término digite o comando: exit
 echo -e "Conjunto de Réplicas do MongoDB configurada com sucesso!!!, continuando com o script..."
 sleep 5
 echo
