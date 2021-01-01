@@ -16,8 +16,9 @@
 # utilização da largura de banda da rede, carga de uso CPU e consumo de espaço em disco, entre vários outros
 # recursos de monitoramento e alertas.
 #
-# Informações que serão solicitada na configuração via Web do Zabbix Server
-# Welcome to Zabbix 5.0: Next step;
+# Informações que serão solicitadas na configuração via Web do Zabbix Server
+# Welcome to Zabbix 5.0: 
+#   Default language: English (en_US): Next step;
 # Check of pre-requisites: Next step;
 # Configure DB connection:
 #	Database type: MySQL

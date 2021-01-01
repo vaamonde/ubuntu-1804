@@ -5,21 +5,22 @@
 # Facebook: facebook.com/BoraParaPratica
 # YouTube: youtube.com/BoraParaPratica
 # Data de criação: 09/08/2020
-# Data de atualização: 09/08/2020
-# Versão: 0.01
+# Data de atualização: 01/01/2021
+# Versão: 0.02
 # Testado e homologado para a versão do Ubuntu Server 18.04.x LTS x64
 # Kernel >= 4.15.x
-# Testado e homologado para a versão do NTopNG 4.0.x
+# Testado e homologado para a versão do NTop-NG 4.0.x
 #
 # NTop-NG é um software para monitorar o tráfego em uma rede de computadores. Ele foi projetado para ser um 
 # substituto de alto desempenho e baixo recurso para o NTop. O NTop-NG é um software de código aberto lançado 
 # sob a Licença Pública Geral GNU (GPLv3) para software. Versões de código-fonte estão disponíveis para os 
 # sistemas operacionais: Unix, Linux, BSD, Mac OS X e Windows. O mecanismo do NTop-NG é escrito na linguagem 
-# de programação C ++, sua interface da web é opcional e foi desenvolvida na linguagem Lua.
+# de programação C++, sua interface da web é opcional e foi desenvolvida na linguagem Lua.
 #
 # OBSERVAÇÃO IMPORTANTE: para o NTop-NG funcionar corretamente em um Infraestrutura de Redes de Computadores,
-# recomendamos que a Porta de Conexão do Switch que vai conectar o Servidor do NTop-NG seja configurada no
-# Modo Mirroring/Monitoring (ou em alguns casos no modo Trunk)
+# e recomendado que as configurações da Porta do Switch que está conectado o Servidor do NTop-NG esteja no 
+# Modo Mirroring/Monitoring (Espelhamento/Monitoramento) ou em alguns casos no Modo Trunk (Tronco), também e
+# recomendado que a Interface de Rede do Servidor esteja no Promiscuous Mode (Modo Promíscuo) 
 #
 # Informações que serão solicitadas na configuração via Web do NTopNG
 #
@@ -79,7 +80,7 @@ if [ "$USUARIO" == "0" ] && [ "$UBUNTU" == "18.04" ] && [ "$KERNEL" == "4.15" ]
 		exit 1
 fi
 #
-# Script de instalação do NTopNG no GNU/Linux Ubuntu Server 18.04.x
+# Script de instalação do NTop-NG no GNU/Linux Ubuntu Server 18.04.x
 # opção do comando echo: -e (enable interpretation of backslash escapes), \n (new line)
 # opção do comando hostname: -I (all IP address)
 # opção do comando date: + (format), %d (day), %m (month), %Y (year 1970), %H (hour 24), %M (minute 60)
@@ -87,8 +88,8 @@ fi
 echo -e "Início do script $0 em: `date +%d/%m/%Y-"("%H:%M")"`\n" &>> $LOG
 clear
 #
-echo -e "Instalação do NTopNG no GNU/Linux Ubuntu Server 18.04.x\n"
-echo -e "Após a instalação do NTopNG acesse a URL: http://`hostname -I | cut -d' ' -f1`:3001\n"
+echo -e "Instalação do NTop-NG no GNU/Linux Ubuntu Server 18.04.x\n"
+echo -e "Após a instalação do NTop-NG acesse a URL: http://`hostname -I | cut -d' ' -f1`:3001\n"
 echo -e "Aguarde, esse processo demora um pouco dependendo do seu Link de Internet..."
 sleep 5
 echo
@@ -130,29 +131,29 @@ echo -e "Software removidos com sucesso!!!, continuando com o script..."
 sleep 5
 echo
 #
-echo -e "Instalando o NTopNG, aguarde...\n"
+echo -e "Instalando o NTop-NG, aguarde...\n"
 echo
 #
-echo -e "Fazendo o download do Repositório do NTopNG do site Oficial, aguarde..."
+echo -e "Fazendo o download do Repositório do NTop-NG do site Oficial, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando rm: -v (verbose)
 	# opção do comando wget: -O (output document file)
 	rm -v ntopng.deb &>> $LOG
 	wget $NTOPNG -O ntopng.deb &>> $LOG
-echo -e "Download do repositório do NTopNG feito com sucesso!!!, continuando com o script..."
+echo -e "Download do repositório do NTop-NG feito com sucesso!!!, continuando com o script..."
 sleep 5
 echo
 #
-echo -e "Instalando o Repositório do NTopNG, aguarde..."
+echo -e "Instalando o Repositório do NTop-NG, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando dpkg: -i (install)
 	dpkg -i ntopng.deb &>> $LOG
 	apt update &>> $LOG
-echo -e "Repositório do NTopNG instalado com sucesso!!!, continuando com o script..."
+echo -e "Repositório do NTop-NG instalado com sucesso!!!, continuando com o script..."
 sleep 5
 echo
 #
-echo -e "Instalando as Dependências do NTopNG, aguarde..."
+echo -e "Instalando as Dependências do NTop-NG, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando apt: -y (yes)
 	apt -y install software-properties-common &>> $LOG
@@ -160,53 +161,51 @@ echo -e "Dependências instaladas com sucesso!!!, continuando com o script..."
 sleep 5
 echo
 #
-echo -e "Instalando o NTopNG, aguarde..."
+echo -e "Instalando o NTop-NG, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando apt: -y (yes)
 	apt -y install ntopng ntopng-data &>> $LOG
-echo -e "NTopNG instalado com sucesso!!!, continuando com o script..."
+echo -e "NTop-NG instalado com sucesso!!!, continuando com o script..."
 sleep 5
 echo
 #
-echo -e "Configurando o NTopNG, pressione <Enter> para continuar."
+echo -e "Configurando o NTop-NG, pressione <Enter> para continuar."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando cp: -v (verbose)
 	read
 	sleep 3
 	cp -v /etc/ntopng/ntopng.conf /etc/ntopng/ntopng.conf.bkp &>> $LOG
 	cp -v conf/ntopng.conf /etc/ntopng/ntopng.conf &>> $LOG
+    cp -v conf/ntopng.start /etc/ntopng/ntopng.start &>> $LOG
 	vim /etc/ntopng/ntopng.conf
-echo -e "NTopNG configurado com sucesso!!!, continuando com o script..."
+echo -e "NTop-NG configurado com sucesso!!!, continuando com o script..."
 sleep 5
 echo
 #
-echo -e "Configurando a Interface do NTopNG, pressione <Enter> para continuar."
-	# opção do comando: &>> (redirecionar a saída padrão)
-	# opção do comando cp: -v (verbose)
-	read
-	sleep 3
-	cp -v conf/ntopng.start /etc/ntopng/ntopng.start &>> $LOG
-	vim /etc/ntopng/ntopng.start
-echo -e "Interface do NTopNG configurada com sucesso!!!, continuando com o script..."
-sleep 5
-echo
-#
-echo -e "Iniciando o serviço do NTopNG, aguarde..."
+echo -e "Iniciando o serviço do NTop-NG, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	systemctl enable ntopng &>> $LOG
 	systemctl start ntopng &>> $LOG
-echo -e "Serviço do NTopNG iniciado com sucesso!!!, continuando com o script..."
+echo -e "Serviço do NTop-NG iniciado com sucesso!!!, continuando com o script..."
 sleep 5
 echo
 #
-echo -e "Verificando a porta de conexão do NTopNG, aguarde..."
+#
+echo -e "Configurando a Interface de Rede em Modo Promíscuo, aguarde..."
+	# opção do comando: &>> (redirecionar a saída padrão)
+	ifconfig enp0s3 promisc &>> $LOG
+echo -e "Interface de Rede configurada com sucesso!!!, continuando com o script..."
+sleep 5
+echo
+#
+echo -e "Verificando a porta de conexão do NTop-NG, aguarde..."
 	# opção do comando netstat: -a (all), -n (numeric)
 	netstat -an | grep 3001
 echo -e "Porta de conexão verificada com sucesso!!!, continuando com o script..."
 sleep 5
 echo
 #
-echo -e "Instalação do NTopNG feita com Sucesso!!!."
+echo -e "Instalação do NTop-NG feita com Sucesso!!!."
 	# script para calcular o tempo gasto (SCRIPT MELHORADO, CORRIGIDO FALHA DE HORA:MINUTO:SEGUNDOS)
 	# opção do comando date: +%T (Time)
 	HORAFINAL=$(date +%T)

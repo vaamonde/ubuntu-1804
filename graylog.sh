@@ -5,8 +5,8 @@
 # Facebook: facebook.com/BoraParaPratica
 # YouTube: youtube.com/BoraParaPratica
 # Data de criação: 26/07/2020
-# Data de atualização: 10/12/2020
-# Versão: 0.03
+# Data de atualização: 01/01/2021
+# Versão: 0.04
 # Testado e homologado para a versão do Ubuntu Server 18.04.x LTS x64
 # Kernel >= 4.15.x
 # Testado e homologado para a versão do Graylog 3.3.x
@@ -275,7 +275,11 @@ echo
 echo -e "Habilitando o Serviço do Graylog, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	systemctl enable graylog-server &>> $LOG
+    sleep 5
 	systemctl restart graylog-server &>> $LOG
+    sleep 5
+    systemctl status graylog-server &>> $LOG
+    sleep 5
 echo -e "Serviço do Graylog habilitado com sucesso!!!, continuando com o script..."
 sleep 5
 echo
