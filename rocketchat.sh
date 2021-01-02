@@ -162,12 +162,14 @@ echo -e "Adicionando o repositório do Node.js, aguarde..."
 	# opção do comando wget: -q (quiet), -O (output document file)
 	# opção do comando cp: -v (verbose)
 	# opção do comando curl: -s (silent), -L (location)
-	apt -y install curl npm &>> $LOG
+    # opção do comando sudo: -E (preserve-env)
+	apt -y install node-gyp &>> $LOG
+    apt -y install curl npm &>> $LOG
 	curl -sL $KEYSRVNODEJS | sudo -E bash - &>> $LOG
 echo -e "Repositório do Node.js adicionado com sucesso!!!, continuando com o script..."
 sleep 5
 echo
-$
+#
 echo -e "Instalando o Node.js, aguarde..."
 	# opção do comando: &>> (redirecionar a saida padrão)
 	# opção do comando apt: -y (yes)
