@@ -17,7 +17,7 @@
 # recursos de monitoramento e alertas.
 #
 # Informações que serão solicitadas na configuração via Web do Zabbix Server
-# Welcome to Zabbix 5.0: 
+# Welcome to Zabbix 5.2: 
 #   Default language: English (en_US): Next step;
 # Check of pre-requisites: Next step;
 # Configure DB connection:
@@ -202,7 +202,8 @@ echo
 echo -e "Instalando o Zabbix Server, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando apt: -y (yes)
-	apt -y install zabbix-server-mysql zabbix-frontend-php zabbix-apache-conf zabbix-agent traceroute nmap snmp snmpd snmp-mibs-downloader &>> $LOG
+	apt -y install zabbix-server-mysql zabbix-frontend-php zabbix-apache-conf zabbix-agent traceroute nmap \
+    snmp snmpd snmp-mibs-downloader &>> $LOG
 echo -e "Zabbix Server instalado com sucesso!!!, continuando com o script..."
 sleep 5
 echo
