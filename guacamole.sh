@@ -145,10 +145,10 @@ echo -e "Instalando o Apache Guacamole Server e Client, aguarde...\n"
 echo -e "Instalando as Dependências do Apache Guacamole Server, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando apt: -y (yes)
-	apt -y install libcairo2-dev libjpeg-turbo8-dev libjpeg62-dev libpng-dev libtool-bin libossp-uuid-dev \
-    libavcodec-dev libavformat-dev libavutil-dev libswscale-dev freerdp2-dev libpango1.0-dev libssh2-1-dev \
-    libtelnet-dev libvncserver-dev libwebsockets-dev libpulse-dev libssl-dev libvorbis-dev libwebp-dev gcc-6 \
-    g++-6 libfreerdp-dev&>> $LOG
+	apt -y install libcairo2-dev libjpeg-turbo8-dev libpng-dev libtool-bin libossp-uuid-dev \
+    libavcodec-dev libavformat-dev libavutil-dev libswscale-dev freerdp2-dev libpango1.0-dev \
+    libssh2-1-dev libtelnet-dev libvncserver-dev libwebsockets-dev libpulse-dev libssl-dev \
+    libvorbis-dev libwebp-dev gcc-6 g++-6 libfreerdp-dev &>> $LOG
 echo -e "Dependências instaladas com sucesso!!!, continuando com o script..."
 sleep 5
 echo
