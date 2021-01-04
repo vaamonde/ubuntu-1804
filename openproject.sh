@@ -187,9 +187,9 @@ echo -e "OpenProject configurado com sucesso!!!, continuando com o script..."
 sleep 5
 echo
 #
-echo -e "Verificando a porta de conexão do OpenProject, aguarde..."
+echo -e "Verificando a porta de conexão do PostgreSQL, aguarde..."
 	# opção do comando netstat: a (all), n (numeric)
-	netstat -an | grep 3000
+	netstat -an | grep 5432
 echo -e "Porta verificada com sucesso!!!, continuando com o script..."
 sleep 5
 echo

@@ -345,15 +345,13 @@ Link da vídeo aula: https://www.youtube.com/watch?v=yXc3v3HAG5w
 
 Link do script utilizado nesse vídeo: https://github.com/vaamonde/ubuntu-1804/blob/master/tomcat.sh
 
-========================= VÍDEOS EM DESENVOLVIMENTO =========================
-
 ## **COMO instalar o GRAYLOG no GNU/Linux Ubuntu Server 18.04.x LTS**
 
 Vídeo mostrando os procedimentos básicos para instalar o Graylog no GNU/Linux Ubuntu Server 18.04 LTS
 
 O Graylog captura, armazena e permite centralizar a pesquisa e a análise de logs em tempo real de qualquer componente da infraestrutura e aplicativos de TI. O software utiliza uma arquitetura de três camadas de armazenamento escalável baseado no ElasticSearch (Elasticsearch é um servidor de buscas distribuído baseado no Apache Lucene) e no MongoDB (MongoDB é um software de banco de dados orientado a documentos NoSQL).
 
-Link da vídeo aula: 
+Link da vídeo aula: https://www.youtube.com/watch?v=EQKBcr2z5Ac
 
 Link do script utilizado nesse vídeo: https://github.com/vaamonde/ubuntu-1804/blob/master/graylog.sh
 
@@ -386,6 +384,8 @@ O FusionInventory Agent é um agente multiplataforma genérico. Ele pode executa
 Link da vídeo aula: 
 
 Link do script utilizado nesse vídeo: https://github.com/vaamonde/ubuntu-1804/blob/master/fusion.sh
+
+========================= VÍDEOS EM DESENVOLVIMENTO =========================
 
 ## **COMO instalar o ROCKET.CHAT no GNU/Linux Ubuntu Server 18.04.x LTS**
 
