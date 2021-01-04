@@ -51,6 +51,7 @@ CLIENT="https://apachemirror.wuchna.com/guacamole/1.3.0/binary/guacamole-1.3.0.w
 #
 # Localização padrão do diretório de configuração e do webapp do Tomcat utilizado no script tomcat.sh
 WEBAPPS="/var/lib/tomcat9/webapps/"
+TOMCAT="/usr/share/tomcat9/"
 #
 # Exportando o recurso de Noninteractive do Debconf para não solicitar telas de configuração
 export DEBIAN_FRONTEND="noninteractive"
@@ -203,6 +204,7 @@ echo -e "Criando o diretório e baixando o Apache Guacamole Client, aguarde..."
 	mkdir -v /etc/guacamole/{extensions,lib} &>> $LOG
 	wget $CLIENT -O /etc/guacamole/guacamole.war &>> $LOG
     ln -sv /etc/guacamole/guacamole.war $WEBAPPS &>> $LOG
+    ln -sv /etc/guacamole $TOMCAT.guacamole &>> $LOG
 echo -e "Download dos Apache Guacamole Client feito com sucesso!!!, continuando com o script..."
 sleep 5
 echo
