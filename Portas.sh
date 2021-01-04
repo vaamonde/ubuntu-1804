@@ -23,7 +23,7 @@
 011: bareos.sh;			HTTP: 80, 9102, 9103
 012: ansible.sh;		HTTP: 4440
 013: glpi.sh;			HTTP: 80
-014: grafana.sh;		HTTP: 3000
+014: grafana.sh;		HTTP: 30000
 015: graylog.sh;		HTTP: 19000, 27017, 9200
 016: tomcat.sh;			HTTP: 8080
 017: zabbix.sh;			HTTP: 80, 10050, 10051
