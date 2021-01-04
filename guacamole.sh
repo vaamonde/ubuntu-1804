@@ -155,9 +155,10 @@ echo
 #
 echo -e "Fazendo o download do Apache Guacamole Server do site Oficial, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
-	# opção do comando rm: -v (verbose)
+	# opção do comando rm: -v (verbose), -f (force), -R (recursive)
 	# opção do comando wget: -O (output document file)
 	rm -v guacamole.tar.gz &>> $LOG
+    rm -Rfv guacamole-server-*/ &>> $LOG
 	wget $SERVER -O guacamole.tar.gz &>> $LOG
 echo -e "Download do Apache Guacamole Server feito com sucesso!!!, continuando com o script..."
 sleep 5
@@ -174,7 +175,7 @@ echo
 echo -e "Instalando o Apache Guacamole Server, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando autoreconf: -f (force), -i (install)
-	cd guacamole-server/ &>> $LOG
+	cd guacamole-server-*/ &>> $LOG
         autoreconf -fi &>> $LOG
         ./configure --with-init-dir=/etc/init.d &>> $LOG
         make &>> $LOG
