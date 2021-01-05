@@ -13,7 +13,7 @@
 #
 # O FusionInventory Agent é um agente multiplataforma genérico. Ele pode executar uma grande variedade de 
 # tarefas de gerenciamento, como inventário local, implantação de software ou descoberta de rede. Ele pode 
-# ser usado autônomo ou em combinação com um servidor compatível (OCS Inventory, GLPI, OTRS, Uranos, ...) 
+# ser usado autônomo ou em combinação com um servidor compatível (OCS Inventory, GLPI, OTRS, Uranos, etc..) 
 # atuando como um ponto de controle centralizado.
 #
 # Informações que serão solicitadas na configuração via Web do FusionInventory no GLPI

@@ -190,7 +190,6 @@ echo -e "Serviço do NTop-NG iniciado com sucesso!!!, continuando com o script..
 sleep 5
 echo
 #
-#
 echo -e "Configurando a Interface de Rede em Modo Promíscuo, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	ifconfig enp0s3 promisc &>> $LOG
