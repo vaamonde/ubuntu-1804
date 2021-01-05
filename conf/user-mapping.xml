@@ -26,9 +26,20 @@
             <param name="username">vaamonde</param>
         </connection>
         <!-- configuração do acesso remoto via RDP-->
-        <connection name="Windows-10">
+        <connection name="Windows-7">
             <protocol>rdp</protocol>
             <param name="hostname">172.16.1.103</param>
+            <param name="port">3389</param>
+            <param name="username">vaamonde</param>
+            <param name="ignore-cert">true</param>
+            <param name="disable-bitmap-caching">true</param>
+            <param name="disable-offscreen-caching">true</param>
+            <param name="disable-glyph-caching">true</param>
+        </connection>
+        <!-- configuração do acesso remoto via RDP-->
+        <connection name="Windows-10">
+            <protocol>rdp</protocol>
+            <param name="hostname">172.16.1.104</param>
             <param name="port">3389</param>
             <param name="username">vaamonde</param>
             <param name="ignore-cert">true</param>
