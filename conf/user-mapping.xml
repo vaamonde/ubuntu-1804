@@ -25,6 +25,12 @@
             <param name="port">22</param>
             <param name="username">vaamonde</param>
         </connection>
+        <!-- configuração do acesso remoto via Telnet-->
+        <connection name="Ubuntu-Server">
+            <protocol>ssh</protocol>
+            <param name="hostname">172.16.1.20</param>
+            <param name="port">23</param>
+        </connection>
         <!-- configuração do acesso remoto via RDP-->
         <connection name="Windows-7">
             <protocol>rdp</protocol>
