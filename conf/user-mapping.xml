@@ -19,20 +19,20 @@
             password="5cbd438413e8e3ca0e14e200fde621a9"
             encoding="md5">
         <!-- configuração do acesso remoto via OpenSSH-->
-        <connection name="Ubuntu-Server">
+        <connection name="Ubuntu-Server-SSH">
             <protocol>ssh</protocol>
             <param name="hostname">172.16.1.20</param>
             <param name="port">22</param>
             <param name="username">vaamonde</param>
         </connection>
         <!-- configuração do acesso remoto via Telnet-->
-        <connection name="Ubuntu-Server">
+        <connection name="Ubuntu-Server-Telnet">
             <protocol>ssh</protocol>
             <param name="hostname">172.16.1.20</param>
             <param name="port">23</param>
         </connection>
         <!-- configuração do acesso remoto via RDP-->
-        <connection name="Windows-7">
+        <connection name="Windows-7-RDP">
             <protocol>rdp</protocol>
             <param name="hostname">172.16.1.103</param>
             <param name="port">3389</param>
@@ -43,7 +43,7 @@
             <param name="disable-glyph-caching">true</param>
         </connection>
         <!-- configuração do acesso remoto via RDP-->
-        <connection name="Windows-10">
+        <connection name="Windows-10-RDP">
             <protocol>rdp</protocol>
             <param name="hostname">172.16.1.104</param>
             <param name="port">3389</param>
@@ -51,7 +51,7 @@
             <param name="ignore-cert">true</param>
         </connection>
         <!-- configuração do acesso remoto via VNC-->
-        <connection name="Linux-Mint">
+        <connection name="Linux-Mint-VNC">
             <protocol>vnc</protocol>
             <param name="hostname">172.16.1.101</param>
             <param name="port">5900</param>
