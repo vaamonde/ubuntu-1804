@@ -385,7 +385,27 @@ Link da vídeo aula:
 
 Link do script utilizado nesse vídeo: https://github.com/vaamonde/ubuntu-1804/blob/master/fusion.sh
 
-========================= VÍDEOS EM DESENVOLVIMENTO =========================
+## **COMO instalar o OPENPROJECT no GNU/Linux Ubuntu Server 18.04.x LTS**
+
+Vídeo mostrando os procedimentos básicos para instalar o OpenProject no GNU/Linux Ubuntu Server 18.04 LTS
+
+O OpenProject é um sistema de gerenciamento de projeto baseado na web para colaboração de equipe independente da localização. Este aplicativo de código aberto gratuito é lançado sob a GNU General Public License Versão 3 e está disponível como uma edição da comunidade e uma Enterprise Edition.
+
+Link da vídeo aula: 
+
+Link do script utilizado nesse vídeo: https://github.com/vaamonde/ubuntu-1804/blob/master/openproject.sh
+
+## **COMO instalar o APACHE GUACAMOLE no GNU/Linux Ubuntu Server 18.04.x LTS**
+
+Vídeo mostrando os procedimentos básicos para instalar o Apache Guacamole no GNU/Linux Ubuntu Server 18.04 LTS
+
+O Apache Guacamole é um gateway de desktop remoto sem cliente, ele suporta protocolos padrão como VNC, RDP e SSH., ele é chamado de Clientless porque nenhum plug-in ou software cliente é necessário para o seu funcionamento isso e possível graças ao HTML5, uma vez que o Apache Guacamole é instalado em um servidor, tudo que você precisa para acessar seus desktops é um navegador da web.
+
+Link da vídeo aula: 
+
+Link do script utilizado nesse vídeo: https://github.com/vaamonde/ubuntu-1804/blob/master/guacamole.sh
+
+========================= SCRIPT EM DESENVOLVIMENTO =========================
 
 ## **COMO instalar o ROCKET.CHAT no GNU/Linux Ubuntu Server 18.04.x LTS**
 
