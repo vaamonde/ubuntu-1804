@@ -49,7 +49,7 @@ KERNEL=`uname -r | cut -d'.' -f1,2`
 LOG="/var/log/$(echo $0 | cut -d'/' -f2)"
 #
 # Declarando as variáveis de download do Unifi (Links atualizados no dia 06/01/2021)
-KEYSRVMONGODB="https://www.mongodb.org/static/pgp/server-4.2.asc"
+KEYSRVMONGODB="https://www.mongodb.org/static/pgp/server-3.4.asc"
 KEYUNIFI="https://dl.ui.com/unifi/unifi-repo.gpg"
 #
 # Exportando o recurso de Noninteractive do Debconf para não solicitar telas de configuração
@@ -131,7 +131,7 @@ echo -e "Adicionando o repositório do MongoDB, aguarde..."
 	# opção do comando wget: -q (quiet), -O (output document file)
 	# opção do comando cp: -v (verbose)
 	wget -qO - $KEYSRVMONGODB | apt-key add - &>> $LOG
-	cp -v conf/mongodb-org-4.2.list /etc/apt/sources.list.d/ &>> $LOG
+	cp -v conf/mongodb-org-3.4.list /etc/apt/sources.list.d/ &>> $LOG
 echo -e "Repositório do MongoDB adicionado com sucesso!!!, continuando com o script..."
 sleep 5
 echo
