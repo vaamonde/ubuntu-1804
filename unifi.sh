@@ -23,6 +23,7 @@
 #
 # Site Oficial do Ubiquiti Unifi: https://unifi-network.ui.com/
 # Site Oficial do Unifi Software: https://www.ui.com/download/unifi
+# Site Oficial do Unifi ID-SSO: https://account.ui.com
 #
 # Vídeo de instalação do GNU/Linux Ubuntu Server 18.04.x LTS: https://www.youtube.com/watch?v=zDdCrqNhIXI
 #
@@ -99,7 +100,8 @@ clear
 #
 echo
 echo -e "Instalação do Unifi Controller no GNU/Linux Ubuntu Server 18.04.x\n"
-echo -e "Após a instalação do Unifi Controller  acessar a URL: http://`hostname -I | cut -d' ' -f1`:8080/\n"
+echo -e "Após a instalação do Unifi Controller  acessar a URL: https://`hostname -I | cut -d' ' -f1`:8443/\n"
+echo -e "Para finalizar a instalação via Wen você precisa de uma conta (ID-SSO) no https://account.ui.com\n"
 echo -e "Aguarde, esse processo demora um pouco dependendo do seu Link de Internet...\n"
 sleep 5
 #
