@@ -5,8 +5,8 @@
 # Facebook: facebook.com/BoraParaPratica
 # YouTube: youtube.com/BoraParaPratica
 # Data de criação: 04/01/2021
-# Data de atualização: 04/01/2021
-# Versão: 0.01
+# Data de atualização: 05/01/2021
+# Versão: 0.02
 # Testado e homologado para a versão do Ubuntu Server 18.04.x LTS x64
 # Kernel >= 4.15.x
 # Testado e homologado para a versão do Apache Guacamole Server 1.3.x e Cliente 1.3.x
@@ -50,8 +50,8 @@ SERVER="https://apachemirror.wuchna.com/guacamole/1.3.0/source/guacamole-server-
 CLIENT="https://apachemirror.wuchna.com/guacamole/1.3.0/binary/guacamole-1.3.0.war"
 #
 # Localização padrão do diretório de configuração e do webapp do Tomcat utilizado no script tomcat.sh
-WEBAPPS="/var/lib/tomcat9/webapps/"
 TOMCAT="/usr/share/tomcat9/"
+WEBAPPS="/var/lib/tomcat9/webapps/"
 #
 # Exportando o recurso de Noninteractive do Debconf para não solicitar telas de configuração
 export DEBIAN_FRONTEND="noninteractive"
@@ -149,7 +149,7 @@ echo -e "Instalando as Dependências do Apache Guacamole Server, aguarde..."
 	apt -y install libcairo2-dev libjpeg-turbo8-dev libpng-dev libtool-bin libossp-uuid-dev \
     libavcodec-dev libavformat-dev libavutil-dev libswscale-dev freerdp2-dev libpango1.0-dev \
     libssh2-1-dev libtelnet-dev libvncserver-dev libwebsockets-dev libpulse-dev libssl-dev \
-    libvorbis-dev libwebp-dev gcc-6 g++-6 libfreerdp-dev &>> $LOG
+    libvorbis-dev libwebp-dev gcc-6 g++-6 make libfreerdp-dev freerdp2-x11 libguac-client-rdp0 &>> $LOG
 echo -e "Dependências instaladas com sucesso!!!, continuando com o script..."
 sleep 5
 echo

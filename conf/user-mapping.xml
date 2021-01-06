@@ -6,7 +6,7 @@
 # YouTube: youtube.com/BoraParaPratica
 # Data de criação: 04/01/2021
 # Data de atualização: 05/01/2021
-# Versão: 0.02
+# Versão: 0.03
 # Testado e homologado para a versão do Ubuntu Server 18.04.x LTS x64
 # Kernel = 4.15.x
 # Testado e homologado para a versão do Apache Guacamole 1.3.x
@@ -27,9 +27,10 @@
         </connection>
         <!-- configuração do acesso remoto via Telnet-->
         <connection name="Ubuntu-Server-Telnet">
-            <protocol>ssh</protocol>
+            <protocol>telnet</protocol>
             <param name="hostname">172.16.1.20</param>
             <param name="port">23</param>
+            <param name="username">vaamonde</param>
         </connection>
         <!-- configuração do acesso remoto via RDP-->
         <connection name="Windows-7-RDP">
