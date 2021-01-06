@@ -71,6 +71,24 @@ if [ "$USUARIO" == "0" ] && [ "$UBUNTU" == "18.04" ] && [ "$KERNEL" == "4.15" ]
 		exit 1
 fi
 #
+# Verificando se as dependências do Unifi Controller estão instaladas
+# opção do dpkg: -s (status), opção do echo: -e (interpretador de escapes de barra invertida), -n (permite nova linha)
+# || (operador lógico OU), 2> (redirecionar de saída de erro STDERR), && = operador lógico AND, { } = agrupa comandos em blocos
+# [ ] = testa uma expressão, retornando 0 ou 1, -ne = é diferente (NotEqual)
+echo -n "Verificando as dependências do Unifi Controller, aguarde... "
+	for name in openjdk-8-jdk openjdk-8-jre
+	do
+  		[[ $(dpkg -s $name 2> /dev/null) ]] || { 
+              echo -en "\n\nO software: $name precisa ser instalado. \nUse o comando 'apt install $name'\n";
+              deps=1; 
+              }
+	done
+		[[ $deps -ne 1 ]] && echo "Dependências.: OK" || { 
+            echo -en "\nInstale as dependências acima e execute novamente este script\n";
+            exit 1; 
+            }
+		sleep 5
+#	
 # Script de instalação do Unifi Controller no GNU/Linux Ubuntu Server 18.04.x
 # opção do comando echo: -e (enable interpretation of backslash escapes), \n (new line)
 # opção do comando hostname: -I (all IP address)
@@ -81,7 +99,7 @@ clear
 #
 echo
 echo -e "Instalação do Unifi Controller no GNU/Linux Ubuntu Server 18.04.x\n"
-echo -e "Após a instalação do Unifi Controller  acessar a URL: http://`hostname -I | cut -d' ' -f1`:8443/\n"
+echo -e "Após a instalação do Unifi Controller  acessar a URL: http://`hostname -I | cut -d' ' -f1`:8080/\n"
 echo -e "Aguarde, esse processo demora um pouco dependendo do seu Link de Internet...\n"
 sleep 5
 #
@@ -143,7 +161,7 @@ echo -e "Adicionando o repositório do Unifi Controller, aguarde..."
 	# opção do comando cp: -v (verbose)
     # opção do comando wget: -q (quiet), -O (output document file)
 	cp -v conf/100-ubnt-unifi.list /etc/apt/sources.list.d/ &>> $LOG
-    wget -O /etc/apt/trusted.gpg.d/unifi-repo.gpg $KEYUNIFI 
+    wget -O /etc/apt/trusted.gpg.d/unifi-repo.gpg $KEYUNIFI &>> $LOG
 echo -e "Repositório do Unifi Controller adicionado com sucesso!!!, continuando com o script..."
 sleep 5
 echo
@@ -177,7 +195,7 @@ echo
 echo -e "Verificando a porta de conexão do MongoDB e Unifi Controller, aguarde..."
 	# opção do comando netstat: -a (all), -n (numeric)
 	# opção do comando grep: \| (função OU)
-	netstat -an | grep '27017\|8443'
+	netstat -an | grep '27017\|8080\|8443'
 echo -e "Portas de conexões verificadas com sucesso!!!, continuando com o script..."
 sleep 5
 echo
