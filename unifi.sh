@@ -18,8 +18,16 @@
 # Remotamente, ou seja, não há necessidade de configurar individualmente cada um dos dispositivos na rede.
 #
 # Informações que serão solicitadas na configuração via Web do Unifi Controller
-# Username: 
-# Password: 
+# Step 1 of 6:
+#   Name Your Controller
+#       Controller Name: Vaamonde
+#       By selecting this you are agreeing to end user licence agreement and the terms of service: ON
+#       Next
+# Step 2 of 6
+# Step 3 of 6
+# Step 4 of 6
+# Step 5 of 6
+# Step 6 of 6
 #
 # Site Oficial do Ubiquiti Unifi: https://unifi-network.ui.com/
 # Site Oficial do Unifi Software: https://www.ui.com/download/unifi
@@ -100,8 +108,9 @@ clear
 #
 echo
 echo -e "Instalação do Unifi Controller no GNU/Linux Ubuntu Server 18.04.x\n"
-echo -e "Após a instalação do Unifi Controller  acessar a URL: https://`hostname -I | cut -d' ' -f1`:8443/\n"
-echo -e "Para finalizar a instalação via Wen você precisa de uma conta (ID-SSO) no https://account.ui.com\n"
+echo -e "Após a instalação do Unifi Controller acessar a URL: https://`hostname -I | cut -d' ' -f1`:8443/\n"
+echo -e "Para finalizar a instalação via Web você precisa de uma conta (ID-SSO) no https://account.ui.com\n"
+echo -e "A comunidade do Unifi recomenda utilizar o Navegador Google Chrome para sua configuração\n"
 echo -e "Aguarde, esse processo demora um pouco dependendo do seu Link de Internet...\n"
 sleep 5
 #
@@ -194,7 +203,7 @@ echo -e "Serviço do Unifi Controller habilitado com sucesso!!!, continuando com
 sleep 5
 echo
 #
-echo -e "Verificando a porta de conexão do MongoDB e Unifi Controller, aguarde..."
+echo -e "Verificando as portas de conexões do MongoDB e do Unifi Controller, aguarde..."
 	# opção do comando netstat: -a (all), -n (numeric)
 	# opção do comando grep: \| (função OU)
 	netstat -an | grep '27017\|8080\|8443'
