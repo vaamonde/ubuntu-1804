@@ -5,8 +5,8 @@
 # Facebook: facebook.com/BoraParaPratica
 # YouTube: youtube.com/BoraParaPratica
 # Data de criação: 10/02/2019
-# Data de atualização: 02/01/2021
-# Versão: 0.04
+# Data de atualização: 11/01/2021
+# Versão: 0.05
 # Testado e homologado para a versão do Ubuntu Server 18.04.x LTS x64
 # Kernel >= 4.15.x
 
@@ -29,3 +29,4 @@
 017: zabbix.sh;			HTTP: 80, 10050, 10051
 018: fusion.sh;         HTTP: 80
 019: ntopng.sh;		    HTTP: 3001
+019: postgresql.sh;		5432
