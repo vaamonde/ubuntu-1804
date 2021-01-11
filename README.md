@@ -361,7 +361,7 @@ Vídeo mostrando os procedimentos básicos para instalar o Zabbix no GNU/Linux U
 
 O Zabbix é uma ferramenta de software de monitoramento de código aberto para diversos componentes de TI, incluindo redes, servidores, máquinas virtuais e serviços em nuvem. O Zabbix fornece métricas de monitoramento, utilização da largura de banda da rede, carga de uso da CPU e consumo de espaço em disco, entre vários outros recursos de monitoramento e alertas.
 
-Link da vídeo aula: 
+Link da vídeo aula: https://www.youtube.com/watch?v=hAqaPS0Rlgw
 
 Link do script utilizado nesse vídeo: https://github.com/vaamonde/ubuntu-1804/blob/master/zabbix.sh
 
@@ -385,16 +385,6 @@ Link da vídeo aula:
 
 Link do script utilizado nesse vídeo: https://github.com/vaamonde/ubuntu-1804/blob/master/fusion.sh
 
-## **COMO instalar o OPENPROJECT no GNU/Linux Ubuntu Server 18.04.x LTS**
-
-Vídeo mostrando os procedimentos básicos para instalar o OpenProject no GNU/Linux Ubuntu Server 18.04 LTS
-
-O OpenProject é um sistema de gerenciamento de projeto baseado na web para colaboração de equipe independente da localização. Este aplicativo de código aberto gratuito é lançado sob a GNU General Public License Versão 3 e está disponível como uma edição da comunidade e uma Enterprise Edition.
-
-Link da vídeo aula: 
-
-Link do script utilizado nesse vídeo: https://github.com/vaamonde/ubuntu-1804/blob/master/openproject.sh
-
 ## **COMO instalar o APACHE GUACAMOLE no GNU/Linux Ubuntu Server 18.04.x LTS**
 
 Vídeo mostrando os procedimentos básicos para instalar o Apache Guacamole no GNU/Linux Ubuntu Server 18.04 LTS
@@ -404,6 +394,26 @@ O Apache Guacamole é um gateway de desktop remoto sem cliente, ele suporta prot
 Link da vídeo aula: 
 
 Link do script utilizado nesse vídeo: https://github.com/vaamonde/ubuntu-1804/blob/master/guacamole.sh
+
+## **COMO instalar o UNIFI CONTROLLER no GNU/Linux Ubuntu Server 18.04.x LTS**
+
+Vídeo mostrando os procedimentos básicos para instalar o Unifi Controller no GNU/Linux Ubuntu Server 18.04 LTS
+
+O software UniFi Controller que vem com o sistema Ubiquiti UniFi tem uma interface baseada em Web que facilita a administração, configuração e gerenciamento dos dispositivos Unifi (Access Point AP, Switch, Router, USG, etc). O sistema Unifi e baseado na arquitetura SDN (Software defined networking) possibilitando o gerenciamento centralizado de todos os equipamentos da infraestrutura da rede utilizando o Unifi Controller Internamente ou Remotamente, ou seja, não há necessidade de configurar individualmente cada um dos dispositivos na rede.
+
+Link da vídeo aula: 
+
+Link do script utilizado nesse vídeo: https://github.com/vaamonde/ubuntu-1804/blob/master/unifi.sh
+
+## **COMO instalar o OPENPROJECT no GNU/Linux Ubuntu Server 18.04.x LTS**
+
+Vídeo mostrando os procedimentos básicos para instalar o OpenProject no GNU/Linux Ubuntu Server 18.04 LTS
+
+O OpenProject é um sistema de gerenciamento de projeto baseado na web para colaboração de equipe independente da localização. Este aplicativo de código aberto gratuito é lançado sob a GNU General Public License Versão 3 e está disponível como uma edição da comunidade e uma Enterprise Edition.
+
+Link da vídeo aula: 
+
+Link do script utilizado nesse vídeo: https://github.com/vaamonde/ubuntu-1804/blob/master/openproject.sh
 
 ========================= SCRIPT EM DESENVOLVIMENTO =========================
 
