@@ -33,6 +33,10 @@
 # Informações que serão solicitadas na configuração via Web do OpenProject
 # Username: admin
 # Password: admin
+# Current password: admin
+# New password: BoraParaPratica
+# Confirm password: BoraParaPratica (Save)
+# Language: Português Brasileiro (Save)
 #
 # Site oficial: https://www.openproject.org/
 #
@@ -183,8 +187,8 @@ echo
 echo -e "Configurando o OpenProject, aguarde..."
 	#opção do comando: &>> (redirecionar a saída padrão)
     #opção do comando cp: -v (verbose)
-    #cp -v conf/installer.dat /etc/openproject/ &>> $LOG
-	openproject configure
+    cp -v conf/installer.dat /etc/openproject/ &>> $LOG
+	openproject configure &>> $LOG
 echo -e "OpenProject configurado com sucesso!!!, continuando com o script..."
 sleep 5
 echo
