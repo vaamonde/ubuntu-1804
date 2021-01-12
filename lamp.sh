@@ -5,8 +5,8 @@
 # Facebook: facebook.com/BoraParaPratica
 # YouTube: youtube.com/BoraParaPratica
 # Data de criação: 04/11/2018
-# Data de atualização: 03/08/2020
-# Versão: 0.08
+# Data de atualização: 11/01/2021
+# Versão: 0.09
 # Testado e homologado para a versão do Ubuntu Server 18.04.x LTS x64
 # Kernel >= 4.15.x
 # Testado e homologado para a versão do Apache2 2.4.x, MySQL 5.7.x, PHP 7.2.x, Perl 5.26.x, Python 2.x e 3.x, PhpMyAdmin 4.6.x
@@ -253,7 +253,7 @@ sleep 5
 echo
 #
 echo -e "Reinicializando o serviço do Apache2, aguarde..."
-	sudo service apache2 restart
+	systemctl restart apache2
 echo -e "Serviço reinicializado com sucesso!!!, continuando com o script..."
 sleep 5
 echo
@@ -282,7 +282,7 @@ sleep 5
 echo
 #
 echo -e "Reinicializando os serviços do MySQL, aguarde..."
-	sudo service mysql restart
+	systemctl restart mysql
 echo -e "Serviço reinicializado com sucesso!!!, continuando com o script..."
 sleep 5
 echo

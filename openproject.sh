@@ -5,8 +5,8 @@
 # Facebook: facebook.com/BoraParaPratica
 # YouTube: youtube.com/BoraParaPratica
 # Data de criação: 03/01/2021
-# Data de atualização: 03/01/2021
-# Versão: 0.01
+# Data de atualização: 11/01/2021
+# Versão: 0.02
 # Testado e homologado para a versão do Ubuntu Server 18.04.x LTS x64
 # Kernel >= 4.15.x
 # Testado e homologado para a versão do OpenProject-
@@ -180,10 +180,10 @@ echo -e "OpenProject instalado com sucesso!!!, continuando com o script..."
 sleep 5
 echo
 #
-echo -e "Configurando o OpenProject, pressione <Enter> para continuar"
-echo -e "OBSERVAÇÃO: Cuidado com as mensagens e opções que serão solicitadas no Wizard do OpenProject"
-	read
-    cp conf/installer.dat /etc/openproject/
+echo -e "Configurando o OpenProject, aguarde..."
+	#opção do comando: &>> (redirecionar a saída padrão)
+    #opção do comando cp: -v (verbose)
+    #cp -v conf/installer.dat /etc/openproject/ &>> $LOG
 	openproject configure
 echo -e "OpenProject configurado com sucesso!!!, continuando com o script..."
 sleep 5
