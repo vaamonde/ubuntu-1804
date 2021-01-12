@@ -1,0 +1,13 @@
+postgres/db_host 127.0.0.1
+postgres/db_port 45432
+postgres/db_name openproject
+postgres/db_username openproject
+postgres/db_password C5ribnCiBdz59Tlz0AfK2yyrTxjVncmz
+openproject/edition default
+postgres/autoinstall install
+server/autoinstall skip
+smtp/autoinstall skip
+memcached/autoinstall install
+server/hostname 172.16.1.20
+server/ssl no
+postgres/addon_version v1
