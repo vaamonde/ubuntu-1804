@@ -151,6 +151,7 @@ echo -e "Removendo software desnecessários, aguarde..."
 	apt -y autoremove &>> $LOG
 echo -e "Software removidos com sucesso!!!, continuando com o script..."
 sleep 5
+echo
 #
 echo -e "Instalando o OpenProject, aguarde...\n"
 #
@@ -182,14 +183,15 @@ echo
 echo -e "Configurando o OpenProject, pressione <Enter> para continuar"
 echo -e "OBSERVAÇÃO: Cuidado com as mensagens e opções que serão solicitadas no Wizard do OpenProject"
 	read
+    cp conf/installer.dat /etc/openproject/
 	openproject configure
 echo -e "OpenProject configurado com sucesso!!!, continuando com o script..."
 sleep 5
 echo
 #
-echo -e "Verificando a porta de conexão do PostgreSQL, aguarde..."
+echo -e "Verificando a porta de conexão do PostgreSQL do OpenProject, aguarde..."
 	# opção do comando netstat: a (all), n (numeric)
-	netstat -an | grep 5432
+	netstat -an | grep 45432
 echo -e "Porta verificada com sucesso!!!, continuando com o script..."
 sleep 5
 echo
