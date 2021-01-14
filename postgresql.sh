@@ -5,8 +5,8 @@
 # Facebook: facebook.com/BoraParaPratica
 # YouTube: youtube.com/BoraParaPratica
 # Data de criação: 11/01/2021
-# Data de atualização: 11/01/2021
-# Versão: 0.01
+# Data de atualização: 14/01/2021
+# Versão: 0.02
 # Testado e homologado para a versão do Ubuntu Server 18.04.x LTS x64
 # Kernel >= 4.15.x
 # Testado e homologado para a versão do PostgreSQL 13.x e PgAdmin 4.x
@@ -19,9 +19,17 @@
 # em Python e jQuery, ele suporta todos os recursos encontrados no PostgreSQL por linha de comando (console).
 # 
 # Mensagem da configuração da senha do PostgreSQL
+# Enter new password: postgres
+# Enter it again: postgres
 #
 # Mensagem da configuração do email e senha do PgAdmin4 Web
-#
+# Email address: postgres@localhost
+# Password: postgres
+# Retype password: postgres
+# We can now configure the Apache Web server for you. This involves enabling the wsgi module and configuring the 
+# pgAdmin 4 application to mount at /pgadmin4. Do you wish to continue (y/n)? y <Enter>
+# The Apache web server is running and must be restarted for the pgAdmin 4 installation to complete. Continue (y/n)? y <Enter>
+# 
 # Site oficial: https://www.postgresql.org/
 # Site oficial: https://www.pgadmin.org/
 #

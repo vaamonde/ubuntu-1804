@@ -98,6 +98,24 @@ echo -n "Verificando as dependências do Unifi Controller, aguarde... "
             }
 		sleep 5
 #	
+# Verificando se as portas do Unifi Controller estão sendo utilizadas
+# opção do dpkg: -s (status), opção do echo: -e (interpretador de escapes de barra invertida), -n (permite nova linha)
+# || (operador lógico OU), 2> (redirecionar de saída de erro STDERR), && = operador lógico AND, { } = agrupa comandos em blocos
+# [ ] = testa uma expressão, retornando 0 ou 1, -ne = é diferente (NotEqual)
+echo -n "Verificando as portas do Unifi Controller já estão sendo utilizadas, aguarde... "
+	for name in 8080 8443
+	do
+  		[[ $(nc -vz 127.0.0.1 $name 2> /dev/null) ]] || { 
+              echo -en "\n\nA porta: $name já está sendo usada nesse servidor.\n";
+              deps=1; 
+              }
+	done
+		[[ $deps -ne 1 ]] && echo "Portas 8080 e 8443.: OK" || { 
+            echo -en "\nVerifique as portas e serviços acima e execute novamente este script\n";
+            exit 1; 
+            }
+		sleep 5
+#
 # Script de instalação do Unifi Controller no GNU/Linux Ubuntu Server 18.04.x
 # opção do comando echo: -e (enable interpretation of backslash escapes), \n (new line)
 # opção do comando hostname: -I (all IP address)

@@ -188,7 +188,14 @@ echo -e "Configurando o OpenProject, aguarde..."
 	#opção do comando: &>> (redirecionar a saída padrão)
     #opção do comando cp: -v (verbose)
     cp -v conf/installer.dat /etc/openproject/ &>> $LOG
-	openproject configure &>> $LOG
+    sleep 3
+    echo -e "Arquivo de configuração atualizado com sucesso!!!, continuando com o script...\n"
+	echo -e "Editando o arquivo de configuração do OpenProject, pressione <Enter> para continuar"
+		read
+		sleep 3
+		vim /etc/openproject/installer.dat
+	echo -e "Arquivo editado com sucesso!!!, continuando com o script...\n"
+	    openproject configure &>> $LOG
 echo -e "OpenProject configurado com sucesso!!!, continuando com o script..."
 sleep 5
 echo
