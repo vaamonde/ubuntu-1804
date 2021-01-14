@@ -198,9 +198,9 @@ echo
 echo -e "Configurando as variáveis do Debconf do PgAdmin4 para o Apt, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando | (piper): (Conecta a saída padrão com a entrada padrão de outro comando)
-	echo "pgadmin4-apache2 pgadmin4/email string $EMAIL" |  debconf-set-selections
-	echo "pgadmin4-apache2 pgadmin4/password password $EMAILPASS" |  debconf-set-selections
-	debconf-show pgadmin4-apache2 &>> $LOG
+	# echo "pgadmin4-apache2 pgadmin4/email string $EMAIL" |  debconf-set-selections
+	# echo "pgadmin4-apache2 pgadmin4/password password $EMAILPASS" |  debconf-set-selections
+	# debconf-show pgadmin4-apache2 &>> $LOG
 echo -e "Variáveis configuradas com sucesso!!!, continuando com o script..."
 sleep 5
 echo
@@ -208,7 +208,7 @@ echo
 echo -e "Instalando o PgAdmin4, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando apt: -y (yes)
-	apt -y install pgadmin4 pgadmin4-apache2 &>> $LOG
+	apt -y install pgadmin4 pgadmin4-web
 echo -e "Instalação do PgAdmin4 feita com sucesso!!!, continuando com o script..."
 sleep 5
 echo

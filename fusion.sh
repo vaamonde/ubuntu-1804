@@ -5,8 +5,8 @@
 # Facebook: facebook.com/BoraParaPratica
 # YouTube: youtube.com/BoraParaPratica
 # Data de criação: 06/08/2020
-# Data de atualização: 01/01/2021
-# Versão: 0.05
+# Data de atualização: 14/01/2021
+# Versão: 0.06
 # Testado e homologado para a versão do Ubuntu Server 18.04.x LTS x64
 # Kernel >= 4.15.x
 # Testado e homologado para a versão do FusionInventory Server 9.5.x, Agent 2.5.x, GLPI 9.5.x
@@ -22,6 +22,15 @@
 #       FusionInventory: Instalar
 #       FusionInventory: Habilitar 
 #
+# Software utilizados pelo FusionInventory:
+# fusioninventory-agent: Agente de Inventário e Tarefas Local do FusionInventory
+# fusioninventory-inventory: Inventário Autônomo do FusionInventory, utilizado nas tarefas do GLPI
+# fusioninventory-remoteinventory: Ferramenta de Inventário Remoto do FusionInventory
+# fusioninventory-netdiscovery: Descoberta de Rede Autônomo do FusionInventory, utilizado nas tarefas do GLPI
+# fusioninventory-netinventory: Inventário de Rede Autônomo do FusionInventory, utilizado nas tarefas do GLPI
+# fusioninventory-wakeonlan: Wake-on-LAN de Computadores FusionInventory, utilizado nas tarefas do GLPI
+# fusioninventory-injector: Ferramenta de Envio de Inventário Remoto do FusionInventory
+# 
 # Site Oficial do Projeto: http://fusioninventory.org/
 #
 # Vídeo de instalação do GNU/Linux Ubuntu Server 18.04.x LTS: https://www.youtube.com/watch?v=zDdCrqNhIXI
