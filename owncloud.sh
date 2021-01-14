@@ -5,8 +5,8 @@
 # Facebook: facebook.com/BoraParaPratica
 # YouTube: youtube.com/BoraParaPratica
 # Data de criação: 08/02/2019
-# Data de atualização: 10/12/2020
-# Versão: 0.07
+# Data de atualização: 14/01/2021
+# Versão: 0.08
 # Testado e homologado para a versão do Ubuntu Server 18.04.x LTS x64
 # Kernel >= 4.15.x
 # Testado e homologado para a versão do ownCloud 10.4.x
@@ -179,7 +179,7 @@ echo -e "Instalando as dependências do ownCloud, aguarde..."
 	# opção do comando apt: -y (yes)
 	apt -y install software-properties-common &>> $LOG
 	apt -y install php-cli php-common php-mbstring php-gd php-intl php-xml php-mysql php-zip php-curl php-xmlrpc &>> $LOG
-	systemctl restart apache2.service &>> $LOG
+	systemctl restart apache2 &>> $LOG
 echo -e "Source List criado com sucesso!!!, continuando com o script..."
 sleep 5
 echo

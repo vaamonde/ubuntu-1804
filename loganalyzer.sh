@@ -5,8 +5,8 @@
 # Facebook: facebook.com/BoraParaPratica
 # YouTube: youtube.com/BoraParaPratica
 # Data de criação: 11/11/2018
-# Data de atualização: 10/12/2020
-# Versão: 0.07
+# Data de atualização: 14/01/2021
+# Versão: 0.08
 # Testado e homologado para a versão do Ubuntu Server 18.04.x LTS x64
 # Kernel >= 4.15.x
 # Testado e homologado para a versão do LogAnalyzer 4.1.x
@@ -208,6 +208,7 @@ echo -e "Instalando as dependências do LogAnalyzer, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando apt: -y (yes)
 	echo "rsyslog-mysql rsyslog-mysql/dbconfig-install boolean false" | debconf-set-selections &>> $LOG
+    debconf-show rsyslog-mysql &>> $LOG
 	apt -y install rsyslog-mysql &>> $LOG
 echo -e "Dependências instaladas com sucesso!!!, continuando com o script"
 sleep 5
@@ -316,7 +317,7 @@ echo
 #
 echo -e "Reinicializando o Serviço do Rsyslog, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
-	sudo service rsyslog restart &>> $LOG
+	systemctl restart rsyslog &>> $LOG
 echo -e "Serviço do Rsyslog reinicializado com sucesso!!!, continuando com o script..."
 sleep 5
 echo

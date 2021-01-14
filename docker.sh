@@ -5,8 +5,8 @@
 # Facebook: facebook.com/BoraParaPratica
 # YouTube: youtube.com/BoraParaPratica
 # Data de criação: 12/11/2018
-# Data de atualização: 03/08/2020
-# Versão: 0.07
+# Data de atualização: 14/01/2020
+# Versão: 0.08
 # Testado e homologado para a versão do Ubuntu Server 18.04.x LTS x64
 # Kernel >= 4.15.x
 # Testado e homologado para a versão do Docker 19.03.x, Portainer 1.24.x
@@ -182,7 +182,7 @@ echo
 #
 echo -e "Iniciando o Serviço Docker, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
-	sudo service docker start &>> $LOG
+	systemctl start docker &>> $LOG
 echo -e "Serviço iniciado com sucesso!!!, continuando com o script..."
 sleep 5
 echo

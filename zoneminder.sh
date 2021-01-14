@@ -5,8 +5,8 @@
 # Facebook: facebook.com/BoraParaPratica
 # YouTube: youtube.com/BoraParaPratica
 # Data de criação: 02/12/2018
-# Data de atualização: 10/12/2020
-# Versão: 0.09
+# Data de atualização: 14/01/2021
+# Versão: 0.10
 # Testado e homologado para a versão do Ubuntu Server 18.04.x LTS x64
 # Kernel >= 4.15.x
 # Testado e homologado para a versão do ZoneMinder 1.35.x
@@ -162,7 +162,7 @@ echo -e "Editando as Configurações do Servidor de MySQL, pressione <Enter> par
 	#sql_mode = NO_ENGINE_SUBSTITUTION
 	read
 	vim /etc/mysql/mysql.conf.d/mysqld.cnf +35
-	sudo service mysql restart &>> $LOG
+	systemctl restart mysql &>> $LOG
 echo -e "Banco de Dados editado com sucesso!!!, continuando com o script..."
 sleep 5
 echo
@@ -215,7 +215,7 @@ echo -e "Habilitando os recursos do Apache2 para o ZoneMinder, aguarde..."
 	a2enmod cgi &>> $LOG
 	a2enmod rewrite &>> $LOG
 	a2enconf zoneminder &>> $LOG
-	service apache2 restart &>> $LOG
+	systemctl restart apache2 &>> $LOG
 echo -e "Recurso habilitado com sucesso!!!, continuando com o script..."
 sleep 5
 echo
@@ -224,7 +224,7 @@ echo
 echo -e "Criando o Serviço do ZoneMinder, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	systemctl enable zoneminder &>> $LOG
-	service zoneminder start &>> $LOG
+	systemctl restart zoneminder &>> $LOG
 echo -e "Serviço criado com sucesso!!!, continuando com o script..."
 sleep 5
 echo

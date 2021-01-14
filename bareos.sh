@@ -5,7 +5,7 @@
 # Facebook: facebook.com/BoraParaPratica
 # YouTube: youtube.com/BoraParaPratica
 # Data de criação: 10/02/2019
-# Data de atualização: 10/12/2020
+# Data de atualização: 14/01/2021
 # Versão: 0.05
 # Testado e homologado para a versão do Ubuntu Server 18.04.x LTS x64
 # Kernel >= 4.15.x
@@ -209,10 +209,10 @@ echo -e "Reinicializando os Serviços do BareOS Server, aguarde..."
 	# bareos-sd: Bareos Storage Daemon.
 	# bareos-fd: Bareos File Daemon
 	# bareos-webui: Bareos Web Configurator
-	systemctl start bareos-dir.service &>> $LOG
-	systemctl start bareos-sd.service &>> $LOG
-	systemctl start bareos-fd.service &>> $LOG
-	systemctl restart apache2.service &>> $LOG
+	systemctl start bareos-dir &>> $LOG
+	systemctl start bareos-sd &>> $LOG
+	systemctl start bareos-fd &>> $LOG
+	systemctl restart apache2 &>> $LOG
 echo -e "Serviços reinicializados com sucesso!!!, continuando com o script..."
 sleep 5
 echo
