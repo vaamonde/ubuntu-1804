@@ -18,11 +18,15 @@
 # O pgAdmin é uma plataforma opensource de administração do PostgreSQL e seus banco de dados relacionados. Escrito 
 # em Python e jQuery, ele suporta todos os recursos encontrados no PostgreSQL por linha de comando (console).
 # 
+# Mensagem da configuração da senha do PostgreSQL
+#
+# Mensagem da configuração do email e senha do PgAdmin4 Web
+#
 # Site oficial: https://www.postgresql.org/
 # Site oficial: https://www.pgadmin.org/
 #
 # Vídeo de instalação do GNU/Linux Ubuntu Server 18.04.x LTS: https://www.youtube.com/watch?v=zDdCrqNhIXI
-# Vídeo de instalação do LAMP Serer no GNU/Linux Ubuntu Server 18.04.x LTS: https://www.youtube.com/watch?v=6EFUu-I3u4s&t
+# Vídeo de instalação do LAMP Server no GNU/Linux Ubuntu Server 18.04.x LTS: https://www.youtube.com/watch?v=6EFUu-I3u4s&t
 #
 # Variável da Data Inicial para calcular o tempo de execução do script (VARIÁVEL MELHORADA)
 # opção do comando date: +%T (Time)
@@ -49,7 +53,7 @@ KEYPOSTGRESQL="https://www.postgresql.org/media/keys/ACCC4CF8.asc"
 USER="postgres"
 PASSWORD="postgres"
 #
-# Variáveis de configuração do PgAdmin4
+# Variáveis de configuração do PgAdmin4 Web
 KEYPGADMIN4="https://www.pgadmin.org/static/packages_pgadmin_org.pub"
 EMAIL="$USER@localhost"
 EMAILPASS=$PASSWORD
@@ -195,24 +199,25 @@ echo -e "Senha configurada com sucesso!!!, continuando com o script..."
 sleep 5
 echo
 #
-echo -e "Configurando as variáveis do Debconf do PgAdmin4 para o Apt, aguarde..."
-	# opção do comando: &>> (redirecionar a saída padrão)
-	# opção do comando | (piper): (Conecta a saída padrão com a entrada padrão de outro comando)
-	# echo "pgadmin4-apache2 pgadmin4/email string $EMAIL" |  debconf-set-selections
-	# echo "pgadmin4-apache2 pgadmin4/password password $EMAILPASS" |  debconf-set-selections
-	# debconf-show pgadmin4-apache2 &>> $LOG
-echo -e "Variáveis configuradas com sucesso!!!, continuando com o script..."
-sleep 5
-echo
-#
-echo -e "Instalando o PgAdmin4, aguarde..."
+echo -e "Instalando o PgAdmin4 e PgAdmin4 Web, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando apt: -y (yes)
-	apt -y install pgadmin4 pgadmin4-web
+	apt -y install pgadmin4 pgadmin4-web &>> $LOG
 echo -e "Instalação do PgAdmin4 feita com sucesso!!!, continuando com o script..."
 sleep 5
 echo
-#				 
+#
+#
+echo -e "Configurando o PgAdmin4 Web, pressione <Enter> para continuar"
+echo -e "Cuidado com as mensagens que serão solicitadas: email: $EMAIL - senha: $EMAILPASS"
+	# opção do comando: &>> (redirecionar a saída padrão)
+	# opção do comando apt: -y (yes)
+	read
+    /usr/pgadmin4/bin/./setup-web.sh
+echo -e "Configuração do PgAdmin4 Web feita com sucesso!!!, continuando com o script..."
+sleep 5
+echo
+#			 
 echo -e "Reinicializando os serviços do Apache2, aguarde..."
 	systemctl restart apache2 &>> $LOG
 echo -e "Serviço reinicializado com sucesso!!!, continuando com o script..."
