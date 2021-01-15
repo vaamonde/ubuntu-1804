@@ -100,12 +100,13 @@ echo -n "Verificando as dependências do Unifi Controller, aguarde... "
 #	
 # Verificando se as portas 8080 e 8443 não estão sendo utilizadas no servidor
 # [ ] = teste de expressão, == comparação de string, exit 1 = A maioria dos erros comuns na execução,
-# $? código de retorno do último comando executado, ; execução de comando
+# $? código de retorno do último comando executado, ; execução de comando, opção do comando nc: -v (verbose)
+# -z (DCCP mode)
 clear
 if [ "$(nc -vz 127.0.0.1 8080 ; echo $?)" == "0" ]
 	then
 		echo -e "A porta: 8080 já está sendo utilizada nesse servidor.\n"
-        echo -e "Verifique a porta é o serviços associada a ela e execute novamente esse script."
+        echo -e "Verifique a porta e o serviço associada a ela e execute novamente esse script.\n"
 		exit 1
 	else
 		echo -e "A porta: 8080 está disponível, continuando com o script..."
@@ -115,7 +116,7 @@ fi
 if [ "$(nc -vz 127.0.0.1 8443 ; echo $?)" == "0" ]
 	then
 		echo -e "A porta: 8443 já está sendo utilizada nesse servidor.\n"
-        echo -e "Verifique a porta é o serviços associada a ela e execute novamente esse script."
+        echo -e "Verifique a porta e o serviço associada a ela e execute novamente esse script.\n"
 		exit 1
 	else
 		echo -e "A porta: 8443 está disponível, continuando com o script..."
