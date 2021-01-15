@@ -5,11 +5,11 @@
 # Facebook: facebook.com/BoraParaPratica
 # YouTube: youtube.com/BoraParaPratica
 # Data de criação: 06/01/2021
-# Data de atualização: 06/01/2021
-# Versão: 0.01
+# Data de atualização: 14/01/2021
+# Versão: 0.02
 # Testado e homologado para a versão do Ubuntu Server 18.04.x LTS x64
 # Kernel >= 4.15.x
-# Testado e homologado para a versão do Unifi Controller 6.0.x
+# Testado e homologado para a versão do Unifi Controller 6.0.x, MongoDB 3.6.x
 #
 # O software UniFi Controller que vem com o sistema Ubiquiti UniFi tem uma interface baseada em Web que facilita
 # a administração, configuração e gerenciamento dos dispositivos Unifi (Access Point AP, Switch, Router, USG, etc).
@@ -21,13 +21,25 @@
 # Step 1 of 6:
 #   Name Your Controller
 #       Controller Name: Vaamonde
-#       By selecting this you are agreeing to end user licence agreement and the terms of service: ON
-#       Next
-# Step 2 of 6
-# Step 3 of 6
-# Step 4 of 6
-# Step 5 of 6
-# Step 6 of 6
+#       By selecting this you are agreeing to end user licence agreement and the terms of service: ON <Next>
+# Step 2 of 6:
+#   Sign in with your Ubiquiti Account
+#       Username: usuário Id-SSO https://account.ui.com
+#       Password: senha usuário ID-SSO <Next>
+# Step 3 of 6:
+#   UniFi Network Setup
+#       Automatically optimize my network: ON
+#       Enable Auto Backup: <Next>
+# Step 4 of 6:
+#   Devices Setup: <Next>
+# Step 5 of 6:
+#   WiFi Setup: <Skip>
+# Step 6 of 6:
+#   Review Configuration:
+#       Country or territory: Brazil
+#       Timezone: (UTC-03:00)America/Sao_Paulo <Next>
+# Security & Analytics
+#   Send to Ubiquiti
 #
 # Site Oficial do Ubiquiti Unifi: https://unifi-network.ui.com/
 # Site Oficial do Unifi Software: https://www.ui.com/download/unifi

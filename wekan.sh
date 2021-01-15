@@ -4,20 +4,21 @@
 # Facebook: facebook.com/ProcedimentosEmTI
 # Facebook: facebook.com/BoraParaPratica
 # YouTube: youtube.com/BoraParaPratica
-# Data de criação: 04/08/2020
+# Data de criação:14/01/2021
 # Data de atualização: 14/01/2021
-# Versão: 0.02
+# Versão: 0.01
 # Testado e homologado para a versão do Ubuntu Server 18.04.x LTS x64
 # Kernel >= 4.15.x
-# Testado e homologado para a versão do Rocket.Chat 3.4.x e MongoDB 4.x
+# Testado e homologado para a versão do Wekan
 #
-# O Rocket.Chat é um servidor de bate-papo na Web, desenvolvido em JavaScript, usando a estrutura de pilha completa 
-# do Meteor. É uma ótima solução para comunidades e empresas que desejam hospedar seu próprio serviço de bate-papo 
-# em particular ou para desenvolvedores que desejam criar e evoluir suas próprias plataformas de bate-papo.
+# O Wekan é um quadro Kanban de código aberto que permite criar tarefas baseadas em cartões e gerenciamento de pendências.
+# Wekan permite criar tabuleiros nos quais os cartões podem ser movidos entre várias Colunas. Os tarefas podem ter vários 
+# membros simultâneos, o que facilita a colaboração. Você pode atribuir etiquetas coloridas aos cartões para facilitar o 
+# agrupamento e a filtragem; além disso, você pode adicionar membros a um cartão, por exemplo, atribuir uma tarefa a alguém.
 #
-# Informações que serão solicitadas na configuração via Web do Rocket.Chat
+# Informações que serão solicitadas na configuração via Web do Wekan
 #
-# Site Oficial do Projeto: https://rocket.chat/
+# Site Oficial do Projeto: https://wekan.github.io/
 #
 # Vídeo de instalação do GNU/Linux Ubuntu Server 18.04.x LTS: https://www.youtube.com/watch?v=zDdCrqNhIXI
 #
@@ -76,7 +77,6 @@ echo -n "Verificando as dependências do Rocket.Chat, aguarde... "
             exit 1; 
             }
 		sleep 5
-#
 #	
 # Verificando se a porta 3000 27017 estão sendo utilizadas no servidor
 # [ ] = teste de expressão, == comparação de string, exit 1 = A maioria dos erros comuns na execução,
@@ -103,7 +103,7 @@ if [ "$(nc -vz 127.0.0.1 27017 ; echo $?)" == "0" ]
         sleep 3
 fi
 #
-# Script de instalação do Rocket.Chat no GNU/Linux Ubuntu Server 18.04.x
+# Script de instalação do Wekan no GNU/Linux Ubuntu Server 18.04.x
 # opção do comando echo: -e (enable interpretation of backslash escapes), \n (new line)
 # opção do comando hostname: -I (all IP address)
 # opção do comando date: + (format), %d (day), %m (month), %Y (year 1970), %H (hour 24), %M (minute 60)
@@ -111,7 +111,7 @@ fi
 echo -e "Início do script $0 em: `date +%d/%m/%Y-"("%H:%M")"`\n" &>> $LOG
 #
 clear
-echo -e "Instalação do Rocket.Chat no GNU/Linux Ubuntu Server 18.04.x\n"
+echo -e "Instalação do Wekan no GNU/Linux Ubuntu Server 18.04.x\n"
 echo -e "Após a instalação do Rocket.Chat acesse a URL: http://`hostname -I | cut -d' ' -f1`:3000\n"
 echo -e "Aguarde, esse processo demora um pouco dependendo do seu Link de Internet..."
 sleep 5
@@ -154,18 +154,23 @@ echo -e "Software removidos com sucesso!!!, continuando com o script..."
 sleep 5
 clear
 #
-echo -e "Instalando o Rocket.Chat, aguarde...\n"
+echo -e "Instalando o Wekan, aguarde...\n"
 #
-echo -e "Instalando o Rocket.Chat utilizando o Snap, aguarde..."
+echo -e "Instalando o Wekan utilizando o Snap, aguarde..."
 	# opção do comando: &>> (redirecionar a saida padrão)
-	# opção do comando cd: - (return to source directory)
-	# opção do comando mv: -v (verbose)
-	snap install rocketchat-server &>> $LOG
-echo -e "Rocket.chat instalado com sucesso!!!, continuando com o script..."
+	snap install wekan
+echo -e "Wekan instalado com sucesso!!!, continuando com o script..."
 sleep 5
 echo
 #
-echo -e "Verificando as portas de conexão do Rocket.Chat e do MongoDB, aguarde..."
+echo -e "Configurando a URL do Wekan, aguarde..."
+	# opção do comando: &>> (redirecionar a saida padrão)
+	# snap set wekan root-url='' &>> $LOG
+echo -e "Wekan instalado com sucesso!!!, continuando com o script..."
+sleep 5
+echo
+#
+echo -e "Verificando as portas de conexão do Wekan e do MongoDB, aguarde..."
 	# opção do comando netstat: a (all), n (numeric)
 	# opção do comando grep: \| (função OU)
 	netstat -an | grep '3000\|27017'
@@ -173,7 +178,7 @@ echo -e "Portas verificadas com sucesso!!!, continuando com o script..."
 sleep 5
 echo
 #
-echo -e "Instalação do Rocket.Chat feita com Sucesso!!!."
+echo -e "Instalação do Wekan feita com Sucesso!!!."
 	# script para calcular o tempo gasto (SCRIPT MELHORADO, CORRIGIDO FALHA DE HORA:MINUTO:SEGUNDOS)
 	# opção do comando date: +%T (Time)
 	HORAFINAL=$(date +%T)
