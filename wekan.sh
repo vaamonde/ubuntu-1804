@@ -4,9 +4,9 @@
 # Facebook: facebook.com/ProcedimentosEmTI
 # Facebook: facebook.com/BoraParaPratica
 # YouTube: youtube.com/BoraParaPratica
-# Data de criação:14/01/2021
-# Data de atualização: 14/01/2021
-# Versão: 0.01
+# Data de criação: 14/01/2021
+# Data de atualização: 15/01/2021
+# Versão: 0.02
 # Testado e homologado para a versão do Ubuntu Server 18.04.x LTS x64
 # Kernel >= 4.15.x
 # Testado e homologado para a versão do Wekan
@@ -17,6 +17,10 @@
 # agrupamento e a filtragem; além disso, você pode adicionar membros a um cartão, por exemplo, atribuir uma tarefa a alguém.
 #
 # Informações que serão solicitadas na configuração via Web do Wekan
+# Não tem conta? Criar conta
+#   Nome do usuário: vaamonde
+#   Email: vaamonde@pti.intra
+#   Senha: vaamonde <Criar Conta>
 #
 # Site Oficial do Projeto: https://wekan.github.io/
 #
@@ -44,6 +48,11 @@ KERNEL=$(uname -r | cut -d'.' -f1,2)
 # $0 (variável de ambiente do nome do comando)
 LOG="/var/log/$(echo $0 | cut -d'/' -f2)"
 #
+# Declarando as variáveis de configuração do Wekan
+PORT="3000"
+IP="172.16.1.20"
+URL="http://$IP:$PORT"
+#
 # Verificando se o usuário é Root, Distribuição é >=18.04 e o Kernel é >=4.15 <IF MELHORADO)
 # [ ] = teste de expressão, && = operador lógico AND, == comparação de string, exit 1 = A maioria dos erros comuns na execução
 clear
@@ -60,11 +69,11 @@ if [ "$USUARIO" == "0" ] && [ "$UBUNTU" == "18.04" ] && [ "$KERNEL" == "4.15" ]
 		exit 1
 fi
 #
-# Verificando se as dependências do Rocket.Chat estão instaladas
+# Verificando se as dependências do Wekan estão instaladas
 # opção do dpkg: -s (status), opção do echo: -e (interpretador de escapes de barra invertida), -n (permite nova linha)
 # || (operador lógico OU), 2> (redirecionar de saída de erro STDERR), && = operador lógico AND, { } = agrupa comandos em blocos
 # [ ] = testa uma expressão, retornando 0 ou 1, -ne = é diferente (NotEqual)
-echo -n "Verificando as dependências do Rocket.Chat, aguarde... "
+echo -n "Verificando as dependências do Wekan, aguarde... "
 	for name in snapd
 	do
   		[[ $(dpkg -s $name 2> /dev/null) ]] || { 
@@ -78,7 +87,7 @@ echo -n "Verificando as dependências do Rocket.Chat, aguarde... "
             }
 		sleep 5
 #	
-# Verificando se a porta 3000 27017 estão sendo utilizadas no servidor
+# Verificando se as portas 3000 e 27017 estão sendo utilizadas no servidor
 # [ ] = teste de expressão, == comparação de string, exit 1 = A maioria dos erros comuns na execução,
 # $? código de retorno do último comando executado, ; execução de comando, opção do comando nc: -v (verbose)
 # -z (DCCP mode)
@@ -93,13 +102,13 @@ if [ "$(nc -vz 127.0.0.1 3000 ; echo $?)" == "0" ]
         sleep 3
 fi
 #
-if [ "$(nc -vz 127.0.0.1 27017 ; echo $?)" == "0" ]
+if [ "$(nc -vz 127.0.0.1 27019 ; echo $?)" == "0" ]
 	then
-		echo -e "A porta: 27017 já está sendo utilizada nesse servidor.\n"
+		echo -e "A porta: 27019 já está sendo utilizada nesse servidor.\n"
         echo -e "Verifique a porta e o serviço associada a ela e execute novamente esse script.\n"
 		exit 1
 	else
-		echo -e "A porta: 27017 está disponível, continuando com o script..."
+		echo -e "A porta: 27019 está disponível, continuando com o script..."
         sleep 3
 fi
 #
@@ -163,17 +172,21 @@ echo -e "Wekan instalado com sucesso!!!, continuando com o script..."
 sleep 5
 echo
 #
-echo -e "Configurando a URL do Wekan, aguarde..."
+echo -e "Configurando a URL e Porta do Wekan, aguarde..."
 	# opção do comando: &>> (redirecionar a saida padrão)
-	# snap set wekan root-url='' &>> $LOG
-echo -e "Wekan instalado com sucesso!!!, continuando com o script..."
+    # opção do comando hostname: -I (all IP address)
+    # opção do comando cut: -d (delimiter), -f (fields)
+    snap set wekan port='$PORT' &>> $LOG
+	snap set wekan root-url='$URL' &>> $LOG
+    systemctl restart snap.wekan.wekan.service &>> $LOG
+echo -e "Wekan configurado com sucesso!!!, continuando com o script..."
 sleep 5
 echo
 #
 echo -e "Verificando as portas de conexão do Wekan e do MongoDB, aguarde..."
 	# opção do comando netstat: a (all), n (numeric)
 	# opção do comando grep: \| (função OU)
-	netstat -an | grep '3000\|27017'
+	netstat -an | grep '3000\|27019'
 echo -e "Portas verificadas com sucesso!!!, continuando com o script..."
 sleep 5
 echo

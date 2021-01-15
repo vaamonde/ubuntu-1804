@@ -5,19 +5,39 @@
 # Facebook: facebook.com/BoraParaPratica
 # YouTube: youtube.com/BoraParaPratica
 # Data de criação: 04/08/2020
-# Data de atualização: 14/01/2021
-# Versão: 0.02
+# Data de atualização: 15/01/2021
+# Versão: 0.03
 # Testado e homologado para a versão do Ubuntu Server 18.04.x LTS x64
 # Kernel >= 4.15.x
-# Testado e homologado para a versão do Rocket.Chat 3.4.x e MongoDB 4.x
+# Testado e homologado para a versão do Rocket.Chat 3.9.x e MongoDB 4.x
 #
 # O Rocket.Chat é um servidor de bate-papo na Web, desenvolvido em JavaScript, usando a estrutura de pilha completa 
 # do Meteor. É uma ótima solução para comunidades e empresas que desejam hospedar seu próprio serviço de bate-papo 
 # em particular ou para desenvolvedores que desejam criar e evoluir suas próprias plataformas de bate-papo.
 #
 # Informações que serão solicitadas na configuração via Web do Rocket.Chat
-#
+# Passo 1: Informação de administração
+#   Nome: Robson Vaamonde
+#   Nome de usuário: vaamonde
+#   E-mail da Organização: vaamonde@pti.intra
+#   Senha: vaamonde <Continuar>
+# Passo 2: Informações sobre a Organização
+#   Tipo de Organização: Comunidade
+#   Nome da Organização: Bora para Prática!!!
+#   Indústria: Educação
+#   Tamanho: 1-10 people
+#   País: Brasil
+#   Site: vaamonde.com.br <Continuar>
+# Passo 3: Informações do servidor
+#   Nome do Site: BoraParaPratica
+#   Idioma: Português do Brasil
+#   Tipo de servidor: Comunidade
+#   Auto ativar a autenticação de duas etapas via email para novos usuários: No <Continuar>
+# Passo 4: Registrar Servidor
+#   Mantenha-se autônomo, você precisará: Sim <Continuar>
+#   
 # Site Oficial do Projeto: https://rocket.chat/
+# Instalação do Rocket.Chat Desktop: https://docs.rocket.chat/installation/mobile-and-desktop-apps
 #
 # Vídeo de instalação do GNU/Linux Ubuntu Server 18.04.x LTS: https://www.youtube.com/watch?v=zDdCrqNhIXI
 #
@@ -78,7 +98,7 @@ echo -n "Verificando as dependências do Rocket.Chat, aguarde... "
 		sleep 5
 #
 #	
-# Verificando se a porta 3000 27017 estão sendo utilizadas no servidor
+# Verificando se as portas 3000 e 27017 estão sendo utilizadas no servidor
 # [ ] = teste de expressão, == comparação de string, exit 1 = A maioria dos erros comuns na execução,
 # $? código de retorno do último comando executado, ; execução de comando, opção do comando nc: -v (verbose)
 # -z (DCCP mode)

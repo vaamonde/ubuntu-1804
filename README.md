@@ -415,8 +415,6 @@ Link da vídeo aula:
 
 Link do script utilizado nesse vídeo: https://github.com/vaamonde/ubuntu-1804/blob/master/openproject.sh
 
-========================= SCRIPT EM DESENVOLVIMENTO =========================
-
 ## **COMO instalar o ROCKET.CHAT no GNU/Linux Ubuntu Server 18.04.x LTS**
 
 Vídeo mostrando os procedimentos básicos para instalar o Rocket.Chat no GNU/Linux Ubuntu Server 18.04 LTS
@@ -426,3 +424,15 @@ O Rocket.Chat é um servidor de bate-papo na Web, desenvolvido em JavaScript, us
 Link da vídeo aula: 
 
 Link do script utilizado nesse vídeo: https://github.com/vaamonde/ubuntu-1804/blob/master/rocketchat.sh
+
+## **COMO instalar o WEKAN no GNU/Linux Ubuntu Server 18.04.x LTS**
+
+Vídeo mostrando os procedimentos básicos para instalar o Wekan no GNU/Linux Ubuntu Server 18.04 LTS
+
+O Wekan é um quadro Kanban de código aberto que permite criar tarefas baseadas em cartões e gerenciamento de pendências. Wekan permite criar tabuleiros nos quais os cartões podem ser movidos entre várias Colunas. Os tarefas podem ter vários membros simultâneos, o que facilita a colaboração. Você pode atribuir etiquetas coloridas aos cartões para facilitar o agrupamento e a filtragem; além disso, você pode adicionar membros a um cartão, por exemplo, atribuir uma tarefa a alguém.
+
+Link da vídeo aula: 
+
+Link do script utilizado nesse vídeo: https://github.com/vaamonde/ubuntu-1804/blob/master/wekan.sh
+
+========================= SCRIPT EM DESENVOLVIMENTO =========================

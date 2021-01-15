@@ -73,6 +73,7 @@ LOG="/var/log/$(echo $0 | cut -d'/' -f2)"
 # Declarando as variáveis para criação da Base de Dados do GLPI
 USER="root"
 PASSWORD="pti@2018"
+#
 # opção do comando create: create (criação), database (base de dados), base (banco de dados)
 # opção do comando create: create (criação), user (usuário), identified by (identificado por - senha do usuário), password (senha)
 # opção do comando grant: grant (permissão), usage (uso em | uso na), *.* (todos os bancos/tabelas), to (para), user (usuário)
