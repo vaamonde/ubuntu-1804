@@ -5,8 +5,8 @@
 # Facebook: facebook.com/BoraParaPratica
 # YouTube: youtube.com/BoraParaPratica
 # Data de criação: 11/01/2021
-# Data de atualização: 14/01/2021
-# Versão: 0.02
+# Data de atualização: 16/01/2021
+# Versão: 0.03
 # Testado e homologado para a versão do Ubuntu Server 18.04.x LTS x64
 # Kernel >= 4.15.x
 # Testado e homologado para a versão do PostgreSQL 13.x e PgAdmin 4.x
@@ -127,7 +127,6 @@ echo -e "Repositório adicionado com sucesso!!!, continuando com o script..."
 sleep 5
 echo
 #
-#
 echo -e "Adicionando o Repositório Multiversão do Apt, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	add-apt-repository multiverse &>> $LOG
@@ -182,8 +181,6 @@ echo
 #
 echo -e "Atualizando as Lista do Apt com os novos Repositórios, aguarde..."
 	# opção do comando: &>> (redirecionar de saída padrão)
-	# opção do comando wget: -q (quiet) -O (output document file)
-	# opção do comando cp: -v (verbose)
     apt update &>> $LOG
 echo -e "Listas atualizadas com sucesso!!!, continuando com o script..."
 sleep 5

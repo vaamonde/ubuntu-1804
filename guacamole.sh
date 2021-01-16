@@ -5,8 +5,8 @@
 # Facebook: facebook.com/BoraParaPratica
 # YouTube: youtube.com/BoraParaPratica
 # Data de criação: 04/01/2021
-# Data de atualização: 05/01/2021
-# Versão: 0.02
+# Data de atualização: 16/01/2021
+# Versão: 0.03
 # Testado e homologado para a versão do Ubuntu Server 18.04.x LTS x64
 # Kernel >= 4.15.x
 # Testado e homologado para a versão do Apache Guacamole Server 1.3.x e Cliente 1.3.x
@@ -17,6 +17,17 @@
 # servidor, tudo que você precisa para acessar seus desktops é um navegador da web.
 #
 # Informações que serão solicitadas na configuração via Web do Apache Guacamole
+# Username: guacadmin
+# Password: guacadmin
+#
+# Instalação do Vino VNC Server no Linux Mint 19.x e 20.x
+# 	sudo apt update
+#	sudo apt install vino
+#   sudo gsettings set org.gnome.Vino prompt-enabled true
+#	sudo gsettings set org.gnome.Vino require-encryption false
+#	cd /usr/lib/vino/
+#	./vino-server &
+#   sudo netstat -pl | grep 5900
 #
 # Site Oficial do Projeto: https://guacamole.apache.org/
 #
