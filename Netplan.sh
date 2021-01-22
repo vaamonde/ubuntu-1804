@@ -56,7 +56,7 @@ cd /etc/netplan/
 network:
 	ethernets:
 		enp0s3:
-			dhcp4: yes
+			dhcp4: true
 	version: 2
 	
 #Aplicando as configurações
@@ -152,7 +152,7 @@ network:
 network:
 	bonds:
 		bond0:
-			dhcp4: yes
+			dhcp4: true
 			interfaces:
 				- enp3s0
 				- enp4s0
