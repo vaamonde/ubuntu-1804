@@ -96,7 +96,6 @@ echo -n "Verificando as dependências do Rocket.Chat, aguarde... "
             exit 1; 
             }
 		sleep 5
-#
 #	
 # Verificando se as portas 3000 e 27017 estão sendo utilizadas no servidor
 # [ ] = teste de expressão, == comparação de string, exit 1 = A maioria dos erros comuns na execução,

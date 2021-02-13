@@ -5,8 +5,8 @@
 # Facebook: facebook.com/BoraParaPratica
 # YouTube: youtube.com/BoraParaPratica
 # Data de criação: 04/01/2021
-# Data de atualização: 16/01/2021
-# Versão: 0.03
+# Data de atualização: 13/02/2021
+# Versão: 0.04
 # Testado e homologado para a versão do Ubuntu Server 18.04.x LTS x64
 # Kernel >= 4.15.x
 # Testado e homologado para a versão do Apache Guacamole Server 1.3.x e Cliente 1.3.x
@@ -28,6 +28,7 @@
 #	cd /usr/lib/vino/
 #	./vino-server &
 #   sudo netstat -pl | grep 5900
+#	sudo nc -vz 127.0.0.1 5900
 #
 # Site Oficial do Projeto: https://guacamole.apache.org/
 #
@@ -209,6 +210,7 @@ echo
 echo -e "Criando o diretório e baixando o Apache Guacamole Client, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando mkdir: -v (verbose), {} (block command)
+	# opção do comando {}: Agrupa comandos em um bloco
 	# opção do comando wget: -O (output document file)
     # opção do comando ln: -s (symbolic), -v (verbose)
 	mkdir -v /etc/guacamole &>> $LOG
@@ -223,7 +225,6 @@ echo
 echo -e "Atualizando os arquivos de configuração do Apache Guacamole Client, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando cp: -v (verbose)
-	# opção do comando vim: + (number line)
 	cp -v conf/guacamole.properties /etc/guacamole/guacamole.properties &>> $LOG
 	cp -v conf/user-mapping.xml /etc/guacamole/user-mapping.xml &>> $LOG
     cp -v /etc/default/tomcat9 /etc/default/tomcat9.old &>> $LOG
