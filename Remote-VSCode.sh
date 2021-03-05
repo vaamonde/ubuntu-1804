@@ -28,7 +28,7 @@ Ctrl + Shift + P
 Remote: Start Server
 
 #Quarta Etapa: Ver o Status do Serviço e Porta do Remote VSCode
-Ctrl + Shift + "`" Acento Grave ou Crase
+Ctrl + Shift + "``" Acento Grave ou Crase
 netstat -an | grep 52698
 
 #Quinta Etapa: Instalação do Rmate no Ubuntu Server 18.04.x LTS
