@@ -5,8 +5,8 @@
 # Facebook: facebook.com/BoraParaPratica
 # YouTube: youtube.com/BoraParaPratica
 # Data de criação: 04/01/2021
-# Data de atualização: 13/02/2021
-# Versão: 0.04
+# Data de atualização: 05/03/2021
+# Versão: 0.05
 # Testado e homologado para a versão do Ubuntu Server 18.04.x LTS x64
 # Kernel >= 4.15.x
 # Testado e homologado para a versão do Apache Guacamole Server 1.3.x e Cliente 1.3.x
@@ -30,9 +30,18 @@
 #   sudo netstat -pl | grep 5900
 #	sudo nc -vz 127.0.0.1 5900
 #
+# Instalação do Telnet Server no Ubuntu Server 18.04.x
+#	sudo apt update
+#	sudo apt install telnetd
+#
+# Instalação do OpenSSH Sever no Ubuntu Server 18.04.x
+#	sudo apt update
+# 	sudo apt install openssh-server
+#
 # Site Oficial do Projeto: https://guacamole.apache.org/
 #
 # Vídeo de instalação do GNU/Linux Ubuntu Server 18.04.x LTS: https://www.youtube.com/watch?v=zDdCrqNhIXI
+# Vídeo de configuração do OpenSSH Sever: https://www.youtube.com/watch?v=ecuol8Uf1EE
 # Vídeo de instalação do Tomcat Server: https://www.youtube.com/watch?v=yXc3v3HAG5w
 #
 # Variável da Data Inicial para calcular o tempo de execução do script (VARIÁVEL MELHORADA)
