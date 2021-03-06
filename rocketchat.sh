@@ -5,8 +5,8 @@
 # Facebook: facebook.com/BoraParaPratica
 # YouTube: youtube.com/BoraParaPratica
 # Data de criação: 04/08/2020
-# Data de atualização: 15/01/2021
-# Versão: 0.03
+# Data de atualização: 06/03/2021
+# Versão: 0.04
 # Testado e homologado para a versão do Ubuntu Server 18.04.x LTS x64
 # Kernel >= 4.15.x
 # Testado e homologado para a versão do Rocket.Chat 3.9.x e MongoDB 4.x
@@ -38,6 +38,7 @@
 #   
 # Site Oficial do Projeto: https://rocket.chat/
 # Instalação do Rocket.Chat Desktop: https://docs.rocket.chat/installation/mobile-and-desktop-apps
+# Download do Rocket.Chat Desktop: https://github.com/RocketChat/Rocket.Chat.Electron/releases/
 #
 # Vídeo de instalação do GNU/Linux Ubuntu Server 18.04.x LTS: https://www.youtube.com/watch?v=zDdCrqNhIXI
 #

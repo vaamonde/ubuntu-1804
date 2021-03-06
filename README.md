@@ -371,7 +371,7 @@ Vídeo mostrando os procedimentos básicos para instalar o NTop-NG no GNU/Linux 
 
 NTop-NG é um software para monitorar o tráfego em uma rede de computadores. Ele foi projetado para ser um substituto de alto desempenho e baixo recurso para o NTop. O NTop-NG é um software de código aberto lançado sob a Licença Pública Geral GNU (GPLv3) para software. Versões de código-fonte estão disponíveis para os sistemas operacionais: Unix, Linux, BSD, Mac OS X e Windows. O mecanismo do NTop-NG é escrito na linguagem de programação C ++, sua interface da web é opcional e foi desenvolvida na linguagem Lua.
 
-Link da vídeo aula: 
+Link da vídeo aula: https://www.youtube.com/watch?v=IDGSvA4sVYg
 
 Link do script utilizado nesse vídeo: https://github.com/vaamonde/ubuntu-1804/blob/master/ntopng.sh
 
@@ -381,9 +381,19 @@ Vídeo mostrando os procedimentos básicos para instalar o FusionInventory no GN
 
 O FusionInventory Agent é um agente multiplataforma genérico. Ele pode executar uma grande variedade de tarefas de gerenciamento, como inventário local, implantação de software ou descoberta de rede. Ele pode ser usado autônomo ou em combinação com um servidor compatível (OCS Inventory, GLPI, OTRS, Uranos, ...) atuando como um ponto de controle centralizado.
 
-Link da vídeo aula: 
+Link da vídeo aula: https://www.youtube.com/watch?v=fTg9r8zyy1A
 
 Link do script utilizado nesse vídeo: https://github.com/vaamonde/ubuntu-1804/blob/master/fusion.sh
+
+## **COMO instalar o POSTGRESQL e PGADMIN no GNU/Linux Ubuntu Server 18.04.x LTS**
+
+Vídeo mostrando os procedimentos básicos para instalar o PostgreSQL e PgAdmin no GNU/Linux Ubuntu Server 18.04 LTS
+
+PostgreSQL é um sistema gerenciador de banco de dados objeto relacional (SGBD), desenvolvido como projeto de código aberto. O PostgreSQL possui recursos mais avançados para o gerenciamento de Banco de Dados disponível no mercado em relação aos seus concorrente (por exemplo: MySQL, MariaDB, Firebird, etc...). O pgAdmin é uma plataforma Open Source de administração do PostgreSQL e seus banco de dados relacionados. Escrito em Python e jQuery, ele suporta todos os recursos encontrados no PostgreSQL por linha de comando (console).
+
+Link da vídeo aula: https://www.youtube.com/watch?v=POCafSY3LAk
+
+Link do script utilizado nesse vídeo: https://github.com/vaamonde/ubuntu-1804/blob/master/postgresql.sh
 
 ## **COMO instalar o APACHE GUACAMOLE no GNU/Linux Ubuntu Server 18.04.x LTS**
 
@@ -391,7 +401,7 @@ Vídeo mostrando os procedimentos básicos para instalar o Apache Guacamole no G
 
 O Apache Guacamole é um gateway de desktop remoto sem cliente, ele suporta protocolos padrão como VNC, RDP e SSH., ele é chamado de Clientless porque nenhum plug-in ou software cliente é necessário para o seu funcionamento isso e possível graças ao HTML5, uma vez que o Apache Guacamole é instalado em um servidor, tudo que você precisa para acessar seus desktops é um navegador da web.
 
-Link da vídeo aula: 
+Link da vídeo aula: https://www.youtube.com/watch?v=S3mq0yRJn7U
 
 Link do script utilizado nesse vídeo: https://github.com/vaamonde/ubuntu-1804/blob/master/guacamole.sh
 
@@ -401,7 +411,7 @@ Vídeo mostrando os procedimentos básicos para instalar o Unifi Controller no G
 
 O software UniFi Controller que vem com o sistema Ubiquiti UniFi tem uma interface baseada em Web que facilita a administração, configuração e gerenciamento dos dispositivos Unifi (Access Point AP, Switch, Router, USG, etc). O sistema Unifi e baseado na arquitetura SDN (Software defined networking) possibilitando o gerenciamento centralizado de todos os equipamentos da infraestrutura da rede utilizando o Unifi Controller Internamente ou Remotamente, ou seja, não há necessidade de configurar individualmente cada um dos dispositivos na rede.
 
-Link da vídeo aula: 
+Link da vídeo aula: https://www.youtube.com/watch?v=rrcwiZSBHkg
 
 Link do script utilizado nesse vídeo: https://github.com/vaamonde/ubuntu-1804/blob/master/unifi.sh
 
@@ -434,5 +444,3 @@ O Wekan é um quadro Kanban de código aberto que permite criar tarefas baseadas
 Link da vídeo aula: 
 
 Link do script utilizado nesse vídeo: https://github.com/vaamonde/ubuntu-1804/blob/master/wekan.sh
-
-========================= SCRIPT EM DESENVOLVIMENTO =========================

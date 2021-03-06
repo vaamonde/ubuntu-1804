@@ -7,8 +7,8 @@
 # Data de criação: 03/08/2020
 # Data de atualização: 04/08/2020
 # Versão: 0.1
-# Testado e homologado para a versão do Ubuntu Server 16.04 LTS x64
-# Kernel >= 4.4.x
+# Testado e homologado para a versão do Ubuntu Server 18.04 LTS x64
+# Kernel >= 4.15.x
 
 # Configuração da variável do nome do cluster utilizado no serviço do Graylog
 cluster.name: graylog
