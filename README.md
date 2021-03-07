@@ -34,11 +34,15 @@ Link da Playlist: https://www.youtube.com/playlist?list=PLozhsZB1lLUOjGzjGO4snI3
 
 DevOps Github APRESENTAÇÃO do CURSO de GNU/Linux Ubuntu Server 18.04.x LTS, vídeo mostrando os detalhes do curso e informações extras.
 
+[![Apresentação do Curso](http://img.youtube.com/vi/qvUVWUz1MmY/0.jpg)](http://www.youtube.com/watch?v=qvUVWUz1MmY "Apresentação do Curso")
+
 Link da vídeo aula: https://www.youtube.com/watch?v=qvUVWUz1MmY
 
 ## **APRESENTAÇÃO do CENÁRIO do Curso de GNU/Linux Ubuntu Server 18.04.x LTS**
 
 Vídeo mostrando o cenário das máquinas virtuais utilizadas no Curso de DevOps Github GNU/Linux Ubuntu Server 18.04.x LTS
+
+[![Apresentação do Cenário](http://img.youtube.com/vi/8AaHNXcrxag/0.jpg)](http://www.youtube.com/watch?v=8AaHNXcrxag "Apresentação do Cenário")
 
 Link da vídeo aula: https://www.youtube.com/watch?v=8AaHNXcrxag
 
@@ -46,15 +50,17 @@ Link da vídeo aula: https://www.youtube.com/watch?v=8AaHNXcrxag
 
 Vídeo mostrando os procedimentos básicos para instalar o GNU/Linux Ubuntu Server 18.04.x LTS no VirtualBOX. Versões LTS (Long-term support) do Ubuntu são recomendadas devido ao suporte de 5 anos da data de lançamento. A nova versão do GNU/Linux Ubuntu Server 18.04.1 LTS trás um novo instalador, vários recursos novos e várias tecnologias que facilitam a implementação de serviços em rede, Cloud e Segurança de forma rápida, fácil e eficiente para pequenas, médias e grandes empresas.
 
-Link da vídeo aula: https://www.youtube.com/watch?v=zDdCrqNhIXI&t
-
 [![Instalação do Ubuntu Serber](http://img.youtube.com/vi/zDdCrqNhIXI/0.jpg)](http://www.youtube.com/watch?v=zDdCrqNhIXI "Instalação do Ubuntu Serber")
+
+Link da vídeo aula: https://www.youtube.com/watch?v=zDdCrqNhIXI&t
 
 Link do script utilizado nesse vídeo: https://github.com/vaamonde/ubuntu-1804/blob/master/Apt-Get.sh
 
 ## **COMO instalar a versão Mini (Netboot - Netinstall) do GNU/Linux Ubuntu Server 18.04 LTS**
 
 Vídeo mostrando os procedimentos básicos para instalar a versão Mini (Netboot - Netinstall) do GNU/Linux Ubuntu Server 18.04 LTS. A versão Mini também conhecida como Netboot ou Netinstall possui os recursos mínimos para a instalação do Server ou Desktop Ubuntu, essa versão e indicada para instalação via Rede, utilizando os Protocolos DHCP, TFTP e PXE, indicada para customizações de sistema ou servidores de virtualização e cloud.
+
+[![Instalação da Versão Netboot](http://img.youtube.com/vi/l-AVJE3DZfw/0.jpg)](http://www.youtube.com/watch?v=l-AVJE3DZfw "Instalação da Versão Netboot")
 
 Link da vídeo aula: https://www.youtube.com/watch?v=l-AVJE3DZfw&t
 
@@ -64,6 +70,8 @@ Link do script utilizado nesse vídeo: https://github.com/vaamonde/ubuntu-1804/b
 
 Vídeo mostrando os procedimentos básicos para manter o Servidor GNU/Linux Ubuntu Server 18.04.x LTS sempre atualizado.
 
+[![Atualização do Ubuntu](http://img.youtube.com/vi/esnu8TAepHU/0.jpg)](http://www.youtube.com/watch?v=esnu8TAepHU "Atualização do Ubuntu")
+
 Link da vídeo aula: https://www.youtube.com/watch?v=esnu8TAepHU&t
 
 Link do script utilizado nesse vídeo: https://github.com/vaamonde/ubuntu-1804/blob/master/Apt-Get.sh
@@ -71,6 +79,8 @@ Link do script utilizado nesse vídeo: https://github.com/vaamonde/ubuntu-1804/b
 ## **COMO desligar e reiniciar o GNU/Linux Ubuntu Server 18.04.x LTS**
 
 Vídeo mostrando os procedimentos básicos para desligar e reiniciar o Servidor GNU/Linux Ubuntu Server 18.04.x LTS
+
+[![Desligando e Reiniciando o Ubuntu](http://img.youtube.com/vi/XLFhmnKr9O0/0.jpg)](http://www.youtube.com/watch?v=XLFhmnKr9O0 "Desligando e Reiniciando o Ubuntu")
 
 Link da vídeo aula: https://www.youtube.com/watch?v=XLFhmnKr9O0&t
 
@@ -82,6 +92,8 @@ Vídeo mostrando os procedimentos básicos para configurar as interfaces (placa 
 
 Na versão 18.04.x as configurações de Placa de Rede não fica mais no arquivo /etc/network/interfaces, hoje o projeto utiliza o software Netplan para fazer as configurações de rede.
 
+[![Configurando a Placa de Rede](http://img.youtube.com/vi/zSUd4k108Zk/0.jpg)](http://www.youtube.com/watch?v=zSUd4k108Zk "Configurando a Placa de Rede")
+
 Link da vídeo aula: https://www.youtube.com/watch?v=zSUd4k108Zk
 
 Link do script utilizado nesse vídeo: https://github.com/vaamonde/ubuntu-1804/blob/master/Netplan.sh
@@ -89,6 +101,8 @@ Link do script utilizado nesse vídeo: https://github.com/vaamonde/ubuntu-1804/b
 ## **COMO configurar o Hostname, Hosts e TCP Wrappers no GNU/Linux Ubuntu Server 18.04.x LTS**
 
 Vídeo mostrando os procedimentos básicos para configurar os parâmetros de rede no GNU/Linux Ubuntu Server 18.04.x LTS
+
+[![Configurando o Hostname](http://img.youtube.com/vi/J7eyb5ynjZA/0.jpg)](http://www.youtube.com/watch?v=J7eyb5ynjZA "Configurando o Hostname")
 
 Link da vídeo aula: https://www.youtube.com/watch?v=J7eyb5ynjZA
 
@@ -98,6 +112,8 @@ Link do script utilizado nesse vídeo: https://github.com/vaamonde/ubuntu-1804/b
 
 Vídeo mostrando os procedimentos básicos para configurar o LOCALE (Localidade), Timezone (Fuso Horário), Data e Hora, sincronização da Data e Hora do Sistema Operacional e o Hardware (BIOS), sincronização da Data e Hora de Servidores NTP, configuração de Teclado ABNT-2, Configuração do UTF-8 no Console do Servidor GNU/Linux Ubuntu Server 18.04.x LTS
 
+[![Configurando o Locale](http://img.youtube.com/vi/laiuH1zgg3U/0.jpg)](http://www.youtube.com/watch?v=laiuH1zgg3U "Configurando o Locale")
+
 Link da vídeo aula: https://www.youtube.com/watch?v=laiuH1zgg3U&t
 
 Link do script utilizado nesse vídeo: https://github.com/vaamonde/ubuntu-1804/blob/master/LocaleTimezoneKeyboard.sh 
@@ -105,6 +121,8 @@ Link do script utilizado nesse vídeo: https://github.com/vaamonde/ubuntu-1804/b
 ## **COMO fazer SNAPSHOTS no VIRTUALBOX do Curso de GNU/Linux Ubuntu Server 18.04.x LTS**
 
 Vídeo mostrando os procedimentos básicos para criar o Snapshot da Máquina Virtual do Oracle do VirtualBOX do Servidor GNU/Linux Ubuntu Server 18.04.x LTS, esse recurso é importante, pois se tiver alguma falha você consegue voltar a imagens anterior se perder todos os procedimentos executados anteriormente.
+
+[![Snapshots Máquina Virtual](http://img.youtube.com/vi/Ypi9wntITpM/0.jpg)](http://www.youtube.com/watch?v=Ypi9wntITpM "Snapshots Máquina Virtual")
 
 Link da vídeo aula: https://www.youtube.com/watch?v=Ypi9wntITpM
 
