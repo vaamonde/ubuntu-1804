@@ -138,6 +138,8 @@ O bash é um interpretador de comandos, um entre os diversos tradutores entre o 
 
 Acrônimo para "Bourne-Again SHell, o bash é uma evolução retro-compatível muito mais interativa do Bourne Shell (sh). Os shells Bourne permitem a execução de sequências de comandos inseridos diretamente na linha de comandos ("prompt") ou ainda lidos de arquivos de texto conhecidos como shell scripts. Neles se podem invocar comandos internos aos próprios shells (conhecidos como comandos "builtins") ou ainda arquivos binários ou scripts de terceiros arquivados nos dispositivos de armazenamento do sistema.
 
+[![Bash Shell Básico](http://img.youtube.com/vi/xs1zGEBf-wc/0.jpg)](http://www.youtube.com/watch?v=xs1zGEBf-wc "Bash Shell Básico")
+
 Link da vídeo aula: https://www.youtube.com/watch?v=xs1zGEBf-wc&t
 
 Link do script utilizado nesse vídeo: https://github.com/vaamonde/ubuntu-1804/blob/master/Bash.sh
@@ -150,6 +152,8 @@ Shell script é uma linguagem de script usada em vários sistemas operacionais, 
 
 A maior parte dos usuários classificam shell script como uma linguagem de fácil aprendizagem. O primeiro passo é, saber o que se deseja fazer, então ver qual o código que executa este comando em shell e aí criar, basta escrever o código em algum editor de texto e salvar.
 
+[![Shell Script Básico](http://img.youtube.com/vi/MkKkZA8wxHU/0.jpg)](http://www.youtube.com/watch?v=MkKkZA8wxHU "Shell Script Básico")
+
 Link da vídeo aula: https://www.youtube.com/watch?v=MkKkZA8wxHU&t
 
 Link do script utilizado nesse vídeo: https://github.com/vaamonde/ubuntu-1804/blob/master/Shell.sh
@@ -161,6 +165,8 @@ Vídeo mostrando os procedimentos básicos para utilizar o comando Git e o site 
 O Git é um sistema de controle de versões distribuído, usado principalmente no desenvolvimento de software, mas pode ser usado para registrar o histórico de edições de qualquer tipo de arquivo. O Git foi inicialmente projetado e desenvolvido por Linus Torvalds para o desenvolvimento do kernel Linux, mas foi adotado por muitos outros projetos.
 
 O GitHub é uma plataforma de hospedagem de código-fonte com controle de versão usando o Git. Ele permite que programadores, utilitários ou qualquer usuário cadastrado na plataforma contribuam em projetos privados e/ou Open Source de qualquer lugar do mundo. 
+
+[![Git e Github Básico](http://img.youtube.com/vi/hrmqRD2k5P0/0.jpg)](http://www.youtube.com/watch?v=hrmqRD2k5P0 "Git e Github Básico")
 
 Link da vídeo aula: https://www.youtube.com/watch?v=hrmqRD2k5P0&t
 
@@ -176,6 +182,8 @@ Desde o seu lançamento para a plataforma do Amiga (em 1991), o seu desenvolvime
 
 Por causa disso, o editor de Texto VIM é o principal Software utilizado em Desktop e Servidores GNU/Linux para a criação de script e modificação de arquivos conf.
 
+[![Vim Básico](http://img.youtube.com/vi/u6Or0rFgltY/0.jpg)](http://www.youtube.com/watch?v=u6Or0rFgltY "Vim Básico")
+
 Link da vídeo aula: https://www.youtube.com/watch?v=u6Or0rFgltY&t
 
 Link do script utilizado nesse vídeo: https://github.com/vaamonde/ubuntu-1804/blob/master/Vim.sh
@@ -186,6 +194,8 @@ Vídeo mostrando os procedimentos básicos para configurar o OpenSSH Server no G
 
 OpenSSH (Open Secure Shell) é um conjunto de utilitários de rede relacionado à segurança que provém a criptografia em sessões de comunicações em uma rede de computadores usando o protocolo SSH. Foi criado com um código aberto alternativo ao código proprietário da suíte de softwares Secure Shell, oferecido pela SSH Communications Security. OpenSSH foi desenvolvido como parte do projeto OpenBSD.
 
+[![OpenSSH Server](http://img.youtube.com/vi/ecuol8Uf1EE/0.jpg)](http://www.youtube.com/watch?v=ecuol8Uf1EE "OpenSSH Server")
+
 Link da vídeo aula: https://www.youtube.com/watch?v=ecuol8Uf1EE
 
 Link do script utilizado nesse vídeo: https://github.com/vaamonde/ubuntu-1804/blob/master/openssh.sh
@@ -195,6 +205,8 @@ Link do script utilizado nesse vídeo: https://github.com/vaamonde/ubuntu-1804/b
 Vídeo mostrando os procedimentos básicos para instalar o LAMP Server GNU/Linux Ubuntu Server 18.04 LTS
 
 O LAMP é o acrônimo para Linux + Apache + MySQL + PHP, é um dos principais serviços de hospedagem de páginas de internet utilizado em todo mundo, sua instalação e simples, fácil, rápida e seguro, podendo montar um estrutura de servidores de hospedagem interna ou externa.
+
+[![LAMP Server](http://img.youtube.com/vi/6EFUu-I3u4s/0.jpg)](http://www.youtube.com/watch?v=6EFUu-I3u4s "LAMP Server")
 
 Link da vídeo aula: https://www.youtube.com/watch?v=6EFUu-I3u4s&t
 
@@ -208,6 +220,8 @@ O LAMP é o acrônimo para Linux + Apache + MySQL + PHP, é um dos principais se
 
 O Wordpress é um sistema livre e aberto de gestão de conteúdo para internet (do inglês: Content Management System - CMS), baseado em PHP com banco de dados MySQL, executado em um servidor interpretador, voltado principalmente para a criação de páginas eletrônicas (sites) e blogs online. Criado a partir do extinto b2/cafelog, por Ryan Boren e Matthew Mullenweg, e distribuído gratuitamente sob a GNU General Public License.
 
+[![Wordpress](http://img.youtube.com/vi/Fs2B7kLdlm4/0.jpg)](http://www.youtube.com/watch?v=Fs2B7kLdlm4 "Wordpress")
+
 Link da vídeo aula: https://www.youtube.com/watch?v=Fs2B7kLdlm4
 
 Link do script utilizado nesse vídeo: https://github.com/vaamonde/ubuntu-1804/blob/master/wordpress.sh
@@ -217,6 +231,8 @@ Link do script utilizado nesse vídeo: https://github.com/vaamonde/ubuntu-1804/b
 Vídeo mostrando os procedimentos básicos para instalar o WEBMIN no GNU/Linux Ubuntu Server 18.04 LTS
 
 O Webmin é um programa de gerenciamento de servidor, que roda em plataformas Unix/Linux. Com ele você pode usar também o Usermin e o Virtualmin. O Webmin funciona como um centralizador de configurações do sistema, monitoração dos serviços e de servidores, fornecendo uma interface amigável, e que quando configurado com um servidor web, pode ser acessado de qualquer local, através de um navegador: https:\\(ip do servidor):(porta de utilização). Exemplo: https:\\172.16.1.20:10000.
+
+[![Webim](http://img.youtube.com/vi/rKTFI9s_YNY/0.jpg)](http://www.youtube.com/watch?v=rKTFI9s_YNY "Webim")
 
 Link da vídeo aula: https://www.youtube.com/watch?v=rKTFI9s_YNY&t
 
@@ -229,6 +245,8 @@ Vídeo mostrando os procedimentos básicos para instalar o NETDATA no GNU/Linux 
 O Netdata é uma ferramenta para visualizar e monitorar métricas em tempo real, otimizado para acumular todos os tipos de dados, como uso da CPU, atividade do disco, consultas SQL, visitas a um site, etc. A ferramenta é projetada para visualizar o agora com o máximo de detalhes possível, permitindo que o usuário tenha uma visão do que está acontecendo e do que acaba de acontecer em seu sistema ou aplicativo, sendo uma opção ideal para resolver problemas de desempenho em tempo real.
 https:\\(ip do servidor):(porta de utilização). Exemplo: https:\\172.16.1.20:19999
 
+[![Netdata](http://img.youtube.com/vi/TdTTgztYVKc/0.jpg)](http://www.youtube.com/watch?v=TdTTgztYVKc "Netdata")
+
 Link da vídeo aula: https://www.youtube.com/watch?v=TdTTgztYVKc&t
 
 Link do script utilizado nesse vídeo: https://github.com/vaamonde/ubuntu-1804/blob/master/netdata.sh
@@ -238,6 +256,8 @@ Link do script utilizado nesse vídeo: https://github.com/vaamonde/ubuntu-1804/b
 Vídeo mostrando os procedimentos básicos para instalar o LOGANALYZER no GNU/Linux Ubuntu Server 18.04 LTS
 
 O LogAnalyzer é uma interface da Web para o Syslog/Rsyslog e outros dados de eventos da rede. Ele fornece fácil navegação análise de eventos de rede em tempo real e serviços de relatórios. Os relatórios ajudam a manter um visão na atividade da rede. Ele consolida o Syslog/Rsyslog e outros dados de eventos, fornecendo uma página web de fácil leitura. Os gráficos  ajudam a ver as coisas importantes de relance.
+
+[![LogAnalyzer](http://img.youtube.com/vi/O5W25TSTJmw/0.jpg)](http://www.youtube.com/watch?v=O5W25TSTJmw "LogAnalyzer")
 
 Link da vídeo aula: https://www.youtube.com/watch?v=O5W25TSTJmw&t
 
@@ -251,6 +271,8 @@ O Docker é uma tecnologia de software que fornece contêineres, promovido pela 
 
 O Portainer.io uma solução de gerenciamento para o Docker, com ele é possível gerenciar facilmente os seus hosts Docker e clusters com Docker Swarm através de uma interface web limpa, simples e intuitiva.
 
+[![Docker Server](http://img.youtube.com/vi/ixgLCHX_7QA/0.jpg)](http://www.youtube.com/watch?v=ixgLCHX_7QA "Docker Server")
+
 Link da vídeo aula: https://www.youtube.com/watch?v=ixgLCHX_7QA
 
 Link do script utilizado nesse vídeo: https://github.com/vaamonde/ubuntu-1804/blob/master/docker.sh
@@ -262,6 +284,8 @@ Vídeo mostrando os procedimentos básicos para instalar o OPENFIRE no GNU/Linux
 Extensible Messaging and Presence Protocol (XMPP) (conhecido anteriormente como Jabber) é um protocolo aberto, extensível, baseado em XML, para sistemas de mensagens instantâneas, desenvolvido originalmente para mensagens instantâneas e informação de presença formalizado pelo IETF. Softwares com base XMPP são distribuídos em milhares de servidores através da internet, e usados por cerca de dez milhões de pessoas em todo mundo, de acordo com a  XMPP Standards Foundation.
 
 O Openfire (anteriormente conhecido como Wildfire e Jive Messenger) é um servidor de mensagens instantâneas e de conversas em grupo que usa o servidor XMPP escrito em Java e licenciado sob a licença Apache 2.0.
+
+[![OpenFire Server](http://img.youtube.com/vi/_2-cVeA-Rvo/0.jpg)](http://www.youtube.com/watch?v=_2-cVeA-Rvo "OpenFire Server")
 
 Link da vídeo aula: https://www.youtube.com/watch?v=_2-cVeA-Rvo&t
 
@@ -277,6 +301,8 @@ CCTV / CFTV = (Closed-Circuit Television - Circuito fechado de televisão);
 
 PTZ Pan/Tilt/Zoom (Uma câmera de rede PTZ oferece funcionalidade de vídeo em rede combinada com o recurso de movimento horizontal, vertical e de zoom - Pan = Panorâmica Horizontal - Tilt = Vertical | Zoom - Aproximar).
 
+[![ZoneMinder Server](http://img.youtube.com/vi/YbnKB5iUCWg/0.jpg)](http://www.youtube.com/watch?v=YbnKB5iUCWg "ZoneMinder Server")
+
 Link da vídeo aula: https://www.youtube.com/watch?v=YbnKB5iUCWg
 
 Link do script utilizado nesse vídeo: https://github.com/vaamonde/ubuntu-1804/blob/master/zoneminder.sh
@@ -286,6 +312,8 @@ Link do script utilizado nesse vídeo: https://github.com/vaamonde/ubuntu-1804/b
 Vídeo mostrando os procedimentos básicos para instalar o ASTERISK no GNU/Linux Ubuntu Server 18.04 LTS
 
 O Asterisk é um software livre, de código aberto, que implementa em software os recursos encontrados em um PABX convencional, utilizando tecnologia de VoIP. Ele foi criado pelo Mark Spencer em 1999. Inicialmente desenvolvido pela empresa Digium, hoje recebe contribuições de programadores ao redor de todo o mundo. Seu desenvolvimento é ativo e sua área de aplicação muito promissora.
+
+[![Asterisk Server](http://img.youtube.com/vi/IAAkmZMfby0/0.jpg)](http://www.youtube.com/watch?v=IAAkmZMfby0 "Asterisk Server")
 
 Link da vídeo aula: https://www.youtube.com/watch?v=IAAkmZMfby0&t
 
@@ -297,6 +325,8 @@ Vídeo mostrando os procedimentos básicos para configurar o ASTERISK no GNU/Lin
 
 O Asterisk é um software livre, de código aberto, que implementa em software os recursos encontrados em um PABX convencional, utilizando tecnologia de VoIP. Ele foi criado pelo Mark Spencer em 1999. Inicialmente desenvolvido pela empresa Digium, hoje recebe contribuições de programadores ao redor de todo o mundo. Seu desenvolvimento é ativo e sua área de aplicação muito promissora.
 
+[![Configuração do Asterisk Server](http://img.youtube.com/vi/cRCBDSOdL2E/0.jpg)](http://www.youtube.com/watch?v=cRCBDSOdL2E "Configuração do Asterisk Server")
+
 Link da vídeo aula: https://www.youtube.com/watch?v=cRCBDSOdL2E
 
 Link do script utilizado nesse vídeo: https://github.com/vaamonde/ubuntu-1804/blob/master/AsteriskConfiguracao.sh
@@ -307,6 +337,8 @@ Vídeo mostrando os procedimentos básicos para instalar o ownCloud no GNU/Linux
 
 O ownCloud é um sistema de computador mais conhecido como "serviço de armazenamento e sincronização de arquivos". Como tal, ownCloud é muito semelhante ao amplamente usado Dropbox, cuja principal diferença é que ownCloud é gratuito e open-source, e permitindo assim qualquer um de instalar e operar sem custo em um servidor privado, sem limite de espaço de armazenamento (com exceção da capacidade do disco rígido) ou o número de clientes conectados.
 
+[![ownCloud Server](http://img.youtube.com/vi/ZiOYoR4uZjU/0.jpg)](http://www.youtube.com/watch?v=ZiOYoR4uZjU "ownCloud Server")
+
 Link da vídeo aula: https://www.youtube.com/watch?v=ZiOYoR4uZjU&t
 
 Link do script utilizado nesse vídeo: https://github.com/vaamonde/ubuntu-1804/blob/master/owncloud.sh
@@ -316,6 +348,8 @@ Link do script utilizado nesse vídeo: https://github.com/vaamonde/ubuntu-1804/b
 Vídeo mostrando os procedimentos básicos para instalar o Bareos Backup Server no GNU/Linux Ubuntu Server 18.04 LTS
 
 O BareOS é um conjunto de programas de computador que permite ao administrador do sistema gerenciar o backup, a recuperação e a verificação de dados de computadores em uma rede de que tenha diferentes tipos de sistemas operacionais. O BareOS também pode ser executado inteiramente em um único computador e pode fazer backup para vários tipos de mídia, incluindo fita e disco. O Bareos é relativamente fácil de usar e eficiente, além de oferecer muitos recursos avançados de gerenciamento de armazenamento que facilitam a localização e a recuperação de arquivos perdidos ou danificados. Devido ao seu design modular, o BareOS é escalonável para pequenos sistemas de computadores individuais a sistemas que consistem em centenas de computadores localizados em uma grande rede.
+
+[![BareOS Server](http://img.youtube.com/vi/82bdWnMlJq8/0.jpg)](http://www.youtube.com/watch?v=82bdWnMlJq8 "BareOS Server")
 
 Link da vídeo aula: https://www.youtube.com/watch?v=82bdWnMlJq8
 
@@ -329,6 +363,8 @@ O Ansible é uma ferramenta de provisionamento de software de código aberto, ge
 
 O Rundeck é uma aplicação java de código aberto que automatiza processos e rotinas nos mais variados ambientes, gerenciado via interface gráfica fica extremamente simples de verificar status de execuções, saídas de erro, etc. Muito utilizado quando se trata de ambientes DevOps, principalmente em uma abordagem de Entrega Contínua, onde em pequenos ciclos novas versões de software são construídas, testadas e liberadas de forma confiável e em curtos períodos de tempo.
 
+[![Ansible e Runck](http://img.youtube.com/vi/s7v9Mb0dMeE/0.jpg)](http://www.youtube.com/watch?v=s7v9Mb0dMeE "Ansible e Runck")
+
 Link da vídeo aula: https://www.youtube.com/watch?v=s7v9Mb0dMeE&t
 
 Link do script utilizado nesse vídeo: https://github.com/vaamonde/ubuntu-1804/blob/master/ansible.sh
@@ -341,6 +377,8 @@ GLPI (sigla em francês: Gestionnaire Libre de Parc Informatique, ou "Free IT Eq
 
 O GLPI é um aplicativo baseado na Web que ajuda as empresas a gerenciar seu sistema de informações. A solução é capaz de criar um inventário de todos os ativos da organização e gerenciar tarefas administrativas e financeiras. As funcionalidades dos sistemas auxiliam os administradores de TI a criar um banco de dados de recursos técnicos, além de um gerenciamento e histórico de ações de manutenções. Os usuários podem declarar incidentes ou solicitações (com base no ativo ou não) graças ao recurso de Helpdesk.
 
+[![GLPI Help Desk](http://img.youtube.com/vi/6T9dMwJMeDw/0.jpg)](http://www.youtube.com/watch?v=6T9dMwJMeDw "GLPI Help Desk")
+
 Link da vídeo aula: https://www.youtube.com/watch?v=6T9dMwJMeDw&t
 
 Link do script utilizado nesse vídeo: https://github.com/vaamonde/ubuntu-1804/blob/master/glpi.sh
@@ -350,6 +388,8 @@ Link do script utilizado nesse vídeo: https://github.com/vaamonde/ubuntu-1804/b
 Vídeo mostrando os procedimentos básicos para instalar o Grafana no GNU/Linux Ubuntu Server 18.04 LTS
 
 O Grafana é uma aplicação web de análise de código aberto multiplataforma e visualização interativa da web. Ele fornece tabelas, gráficos e alertas para a Web quando conectado a fontes de dados suportadas. É expansível através de um sistema de plug-in, como por exemplo: MySQL, GLPI, Zimbra, Zabbix, etc.
+
+[![Grafana Server](http://img.youtube.com/vi/kFoJZqQD1lM/0.jpg)](http://www.youtube.com/watch?v=kFoJZqQD1lM "Grafana Server")
 
 Link da vídeo aula: https://www.youtube.com/watch?v=kFoJZqQD1lM
 
@@ -361,6 +401,8 @@ Vídeo mostrando os procedimentos básicos para instalar o Tomcat no GNU/Linux U
 
 O software Tomcat, desenvolvido pela Fundação Apache, permite a execução de aplicações para web. Sua principal característica técnica é estar centrada na linguagem de programação Java, mais especificamente nas tecnologias de Servlets e de Java Server Pages (JSP).
 
+[![Tomcat Server](http://img.youtube.com/vi/yXc3v3HAG5w/0.jpg)](http://www.youtube.com/watch?v=yXc3v3HAG5w "Tomcat Server")
+
 Link da vídeo aula: https://www.youtube.com/watch?v=yXc3v3HAG5w
 
 Link do script utilizado nesse vídeo: https://github.com/vaamonde/ubuntu-1804/blob/master/tomcat.sh
@@ -370,6 +412,8 @@ Link do script utilizado nesse vídeo: https://github.com/vaamonde/ubuntu-1804/b
 Vídeo mostrando os procedimentos básicos para instalar o Graylog no GNU/Linux Ubuntu Server 18.04 LTS
 
 O Graylog captura, armazena e permite centralizar a pesquisa e a análise de logs em tempo real de qualquer componente da infraestrutura e aplicativos de TI. O software utiliza uma arquitetura de três camadas de armazenamento escalável baseado no ElasticSearch (Elasticsearch é um servidor de buscas distribuído baseado no Apache Lucene) e no MongoDB (MongoDB é um software de banco de dados orientado a documentos NoSQL).
+
+[![Graylog Server](http://img.youtube.com/vi/EQKBcr2z5Ac/0.jpg)](http://www.youtube.com/watch?v=EQKBcr2z5Ac "Graylog Server")
 
 Link da vídeo aula: https://www.youtube.com/watch?v=EQKBcr2z5Ac
 
@@ -381,6 +425,8 @@ Vídeo mostrando os procedimentos básicos para instalar o Zabbix no GNU/Linux U
 
 O Zabbix é uma ferramenta de software de monitoramento de código aberto para diversos componentes de TI, incluindo redes, servidores, máquinas virtuais e serviços em nuvem. O Zabbix fornece métricas de monitoramento, utilização da largura de banda da rede, carga de uso da CPU e consumo de espaço em disco, entre vários outros recursos de monitoramento e alertas.
 
+[![Zabbix Server](http://img.youtube.com/vi/hAqaPS0Rlgw/0.jpg)](http://www.youtube.com/watch?v=hAqaPS0Rlgw "Zabbix Server")
+
 Link da vídeo aula: https://www.youtube.com/watch?v=hAqaPS0Rlgw
 
 Link do script utilizado nesse vídeo: https://github.com/vaamonde/ubuntu-1804/blob/master/zabbix.sh
@@ -391,6 +437,8 @@ Vídeo mostrando os procedimentos básicos para instalar o NTop-NG no GNU/Linux 
 
 NTop-NG é um software para monitorar o tráfego em uma rede de computadores. Ele foi projetado para ser um substituto de alto desempenho e baixo recurso para o NTop. O NTop-NG é um software de código aberto lançado sob a Licença Pública Geral GNU (GPLv3) para software. Versões de código-fonte estão disponíveis para os sistemas operacionais: Unix, Linux, BSD, Mac OS X e Windows. O mecanismo do NTop-NG é escrito na linguagem de programação C ++, sua interface da web é opcional e foi desenvolvida na linguagem Lua.
 
+[![NTop-NG Server](http://img.youtube.com/vi/IDGSvA4sVYg/0.jpg)](http://www.youtube.com/watch?v=IDGSvA4sVYg "NTop-NG Server")
+
 Link da vídeo aula: https://www.youtube.com/watch?v=IDGSvA4sVYg
 
 Link do script utilizado nesse vídeo: https://github.com/vaamonde/ubuntu-1804/blob/master/ntopng.sh
@@ -399,7 +447,9 @@ Link do script utilizado nesse vídeo: https://github.com/vaamonde/ubuntu-1804/b
 
 Vídeo mostrando os procedimentos básicos para instalar o FusionInventory no GNU/Linux Ubuntu Server 18.04 LTS
 
-O FusionInventory Agent é um agente multiplataforma genérico. Ele pode executar uma grande variedade de tarefas de gerenciamento, como inventário local, implantação de software ou descoberta de rede. Ele pode ser usado autônomo ou em combinação com um servidor compatível (OCS Inventory, GLPI, OTRS, Uranos, ...) atuando como um ponto de controle centralizado.
+O FusionInventory Agent é um agente multiplataforma genérico. Ele pode executar uma grande variedade de tarefas de gerenciamento, como inventário local, implantação de software ou descoberta de rede. Ele pode ser usado autônomo ou em combinação com um servidor compatível (OCS Inventory, GLPI, OTRS, Uranos, etc...) atuando como um ponto de controle centralizado.
+
+[![FusionInventory Server](http://img.youtube.com/vi/fTg9r8zyy1A/0.jpg)](http://www.youtube.com/watch?v=fTg9r8zyy1A "FusionInventory Server")
 
 Link da vídeo aula: https://www.youtube.com/watch?v=fTg9r8zyy1A
 
@@ -411,6 +461,8 @@ Vídeo mostrando os procedimentos básicos para instalar o PostgreSQL e PgAdmin 
 
 PostgreSQL é um sistema gerenciador de banco de dados objeto relacional (SGBD), desenvolvido como projeto de código aberto. O PostgreSQL possui recursos mais avançados para o gerenciamento de Banco de Dados disponível no mercado em relação aos seus concorrente (por exemplo: MySQL, MariaDB, Firebird, etc...). O pgAdmin é uma plataforma Open Source de administração do PostgreSQL e seus banco de dados relacionados. Escrito em Python e jQuery, ele suporta todos os recursos encontrados no PostgreSQL por linha de comando (console).
 
+[![PostgreSQL Server](http://img.youtube.com/vi/POCafSY3LAk/0.jpg)](http://www.youtube.com/watch?v=POCafSY3LAk "PostgreSQL Server")
+
 Link da vídeo aula: https://www.youtube.com/watch?v=POCafSY3LAk
 
 Link do script utilizado nesse vídeo: https://github.com/vaamonde/ubuntu-1804/blob/master/postgresql.sh
@@ -421,6 +473,8 @@ Vídeo mostrando os procedimentos básicos para instalar o Apache Guacamole no G
 
 O Apache Guacamole é um gateway de desktop remoto sem cliente, ele suporta protocolos padrão como VNC, RDP e SSH., ele é chamado de Clientless porque nenhum plug-in ou software cliente é necessário para o seu funcionamento isso e possível graças ao HTML5, uma vez que o Apache Guacamole é instalado em um servidor, tudo que você precisa para acessar seus desktops é um navegador da web.
 
+[![Apache Guacamole Server](http://img.youtube.com/vi/S3mq0yRJn7U/0.jpg)](http://www.youtube.com/watch?v=S3mq0yRJn7U "Apache Guacamole Server")
+
 Link da vídeo aula: https://www.youtube.com/watch?v=S3mq0yRJn7U
 
 Link do script utilizado nesse vídeo: https://github.com/vaamonde/ubuntu-1804/blob/master/guacamole.sh
@@ -430,6 +484,8 @@ Link do script utilizado nesse vídeo: https://github.com/vaamonde/ubuntu-1804/b
 Vídeo mostrando os procedimentos básicos para instalar o Unifi Controller no GNU/Linux Ubuntu Server 18.04 LTS
 
 O software UniFi Controller que vem com o sistema Ubiquiti UniFi tem uma interface baseada em Web que facilita a administração, configuração e gerenciamento dos dispositivos Unifi (Access Point AP, Switch, Router, USG, etc). O sistema Unifi e baseado na arquitetura SDN (Software defined networking) possibilitando o gerenciamento centralizado de todos os equipamentos da infraestrutura da rede utilizando o Unifi Controller Internamente ou Remotamente, ou seja, não há necessidade de configurar individualmente cada um dos dispositivos na rede.
+
+[![Unifi Controller](http://img.youtube.com/vi/rrcwiZSBHkg/0.jpg)](http://www.youtube.com/watch?v=rrcwiZSBHkg "Unifi Controller")
 
 Link da vídeo aula: https://www.youtube.com/watch?v=rrcwiZSBHkg
 
