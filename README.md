@@ -47,7 +47,9 @@ Link da vídeo aula: https://www.youtube.com/watch?v=8AaHNXcrxag
 Vídeo mostrando os procedimentos básicos para instalar o GNU/Linux Ubuntu Server 18.04.x LTS no VirtualBOX. Versões LTS (Long-term support) do Ubuntu são recomendadas devido ao suporte de 5 anos da data de lançamento. A nova versão do GNU/Linux Ubuntu Server 18.04.1 LTS trás um novo instalador, vários recursos novos e várias tecnologias que facilitam a implementação de serviços em rede, Cloud e Segurança de forma rápida, fácil e eficiente para pequenas, médias e grandes empresas.
 
 Link da vídeo aula: https://www.youtube.com/watch?v=zDdCrqNhIXI&t
-<iframe width="560" height="315" src="https://www.youtube.com/embed/zDdCrqNhIXI" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+[![Instalação do Ubuntu Serber](http://img.youtube.com/vi/zDdCrqNhIXI/0.jpg)](http://www.youtube.com/watch?v=zDdCrqNhIXI "Instalação do Ubuntu Serber")
+
 Link do script utilizado nesse vídeo: https://github.com/vaamonde/ubuntu-1804/blob/master/Apt-Get.sh
 
 ## **COMO instalar a versão Mini (Netboot - Netinstall) do GNU/Linux Ubuntu Server 18.04 LTS**
