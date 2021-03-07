@@ -33,9 +33,9 @@ Link da Playlist: https://www.youtube.com/playlist?list=PLozhsZB1lLUOjGzjGO4snI3
 ## **APRESENTAÇÃO do CURSO de GNU/Linux Ubuntu Server 18.04.x LTS DevOps**
 
 DevOps Github APRESENTAÇÃO do CURSO de GNU/Linux Ubuntu Server 18.04.x LTS, vídeo mostrando os detalhes do curso e informações extras.
-
+<p align="center">
 [![Apresentação do Curso](http://img.youtube.com/vi/qvUVWUz1MmY/0.jpg)](http://www.youtube.com/watch?v=qvUVWUz1MmY "Apresentação do Curso")
-
+</p>
 Link da vídeo aula: https://www.youtube.com/watch?v=qvUVWUz1MmY
 
 ## **APRESENTAÇÃO do CENÁRIO do Curso de GNU/Linux Ubuntu Server 18.04.x LTS**
