@@ -5,8 +5,8 @@
 # Facebook: facebook.com/BoraParaPratica
 # YouTube: youtube.com/BoraParaPratica
 # Data de criação: 11/01/2021
-# Data de atualização: 16/01/2021
-# Versão: 0.03
+# Data de atualização: 17/03/2021
+# Versão: 0.04
 # Testado e homologado para a versão do Ubuntu Server 18.04.x LTS x64
 # Kernel >= 4.15.x
 # Testado e homologado para a versão do PostgreSQL 13.x e PgAdmin 4.x
@@ -15,7 +15,7 @@
 # código aberto. O PostgreSQL possui recursos mais avançados para o gerenciamento de Banco de Dados disponível
 # no mercado em relação aos seus concorrente (por exemplo: MySQL, MariaDB, Firebird, etc...)
 #
-# O pgAdmin é uma plataforma opensource de administração do PostgreSQL e seus banco de dados relacionados. Escrito 
+# O pgAdmin é uma plataforma Open Source de administração do PostgreSQL e seus banco de dados relacionados. Escrito 
 # em Python e jQuery, ele suporta todos os recursos encontrados no PostgreSQL por linha de comando (console).
 # 
 # Mensagem da configuração da senha do PostgreSQL
@@ -198,7 +198,7 @@ echo
 echo -e "Instalando o PostgreSQL Server, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando apt: -y (yes)
-	apt -y install postgresql postgresql-contrib &>> $LOG
+	apt -y install postgresql postgresql-contrib postgresql-client &>> $LOG
 echo -e "Instalação do PostgreSQL Server feito com sucesso!!!, continuando com o script..."
 sleep 5
 echo
