@@ -4,8 +4,8 @@
 # Facebook: facebook.com/BoraParaPratica
 # YouTube: youtube.com/BoraParaPratica
 # Data de criação: 28/02/2019
-# Data de atualização: 10/11/2019
-# Versão: 0.5
+# Data de atualização: 17/03/2021
+# Versão: 0.6
 # Testado e homologado para a versão do Ubuntu Server 18.04.x LTS x64
 # Kernel >= 4.15.x
 
@@ -58,7 +58,7 @@ Banner /etc/issue.net
 # O tempo após o qual o servidor será desconectado se o usuário não tiver efetuado login com êxito.
 LoginGraceTime 50
 
-# Tempo de inatividade em segundos para os usuários logados na sessão do Servidor de OpenSSH.
+# Tempo de inatividade em segundos para que os usuários logados na sessão do Servidor de OpenSSH sejam desconectado.
 # Se você utiliza o recurso do Visual Studio Code VSCode com Remote SSH, recomendo comentar ou aumentar o tempo da sessão
 ClientAliveInterval 180
 ClientAliveCountMax 0
@@ -73,7 +73,7 @@ MaxSessions 3
 # 5=conexão não autenticada | 60=rejeitar 60% das conexões | 10=tentativas de conexão
 MaxStartups 5:60:10
 
-# Especifica qual família de endereços IP do OpenSSH deve usar.
+# Especifica qual família de endereços IP o OpenSSH deve suportar.
 # Os argumentos válidos são: any, inet (somente IPv4), inet6 (apenas IPv6)
 AddressFamily inet
 
@@ -98,17 +98,19 @@ X11Forwarding no
 # Por padrão o Servidor de OpenSSH não trabalhar com Chaves Pública para autenticação, utilizando o arquivo /etc/passwd
 # para se autenticar no servidor, por motivos de segurança, é recomendado utilizar chaves públicas e senhas para se
 # autenticar no servidor
+# Descomentar essa opção depois de configurar e publicar a chave pública no servidor
 #AuthenticationMethods publickey,password
 
 # Autenticação utilizando chaves públicas geradas no cliente com o comando: ssh-keygen e exportada para o servidor
 # com o comando: ssh-copy-id, localizadas em: /home/nome_usuário/.ssh/authorized_keys
+# Essa opção será utiliza em conjunto com a opção: AuthenticationMethods para verificar a chave pública.
 PubkeyAuthentication yes
 
 # Especifica se a autenticação por senha é permitida. O padrão é yes. Não é recomendado mudar
 PasswordAuthentication yes
 
 # Configuração do diretório de chaves públicas para autenticar os usuários, as chaves devem ser exportada para
-# o Servidor de OpenSSH utilizando o comando o comando: ssh-copy-id
+# o Servidor de OpenSSH utilizando o comando: ssh-copy-id
 AuthorizedKeysFile .ssh/authorized_keys
 
 # Evitar o uso de diretórios residenciais inseguros e permissões de arquivos de chaves não confiáveis
@@ -118,7 +120,8 @@ StrictModes yes
 # Utilizar um desafio para se autenticar, muito utilizado com QRCode
 ChallengeResponseAuthentication no
 
-# Utilizar autenticação de usuário via PAM
+# Utilizar autenticação de usuário via PAM (Linux Pluggable Authentication), essa opção só vai funcionar se o
+# Serviço do PAM esteja configurado no Servidor
 UsePAM yes
 
 # Imprimir na tela a mensagem de boas vindas do dia no login do OpenSSH

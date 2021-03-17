@@ -5,8 +5,8 @@
 # Facebook: facebook.com/BoraParaPratica
 # YouTube: youtube.com/BoraParaPratica
 # Data de criação: 22/07/2020
-# Data de atualização: 22/07/2020
-# Versão: 0.01
+# Data de atualização: 17/03/2021
+# Versão: 0.02
 # Testado e homologado para a versão do Ubuntu Server 18.04.x LTS x64
 # Kernel >= 4.15.x
 #
@@ -21,15 +21,23 @@ sudo localectl set-locale LANG=en_US.UTF-8
 
 #Configuração do Timezone (Fuso Horário) do Sistema
 sudo timedatectl
-sudo cat /etc/localtime
+sudo systemctl status systemd-timesyncd.service
 sudo timedatectl set-timezone “America/Sao_Paulo”
+sudo cat /etc/systemd/timesyncd.conf
+sudo vim /etc/systemd/timesyncd.conf
+	[Time]
+	NTP=a.st1.ntp.br
+	FallbackNTP=a.ntp.br
+sudo systemctl restart systemd-timesyncd.service
+sudo systemctl status systemd-timesyncd.service
+sudo timedatectl
 
 #Configuração de Data e Hora do Sistema
 sudo date
 sudo date +%d/%m/%Y
-sudo date -s 03/25/2019	(Mês, Dia e Ano)
+sudo date -s 03/25/2019	(-s=set, Mês, Dia e Ano)
 sudo date +%H:%M:%S
-sudo date -s 13:30:00 (Hora, Minuto, Segundos)
+sudo date -s 13:30:00 (-s=set, Hora, Minuto, Segundos)
 
 #Sincronizando Data e Hora do Sistema e Hardware (BIOS)
 sudo hwclock --show

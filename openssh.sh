@@ -5,8 +5,8 @@
 # Facebook: facebook.com/BoraParaPratica
 # YouTube: youtube.com/BoraParaPratica
 # Data de criação: 28/02/2019
-# Data de atualização: 10/12/2020
-# Versão: 0.06
+# Data de atualização: 17/03/2021
+# Versão: 0.07
 # Testado e homologado para a versão do Ubuntu Server 18.04.x LTS x64
 # Kernel >= 4.15.x
 # Testado e homologado para a versão do OpenSSH Server 7.6.x
@@ -91,13 +91,20 @@ clear
 #
 echo
 echo -e "Configuração do OpenSSH Server no GNU/Linux Ubuntu Server 18.04.x\n"
-echo -e "Após a configuração do OpenSSH Server sua porta padrão de conexão é: 22\n"
+echo -e "Após a configuração do OpenSSH Server sua porta de conexão padrão é: 22\n"
 sleep 5
 #
 #
 echo -e "Adicionando o Repositório Universal do Apt, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	add-apt-repository universe &>> $LOG
+echo -e "Repositório adicionado com sucesso!!!, continuando com o script..."
+sleep 5
+echo
+#
+echo -e "Adicionando o Repositório Multiversão do Apt, aguarde..."
+	# opção do comando: &>> (redirecionar a saída padrão)
+	add-apt-repository multiverse &>> $LOG
 echo -e "Repositório adicionado com sucesso!!!, continuando com o script..."
 sleep 5
 echo
