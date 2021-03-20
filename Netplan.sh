@@ -5,8 +5,8 @@
 # Facebook: facebook.com/BoraParaPratica
 # YouTube: youtube.com/BoraParaPratica
 # Data de criação: 22/07/2020
-# Data de atualização: 22/07/2020
-# Versão: 0.01
+# Data de atualização: 19/03/2021
+# Versão: 0.02
 # Testado e homologado para a versão do Ubuntu Server 18.04.x LTS x64
 # Kernel >= 4.15.x
 
@@ -15,6 +15,8 @@
 #Site: https://netplan.io/examples
 
 #Verificando os dispositivos PCI de placa de rede instalados
+#opções do comando lspci: -v (verbose), -s (show)
+#opção do comando grep: -i (ignore-case)
 sudo lspci -v | grep -i ethernet
 sudo lcpci -v -s 00:03.0
 
@@ -22,10 +24,12 @@ sudo lcpci -v -s 00:03.0
 sudo lshw -class network
 
 #Verificando as configurações de endereçamento da placa de rede instalada
+#opção do comando ifconfig: -a (all)
 sudo ifconfig -a
 sudo ip address
 
 #Verificando as configurações de gateway (route)
+#opção do comando route: -n (number)
 sudo route -n
 sudo ip route
 

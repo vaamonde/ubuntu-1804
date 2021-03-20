@@ -5,11 +5,33 @@
 # Facebook: facebook.com/BoraParaPratica
 # YouTube: youtube.com/BoraParaPratica
 # Data de criação: 04/11/2018
-# Data de atualização: 11/01/2021
-# Versão: 0.09
+# Data de atualização: 20/03/2021
+# Versão: 0.10
 # Testado e homologado para a versão do Ubuntu Server 18.04.x LTS x64
 # Kernel >= 4.15.x
 # Testado e homologado para a versão do Apache2 2.4.x, MySQL 5.7.x, PHP 7.2.x, Perl 5.26.x, Python 2.x e 3.x, PhpMyAdmin 4.6.x
+#
+# O Servidor HTTP Apache (do inglês Apache HTTP Server) ou Servidor Apache ou HTTP Daemon Apache ou somente 
+# Apache, é o servidor web livre criado em 1995 por Rob McCool. É a principal tecnologia da Apache Software 
+# Foundation, responsável por mais de uma dezena de projetos envolvendo tecnologias de transmissão via web, 
+# processamento de dados e execução de aplicativos distribuídos.
+#
+# O MySQL é um sistema de gerenciamento de banco de dados (SGBD), que utiliza a linguagem SQL (Linguagem de 
+# Consulta Estruturada, do inglês Structured Query Language) como interface. É atualmente um dos sistemas 
+# de gerenciamento de bancos de dados mais populares[2] da Oracle Corporation, com mais de 10 milhões de 
+# instalações pelo mundo.
+#
+# PHP (um acrônimo recursivo para "PHP: Hypertext Preprocessor", originalmente Personal Home Page) é uma 
+# linguagem interpretada livre, usada originalmente apenas para o desenvolvimento de aplicações presentes 
+# e atuantes no lado do servidor, capazes de gerar conteúdo dinâmico na World Wide Web.
+#
+# Perl é usada em aplicações de CGI para a web[5], para administração de sistemas linux e por várias 
+# aplicações que necessitam de facilidade de manipulação de strings.
+#
+# Python é uma linguagem de programação de alto nível,[5] interpretada de script, imperativa, orientada a 
+# objetos, funcional, de tipagem dinâmica e forte. Foi lançada por Guido van Rossum em 1991.[1] Atualmente,
+# possui um modelo de desenvolvimento comunitário, aberto e gerenciado pela organização sem fins lucrativos 
+# Python Software Foundation.
 #
 # APACHE-2.4 (Apache HTTP Server) -Servidor de Hospedagem de Páginas Web: https://www.apache.org/
 # MYSQL-5.7 (SGBD) - Sistemas de Gerenciamento de Banco de Dados: https://www.mysql.com/
@@ -65,12 +87,15 @@ KERNEL=`uname -r | cut -d'.' -f1,2`
 # $0 (variável de ambiente do nome do comando)
 LOG="/var/log/$(echo $0 | cut -d'/' -f2)"
 #
-# Variáveis de configuração do MySQL e liberação de conexão remota para o usuário Root
+# Variáveis de configuração do usuário root e senha do MySQL para acesso via console e do PhpMyAdmin
 USER="root"
 PASSWORD="pti@2018"
 AGAIN=$PASSWORD
-# opões do comando GRANT: grant (permissão), all (todos privilégios), on (em ou na | banco ou tabela), *.* (todos os bancos/tabelas)
-# to (para), user@'%' (usuário @ localhost), identified by (identificado por - senha do usuário)
+#
+# Variáveis de configuração e liberação da conexão remota para o usuário Root do MySQL
+# opões do comando GRANT: grant (permissão), all (todos privilégios), on (em ou na | banco ou tabela), 
+# *.* (todos os bancos/tabelas) to (para), user@'%' (usuário @ localhost), identified by (identificado 
+# por - senha do usuário)
 # opção do comando FLUSH: privileges (recarregar as permissões)
 GRANTALL="GRANT ALL ON *.* TO $USER@'%' IDENTIFIED BY '$PASSWORD';"
 FLUSH="FLUSH PRIVILEGES;"
@@ -91,7 +116,7 @@ clear
 if [ "$USUARIO" == "0" ] && [ "$UBUNTU" == "18.04" ] && [ "$KERNEL" == "4.15" ]
 	then
 		echo -e "O usuário é Root, continuando com o script..."
-		echo -e "Distribuição é >=18.04.x, continuando com o script..."
+		echo -e "Distribuição é >= 18.04.x, continuando com o script..."
 		echo -e "Kernel é >= 4.15, continuando com o script..."
 		sleep 5
 	else
@@ -127,6 +152,13 @@ echo
 echo -e "Adicionando o Repositório Universal do Apt, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	add-apt-repository universe &>> $LOG
+echo -e "Repositório adicionado com sucesso!!!, continuando com o script..."
+sleep 5
+echo
+#
+echo -e "Adicionando o Repositório Multiversão do Apt, aguarde..."
+	# opção do comando: &>> (redirecionar a saída padrão)
+	add-apt-repository multiverse &>> $LOG
 echo -e "Repositório adicionado com sucesso!!!, continuando com o script..."
 sleep 5
 echo
@@ -209,20 +241,20 @@ echo -e "Atualização das dependências feita com sucesso!!!, continuando com o
 sleep 5
 echo
 #
-echo -e "Criando o arquivo de teste do PHP phpinfo.php, aguarde..."
-	# opção do comando: > (redirecionar a saída padrão)
-	# opção do comando chown: -v (verbose)
-	touch /var/www/html/phpinfo.php
-	echo -e "<?php phpinfo(); ?>" > /var/www/html/phpinfo.php
-	chown -v www-data.www-data /var/www/html/phpinfo.php &>> $LOG
-echo -e "Arquivo criado com sucesso!!!, continuando com o script..."
+echo -e "Copiando os arquivos de teste do PHP phpinfo.php e do HTML teste.html, aguarde..."
+	# opção do comando cp: -v (verbose)
+	# opção do comando chown: -v (verbose), www-data (user), www-data (group)
+	cp -v conf/phpinfo.php /var/www/html/phpinfo.php &>> $LOG
+	cp -v conf/teste.html /var/www/html/teste.html &>> $LOG
+	chown -v www-data.www-data /var/www/html/phpinfo.php /var/www/html/teste.html &>> $LOG
+echo -e "Arquivos copiados com sucesso!!!, continuando com o script..."
 sleep 5
 echo
 #
 echo -e "Instalação do LAMP-Server e PhpMyAdmin feito com sucesso!!! Pressione <Enter> para continuar."
 read
-sleep 3
-clear
+sleep 5
+echo
 #
 echo -e "Atualizando e editando o arquivo de configuração do Apache2, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
@@ -233,7 +265,7 @@ echo -e "Atualizando e editando o arquivo de configuração do Apache2, aguarde.
 	echo -e "Pressione <Enter> para editar o arquivo: apache2.conf"
 		read
 		sleep 3
-	vim /etc/apache2/apache2.conf
+		vim /etc/apache2/apache2.conf
 echo -e "Arquivo atualizado com sucesso!!!, continuando com o script..."
 sleep 5
 echo
@@ -247,7 +279,7 @@ echo -e "Atualizando e editando o arquivo de configuração do PHP, aguarde..."
 	echo -e "Pressione <Enter> para editar o arquivo: php.ini"
 		read
 		sleep 3
-	vim /etc/php/7.2/apache2/php.ini
+		vim /etc/php/7.2/apache2/php.ini
 echo -e "Arquivo atualizado com sucesso!!!, continuando com o script..."
 sleep 5
 echo
@@ -276,7 +308,7 @@ echo -e "Atualizando e editando o arquivo de configuração do MySQL, aguarde...
 	echo -e "Pressione <Enter> para editar o arquivo: mysqld.cnf"
 		read
 		sleep 3
-	vim /etc/mysql/mysql.conf.d/mysqld.cnf
+		vim /etc/mysql/mysql.conf.d/mysqld.cnf
 echo -e "Arquivo atualizado com sucesso!!!, continuando com o script..."
 sleep 5
 echo
