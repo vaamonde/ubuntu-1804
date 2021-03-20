@@ -139,8 +139,11 @@ echo
 echo -e "Instalação do LAMP-SERVER no GNU/Linux Ubuntu Server 18.04.x\n"
 echo -e "APACHE (Apache HTTP Server) - Servidor de Hospedagem de Páginas Web - Porta 80/443"
 echo -e "Após a instalação do Apache2 acessar a URL: http://`hostname -I | cut -d ' ' -f1`/\n"
+echo -e "Testar a linguagem HTML acessando a URL: http://`hostname -I | cut -d ' ' -f1`/teste.html\n"
 echo -e "MYSQL (SGBD) - Sistemas de Gerenciamento de Banco de Dados - Porta 3306\n"
+echo -e "Após a instalação do MySQL acessar o console: mysql -u root -p\n"
 echo -e "PHP (Personal Home Page - PHP: Hypertext Preprocessor) - Linguagem de Programação Dinâmica para Web\n"
+echo -e "Após a instalação do PHP acessar a URL: http://`hostname -I | cut -d ' ' -f1`/phpinfo.php\n"
 echo -e "PERL - Linguagem de programação multi-plataforma\n"
 echo -e "PYTHON - Linguagem de programação de alto nível\n"
 echo -e "PhpMyAdmin - Aplicativo desenvolvido em PHP para administração do MySQL pela Internet"
@@ -246,7 +249,7 @@ echo -e "Copiando os arquivos de teste do PHP phpinfo.php e do HTML teste.html, 
 	# opção do comando chown: -v (verbose), www-data (user), www-data (group)
 	cp -v conf/phpinfo.php /var/www/html/phpinfo.php &>> $LOG
 	cp -v conf/teste.html /var/www/html/teste.html &>> $LOG
-	chown -v www-data.www-data /var/www/html/phpinfo.php /var/www/html/teste.html &>> $LOG
+	chown -v www-data.www-data /var/www/html/* &>> $LOG
 echo -e "Arquivos copiados com sucesso!!!, continuando com o script..."
 sleep 5
 echo
