@@ -5,11 +5,11 @@
 # Facebook: facebook.com/BoraParaPratica
 # YouTube: youtube.com/BoraParaPratica
 # Data de criação: 21/03/2021
-# Data de atualização: 21/03/2021
-# Versão: 0.01
+# Data de atualização: 22/03/2021
+# Versão: 0.02
 # Testado e homologado para a versão do Ubuntu Server 18.04.x LTS x64
 # Kernel >= 4.15.x
-# Testado e homologado para a versão do Bacula 11.x e do Baculum .x
+# Testado e homologado para a versão do Bacula 11.x e do Baculum 11.x
 #
 # O Bacula é um conjunto de software de código aberto que permitem o gerenciamento de backups, restaurações
 # e verificação de dados através de uma rede de computadores de diversos tipos. É relativamente fácil de 
@@ -173,7 +173,7 @@ echo -e "Adicionando o repositório do Baculum, aguarde..."
 	# opção do comando apt-key: add (file name), - (arquivo recebido dO redirecionar | piper)
 	cp -v conf/baculum.list /etc/apt/sources.list.d/baculum.list &>> $LOG
 	wget -q $BACULUMKEY -O- | apt-key add - &>> $LOG
-echo -e "Repositório do BareOS criado com sucesso!!!, continuando com o script..."
+echo -e "Repositório do Baculum criado com sucesso!!!, continuando com o script..."
 sleep 5
 echo
 #
@@ -187,7 +187,7 @@ echo
 echo -e "Instalando o Bacula, aguarde..."
 	# opção do comando: &>> (redirecionar a saida padrão)
 	# opção do comando apt: -y (yes)
-	apt -y install bacula-postgresql bacula-aligned bacula-client &>> $LOG
+	apt -y install bacula-common bacula-console bacula-client bacula-postgresql bacula-aligned &>> $LOG
 echo -e "Bacula instalado com sucesso!!!, continuando com o script..."
 sleep 5
 echo
@@ -196,8 +196,8 @@ echo -e "Instalando o Baculum API, aguarde..."
 	# opção do comando: &>> (redirecionar a saida padrão)
 	# opção do comando apt: -y (yes)
 	apt -y install baculum-common baculum-api baculum-api-apache2 &>> $LOG
-	a2enmod rewrite
-	a2ensite baculum-api
+	a2enmod rewrite &>> $LOG
+	a2ensite baculum-api.conf &>> $LOG
 echo -e "Baculum API instalado com sucesso!!!, continuando com o script..."
 sleep 5
 echo
@@ -206,9 +206,8 @@ echo -e "Instalando o Baculum WEB, aguarde..."
 	# opção do comando: &>> (redirecionar a saida padrão)
 	# opção do comando apt: -y (yes)
 	apt -y install baculum-web baculum-web-apache2 &>> $LOG
-	a2enmod rewrite
-	a2ensite baculum-web
-	systemctl restart apache2
+	a2ensite baculum-web.conf &>> $LOG
+	systemctl restart apache2 &>> $LOG
 echo -e "Baculum WEB instalado com sucesso!!!, continuando com o script..."
 sleep 5
 echo
@@ -260,26 +259,9 @@ echo -e "Serviços iniciados com sucesso!!!, continuando com o script..."
 sleep 5
 echo
 #
-
-
-
-
-
-echo -e "Criando o usuário de administração do BareOS Webgui, aguarde..."
-	# opção do comando: &>> (redirecionar a saida padrão)
-	# opção do comando | (piper): (Conecta a saída padrão com a entrada padrão de outro comando)
-	# opções do comando bconsole: configure (configurar o BareOS), add (adicionar), console (gerenciamento do console)
-	# name (nome do usuário), password (senha do usuário), profile (perfil do usuário), tlsenable (habilitar ou desabilitar TLS)
-	# reload (aplicar as mudanças)
-	echo -e "configure add console name=$USER password=$PASSWD profile=$PROFILE tlsenable=no" | bconsole &>> $LOG
-	echo -e "reload" | bconsole &>> $LOG
-echo -e "Usuário criado com sucesso!!!, continuando com o script..."
-sleep 5
-echo
-#
 echo -e "Verificando as portas de Conexões do Bacula e do Baculum, aguarde..."
 	# opção do comando netstat: -a (all), -n (numeric)
-	netstat -an | grep '9101\|9103\|9095\|9096'
+	netstat -an | grep '9101\|9102\|9103\|9095\|9096'
 echo -e "Portas de conexões verificadas com sucesso!!!, continuando com o script..."
 sleep 5
 echo
