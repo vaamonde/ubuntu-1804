@@ -38,7 +38,7 @@
 #
 # Variável da Data Inicial para calcular o tempo de execução do script (VARIÁVEL MELHORADA)
 # opção do comando date: +%T (Time)
-HORAINICIAL=`date +%T`
+HORAINICIAL=$(date +%T)
 #
 # Variáveis para validar o ambiente, verificando se o usuário e "root", versão do ubuntu e kernel
 # opções do comando id: -u (user), opções do comando: lsb_release: -r (release), -s (short), 
@@ -47,9 +47,9 @@ HORAINICIAL=`date +%T`
 # opção do shell script: acento crase ` ` = Executa comandos numa subshell, retornando o resultado
 # opção do shell script: aspas simples ' ' = Protege uma string completamente (nenhum caractere é especial)
 # opção do shell script: aspas duplas " " = Protege uma string, mas reconhece $, \ e ` como especiais
-USUARIO=`id -u`
-UBUNTU=`lsb_release -rs`
-KERNEL=`uname -r | cut -d'.' -f1,2`
+USUARIO=$(id -u)
+UBUNTU=$(lsb_release -rs)
+KERNEL=$(uname -r | cut -d'.' -f1,2)
 #
 # Variável do caminho do Log dos Script utilizado nesse curso (VARIÁVEL MELHORADA)
 # opções do comando cut: -d (delimiter), -f (fields)
@@ -98,8 +98,8 @@ echo -n "Verificando as dependências do PgAdmin4, aguarde... "
               }
 	done
 		[[ $deps -ne 1 ]] && echo "Dependências.: OK" || { 
-            echo -en "\nInstale as dependências acima e execute novamente este script\n";
-            echo -en "Recomendo utilizar o script: lamp.sh para resolver as dependências."
+			echo -en "\nInstale as dependências acima e execute novamente este script\n";
+			echo -en "Recomendo utilizar o script: lamp.sh para resolver as dependências."
             exit 1; 
             }
 		sleep 5
