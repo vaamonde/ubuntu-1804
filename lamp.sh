@@ -5,8 +5,8 @@
 # Facebook: facebook.com/BoraParaPratica
 # YouTube: youtube.com/BoraParaPratica
 # Data de criação: 04/11/2018
-# Data de atualização: 20/03/2021
-# Versão: 0.10
+# Data de atualização: 23/03/2021
+# Versão: 0.11
 # Testado e homologado para a versão do Ubuntu Server 18.04.x LTS x64
 # Kernel >= 4.15.x
 # Testado e homologado para a versão do Apache2 2.4.x, MySQL 5.7.x, PHP 7.2.x, Perl 5.26.x, Python 2.x e 3.x, PhpMyAdmin 4.6.x
@@ -238,6 +238,7 @@ echo -e "Atualizando as dependências do PHP para o PhpMyAdmin, aguarde..."
 	pecl channel-update pecl.php.net &>> $LOG
 	echo | pecl install mcrypt-1.0.1 &>> $LOG
 	cp -v conf/mcrypt.ini /etc/php/7.2/mods-available/ &>> $LOG
+	cp -v conf/sql.lib.php /usr/share/phpmyadmin/libraries/ &>> $LOG
 	phpenmod mcrypt &>> $LOG
 	phpenmod mbstring &>> $LOG
 echo -e "Atualização das dependências feita com sucesso!!!, continuando com o script..."

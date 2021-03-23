@@ -5,8 +5,8 @@
 # Facebook: facebook.com/BoraParaPratica
 # YouTube: youtube.com/BoraParaPratica
 # Data de criação: 09/11/2018
-# Data de atualização: 10/12/2020
-# Versão: 0.08
+# Data de atualização: 23/03/2021
+# Versão: 0.09
 # Testado e homologado para a versão do Ubuntu Server 18.04.x LTS x64
 # Kernel >= 4.15.x
 # Testado e homologado para a versão do Wordpress 5.4.x
@@ -32,7 +32,7 @@
 #
 # Variável da Data Inicial para calcular o tempo de execução do script (VARIÁVEL MELHORADA)
 # opção do comando date: +%T (Time)
-HORAINICIAL=`date +%T`
+HORAINICIAL=$(date +%T)
 #
 # Variáveis para validar o ambiente, verificando se o usuário e "root", versão do ubuntu e kernel
 # opções do comando id: -u (user), opções do comando: lsb_release: -r (release), -s (short), 
@@ -41,9 +41,9 @@ HORAINICIAL=`date +%T`
 # opção do shell script: acento crase ` ` = Executa comandos numa subshell, retornando o resultado
 # opção do shell script: aspas simples ' ' = Protege uma string completamente (nenhum caractere é especial)
 # opção do shell script: aspas duplas " " = Protege uma string, mas reconhece $, \ e ` como especiais
-USUARIO=`id -u`
-UBUNTU=`lsb_release -rs`
-KERNEL=`uname -r | cut -d'.' -f1,2`
+USUARIO=$(id -u)
+UBUNTU=$(lsb_release -rs)
+KERNEL=$(uname -r | cut -d'.' -f1,2)
 #
 # Variável do caminho do Log dos Script utilizado nesse curso (VARIÁVEL MELHORADA)
 # opções do comando cut: -d (delimiter), -f (fields)
@@ -54,8 +54,6 @@ LOG="/var/log/$(echo $0 | cut -d'/' -f2)"
 WORDPRESS="https://wordpress.org/latest.zip"
 #
 # Declarando as variáveis para criação da Base de Dados do Wordpress
-USER="root"
-PASSWORD="pti@2018"
 # opção do comando create: create (criação), database (base de dados), base (banco de dados)
 # opção do comando create: create (criação), user (usuário), identified by (identificado por - senha do usuário), password (senha)
 # opção do comando grant: grant (permissão), usage (uso em | uso na), *.* (todos os bancos/tabelas), to (para), user (usuário)
@@ -63,6 +61,8 @@ PASSWORD="pti@2018"
 # opões do comando GRANT: grant (permissão), all (todos privilégios), on (em ou na | banco ou tabela), *.* (todos os bancos/tabelas)
 # to (para), user@'%' (usuário @ localhost), identified by (identificado por - senha do usuário), password (senha)
 # opção do comando FLUSH: flush (atualizar), privileges (recarregar as permissões)
+USER="root"
+PASSWORD="pti@2018"
 DATABASE="CREATE DATABASE wordpress;"
 USERDATABASE="CREATE USER 'wordpress' IDENTIFIED BY 'wordpress';"
 GRANTDATABASE="GRANT USAGE ON *.* TO 'wordpress' IDENTIFIED BY 'wordpress';"
@@ -78,7 +78,7 @@ clear
 if [ "$USUARIO" == "0" ] && [ "$UBUNTU" == "18.04" ] && [ "$KERNEL" == "4.15" ]
 	then
 		echo -e "O usuário é Root, continuando com o script..."
-		echo -e "Distribuição é >=18.04.x, continuando com o script..."
+		echo -e "Distribuição é >= 18.04.x, continuando com o script..."
 		echo -e "Kernel é >= 4.15, continuando com o script..."
 		sleep 5
 	else
@@ -119,14 +119,19 @@ clear
 echo
 echo -e "Instalação do Wordpress no GNU/Linux Ubuntu Server 18.04.x\n"
 echo -e "Após a instalação do Wordpress acessar a URL: http://`hostname -I | cut -d ' ' -f1`/wp/\n"
-echo -e "Aguarde, esse processo demora um pouco dependendo do seu Link de Internet..."
+echo -e "Aguarde, esse processo demora um pouco dependendo do seu Link de Internet...\n"
 sleep 5
-echo
-#
 #
 echo -e "Adicionando o Repositório Universal do Apt, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	add-apt-repository universe &>> $LOG
+echo -e "Repositório adicionado com sucesso!!!, continuando com o script..."
+sleep 5
+echo
+#
+echo -e "Adicionando o Repositório Multiversão do Apt, aguarde..."
+	# opção do comando: &>> (redirecionar a saída padrão)
+	add-apt-repository multiverse &>> $LOG
 echo -e "Repositório adicionado com sucesso!!!, continuando com o script..."
 sleep 5
 echo
@@ -146,11 +151,21 @@ echo -e "Sistema atualizado com sucesso!!!, continuando com o script..."
 sleep 5
 echo
 #
+echo -e "Removendo software desnecessários, aguarde..."
+	# opção do comando: &>> (redirecionar a saída padrão)
+	# opção do comando apt: -y (yes)
+	apt -y autoremove &>> $LOG
+echo -e "Software removidos com sucesso!!!, continuando com o script..."
+sleep 5
+echo
+#
+echo -e "Instalando o Wordpress, aguarde...\n"
+#
 echo -e "Instalando as dependências do Wordpress, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando apt: -y (yes)
 	apt -y install unzip &>> $LOG
-echo -e "Dependências instaladas com sucesso!!!, continuando com o script"
+echo -e "Dependências instaladas com sucesso!!!, continuando com o script..."
 sleep 5
 echo
 #
@@ -160,9 +175,6 @@ echo -e "Removendo os software desnecessários, aguarde..."
 	apt -y autoremove &>> $LOG
 echo -e "Software removidos com Sucesso!!!, continuando com o script..."
 sleep 5
-echo
-#
-echo -e "Instalando o Wordpress, aguarde..."
 echo
 #
 echo -e "Fazendo o download do Wordpress do site oficial, aguarde..."
@@ -224,7 +236,7 @@ echo -e "Editando o arquivo de configuração da Base de Dados do Wordpress, agu
 		# opção do comando sleep: 3 (seconds)
 		read
 		sleep 3
-	vim /var/www/html/wp/wp-config.php
+		vim /var/www/html/wp/wp-config.php
 echo -e "Arquivo editado com sucesso!!!, continuando com o script..."
 sleep 5
 echo
@@ -234,7 +246,7 @@ echo -e "Editando o arquivo de configuração do htaccess do Wordpress, aguarde.
 		# opção do comando sleep: 3 (seconds)
 		read
 		sleep 3
-	vim /var/www/html/wp/.htaccess
+		vim /var/www/html/wp/.htaccess
 echo -e "Arquivo editado com sucesso!!!, continuando com o script..."
 sleep 5
 echo

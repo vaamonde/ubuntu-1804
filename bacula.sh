@@ -82,7 +82,7 @@ fi
 # || (operador lógico OU), 2> (redirecionar de saída de erro STDERR), && = operador lógico AND, { } = agrupa comandos em blocos
 # [ ] = testa uma expressão, retornando 0 ou 1, -ne = é diferente (NotEqual)
 echo -n "Verificando as dependências do Bacula, aguarde... "
-	for name in apt-transport-https apache2 php python mysql-server mysql-common
+	for name in apt-transport-https apache2 php python postgresql postgresql-client
 	do
   		[[ $(dpkg -s $name 2> /dev/null) ]] || { 
               echo -en "\n\nO software: $name precisa ser instalado. \nUse o comando 'apt install $name'\n";
@@ -187,8 +187,7 @@ echo
 echo -e "Instalando o Bacula, aguarde..."
 	# opção do comando: &>> (redirecionar a saida padrão)
 	# opção do comando apt: -y (yes)
-	apt -y install bacula bacula-common bacula-console bacula-client bacula-doc bacula-aligned \
-	bacula-mysql bacula-common-mysql bacula-director-mysql &>> $LOG
+	apt -y install bacula-postgresql &>> $LOG
 echo -e "Bacula instalado com sucesso!!!, continuando com o script..."
 sleep 5
 echo
@@ -196,7 +195,8 @@ echo
 echo -e "Instalando o Baculum API, aguarde..."
 	# opção do comando: &>> (redirecionar a saida padrão)
 	# opção do comando apt: -y (yes)
-	apt -y install baculum-common baculum-api baculum-api-apache2 &>> $LOG
+	apt -y install php-bcmath php7.0-mbstring baculum-common baculum-api baculum-api-apache2 \
+	bacula-console &>> $LOG
 	a2enmod rewrite &>> $LOG
 	a2ensite baculum-api.conf &>> $LOG
 echo -e "Baculum API instalado com sucesso!!!, continuando com o script..."
