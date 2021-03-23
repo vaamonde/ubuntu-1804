@@ -94,7 +94,6 @@ echo -e "Configuração do OpenSSH Server no GNU/Linux Ubuntu Server 18.04.x\n"
 echo -e "Após a configuração do OpenSSH Server sua porta de conexão padrão é: 22\n"
 sleep 5
 #
-#
 echo -e "Adicionando o Repositório Universal do Apt, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	add-apt-repository universe &>> $LOG
@@ -130,7 +129,6 @@ echo -e "Removendo software desnecessários, aguarde..."
 	apt -y autoremove &>> $LOG
 echo -e "Software removidos com sucesso!!!, continuando com o script..."
 sleep 5
-clear
 #
 echo -e "Configuração do OpenSSH Server, aguarde...\n"
 #

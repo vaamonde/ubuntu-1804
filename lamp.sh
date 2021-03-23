@@ -203,7 +203,7 @@ echo -e "Instalando o LAMP-SERVER, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando apt: -y (yes)
 	# opção do comando ^ (circunflexo): (expressão regular - Casa o começo da linha)
-	apt -y install lamp-server^ perl python &>> $LOG
+	apt -y install lamp-server^ perl python apt-transport-https &>> $LOG
 echo -e "Instalação do LAMP-SERVER feito com sucesso!!!, continuando com o script..."
 sleep 5
 echo

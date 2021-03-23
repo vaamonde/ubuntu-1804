@@ -82,7 +82,7 @@ fi
 # || (operador lógico OU), 2> (redirecionar de saída de erro STDERR), && = operador lógico AND, { } = agrupa comandos em blocos
 # [ ] = testa uma expressão, retornando 0 ou 1, -ne = é diferente (NotEqual)
 echo -n "Verificando as dependências do Bacula, aguarde... "
-	for name in apt-transport-https apache2 php python postgresql
+	for name in apt-transport-https apache2 php python mysql-server mysql-common
 	do
   		[[ $(dpkg -s $name 2> /dev/null) ]] || { 
               echo -en "\n\nO software: $name precisa ser instalado. \nUse o comando 'apt install $name'\n";
@@ -91,7 +91,7 @@ echo -n "Verificando as dependências do Bacula, aguarde... "
 	done
 		[[ $deps -ne 1 ]] && echo "Dependências.: OK" || { 
             echo -en "\nInstale as dependências acima e execute novamente este script\n";
-			echo -en "Recomendo utilizar os scripts: lamp.sh e postgresql.sh para resolver as dependências."
+			echo -en "Recomendo utilizar os scripts: lamp.sh para resolver as dependências."
             exit 1; 
             }
 		sleep 5
@@ -187,7 +187,8 @@ echo
 echo -e "Instalando o Bacula, aguarde..."
 	# opção do comando: &>> (redirecionar a saida padrão)
 	# opção do comando apt: -y (yes)
-	apt -y install bacula-common bacula-console bacula-client bacula-postgresql bacula-aligned &>> $LOG
+	apt -y install bacula bacula-common bacula-console bacula-client bacula-doc bacula-aligned \
+	bacula-mysql bacula-common-mysql bacula-director-mysql &>> $LOG
 echo -e "Bacula instalado com sucesso!!!, continuando com o script..."
 sleep 5
 echo
