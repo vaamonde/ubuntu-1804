@@ -5,8 +5,8 @@
 # Facebook: facebook.com/BoraParaPratica
 # YouTube: youtube.com/BoraParaPratica
 # Data de criação: 11/11/2018
-# Data de atualização: 10/12/2020
-# Versão: 0.09
+# Data de atualização: 24/03/2021
+# Versão: 0.10
 # Testado e homologado para a versão do Ubuntu Server 18.04.x LTS x64
 # Kernel >= 4.15.x
 # Testado e homologado para a versão do Netdata 1.23.x
@@ -24,7 +24,7 @@
 #
 # Variável da Data Inicial para calcular o tempo de execução do script (VARIÁVEL MELHORADA)
 # opção do comando date: +%T (Time)
-HORAINICIAL=`date +%T`
+HORAINICIAL=$(date +%T)
 #
 # Variáveis para validar o ambiente, verificando se o usuário e "root", versão do ubuntu e kernel
 # opções do comando id: -u (user)
@@ -35,9 +35,9 @@ HORAINICIAL=`date +%T`
 # opção do shell script: acento crase ` ` = Executa comandos numa subshell, retornando o resultado
 # opção do shell script: aspas simples ' ' = Protege uma string completamente (nenhum caractere é especial)
 # opção do shell script: aspas duplas " " = Protege uma string, mas reconhece $, \ e ` como especiais
-USUARIO=`id -u`
-UBUNTU=`lsb_release -rs`
-KERNEL=`uname -r | cut -d'.' -f1,2`
+USUARIO=$(id -u)
+UBUNTU=$(lsb_release -rs)
+KERNEL=$(uname -r | cut -d'.' -f1,2)
 #
 # Variável do caminho do Log dos Script utilizado nesse curso (VARIÁVEL MELHORADA)
 # opções do comando cut: -d (delimiter), -f (fields)
@@ -57,7 +57,7 @@ clear
 if [ "$USUARIO" == "0" ] && [ "$UBUNTU" == "18.04" ] && [ "$KERNEL" == "4.15" ]
 	then
 		echo -e "O usuário é Root, continuando com o script..."
-		echo -e "Distribuição é >=18.04.x, continuando com o script..."
+		echo -e "Distribuição é >= 18.04.x, continuando com o script..."
 		echo -e "Kernel é >= 4.15, continuando com o script..."
 		sleep 5
 	else
@@ -109,6 +109,13 @@ echo -e "Repositório adicionado com sucesso!!!, continuando com o script..."
 sleep 5
 echo
 #
+echo -e "Adicionando o Repositório Multiversão do Apt, aguarde..."
+	# opção do comando: &>> (redirecionar a saída padrão)
+	add-apt-repository multiverse &>> $LOG
+echo -e "Repositório adicionado com sucesso!!!, continuando com o script..."
+sleep 5
+echo
+#
 echo -e "Atualizando as listas do Apt, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	apt update &>> $LOG
@@ -132,8 +139,7 @@ echo -e "Software removidos com sucesso!!!, continuando com o script..."
 sleep 5
 echo
 #
-echo -e "Instalando o Netdata, aguarde..."
-echo
+echo -e "Instalando o Netdata, aguarde...\n"
 #
 echo -e "Instalando as dependências do Netdata, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
@@ -161,18 +167,6 @@ echo -e "Instalação do Netdata feita com sucesso!!!, continuando com o script.
 sleep 5
 echo
 #
-echo -e "Verificando a porta de conexão do Netdata, aguarde..."
-	# opção do comando netstat: -a (all), -n (numeric)
-	netstat -an | grep 19999
-echo -e "Porta de conexão verificada com sucesso!!!, continuando com o script..."
-sleep 5
-echo
-#
-echo -e "Netdata instalado com sucesso!!!, pressione <Enter> para continuar com o script."
-read
-sleep 5
-clear
-#
 echo -e "Editando o arquivo de monitoramento do MySQL, pressione <Enter> para editar"
 echo -e "Adicionar o usuário: 'root' é a senha: 'pti@2018' nas configurações do tcp:"
 echo -e "Remover os comentários das variáveis: user e pass"
@@ -187,6 +181,13 @@ echo -e "Reinicializando o serviço do Netdata, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	systemctl restart netdata &>> $LOG
 echo -e "Serviço reinicializado com sucesso!!!, continuando com o script..."
+sleep 5
+echo
+#
+echo -e "Verificando a porta de conexão do Netdata, aguarde..."
+	# opção do comando netstat: -a (all), -n (numeric)
+	netstat -an | grep 19999
+echo -e "Porta de conexão verificada com sucesso!!!, continuando com o script..."
 sleep 5
 echo
 #

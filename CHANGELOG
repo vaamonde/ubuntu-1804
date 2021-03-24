@@ -4,12 +4,19 @@ Facebook: facebook.com/ProcedimentosEmTI
 Facebook: facebook.com/BoraParaPratica
 YouTube: youtube.com/BoraParaPratica
 Data de criação: 29/01/2019
-Data de atualização: 20/03/2021
-Versão: 0.10
+Data de atualização: 24/03/2021
+Versão: 0.12
 Testado e homologado para a versão do Ubuntu Server 18.04.x LTS x64
 Kernel >= 4.15.x
 
 ============================================= ATUALIZAÇÕES DOS SCRIPTS =============================================
+24/03/2021 - Robson Vaamonde - melhoras nos scripts wordpress.sh e netdata.sh
+
+23/03/2021 - Robson Vaamonde - Correção da falha de consulta de tabelas do PhpMyAdmin, aplicação do Path de Correção do arquivo
+sql.lib.php no diretório /usr/share/phpmyadmin/libraries
+23/03/2021 - Robson Vaamonde - Melhoria no arquivos de configuração do Wordpress, acréscimo da linha de configuração de múltiplos
+endereços IP, hostname ou domain no Wordpress.
+
 20/03/2021 - Robson Vaamonde - Melhoria no script lamp.sh
 
 14/01/2021 - Robson Vaamonde - Substituição do comando service pelo systemctl nos script docker.sh, loganalyzer.sh, 

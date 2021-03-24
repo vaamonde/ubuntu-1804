@@ -5,8 +5,8 @@
 # Facebook: facebook.com/BoraParaPratica
 # YouTube: youtube.com/BoraParaPratica
 # Data de criação: 09/11/2018
-# Data de atualização: 23/03/2021
-# Versão: 0.09
+# Data de atualização: 24/03/2021
+# Versão: 0.10
 # Testado e homologado para a versão do Ubuntu Server 18.04.x LTS x64
 # Kernel >= 4.15.x
 # Testado e homologado para a versão do Wordpress 5.4.x
@@ -169,14 +169,6 @@ echo -e "Dependências instaladas com sucesso!!!, continuando com o script..."
 sleep 5
 echo
 #
-echo -e "Removendo os software desnecessários, aguarde..."
-	# opção do comando: &>> (redirecionar a saída padrão)
-	# opção do comando apt: -y (yes)
-	apt -y autoremove &>> $LOG
-echo -e "Software removidos com Sucesso!!!, continuando com o script..."
-sleep 5
-echo
-#
 echo -e "Fazendo o download do Wordpress do site oficial, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando rm: -v (verbose)
@@ -229,7 +221,6 @@ echo
 echo -e "Instalação do Wordpress feita com sucesso!!! Pressione <Enter> para continuar."
 read
 sleep 3
-clear
 #
 echo -e "Editando o arquivo de configuração da Base de Dados do Wordpress, aguarde..."
 	echo -e "Pressione <Enter> para editar o arquivo: wp-config.php"
@@ -241,7 +232,7 @@ echo -e "Arquivo editado com sucesso!!!, continuando com o script..."
 sleep 5
 echo
 #
-echo -e "Editando o arquivo de configuração do htaccess do Wordpress, aguarde..."
+echo -e "Editando o arquivo de configuração do .htaccess do Wordpress, aguarde..."
 	echo -e "Pressione <Enter> para editar o arquivo: .htaccess"
 		# opção do comando sleep: 3 (seconds)
 		read

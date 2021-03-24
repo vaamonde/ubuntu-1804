@@ -37,10 +37,11 @@ $table_prefix  = 'wp_';
 /** Utilizado principalmente quando o seu site do Wordpress está na rede local e */
 /** você faz NAT (Port Forwarding) utilizando servidores de Firewall, exemplo pfSense */
 /** Site-01: https://www.filipemarques.net/diversos-dominios-mesmo-wordpress/ */
-/** Site-02: https://suporte.hostgator.com.br/hc/pt-br/articles/115003844573-Como-utilizar-dois-dom%C3%ADnios-em-um-mesmo-WordPress-*/ */
+/** Site-02: https://suporte.hostgator.com.br/hc/pt-br/articles/115003844573-Como-utilizar-dois-dom%C3%ADnios-em-um-mesmo-WordPress- */
+
 /** Habilitar dois domínios para uma única instalação */
-define('WP_SITEURL', 'http://' . $_SERVER['HTTP_HOST']);
-define('WP_HOME', 'http://' . $_SERVER['HTTP_HOST']);
+/** define('WP_SITEURL', 'http://' . $_SERVER['HTTP_HOST']); */
+/** define('WP_HOME', 'http://' . $_SERVER['HTTP_HOST']); */
 
 /** Configuração do Debug do Wordpress, deixar desativado (padrão false)*/
 define('WP_DEBUG', false);
