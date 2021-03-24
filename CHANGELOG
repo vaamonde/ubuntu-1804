@@ -10,7 +10,7 @@ Testado e homologado para a versão do Ubuntu Server 18.04.x LTS x64
 Kernel >= 4.15.x
 
 ============================================= ATUALIZAÇÕES DOS SCRIPTS =============================================
-24/03/2021 - Robson Vaamonde - melhoras nos scripts wordpress.sh e netdata.sh
+24/03/2021 - Robson Vaamonde - melhoras nos scripts wordpress.sh, netdata.sh e atualização da versão do webmin no webmin.sh
 
 23/03/2021 - Robson Vaamonde - Correção da falha de consulta de tabelas do PhpMyAdmin, aplicação do Path de Correção do arquivo
 sql.lib.php no diretório /usr/share/phpmyadmin/libraries
