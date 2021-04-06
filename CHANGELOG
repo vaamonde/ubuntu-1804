@@ -13,7 +13,7 @@ Kernel >= 4.15.x
 24/03/2021 - Robson Vaamonde - melhoras nos scripts wordpress.sh, netdata.sh e atualização da versão do webmin no webmin.sh
 
 23/03/2021 - Robson Vaamonde - Correção da falha de consulta de tabelas do PhpMyAdmin, aplicação do Path de Correção do arquivo
-sql.lib.php no diretório /usr/share/phpmyadmin/libraries
+sql.lib.php e plugin_interface.lib.php no diretório /usr/share/phpmyadmin/libraries
 23/03/2021 - Robson Vaamonde - Melhoria no arquivos de configuração do Wordpress, acréscimo da linha de configuração de múltiplos
 endereços IP, hostname ou domain no Wordpress.
 
