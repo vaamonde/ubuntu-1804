@@ -66,6 +66,7 @@ network:
 #Aplicando as configurações
 sudo netplan --debug apply
 sudo netplan ip leases enp0s3
+sudo systemd-resolve --status
 
 #Configuração do endereçamento IPv4 Static (Estático)
 network:
