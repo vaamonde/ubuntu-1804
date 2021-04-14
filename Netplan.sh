@@ -5,8 +5,8 @@
 # Facebook: facebook.com/BoraParaPratica
 # YouTube: youtube.com/BoraParaPratica
 # Data de criação: 22/07/2020
-# Data de atualização: 19/03/2021
-# Versão: 0.02
+# Data de atualização: 14/04/2021
+# Versão: 0.03
 # Testado e homologado para a versão do Ubuntu Server 18.04.x LTS x64
 # Kernel >= 4.15.x
 
@@ -53,6 +53,8 @@ sudo ip link set enp0s3 up
 #Diretório de configuração da placa de rede
 cd /etc/netplan/
 
+#Instalando as dependências das Interfaces
+sudo apt install bridge-utils ifenslave
 #Arquivo de configurações da placa de rede
 /etc/netplan/50-cloud-init.yaml
 
@@ -152,7 +154,10 @@ network:
          		via: 11.0.0.1
          		metric: 100
 	version: 2
-	
+
+#Aplicando as configurações
+sudo netplan --debug apply
+
 #Configurações de bonds 802.3d:
 network:
 	bonds:
@@ -166,9 +171,53 @@ network:
 				primary: enp3s0
 	version: 2
 
+network:
+	bonds:
+		bond0:
+			addresses: [192.168.0.8/24]
+			gateway4: 192.168.0.1
+			nameservers:
+				addresses: [8.8.8.8,8.8.4.4]
+			interfaces:
+			- enp5s4
+			- enp5s9
+			- enp64s0
+	version: 2
+
+#Aplicando as configurações
+sudo netplan --debug apply
+
 #Configurações de bridges:
+network:
+	renderer: networkd
+	ethernets:
+		enp1s0:
+			dhcp4: no
+	bridges:
+		br0:
+			dhcp4: yes
+			interfaces:
+			- enp1s0
+	version: 2
+
+#Aplicando as configurações
+sudo netplan --debug apply
 
 #Configurações de vlans:
+network:
+	vlans:
+        inet:
+            id: 50
+            link: bond0
+            addresses: [X.X.X.X/24]
+            gateway4: X.X.X.252
+            dhcp4: no
+            nameservers:
+                addresses: [X.X.X.33]
+	version: 2
+
+#Aplicando as configurações
+sudo netplan --debug apply
 
 #Configurações de wi-fi:
 network:
@@ -184,3 +233,6 @@ network:
 			"pti-intra":
 			password: "pti@2018"
 	version: 2
+
+#Aplicando as configurações
+sudo netplan --debug apply
