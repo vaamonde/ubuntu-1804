@@ -55,8 +55,10 @@ cd /etc/netplan/
 
 #Instalando as dependências das Interfaces
 sudo apt install bridge-utils ifenslave
+
 #Arquivo de configurações da placa de rede
 /etc/netplan/50-cloud-init.yaml
+/etc/netplan/00-installer-config.yaml
 
 #Configuração do endereçamento IPv4 Dynamic (Dinâmico)
 network:
@@ -84,6 +86,7 @@ network:
 
 #Aplicando as configurações
 sudo netplan --debug apply
+sudo systemd-resolve --status
 
 #Configuração do endereçamento IPv4 Static (Estático)
 network:
@@ -104,6 +107,7 @@ network:
 
 #Aplicando as configurações
 sudo netplan --debug apply
+sudo systemd-resolve --status
 	
 #Configurações de múltiplos endereços IP
 network:
@@ -126,6 +130,7 @@ network:
 
 #Aplicando as configurações
 sudo netplan --debug apply
+sudo systemd-resolve --status
 
 #Configurações de múltiplos endereços de gateway
 network:
@@ -157,6 +162,7 @@ network:
 
 #Aplicando as configurações
 sudo netplan --debug apply
+sudo systemd-resolve --status
 
 #Configurações de bonds 802.3d:
 network:
@@ -186,6 +192,7 @@ network:
 
 #Aplicando as configurações
 sudo netplan --debug apply
+sudo systemd-resolve --status
 
 #Configurações de bridges:
 network:
@@ -202,6 +209,7 @@ network:
 
 #Aplicando as configurações
 sudo netplan --debug apply
+sudo systemd-resolve --status
 
 #Configurações de vlans:
 network:
@@ -218,6 +226,7 @@ network:
 
 #Aplicando as configurações
 sudo netplan --debug apply
+sudo systemd-resolve --status
 
 #Configurações de wi-fi:
 network:
@@ -236,3 +245,4 @@ network:
 
 #Aplicando as configurações
 sudo netplan --debug apply
+sudo systemd-resolve --status
