@@ -5,8 +5,8 @@
 # Facebook: facebook.com/BoraParaPratica
 # YouTube: youtube.com/BoraParaPratica
 # Data de criação: 04/11/2018
-# Data de atualização: 23/03/2021
-# Versão: 0.11
+# Data de atualização: 06/04/2021
+# Versão: 0.12
 # Testado e homologado para a versão do Ubuntu Server 18.04.x LTS x64
 # Kernel >= 4.15.x
 # Testado e homologado para a versão do Apache2 2.4.x, MySQL 5.7.x, PHP 7.2.x, Perl 5.26.x, Python 2.x e 3.x, PhpMyAdmin 4.6.x
@@ -69,7 +69,7 @@
 #
 # Variável da Data Inicial para calcular o tempo de execução do script (VARIÁVEL MELHORADA)
 # opção do comando date: +%T (Time)
-HORAINICIAL=`date +%T`
+HORAINICIAL=$(date +%T)
 #
 # Variáveis para validar o ambiente, verificando se o usuário e "root", versão do ubuntu e kernel
 # opções do comando id: -u (user), opções do comando: lsb_release: -r (release), -s (short), 
@@ -78,9 +78,9 @@ HORAINICIAL=`date +%T`
 # opção do shell script: acento crase ` ` = Executa comandos numa subshell, retornando o resultado
 # opção do shell script: aspas simples ' ' = Protege uma string completamente (nenhum caractere é especial)
 # opção do shell script: aspas duplas " " = Protege uma string, mas reconhece $, \ e ` como especiais
-USUARIO=`id -u`
-UBUNTU=`lsb_release -rs`
-KERNEL=`uname -r | cut -d'.' -f1,2`
+USUARIO=$(id -u)
+UBUNTU=$(lsb_release -rs)
+KERNEL=$(uname -r | cut -d'.' -f1,2)
 #
 # Variável do caminho do Log dos Script utilizado nesse curso (VARIÁVEL MELHORADA)
 # opções do comando cut: -d (delimiter), -f (fields)
@@ -238,14 +238,23 @@ echo -e "Atualizando as dependências do PHP para o PhpMyAdmin, aguarde..."
 	pecl channel-update pecl.php.net &>> $LOG
 	echo | pecl install mcrypt-1.0.1 &>> $LOG
 	cp -v conf/mcrypt.ini /etc/php/7.2/mods-available/ &>> $LOG
-	cp -v conf/sql.lib.php /usr/share/phpmyadmin/libraries/ &>> $LOG
 	phpenmod mcrypt &>> $LOG
 	phpenmod mbstring &>> $LOG
 echo -e "Atualização das dependências feita com sucesso!!!, continuando com o script..."
 sleep 5
 echo
 #
+echo -e "Aplicando os Patch de Correção do PhpMyAdmin, aguarde..."
+	# opção do comando: &>> (redirecionar a saída padrão)
+	# opção do comando cp: -v (verbose)
+	cp -v conf/sql.lib.php /usr/share/phpmyadmin/libraries/ &>> $LOG
+	cp -v conf/plugin_interface.lib.ph /usr/share/phpmyadmin/libraries/ &>> $LOG
+echo -e "Patch de correção aplicados com sucesso!!!, continuando com o script..."
+sleep 5
+echo
+#
 echo -e "Copiando os arquivos de teste do PHP phpinfo.php e do HTML teste.html, aguarde..."
+	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando cp: -v (verbose)
 	# opção do comando chown: -v (verbose), www-data (user), www-data (group)
 	cp -v conf/phpinfo.php /var/www/html/phpinfo.php &>> $LOG
