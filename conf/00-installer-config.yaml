@@ -1,0 +1,14 @@
+# This is the network config written by 'subiquity'
+network:
+  ethernets:
+    enp0s3:
+      addresses:
+      - 172.16.10.20/24
+      gateway4: 172.16.10.254
+      nameservers:
+        addresses:
+        - 172.16.10.10
+        - 172.16.10.254
+        search:
+        - vaamonde.intra
+  version: 2
