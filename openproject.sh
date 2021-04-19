@@ -5,8 +5,8 @@
 # Facebook: facebook.com/BoraParaPratica
 # YouTube: youtube.com/BoraParaPratica
 # Data de criação: 03/01/2021
-# Data de atualização: 11/01/2021
-# Versão: 0.02
+# Data de atualização: 19/04/2021
+# Versão: 0.03
 # Testado e homologado para a versão do Ubuntu Server 18.04.x LTS x64
 # Kernel >= 4.15.x
 # Testado e homologado para a versão do OpenProject-
@@ -93,7 +93,7 @@ fi
 # || (operador lógico OU), 2> (redirecionar de saída de erro STDERR), && = operador lógico AND, { } = agrupa comandos em blocos
 # [ ] = testa uma expressão, retornando 0 ou 1, -ne = é diferente (NotEqual)
 echo -n "Verificando as dependências do OpenProject, aguarde... "
-	for name in apache2 php
+	for name in apache2 php postgresql postgresql-client
 	do
   		[[ $(dpkg -s $name 2> /dev/null) ]] || { 
               echo -en "\n\nO software: $name precisa ser instalado. \nUse o comando 'apt install $name'\n";
@@ -102,7 +102,8 @@ echo -n "Verificando as dependências do OpenProject, aguarde... "
 	done
 		[[ $deps -ne 1 ]] && echo "Dependências.: OK" || { 
             echo -en "\nInstale as dependências acima e execute novamente este script\n";
-            echo -en "Recomendo utilizar o script: lamp.sh para resolver as dependências."
+            echo -en "Recomendo utilizar o script: lamp.sh para resolver as dependências do Apache e PHP."
+			echo -en "Recomendo utilizar o script: postgresql.sh para resolver as dependências do PostgreSQL"
             exit 1; 
             }
 		sleep 5
