@@ -16,6 +16,7 @@
 # Public License Versão 3 e está disponível como uma edição da comunidade e uma Enterprise Edition.
 #
 # Informações que serão solicitadas na configuração via Console do OpenProject
+# Obs: informações utilizadas no arquivo: installer.dat ele será utilizado com o comando: openproject configure
 # 01. Select your OpenProject Edition: default <OK>
 # 02. Do you want to use this wizard to help setup your PostgreSQL database? install <OK>
 # 03. Do you want to use this wizard to help setup your Web Server? install <OK>
@@ -37,6 +38,7 @@
 # New password: BoraParaPratica
 # Confirm password: BoraParaPratica (Save)
 # Language: Português Brasileiro (Save)
+# Tour Virtual (Pular)
 #
 # Site oficial: https://www.openproject.org/
 #
@@ -61,6 +63,9 @@ USUARIO=$(id -u)
 UBUNTU=$(lsb_release -rs)
 KERNEL=$(uname -r | cut -d'.' -f1,2)
 #
+# Variável de configuração do PostgreSQL
+USER="postgres"
+#
 # Variável do caminho do Log dos Script utilizado nesse curso (VARIÁVEL MELHORADA)
 # opções do comando cut: -d (delimiter), -f (fields)
 # $0 (variável de ambiente do nome do comando)
@@ -78,7 +83,7 @@ clear
 if [ "$USUARIO" == "0" ] && [ "$UBUNTU" == "18.04" ] && [ "$KERNEL" == "4.15" ]
 	then
 		echo -e "O usuário é Root, continuando com o script..."
-		echo -e "Distribuição é >=18.04.x, continuando com o script..."
+		echo -e "Distribuição é >= 18.04.x, continuando com o script..."
 		echo -e "Kernel é >= 4.15, continuando com o script..."
 		sleep 5
 	else
@@ -112,6 +117,7 @@ echo -n "Verificando as dependências do OpenProject, aguarde... "
 # opção do comando echo: -e (enable interpretation of backslash escapes), \n (new line)
 # opção do comando hostname: -I (all IP address)
 # opção do comando date: + (format), %d (day), %m (month), %Y (year 1970), %H (hour 24), %M (minute 60)
+# opções do comando cut: -d (delimiter), -f (fields)
 echo -e "Início do script $0 em: `date +%d/%m/%Y-"("%H:%M")"`\n" &>> $LOG
 clear
 #
@@ -195,7 +201,7 @@ echo -e "Configurando o OpenProject, aguarde..."
 		read
 		sleep 3
 		vim /etc/openproject/installer.dat
-	echo -e "Arquivo editado com sucesso!!!, continuando com o script...\n"
+	echo -e "Arquivo editado com sucesso!!!, continuando com o script, aguarde esse processo demora...\n"
 	    openproject configure &>> $LOG
 echo -e "OpenProject configurado com sucesso!!!, continuando com o script..."
 sleep 5
@@ -205,6 +211,14 @@ echo -e "Verificando a porta de conexão do PostgreSQL do OpenProject, aguarde..
 	# opção do comando netstat: a (all), n (numeric)
 	netstat -an | grep 45432
 echo -e "Porta verificada com sucesso!!!, continuando com o script..."
+sleep 5
+echo
+#
+echo -e "Verificando o Database do OpenProject no PostgreSQL, aguarde..."
+	# opção do comando sudo: -u (user)
+	# opção do comando psql: -p (port), \l (list databases)
+	sudo -u $USER psql -p 45432 openproject --command '\l' | grep openproject
+echo -e "Database verificado com sucesso!!!, continuando com o script..."
 sleep 5
 echo
 #
