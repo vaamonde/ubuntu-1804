@@ -500,7 +500,9 @@ Vídeo mostrando os procedimentos básicos para instalar o OpenProject no GNU/Li
 
 O OpenProject é um sistema de gerenciamento de projeto baseado na web para colaboração de equipe independente da localização. Este aplicativo de código aberto gratuito é lançado sob a GNU General Public License Versão 3 e está disponível como uma edição da comunidade e uma Enterprise Edition.
 
-Link da vídeo aula: 
+[![Open](http://img.youtube.com/vi/gboutNXHUus/0.jpg)](http://www.youtube.com/watch?v=gboutNXHUus "OpenProject")
+
+Link da vídeo aula: https://www.youtube.com/watch?v=gboutNXHUus
 
 Link do script utilizado nesse vídeo: https://github.com/vaamonde/ubuntu-1804/blob/master/openproject.sh
 
