@@ -5,8 +5,8 @@
 # Facebook: facebook.com/BoraParaPratica
 # YouTube: youtube.com/BoraParaPratica
 # Data de criação: 18/04/2021
-# Data de atualização: 18/04/2021
-# Versão: 0.1
+# Data de atualização: 22/04/2021
+# Versão: 0.2
 # Testado e homologado para a versão do Ubuntu Server 18.04.x LTS x64
 # Kernel >= 4.15.x
 # Testado e homologado para a versão do Nginx, MariaDB, PHP 7.2.x, Perl 5.26.x, Python 2.x e 3.x, PhpMyAdmin 4.6.x
@@ -96,7 +96,7 @@ ADMINUSER=$USER
 ADMIN_PASS=$PASSWORD
 APP_PASSWORD=$PASSWORD
 APP_PASS=$PASSWORD
-WEBSERVER="apache2"
+WEBSERVER="localhost"
 #
 # Exportando o recurso de Noninteractive do Debconf para não solicitar telas de configuração
 export DEBIAN_FRONTEND="noninteractive"
@@ -180,12 +180,12 @@ echo -e "Software removidos com Sucesso!!!, continuando com o script..."
 sleep 5
 echo
 #
-echo -e "Configurando as variáveis do Debconf do MySQL para o Apt, aguarde..."
+echo -e "Configurando as variáveis do Debconf do MariaDB para o Apt, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando | (piper): (Conecta a saída padrão com a entrada padrão de outro comando)
-	echo "mysql-server-5.7 mysql-server/root_password password $PASSWORD" |  debconf-set-selections
-	echo "mysql-server-5.7 mysql-server/root_password_again password $AGAIN" |  debconf-set-selections
-	debconf-show mysql-server-5.7 &>> $LOG
+	echo "mariadb-server-10.0 mysql-server/root_password password $PASSWORD" |  debconf-set-selections
+	echo "mariadb-server-10.0 mysql-server/root_password_again password $AGAIN" |  debconf-set-selections
+	debconf-show mariadb-server-10.0 &>> $LOG
 echo -e "Variáveis configuradas com sucesso!!!, continuando com o script..."
 sleep 5
 echo

@@ -5,8 +5,8 @@
 # Facebook: facebook.com/BoraParaPratica
 # YouTube: youtube.com/BoraParaPratica
 # Data de criação: 14/01/2021
-# Data de atualização: 15/01/2021
-# Versão: 0.02
+# Data de atualização: 22/04/2021
+# Versão: 0.03
 # Testado e homologado para a versão do Ubuntu Server 18.04.x LTS x64
 # Kernel >= 4.15.x
 # Testado e homologado para a versão do Wekan
@@ -59,7 +59,7 @@ clear
 if [ "$USUARIO" == "0" ] && [ "$UBUNTU" == "18.04" ] && [ "$KERNEL" == "4.15" ]
 	then
 		echo -e "O usuário é Root, continuando com o script..."
-		echo -e "Distribuição é >=18.04.x, continuando com o script..."
+		echo -e "Distribuição é >= 18.04.x, continuando com o script..."
 		echo -e "Kernel é >= 4.15, continuando com o script..."
 		sleep 5
 	else
@@ -174,8 +174,6 @@ echo
 #
 echo -e "Configurando a URL e Porta do Wekan, aguarde..."
 	# opção do comando: &>> (redirecionar a saida padrão)
-    # opção do comando hostname: -I (all IP address)
-    # opção do comando cut: -d (delimiter), -f (fields)
     snap set wekan port='$PORT' &>> $LOG
 	snap set wekan root-url='$URL' &>> $LOG
     systemctl restart snap.wekan.wekan.service &>> $LOG
