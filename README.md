@@ -219,8 +219,6 @@ Link do script utilizado nesse vídeo: https://github.com/vaamonde/ubuntu-1804/b
 
 Vídeo mostrando os procedimentos básicos para instalar o WORDPRESS no LAMP Server do GNU/Linux Ubuntu Server 18.04 LTS
 
-O LAMP é o acrônimo para Linux + Apache + MySQL + PHP, é um dos principais serviços de hospedagem de páginas de internet utilizado em todo mundo, sua instalação e simples, fácil, rápida e segura, podendo montar um estrutura de servidores de hospedagem interna ou externa.
-
 O Wordpress é um sistema livre e aberto de gestão de conteúdo para internet (do inglês: Content Management System - CMS), baseado em PHP com banco de dados MySQL, executado em um servidor interpretador, voltado principalmente para a criação de páginas eletrônicas (sites) e blogs online. Criado a partir do extinto b2/cafelog, por Ryan Boren e Matthew Mullenweg, e distribuído gratuitamente sob a GNU General Public License.
 
 [![Wordpress](http://img.youtube.com/vi/Fs2B7kLdlm4/0.jpg)](http://www.youtube.com/watch?v=Fs2B7kLdlm4 "Wordpress")
@@ -233,7 +231,7 @@ Link do script utilizado nesse vídeo: https://github.com/vaamonde/ubuntu-1804/b
 
 Vídeo mostrando os procedimentos básicos para instalar o WEBMIN no GNU/Linux Ubuntu Server 18.04 LTS
 
-O Webmin é um programa de gerenciamento de servidor, que roda em plataformas Unix/Linux. Com ele você pode usar também o Usermin e o Virtualmin. O Webmin funciona como um centralizador de configurações do sistema, monitoração dos serviços e de servidores, fornecendo uma interface amigável, e que quando configurado com um servidor web, pode ser acessado de qualquer local, através de um navegador: https:\\(ip do servidor):(porta de utilização). Exemplo: https:\\172.16.1.20:10000.
+O Webmin é um programa de gerenciamento de servidor, que roda em plataformas Unix/Linux. Com ele você pode usar também o Usermin e o Virtualmin. O Webmin funciona como um centralizador de configurações do sistema, monitoração dos serviços e de servidores, fornecendo uma interface amigável, e que quando configurado com um servidor web, pode ser acessado de qualquer local através de um navegador.
 
 [![Webim](http://img.youtube.com/vi/rKTFI9s_YNY/0.jpg)](http://www.youtube.com/watch?v=rKTFI9s_YNY "Webim")
 
@@ -246,7 +244,6 @@ Link do script utilizado nesse vídeo: https://github.com/vaamonde/ubuntu-1804/b
 Vídeo mostrando os procedimentos básicos para instalar o NETDATA no GNU/Linux Ubuntu Server 18.04 LTS
 
 O Netdata é uma ferramenta para visualizar e monitorar métricas em tempo real, otimizado para acumular todos os tipos de dados, como uso da CPU, atividade do disco, consultas SQL, visitas a um site, etc. A ferramenta é projetada para visualizar o agora com o máximo de detalhes possível, permitindo que o usuário tenha uma visão do que está acontecendo e do que acaba de acontecer em seu sistema ou aplicativo, sendo uma opção ideal para resolver problemas de desempenho em tempo real.
-https:\\(ip do servidor):(porta de utilização). Exemplo: https:\\172.16.1.20:19999
 
 [![Netdata](http://img.youtube.com/vi/TdTTgztYVKc/0.jpg)](http://www.youtube.com/watch?v=TdTTgztYVKc "Netdata")
 
@@ -506,6 +503,16 @@ Link da vídeo aula: https://www.youtube.com/watch?v=gboutNXHUus
 
 Link do script utilizado nesse vídeo: https://github.com/vaamonde/ubuntu-1804/blob/master/openproject.sh
 
+## **COMO instalar o WEKAN no GNU/Linux Ubuntu Server 18.04.x LTS**
+
+Vídeo mostrando os procedimentos básicos para instalar o Wekan no GNU/Linux Ubuntu Server 18.04 LTS
+
+O Wekan é um quadro Kanban de código aberto que permite criar tarefas baseadas em cartões e gerenciamento de pendências. Wekan permite criar tabuleiros nos quais os cartões podem ser movidos entre várias Colunas. Os tarefas podem ter vários membros simultâneos, o que facilita a colaboração. Você pode atribuir etiquetas coloridas aos cartões para facilitar o agrupamento e a filtragem; além disso, você pode adicionar membros a um cartão, por exemplo, atribuir uma tarefa a alguém.
+
+Link da vídeo aula: 
+
+Link do script utilizado nesse vídeo: https://github.com/vaamonde/ubuntu-1804/blob/master/wekan.sh
+
 ## **COMO instalar o ROCKET.CHAT no GNU/Linux Ubuntu Server 18.04.x LTS**
 
 Vídeo mostrando os procedimentos básicos para instalar o Rocket.Chat no GNU/Linux Ubuntu Server 18.04 LTS
@@ -516,12 +523,12 @@ Link da vídeo aula:
 
 Link do script utilizado nesse vídeo: https://github.com/vaamonde/ubuntu-1804/blob/master/rocketchat.sh
 
-## **COMO instalar o WEKAN no GNU/Linux Ubuntu Server 18.04.x LTS**
+## **COMO instalar o LEMP Server no GNU/Linux Ubuntu Server 18.04.x LTS**
 
-Vídeo mostrando os procedimentos básicos para instalar o Wekan no GNU/Linux Ubuntu Server 18.04 LTS
+Vídeo mostrando os procedimentos básicos para instalar o LEMP Server GNU/Linux Ubuntu Server 18.04 LTS
 
-O Wekan é um quadro Kanban de código aberto que permite criar tarefas baseadas em cartões e gerenciamento de pendências. Wekan permite criar tabuleiros nos quais os cartões podem ser movidos entre várias Colunas. Os tarefas podem ter vários membros simultâneos, o que facilita a colaboração. Você pode atribuir etiquetas coloridas aos cartões para facilitar o agrupamento e a filtragem; além disso, você pode adicionar membros a um cartão, por exemplo, atribuir uma tarefa a alguém.
+O LEMP é o acrônimo para Linux + Nginx + MariaDB + PHP, é um dos principais serviços de hospedagem de páginas de internet utilizado em todo mundo, sua instalação e simples, fácil, rápida e seguro, podendo montar um estrutura de servidores de hospedagem interna ou externa.
 
 Link da vídeo aula: 
 
-Link do script utilizado nesse vídeo: https://github.com/vaamonde/ubuntu-1804/blob/master/wekan.sh
+Link do script utilizado nesse vídeo: https://github.com/vaamonde/ubuntu-1804/blob/master/lemp.sh
