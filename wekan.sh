@@ -5,8 +5,8 @@
 # Facebook: facebook.com/BoraParaPratica
 # YouTube: youtube.com/BoraParaPratica
 # Data de criação: 14/01/2021
-# Data de atualização: 22/04/2021
-# Versão: 0.03
+# Data de atualização: 26/04/2021
+# Versão: 0.04
 # Testado e homologado para a versão do Ubuntu Server 18.04.x LTS x64
 # Kernel >= 4.15.x
 # Testado e homologado para a versão do Wekan
@@ -15,6 +15,9 @@
 # Wekan permite criar tabuleiros nos quais os cartões podem ser movidos entre várias Colunas. Os tarefas podem ter vários 
 # membros simultâneos, o que facilita a colaboração. Você pode atribuir etiquetas coloridas aos cartões para facilitar o 
 # agrupamento e a filtragem; além disso, você pode adicionar membros a um cartão, por exemplo, atribuir uma tarefa a alguém.
+#
+# Kanban é uma estratégia para otimizar o fluxo de valor para partes interessadas através de um processo que utiliza um 
+# sistema visual que limita a quantidade de trabalho em andamento através de um sistema de acompanhamento de etapas.
 #
 # Informações que serão solicitadas na configuração via Web do Wekan
 # Não tem conta? Criar conta
@@ -87,11 +90,10 @@ echo -n "Verificando as dependências do Wekan, aguarde... "
             }
 		sleep 5
 #	
-# Verificando se as portas 3000 e 27017 estão sendo utilizadas no servidor
+# Verificando se as portas 3000 e 27019 estão sendo utilizadas no servidor
 # [ ] = teste de expressão, == comparação de string, exit 1 = A maioria dos erros comuns na execução,
 # $? código de retorno do último comando executado, ; execução de comando, opção do comando nc: -v (verbose)
 # -z (DCCP mode)
-clear
 if [ "$(nc -vz 127.0.0.1 3000 ; echo $?)" == "0" ]
 	then
 		echo -e "A porta: 3000 já está sendo utilizada nesse servidor.\n"
@@ -121,10 +123,9 @@ echo -e "Início do script $0 em: `date +%d/%m/%Y-"("%H:%M")"`\n" &>> $LOG
 #
 clear
 echo -e "Instalação do Wekan no GNU/Linux Ubuntu Server 18.04.x\n"
-echo -e "Após a instalação do Rocket.Chat acesse a URL: http://`hostname -I | cut -d' ' -f1`:3000\n"
-echo -e "Aguarde, esse processo demora um pouco dependendo do seu Link de Internet..."
+echo -e "Após a instalação do Wekan acesse a URL: http://`hostname -I | cut -d' ' -f1`:3000\n"
+echo -e "Aguarde, esse processo demora um pouco dependendo do seu Link de Internet...\n"
 sleep 5
-#
 #
 echo -e "Adicionando o Repositório Universal do Apt, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
@@ -161,7 +162,7 @@ echo -e "Removendo software desnecessários, aguarde..."
 	apt -y autoremove &>> $LOG
 echo -e "Software removidos com sucesso!!!, continuando com o script..."
 sleep 5
-clear
+echo
 #
 echo -e "Instalando o Wekan, aguarde...\n"
 #
@@ -172,10 +173,10 @@ echo -e "Wekan instalado com sucesso!!!, continuando com o script..."
 sleep 5
 echo
 #
-echo -e "Configurando a URL e Porta do Wekan, aguarde..."
+echo -e "Configurando a URL, Porta e Reinicializando o Serviço do Wekan, aguarde..."
 	# opção do comando: &>> (redirecionar a saida padrão)
-    snap set wekan port='$PORT' &>> $LOG
-	snap set wekan root-url='$URL' &>> $LOG
+    snap set wekan port=$PORT &>> $LOG
+	snap set wekan root-url=$URL &>> $LOG
     systemctl restart snap.wekan.wekan.service &>> $LOG
 echo -e "Wekan configurado com sucesso!!!, continuando com o script..."
 sleep 5
