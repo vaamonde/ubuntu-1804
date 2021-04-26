@@ -102,7 +102,6 @@ echo -n "Verificando as dependências do Rocket.Chat, aguarde... "
 # [ ] = teste de expressão, == comparação de string, exit 1 = A maioria dos erros comuns na execução,
 # $? código de retorno do último comando executado, ; execução de comando, opção do comando nc: -v (verbose)
 # -z (DCCP mode)
-clear
 if [ "$(nc -vz 127.0.0.1 3000 ; echo $?)" == "0" ]
 	then
 		echo -e "A porta: 3000 já está sendo utilizada nesse servidor.\n"
@@ -172,7 +171,7 @@ echo -e "Removendo software desnecessários, aguarde..."
 	apt -y autoremove &>> $LOG
 echo -e "Software removidos com sucesso!!!, continuando com o script..."
 sleep 5
-clear
+echo
 #
 echo -e "Instalando o Rocket.Chat, aguarde...\n"
 #
