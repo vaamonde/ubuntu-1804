@@ -5,8 +5,8 @@
 # Facebook: facebook.com/BoraParaPratica
 # YouTube: youtube.com/BoraParaPratica
 # Data de criação: 14/01/2021
-# Data de atualização: 26/04/2021
-# Versão: 0.04
+# Data de atualização: 27/04/2021
+# Versão: 0.05
 # Testado e homologado para a versão do Ubuntu Server 18.04.x LTS x64
 # Kernel >= 4.15.x
 # Testado e homologado para a versão do Wekan
@@ -93,8 +93,8 @@ echo -n "Verificando as dependências do Wekan, aguarde... "
 # Verificando se as portas 3000 e 27019 estão sendo utilizadas no servidor
 # [ ] = teste de expressão, == comparação de string, exit 1 = A maioria dos erros comuns na execução,
 # $? código de retorno do último comando executado, ; execução de comando, opção do comando nc: -v (verbose)
-# -z (DCCP mode)
-if [ "$(nc -vz 127.0.0.1 3000 ; echo $?)" == "0" ]
+# -z (DCCP mode), &> redirecionador de saída de erro
+if [ "$(nc -vz 127.0.0.1 3000 &> /dev/null ; echo $?)" == "0" ]
 	then
 		echo -e "A porta: 3000 já está sendo utilizada nesse servidor.\n"
         echo -e "Verifique a porta e o serviço associada a ela e execute novamente esse script.\n"
@@ -104,7 +104,7 @@ if [ "$(nc -vz 127.0.0.1 3000 ; echo $?)" == "0" ]
         sleep 3
 fi
 #
-if [ "$(nc -vz 127.0.0.1 27019 ; echo $?)" == "0" ]
+if [ "$(nc -vz 127.0.0.1 27019 &> /dev/null ; echo $?)" == "0" ]
 	then
 		echo -e "A porta: 27019 já está sendo utilizada nesse servidor.\n"
         echo -e "Verifique a porta e o serviço associada a ela e execute novamente esse script.\n"
@@ -168,7 +168,7 @@ echo -e "Instalando o Wekan, aguarde...\n"
 #
 echo -e "Instalando o Wekan utilizando o Snap, aguarde..."
 	# opção do comando: &>> (redirecionar a saida padrão)
-	snap install wekan
+	snap install wekan &>> $LOG
 echo -e "Wekan instalado com sucesso!!!, continuando com o script..."
 sleep 5
 echo

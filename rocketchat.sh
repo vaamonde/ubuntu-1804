@@ -5,8 +5,8 @@
 # Facebook: facebook.com/BoraParaPratica
 # YouTube: youtube.com/BoraParaPratica
 # Data de criação: 04/08/2020
-# Data de atualização: 22/04/2021
-# Versão: 0.05
+# Data de atualização: 27/04/2021
+# Versão: 0.06
 # Testado e homologado para a versão do Ubuntu Server 18.04.x LTS x64
 # Kernel >= 4.15.x
 # Testado e homologado para a versão do Rocket.Chat 3.9.x e MongoDB 4.x
@@ -101,8 +101,8 @@ echo -n "Verificando as dependências do Rocket.Chat, aguarde... "
 # Verificando se as portas 3000 e 27017 estão sendo utilizadas no servidor
 # [ ] = teste de expressão, == comparação de string, exit 1 = A maioria dos erros comuns na execução,
 # $? código de retorno do último comando executado, ; execução de comando, opção do comando nc: -v (verbose)
-# -z (DCCP mode)
-if [ "$(nc -vz 127.0.0.1 3000 ; echo $?)" == "0" ]
+# -z (DCCP mode), &> redirecionador de saída de erro
+if [ "$(nc -vz 127.0.0.1 3000 &> /dev/null ; echo $?)" == "0" ]
 	then
 		echo -e "A porta: 3000 já está sendo utilizada nesse servidor.\n"
         echo -e "Verifique a porta e o serviço associada a ela e execute novamente esse script.\n"
@@ -112,7 +112,7 @@ if [ "$(nc -vz 127.0.0.1 3000 ; echo $?)" == "0" ]
         sleep 3
 fi
 #
-if [ "$(nc -vz 127.0.0.1 27017 ; echo $?)" == "0" ]
+if [ "$(nc -vz 127.0.0.1 27017 &> /dev/null ; echo $?)" == "0" ]
 	then
 		echo -e "A porta: 27017 já está sendo utilizada nesse servidor.\n"
         echo -e "Verifique a porta e o serviço associada a ela e execute novamente esse script.\n"
@@ -177,8 +177,6 @@ echo -e "Instalando o Rocket.Chat, aguarde...\n"
 #
 echo -e "Instalando o Rocket.Chat utilizando o Snap, aguarde..."
 	# opção do comando: &>> (redirecionar a saida padrão)
-	# opção do comando cd: - (return to source directory)
-	# opção do comando mv: -v (verbose)
 	snap install rocketchat-server &>> $LOG
 echo -e "Rocket.chat instalado com sucesso!!!, continuando com o script..."
 sleep 5
