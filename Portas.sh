@@ -5,8 +5,8 @@
 # Facebook: facebook.com/BoraParaPratica
 # YouTube: youtube.com/BoraParaPratica
 # Data de criação: 10/02/2019
-# Data de atualização: 14/01/2021
-# Versão: 0.05
+# Data de atualização: 27/04/2021
+# Versão: 0.06
 # Testado e homologado para a versão do Ubuntu Server 18.04.x LTS x64
 # Kernel >= 4.15.x
 
@@ -24,10 +24,12 @@
 012: ansible.sh;		HTTP: 4440
 013: glpi.sh;			HTTP: 80
 014: grafana.sh;		HTTP: 30000
-015: graylog.sh;		HTTP: 19000, 27017, 9200
+015: graylog.sh;		HTTP: 19000, MONGODB: 27017, 9200
 016: tomcat.sh;			HTTP: 8080
 017: zabbix.sh;			HTTP: 80, 10050, 10051
 018: fusion.sh;         HTTP: 80
 019: ntopng.sh;		    HTTP: 3001
 020: postgresql.sh;		5432
 021: guacamole.sh:      HTTP: 8080, 4822
+022: wekan.sh:			HTTP: 3000, MONGODB: 27019
+023: rocketcjat.sh:		HTTP: 3000, MONGODB: 27017
