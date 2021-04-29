@@ -5,11 +5,11 @@
 # Facebook: facebook.com/BoraParaPratica
 # YouTube: youtube.com/BoraParaPratica
 # Data de criação: 18/04/2021
-# Data de atualização: 22/04/2021
-# Versão: 0.2
+# Data de atualização: 29/04/2021
+# Versão: 0.3
 # Testado e homologado para a versão do Ubuntu Server 18.04.x LTS x64
 # Kernel >= 4.15.x
-# Testado e homologado para a versão do Nginx, MariaDB, PHP 7.2.x, Perl 5.26.x, Python 2.x e 3.x, PhpMyAdmin 4.6.x
+# Testado e homologado para a versão do Nginx 1.14, MariaDB 10.1, PHP 7.2.x, Perl 5.26.x, Python 2.x/3.x, PhpMyAdmin 4.6.x
 #
 # O Servidor NGINX (lê-se "engine x") é um servidor leve de HTTP, Proxy Reverso e Proxy de E-mail IMAP/POP3. 
 # O Nginx consome menos memória que o Apache, pois lida com requisições Web do tipo “event-based web server”; 
@@ -183,9 +183,9 @@ echo
 echo -e "Configurando as variáveis do Debconf do MariaDB para o Apt, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando | (piper): (Conecta a saída padrão com a entrada padrão de outro comando)
-	echo "mariadb-server-10.0 mysql-server/root_password password $PASSWORD" |  debconf-set-selections
-	echo "mariadb-server-10.0 mysql-server/root_password_again password $AGAIN" |  debconf-set-selections
-	debconf-show mariadb-server-10.0 &>> $LOG
+	echo "mariadb-server-10.1 mysql-server/root_password password $PASSWORD" | debconf-set-selections
+	echo "mariadb-server-10.1 mysql-server/root_password_again password $AGAIN" | debconf-set-selections
+	debconf-show mariadb-server-10.1 &>> $LOG
 echo -e "Variáveis configuradas com sucesso!!!, continuando com o script..."
 sleep 5
 echo
@@ -193,24 +193,31 @@ echo
 echo -e "Instalando o LEMP-SERVER, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando apt: -y (yes)
-	apt -y install nginx mariadb-server mariadb-client mariadb-common php \
-	php-fpm php-mysql php-curl php-gd php-intl php-mbstring php-soap php-xml php-xmlrpc \
-	php-zip php-common php-cli php-json php-opcache php-readline php-imagick php-bcmath \
-	php-apcu mcrypt perl python apt-transport-https &>> $LOG
+	apt -y install nginx mariadb-server mariadb-client mariadb-common php-fpm php-mysql \
+	perl python mcrypt apt-transport-https &>> $LOG
 echo -e "Instalação do LEMP-SERVER feito com sucesso!!!, continuando com o script..."
+sleep 5
+echo
+#
+echo -e "Instalando as dependências do PHP do LEMP-SERVER, aguarde..."
+	# opção do comando: &>> (redirecionar a saída padrão)
+	# opção do comando apt: -y (yes)
+	apt -y install php-curl php-gd php-intl php-mbstring php-soap php-xml php-xmlrpc \
+	php-zip php-cli php-json php-readline php-imagick php-bcmath php-apcu &>> $LOG
+echo -e "Dependências do PHP do LEMP-SERVER feito com sucesso!!!, continuando com o script..."
 sleep 5
 echo
 #
 echo -e "Configurando as variáveis do Debconf do PhpMyAdmin para o Apt, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando | (piper): (Conecta a saída padrão com a entrada padrão de outro comando)
-	echo "phpmyadmin phpmyadmin/internal/skip-preseed boolean true" |  debconf-set-selections
-	echo "phpmyadmin phpmyadmin/dbconfig-install boolean true" |  debconf-set-selections
-	echo "phpmyadmin phpmyadmin/app-password-confirm password $APP_PASSWORD" |  debconf-set-selections
-	echo "phpmyadmin phpmyadmin/reconfigure-webserver multiselect $WEBSERVER" |  debconf-set-selections
-	echo "phpmyadmin phpmyadmin/mysql/admin-user string $ADMINUSER" |  debconf-set-selections
-	echo "phpmyadmin phpmyadmin/mysql/admin-pass password $ADMIN_PASS" |  debconf-set-selections
-	echo "phpmyadmin phpmyadmin/mysql/app-pass password $APP_PASS" |  debconf-set-selections
+	echo "phpmyadmin phpmyadmin/internal/skip-preseed boolean true" | debconf-set-selections
+	echo "phpmyadmin phpmyadmin/dbconfig-install boolean true" | debconf-set-selections
+	echo "phpmyadmin phpmyadmin/app-password-confirm password $APP_PASSWORD" | debconf-set-selections
+	echo "phpmyadmin phpmyadmin/reconfigure-webserver multiselect $WEBSERVER" | debconf-set-selections
+	echo "phpmyadmin phpmyadmin/mysql/admin-user string $ADMINUSER" | debconf-set-selections
+	echo "phpmyadmin phpmyadmin/mysql/admin-pass password $ADMIN_PASS" | debconf-set-selections
+	echo "phpmyadmin phpmyadmin/mysql/app-pass password $APP_PASS" | debconf-set-selections
 	debconf-show phpmyadmin &>> $LOG
 echo -e "Variáveis configuradas com sucesso!!!, continuando com o script..."
 sleep 5
@@ -219,7 +226,7 @@ echo
 echo -e "Instalando o PhpMyAdmin, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando apt: -y (yes)
-	apt -y install phpmyadmin php-mbstring php-gettext php-dev libmcrypt-dev php-pear pwgen &>> $LOG
+	apt install phpmyadmin php-mbstring php-gettext php-dev libmcrypt-dev php-pear pwgen &>> $LOG
 echo -e "Instalação do PhpMyAdmin feita com sucesso!!!, continuando com o script..."
 sleep 5
 echo
@@ -241,7 +248,7 @@ echo -e "Aplicando os Patch de Correção do PhpMyAdmin, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando cp: -v (verbose)
 	cp -v conf/sql.lib.php /usr/share/phpmyadmin/libraries/ &>> $LOG
-	cp -v conf/plugin_interface.lib.ph /usr/share/phpmyadmin/libraries/ &>> $LOG
+	cp -v conf/plugin_interface.lib.php /usr/share/phpmyadmin/libraries/ &>> $LOG
 echo -e "Patch de correção aplicados com sucesso!!!, continuando com o script..."
 sleep 5
 echo
@@ -262,17 +269,24 @@ read
 sleep 5
 echo
 #
-echo -e "Atualizando e editando o arquivo de configuração do Apache2, aguarde..."
+echo -e "Atualizando e editando o arquivo de configuração do Nginx, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando cp: -v (verbose)
 	# opção do comando sleep: 3 (seconds)
-	cp -v /etc/apache2/apache2.conf /etc/apache2/apache2.conf.old &>> $LOG
-	cp -v conf/apache2.conf /etc/apache2/apache2.conf &>> $LOG
-	echo -e "Pressione <Enter> para editar o arquivo: apache2.conf"
+	cp -v /etc/nginx/nginx.conf /etc/nginx/nginx.conf.old &>> $LOG
+	cp -v conf/nginx.conf /etc/apache2/nginx.conf &>> $LOG
+	cp -v conf/default /etc/nginx/sites-available/default &>> $LOG
+	echo -e "Pressione <Enter> para editar o arquivo: nginx.conf"
 		read
 		sleep 3
-		vim /etc/apache2/apache2.conf
-echo -e "Arquivo atualizado com sucesso!!!, continuando com o script..."
+		vim /etc/apache2/nginx.conf
+	echo -e "Arquivo atualizado com sucesso!!!, continuando com o script...\n"
+	sleep 3
+	echo -e "Pressione <Enter> para editar o arquivo: default"
+		read
+		sleep 3
+		vim /etc/nginx/sites-available/default
+	cho -e "Arquivo atualizado com sucesso!!!, continuando com o script..."
 sleep 5
 echo
 #
@@ -280,18 +294,18 @@ echo -e "Atualizando e editando o arquivo de configuração do PHP, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando cp: -v (verbose)
 	# opção do comando sleep: 3 (seconds)
-	cp -v /etc/php/7.2/apache2/php.ini /etc/php/7.2/apache2/php.ini.old &>> $LOG
-	cp -v conf/php.ini /etc/php/7.2/apache2/php.ini &>> $LOG
+	cp -v /etc/php/7.2/fpm/php.ini /etc/php/7.2/fpm/php.ini.old &>> $LOG
+	cp -v conf/php.ini /etc/php/7.2/fpm/php.ini &>> $LOG
 	echo -e "Pressione <Enter> para editar o arquivo: php.ini"
 		read
 		sleep 3
-		vim /etc/php/7.2/apache2/php.ini
+		vim /etc/php/7.2/fpm/php.ini
 echo -e "Arquivo atualizado com sucesso!!!, continuando com o script..."
 sleep 5
 echo
 #
 echo -e "Reinicializando o serviço do Apache2, aguarde..."
-	systemctl restart apache2
+	systemctl restart nginx
 echo -e "Serviço reinicializado com sucesso!!!, continuando com o script..."
 sleep 5
 echo
@@ -299,8 +313,8 @@ echo
 echo -e "Permitindo o Root do MariaDB se autenticar remotamente, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando mysql: -u (user), -p (password) -e (execute)
-	mysql -u $USER -p$PASSWORD -e "$GRANTALL" mysql &>> $LOG
-	mysql -u $USER -p$PASSWORD -e "$FLUSH" mysql &>> $LOG
+	mariadb -u $USER -p$PASSWORD -e "$GRANTALL" mysql &>> $LOG
+	mariadb -u $USER -p$PASSWORD -e "$FLUSH" mysql &>> $LOG
 echo -e "Permissão alterada com sucesso!!!, continuando com o script..."
 sleep 5
 echo
@@ -309,18 +323,18 @@ echo -e "Atualizando e editando o arquivo de configuração do MariaDB, aguarde.
 	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando cp: -v (verbose)
 	# opção do comando sleep: 3 (seconds)
-	cp -v /etc/mysql/mysql.conf.d/mysqld.cnf /etc/mysql/mysql.conf.d/mysqld.cnf.old &>> $LOG
-	cp -v conf/mysqld.cnf /etc/mysql/mysql.conf.d/mysqld.cnf &>> $LOG
-	echo -e "Pressione <Enter> para editar o arquivo: mysqld.cnf"
+	cp -v /etc/mysql/mariadb.conf.d/50-server.cnf /etc/mysql/mariadb.conf.d/50-server.cnf.old &>> $LOG
+	cp -v conf/50-server.cnf /etc/mysql/mariadb.conf.d/50-server.cnf &>> $LOG
+	echo -e "Pressione <Enter> para editar o arquivo: 50-server.cnf"
 		read
 		sleep 3
-		vim /etc/mysql/mysql.conf.d/mysqld.cnf
+		vim /etc/mysql/mariadb.conf.d/50-server.cnf
 echo -e "Arquivo atualizado com sucesso!!!, continuando com o script..."
 sleep 5
 echo
 #
 echo -e "Reinicializando os serviços do MariaDB, aguarde..."
-	systemctl restart mysql
+	systemctl restart mariadb
 echo -e "Serviço reinicializado com sucesso!!!, continuando com o script..."
 sleep 5
 echo

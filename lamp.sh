@@ -248,7 +248,7 @@ echo -e "Aplicando os Patch de Correção do PhpMyAdmin, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando cp: -v (verbose)
 	cp -v conf/sql.lib.php /usr/share/phpmyadmin/libraries/ &>> $LOG
-	cp -v conf/plugin_interface.lib.ph /usr/share/phpmyadmin/libraries/ &>> $LOG
+	cp -v conf/plugin_interface.lib.php /usr/share/phpmyadmin/libraries/ &>> $LOG
 echo -e "Patch de correção aplicados com sucesso!!!, continuando com o script..."
 sleep 5
 echo
