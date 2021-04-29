@@ -6,7 +6,7 @@
 # YouTube: youtube.com/BoraParaPratica
 # Data de criação: 18/04/2021
 # Data de atualização: 29/04/2021
-# Versão: 0.4
+# Versão: 0.5
 # Testado e homologado para a versão do Ubuntu Server 18.04.x LTS x64
 # Kernel >= 4.15.x
 # Testado e homologado para a versão do Nginx 1.14, MariaDB 10.1, PHP 7.2.x, Perl 5.26.x, Python 2.x/3.x, PhpMyAdmin 4.6.x
@@ -34,8 +34,12 @@
 # possui um modelo de desenvolvimento comunitário, aberto e gerenciado pela organização sem fins lucrativos 
 # Python Software Foundation.
 #
-# NGINX-1.19 (HTTP Server) -Servidor de Hospedagem de Páginas Web: https://www.nginx.com/
-# MARIADB-10.5.9 (SGBD) - Sistemas de Gerenciamento de Banco de Dados: https://mariadb.org/
+# PhpMyAdmin é um aplicativo web livre e de código aberto desenvolvido em PHP para administração do MySQL 
+# ou MariaDB pela Internet. A partir deste sistema é possível criar e remover bases de dados, criar, remover
+# e alterar tabelas, inserir, remover e editar campos, executar códigos SQL e manipular campos chaves.
+#
+# NGINX-1.14 (HTTP Server) -Servidor de Hospedagem de Páginas Web: https://www.nginx.com/
+# MARIADB-10.1.x (SGBD) - Sistemas de Gerenciamento de Banco de Dados: https://mariadb.org/
 # PHP-7.2 (Personal Home Page - PHP: Hypertext Preprocessor) - Linguagem de Programação Dinâmica para Web: http://www.php.net/
 # PERL-5.26 - Linguagem de programação multiplataforma: https://www.perl.org/
 # PYTHON-2.7 - Linguagem de programação de alto nível: https://www.python.org/
@@ -84,9 +88,11 @@ PASSWORD="pti@2018"
 AGAIN=$PASSWORD
 #
 # Variáveis de configuração e liberação da conexão remota para o usuário Root do MariaDB
-# opões do comando GRANT: grant (permissão), all (todos privilégios), on (em ou na | banco ou tabela), 
+# opções do comando GRANT: grant (permissão), all (todos privilégios), on (em ou na | banco ou tabela), 
 # *.* (todos os bancos/tabelas) to (para), user@'%' (usuário @ localhost), identified by (identificado 
 # por - senha do usuário)
+# opções do comando UPDATE: user (table mysql), SET Password=PASSWORD (columns), WHERE (condition), User (value)
+# opções do comando UPDATE: user (table mysql), SET plugin (columns), WHERE (condition), User (value)
 # opção do comando FLUSH: privileges (recarregar as permissões)
 GRANTALL="GRANT ALL ON *.* TO $USER@'%' IDENTIFIED BY '$PASSWORD';"
 UPDATE1045="UPDATE user SET Password=PASSWORD('$PASSWORD') WHERE User='$USER';"
@@ -128,7 +134,6 @@ fi
 echo -e "Início do script $0 em: `date +%d/%m/%Y-"("%H:%M")"`\n" &>> $LOG
 clear
 #
-echo
 echo -e "Instalação do LEMP-SERVER no GNU/Linux Ubuntu Server 18.04.x\n"
 echo -e "NGINX (HTTP Server) - Servidor de Hospedagem de Páginas Web - Porta 80/443"
 echo -e "Após a instalação do Nginx acessar a URL: http://`hostname -I | cut -d ' ' -f1`/"
@@ -141,46 +146,40 @@ echo -e "PERL - Linguagem de programação multi-plataforma\n"
 echo -e "PYTHON - Linguagem de programação de alto nível\n"
 echo -e "PhpMyAdmin - Aplicativo desenvolvido em PHP para administração do MariaDB pela Internet"
 echo -e "Após a instalação do PhpMyAdmin acessar a URL: http://`hostname -I | cut -d ' ' -f1`/phpmyadmin\n"
-echo -e "Aguarde, esse processo demora um pouco dependendo do seu Link de Internet..."
+echo -e "Aguarde, esse processo demora um pouco dependendo do seu Link de Internet...\n"
 sleep 5
-echo
 #
 echo -e "Adicionando o Repositório Universal do Apt, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	add-apt-repository universe &>> $LOG
-echo -e "Repositório adicionado com sucesso!!!, continuando com o script..."
+echo -e "Repositório adicionado com sucesso!!!, continuando com o script...\n"
 sleep 5
-echo
 #
 echo -e "Adicionando o Repositório Multiversão do Apt, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	add-apt-repository multiverse &>> $LOG
-echo -e "Repositório adicionado com sucesso!!!, continuando com o script..."
+echo -e "Repositório adicionado com sucesso!!!, continuando com o script...\n"
 sleep 5
-echo
 #
 echo -e "Atualizando as listas do Apt, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	apt update &>> $LOG
-echo -e "Listas atualizadas com sucesso!!!, continuando com o script..."
+echo -e "Listas atualizadas com sucesso!!!, continuando com o script...\n"
 sleep 5
-echo
 #
 echo -e "Atualizando o sistema, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando apt: -y (yes)
 	apt -y upgrade &>> $LOG
-echo -e "Sistema atualizado com sucesso!!!, continuando com o script..."
+echo -e "Sistema atualizado com sucesso!!!, continuando com o script...\n"
 sleep 5
-echo
 #
 echo -e "Removendo software desnecessários, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando apt: -y (yes)
 	apt -y autoremove &>> $LOG
-echo -e "Software removidos com Sucesso!!!, continuando com o script..."
+echo -e "Software removidos com Sucesso!!!, continuando com o script...\n"
 sleep 5
-echo
 #
 echo -e "Configurando as variáveis do Debconf do MariaDB para o Apt, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
@@ -188,27 +187,24 @@ echo -e "Configurando as variáveis do Debconf do MariaDB para o Apt, aguarde...
 	echo "mariadb-server-10.1 mysql-server/root_password password $PASSWORD" | debconf-set-selections
 	echo "mariadb-server-10.1 mysql-server/root_password_again password $AGAIN" | debconf-set-selections
 	debconf-show mariadb-server-10.1 &>> $LOG
-echo -e "Variáveis configuradas com sucesso!!!, continuando com o script..."
+echo -e "Variáveis configuradas com sucesso!!!, continuando com o script...\n"
 sleep 5
-echo
 #
 echo -e "Instalando o LEMP-SERVER, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando apt: -y (yes)
 	apt -y install nginx mariadb-server mariadb-client mariadb-common php-fpm php-mysql \
 	perl python mcrypt apt-transport-https &>> $LOG
-echo -e "Instalação do LEMP-SERVER feito com sucesso!!!, continuando com o script..."
+echo -e "Instalação do LEMP-SERVER feito com sucesso!!!, continuando com o script...\n"
 sleep 5
-echo
 #
 echo -e "Instalando as dependências do PHP do LEMP-SERVER, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando apt: -y (yes)
 	apt -y install php-curl php-gd php-intl php-mbstring php-soap php-xml php-xmlrpc \
 	php-zip php-cli php-json php-readline php-imagick php-bcmath php-apcu &>> $LOG
-echo -e "Dependências do PHP do LEMP-SERVER feito com sucesso!!!, continuando com o script..."
+echo -e "Dependências do PHP do LEMP-SERVER feito com sucesso!!!, continuando com o script...\n"
 sleep 5
-echo
 #
 echo -e "Configurando as variáveis do Debconf do PhpMyAdmin para o Apt, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
@@ -221,17 +217,15 @@ echo -e "Configurando as variáveis do Debconf do PhpMyAdmin para o Apt, aguarde
 	echo "phpmyadmin phpmyadmin/mysql/admin-pass password $ADMIN_PASS" | debconf-set-selections
 	echo "phpmyadmin phpmyadmin/mysql/app-pass password $APP_PASS" | debconf-set-selections
 	debconf-show phpmyadmin &>> $LOG
-echo -e "Variáveis configuradas com sucesso!!!, continuando com o script..."
+echo -e "Variáveis configuradas com sucesso!!!, continuando com o script...\n"
 sleep 5
-echo
 #
 echo -e "Instalando o PhpMyAdmin, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando apt: -y (yes)
 	apt -y install phpmyadmin php-mbstring php-gettext php-dev libmcrypt-dev php-pear pwgen &>> $LOG
-echo -e "Instalação do PhpMyAdmin feita com sucesso!!!, continuando com o script..."
+echo -e "Instalação do PhpMyAdmin feita com sucesso!!!, continuando com o script...\n"
 sleep 5
-echo
 #				 
 echo -e "Atualizando as dependências do PHP para o PhpMyAdmin, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
@@ -242,26 +236,23 @@ echo -e "Atualizando as dependências do PHP para o PhpMyAdmin, aguarde..."
 	cp -v conf/mcrypt.ini /etc/php/7.2/mods-available/ &>> $LOG
 	phpenmod mcrypt &>> $LOG
 	phpenmod mbstring &>> $LOG
-echo -e "Atualização das dependências feita com sucesso!!!, continuando com o script..."
+echo -e "Atualização das dependências feita com sucesso!!!, continuando com o script...\n"
 sleep 5
-echo
 #
 echo -e "Aplicando os Patch de Correção do PhpMyAdmin, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando cp: -v (verbose)
 	cp -v conf/sql.lib.php /usr/share/phpmyadmin/libraries/ &>> $LOG
 	cp -v conf/plugin_interface.lib.php /usr/share/phpmyadmin/libraries/ &>> $LOG
-echo -e "Patch de correção aplicados com sucesso!!!, continuando com o script..."
+echo -e "Patch de correção aplicados com sucesso!!!, continuando com o script...\n"
 sleep 5
-echo
 #
 echo -e "Criando o Link Simbólico do PhpMyAdmin, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando ln: -v (verbose), -s (symbolic)
 	ln -vs /usr/share/phpmyadmin /var/www/html &>> $LOG
-echo -e "Link simbólico criado com sucesso!!!, continuando com o script..."
+echo -e "Link simbólico criado com sucesso!!!, continuando com o script...\n"
 sleep 5
-echo
 #
 echo -e "Copiando os arquivos de teste do PHP phpinfo.php e do HTML teste.html, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
@@ -270,55 +261,60 @@ echo -e "Copiando os arquivos de teste do PHP phpinfo.php e do HTML teste.html, 
 	cp -v conf/phpinfo.php /var/www/html/phpinfo.php &>> $LOG
 	cp -v conf/teste.html /var/www/html/teste.html &>> $LOG
 	chown -v www-data.www-data /var/www/html/* &>> $LOG
-echo -e "Arquivos copiados com sucesso!!!, continuando com o script..."
+echo -e "Arquivos copiados com sucesso!!!, continuando com o script...\n"
 sleep 5
-echo
 #
-echo -e "Instalação do LEMP-Server e PhpMyAdmin feito com sucesso!!! Pressione <Enter> para continuar."
+echo -e "Instalação do LEMP-Server e PhpMyAdmin feito com sucesso!!! Pressione <Enter> para continuar.\n"
 read
 sleep 5
-echo
 #
-echo -e "Atualizando e editando o arquivo de configuração do Nginx, aguarde..."
+echo -e "Atualizando os arquivos de configuração do Nginx, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando cp: -v (verbose)
-	# opção do comando sleep: 3 (seconds)
 	cp -v /etc/nginx/nginx.conf /etc/nginx/nginx.conf.old &>> $LOG
 	cp -v conf/nginx.conf /etc/apache2/nginx.conf &>> $LOG
 	cp -v conf/default /etc/nginx/sites-available/default &>> $LOG
-	echo -e "Pressione <Enter> para editar o arquivo: nginx.conf"
-		read
-		sleep 3
-		vim /etc/apache2/nginx.conf
-	echo -e "Arquivo atualizado com sucesso!!!, continuando com o script...\n"
-	sleep 3
-	echo -e "Pressione <Enter> para editar o arquivo: default"
-		read
-		sleep 3
-		vim /etc/nginx/sites-available/default
-	echo -e "Arquivo atualizado com sucesso!!!, continuando com o script..."
+echo -e "Arquivo atualizado com sucesso!!!, continuando com o script...\n"
 sleep 5
-echo
 #
-echo -e "Atualizando e editando o arquivo de configuração do PHP, aguarde..."
+echo -e "Editando o arquivo de configuração: nginx.conf, Pressione <Enter> para continuar..."
+	# opção do comando sleep: 3 (seconds)
+	read
+	sleep 3
+	vim /etc/apache2/nginx.conf
+echo -e "Arquivo editado com sucesso!!!, continuando com o script...\n"
+sleep 5
+#
+echo -e "Editando o arquivo de configuração: default, Pressione <Enter> para continuar..."
+	# opção do comando sleep: 3 (seconds)
+	read
+	sleep 3
+	vim /etc/nginx/sites-available/default
+echo -e "Arquivo editado com sucesso!!!, continuando com o script...\n"
+sleep 5
+#
+echo -e "Atualizando os arquivos de configuração do PHP, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando cp: -v (verbose)
 	# opção do comando sleep: 3 (seconds)
 	cp -v /etc/php/7.2/fpm/php.ini /etc/php/7.2/fpm/php.ini.old &>> $LOG
 	cp -v conf/php.ini /etc/php/7.2/fpm/php.ini &>> $LOG
-	echo -e "Pressione <Enter> para editar o arquivo: php.ini"
-		read
-		sleep 3
-		vim /etc/php/7.2/fpm/php.ini
-echo -e "Arquivo atualizado com sucesso!!!, continuando com o script..."
+echo -e "Arquivos atualizados com sucesso!!!, continuando com o script...\n"
 sleep 5
-echo
 #
-echo -e "Reinicializando o serviço do Nginx, aguarde..."
-	systemctl restart nginx
-echo -e "Serviço reinicializado com sucesso!!!, continuando com o script..."
+echo -e "Editando o arquivo de configuração: php.ini, Pressione <Enter> para continuar..."
+	# opção do comando sleep: 3 (seconds)
+	read
+	sleep 3
+	vim /etc/php/7.2/fpm/php.ini
+echo -e "Arquivo editado com sucesso!!!, continuando com o script...\n"
 sleep 5
-echo
+#
+echo -e "Reinicializando os serviços do PHP-FPM e Nginx, aguarde..."
+	systemctl restart php7.2-fpm &>> $LOG
+	systemctl restart nginx &>> $LOG
+echo -e "Serviços reinicializados com sucesso!!!, continuando com o script...\n"
+sleep 5
 #
 echo -e "Permitindo o Root do MariaDB se autenticar remotamente, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
@@ -327,37 +323,36 @@ echo -e "Permitindo o Root do MariaDB se autenticar remotamente, aguarde..."
 	mariadb -u $USER -p$PASSWORD -e "$UPDATE1045" mysql &>> $LOG
 	mariadb -u $USER -p$PASSWORD -e "$UPDATE1698" mysql &>> $LOG
 	mariadb -u $USER -p$PASSWORD -e "$FLUSH" mysql &>> $LOG
-echo -e "Permissão alterada com sucesso!!!, continuando com o script..."
+echo -e "Permissão alterada com sucesso!!!, continuando com o script...\n"
 sleep 5
-echo
 #
-echo -e "Atualizando e editando o arquivo de configuração do MariaDB, aguarde..."
+echo -e "Atualizando o arquivo de configuração do MariaDB, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando cp: -v (verbose)
-	# opção do comando sleep: 3 (seconds)
 	cp -v /etc/mysql/mariadb.conf.d/50-server.cnf /etc/mysql/mariadb.conf.d/50-server.cnf.old &>> $LOG
 	cp -v conf/50-server.cnf /etc/mysql/mariadb.conf.d/50-server.cnf &>> $LOG
-	echo -e "Pressione <Enter> para editar o arquivo: 50-server.cnf"
-		read
-		sleep 3
-		vim /etc/mysql/mariadb.conf.d/50-server.cnf
-echo -e "Arquivo atualizado com sucesso!!!, continuando com o script..."
+echo -e "Arquivo atualizado com sucesso!!!, continuando com o script...\n"
 sleep 5
-echo
 #
-echo -e "Reinicializando os serviços do MariaDB, aguarde..."
-	systemctl restart mariadb
-echo -e "Serviço reinicializado com sucesso!!!, continuando com o script..."
+echo -e "Editando o arquivo de configuração: 50-server.cnf, Pressione <Enter> para continuar..."
+	# opção do comando sleep: 3 (seconds)
+	read
+	sleep 3
+	vim /etc/mysql/mariadb.conf.d/50-server.cnf
+echo -e "Arquivo editado com sucesso!!!, continuando com o script...\n"
 sleep 5
-echo
+#
+echo -e "Reinicializando os serviço do MariaDB, aguarde..."
+	systemctl restart mariadb &>> $LOG
+echo -e "Serviço reinicializado com sucesso!!!, continuando com o script...\n"
+sleep 5
 #
 echo -e "Verificando as portas de Conexão do Nginx e do MariaDB, aguarde..."
 	# opção do comando netstat: a (all), n (numeric)
 	# opção do comando grep: ' ' (aspas simples) protege uma string, \| (Escape e opção OU)
 	netstat -an | grep '80\|3306'
-echo -e "Portas verificadas com sucesso!!!, continuando com o script..."
+echo -e "Portas verificadas com sucesso!!!, continuando com o script...\n"
 sleep 5
-echo
 #
 echo -e "Instalação do LEMP-SERVER feito com Sucesso!!!"
 	# script para calcular o tempo gasto (SCRIPT MELHORADO, CORRIGIDO FALHA DE HORA:MINUTO:SEGUNDOS)
