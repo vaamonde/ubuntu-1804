@@ -323,14 +323,10 @@ echo
 echo -e "Permitindo o Root do MariaDB se autenticar remotamente, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando mysql: -u (user), -p (password) -e (execute), mysql (database)
-	echo GRANT
-	mariadb -u $USER -p$PASSWORD -e "$GRANTALL" mysql
-	echo UPDATE1045
-	mariadb -u $USER -p$PASSWORD -e "$UPDATE1045" mysql
-	echo UPDATE1698
-	mariadb -u $USER -p$PASSWORD -e "$UPDATE1698" mysql
-	echo FLUSH
-	mariadb -u $USER -p$PASSWORD -e "$FLUSH" mysql
+	mariadb -u $USER -p$PASSWORD -e "$GRANTALL" mysql &>> $LOG
+	mariadb -u $USER -p$PASSWORD -e "$UPDATE1045" mysql &>> $LOG
+	mariadb -u $USER -p$PASSWORD -e "$UPDATE1698" mysql &>> $LOG
+	mariadb -u $USER -p$PASSWORD -e "$FLUSH" mysql &>> $LOG
 echo -e "Permissão alterada com sucesso!!!, continuando com o script..."
 sleep 5
 echo
