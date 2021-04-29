@@ -6,7 +6,7 @@
 # YouTube: youtube.com/BoraParaPratica
 # Data de criação: 18/04/2021
 # Data de atualização: 29/04/2021
-# Versão: 0.3
+# Versão: 0.4
 # Testado e homologado para a versão do Ubuntu Server 18.04.x LTS x64
 # Kernel >= 4.15.x
 # Testado e homologado para a versão do Nginx 1.14, MariaDB 10.1, PHP 7.2.x, Perl 5.26.x, Python 2.x/3.x, PhpMyAdmin 4.6.x
@@ -130,15 +130,15 @@ clear
 echo
 echo -e "Instalação do LEMP-SERVER no GNU/Linux Ubuntu Server 18.04.x\n"
 echo -e "NGINX (HTTP Server) - Servidor de Hospedagem de Páginas Web - Porta 80/443"
-echo -e "Após a instalação do Nginx acessar a URL: http://`hostname -I | cut -d ' ' -f1`/\n"
+echo -e "Após a instalação do Nginx acessar a URL: http://`hostname -I | cut -d ' ' -f1`/"
 echo -e "Testar a linguagem HTML acessando a URL: http://`hostname -I | cut -d ' ' -f1`/teste.html\n"
-echo -e "MariaDB (SGBD) - Sistemas de Gerenciamento de Banco de Dados - Porta 3306\n"
-echo -e "Após a instalação do MariaDB acessar o console: mysql -u root -p\n"
-echo -e "PHP (Personal Home Page - PHP: Hypertext Preprocessor) - Linguagem de Programação Dinâmica para Web\n"
+echo -e "MariaDB (SGBD) - Sistemas de Gerenciamento de Banco de Dados - Porta 3306"
+echo -e "Após a instalação do MariaDB acessar o console: mariadb -u root -p\n"
+echo -e "PHP (Personal Home Page - PHP: Hypertext Preprocessor) - Linguagem de Programação Dinâmica para Web"
 echo -e "Após a instalação do PHP acessar a URL: http://`hostname -I | cut -d ' ' -f1`/phpinfo.php\n"
 echo -e "PERL - Linguagem de programação multi-plataforma\n"
 echo -e "PYTHON - Linguagem de programação de alto nível\n"
-echo -e "PhpMyAdmin - Aplicativo desenvolvido em PHP para administração do MySQL pela Internet"
+echo -e "PhpMyAdmin - Aplicativo desenvolvido em PHP para administração do MariaDB pela Internet"
 echo -e "Após a instalação do PhpMyAdmin acessar a URL: http://`hostname -I | cut -d ' ' -f1`/phpmyadmin\n"
 echo -e "Aguarde, esse processo demora um pouco dependendo do seu Link de Internet..."
 sleep 5
