@@ -89,7 +89,8 @@ AGAIN=$PASSWORD
 # por - senha do usuário)
 # opção do comando FLUSH: privileges (recarregar as permissões)
 GRANTALL="GRANT ALL ON *.* TO $USER@'%' IDENTIFIED BY '$PASSWORD';"
-UPDATE="UPDATE mysql.user SET Password=PASSWORD("$PASSWORD") WHERE User="$USER";"
+UPDATE1045="UPDATE user SET Password=PASSWORD("$PASSWORD") WHERE User="$USER";"
+UPDATE1698="UPDATE user SET plugin='' WHERE User='$USER';"
 FLUSH="FLUSH PRIVILEGES;"
 #
 # Variáveis de configuração do PhpMyAdmin
@@ -256,8 +257,8 @@ echo
 #
 echo -e "Criando o Link Simbólico do PhpMyAdmin, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
-	# opção do comando ln: -s (symbolic)
-	ln -s /usr/share/phpmyadmin /var/www/html &>> $LOG
+	# opção do comando ln: -v (verbose), -s (symbolic)
+	ln -vs /usr/share/phpmyadmin /var/www/html &>> $LOG
 echo -e "Link simbólico criado com sucesso!!!, continuando com o script..."
 sleep 5
 echo
@@ -321,9 +322,10 @@ echo
 #
 echo -e "Permitindo o Root do MariaDB se autenticar remotamente, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
-	# opção do comando mysql: -u (user), -p (password) -e (execute)
+	# opção do comando mysql: -u (user), -p (password) -e (execute), mysql (database)
 	mariadb -u $USER -p$PASSWORD -e "$GRANTALL" mysql &>> $LOG
-	mariadb -u $USER -p$PASSWORD -e "$UPDATE" mysql &>> $LOG
+	mariadb -u $USER -p$PASSWORD -e "$UPDATE1045" mysql &>> $LOG
+	mariadb -u $USER -p$PASSWORD -e "$UPDATE1698" mysql &>> $LOG
 	mariadb -u $USER -p$PASSWORD -e "$FLUSH" mysql &>> $LOG
 echo -e "Permissão alterada com sucesso!!!, continuando com o script..."
 sleep 5
