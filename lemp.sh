@@ -89,7 +89,7 @@ AGAIN=$PASSWORD
 # por - senha do usuário)
 # opção do comando FLUSH: privileges (recarregar as permissões)
 GRANTALL="GRANT ALL ON *.* TO $USER@'%' IDENTIFIED BY '$PASSWORD';"
-UPDATE1045="UPDATE user SET Password=PASSWORD("$PASSWORD") WHERE User="$USER";"
+UPDATE1045="UPDATE user SET Password=PASSWORD('$PASSWORD') WHERE User='$USER';"
 UPDATE1698="UPDATE user SET plugin='' WHERE User='$USER';"
 FLUSH="FLUSH PRIVILEGES;"
 #
@@ -323,10 +323,14 @@ echo
 echo -e "Permitindo o Root do MariaDB se autenticar remotamente, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando mysql: -u (user), -p (password) -e (execute), mysql (database)
-	mariadb -u $USER -p$PASSWORD -e "$GRANTALL" mysql &>> $LOG
-	mariadb -u $USER -p$PASSWORD -e "$UPDATE1045" mysql &>> $LOG
-	mariadb -u $USER -p$PASSWORD -e "$UPDATE1698" mysql &>> $LOG
-	mariadb -u $USER -p$PASSWORD -e "$FLUSH" mysql &>> $LOG
+	echo GRANT
+	mariadb -u $USER -p$PASSWORD -e "$GRANTALL" mysql
+	echo UPDATE1045
+	mariadb -u $USER -p$PASSWORD -e "$UPDATE1045" mysql
+	echo UPDATE1698
+	mariadb -u $USER -p$PASSWORD -e "$UPDATE1698" mysql
+	echo FLUSH
+	mariadb -u $USER -p$PASSWORD -e "$FLUSH" mysql
 echo -e "Permissão alterada com sucesso!!!, continuando com o script..."
 sleep 5
 echo
