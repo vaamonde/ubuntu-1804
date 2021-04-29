@@ -78,17 +78,18 @@ KERNEL=$(uname -r | cut -d'.' -f1,2)
 # $0 (variável de ambiente do nome do comando)
 LOG="/var/log/$(echo $0 | cut -d'/' -f2)"
 #
-# Variáveis de configuração do usuário root e senha do MySQL para acesso via console e do PhpMyAdmin
+# Variáveis de configuração do usuário root e senha do MariaDB para acesso via console e do PhpMyAdmin
 USER="root"
 PASSWORD="pti@2018"
 AGAIN=$PASSWORD
 #
-# Variáveis de configuração e liberação da conexão remota para o usuário Root do MySQL
+# Variáveis de configuração e liberação da conexão remota para o usuário Root do MariaDB
 # opões do comando GRANT: grant (permissão), all (todos privilégios), on (em ou na | banco ou tabela), 
 # *.* (todos os bancos/tabelas) to (para), user@'%' (usuário @ localhost), identified by (identificado 
 # por - senha do usuário)
 # opção do comando FLUSH: privileges (recarregar as permissões)
 GRANTALL="GRANT ALL ON *.* TO $USER@'%' IDENTIFIED BY '$PASSWORD';"
+UPDATE="UPDATE mysql.user SET Password=PASSWORD("$PASSWORD") WHERE User="$USER";"
 FLUSH="FLUSH PRIVILEGES;"
 #
 # Variáveis de configuração do PhpMyAdmin
@@ -226,7 +227,7 @@ echo
 echo -e "Instalando o PhpMyAdmin, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando apt: -y (yes)
-	apt install phpmyadmin php-mbstring php-gettext php-dev libmcrypt-dev php-pear pwgen &>> $LOG
+	apt -y install phpmyadmin php-mbstring php-gettext php-dev libmcrypt-dev php-pear pwgen &>> $LOG
 echo -e "Instalação do PhpMyAdmin feita com sucesso!!!, continuando com o script..."
 sleep 5
 echo
@@ -250,6 +251,14 @@ echo -e "Aplicando os Patch de Correção do PhpMyAdmin, aguarde..."
 	cp -v conf/sql.lib.php /usr/share/phpmyadmin/libraries/ &>> $LOG
 	cp -v conf/plugin_interface.lib.php /usr/share/phpmyadmin/libraries/ &>> $LOG
 echo -e "Patch de correção aplicados com sucesso!!!, continuando com o script..."
+sleep 5
+echo
+#
+echo -e "Criando o Link Simbólico do PhpMyAdmin, aguarde..."
+	# opção do comando: &>> (redirecionar a saída padrão)
+	# opção do comando ln: -s (symbolic)
+	ln -s /usr/share/phpmyadmin /var/www/html &>> $LOG
+echo -e "Link simbólico criado com sucesso!!!, continuando com o script..."
 sleep 5
 echo
 #
@@ -286,7 +295,7 @@ echo -e "Atualizando e editando o arquivo de configuração do Nginx, aguarde...
 		read
 		sleep 3
 		vim /etc/nginx/sites-available/default
-	cho -e "Arquivo atualizado com sucesso!!!, continuando com o script..."
+	echo -e "Arquivo atualizado com sucesso!!!, continuando com o script..."
 sleep 5
 echo
 #
@@ -304,7 +313,7 @@ echo -e "Arquivo atualizado com sucesso!!!, continuando com o script..."
 sleep 5
 echo
 #
-echo -e "Reinicializando o serviço do Apache2, aguarde..."
+echo -e "Reinicializando o serviço do Nginx, aguarde..."
 	systemctl restart nginx
 echo -e "Serviço reinicializado com sucesso!!!, continuando com o script..."
 sleep 5
@@ -314,6 +323,7 @@ echo -e "Permitindo o Root do MariaDB se autenticar remotamente, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando mysql: -u (user), -p (password) -e (execute)
 	mariadb -u $USER -p$PASSWORD -e "$GRANTALL" mysql &>> $LOG
+	mariadb -u $USER -p$PASSWORD -e "$UPDATE" mysql &>> $LOG
 	mariadb -u $USER -p$PASSWORD -e "$FLUSH" mysql &>> $LOG
 echo -e "Permissão alterada com sucesso!!!, continuando com o script..."
 sleep 5
