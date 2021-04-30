@@ -5,11 +5,16 @@
 # Facebook: facebook.com/BoraParaPratica
 # YouTube: youtube.com/BoraParaPratica
 # Data de criação: 18/04/2021
-# Data de atualização: 29/04/2021
-# Versão: 0.5
+# Data de atualização: 30/04/2021
+# Versão: 0.6
 # Testado e homologado para a versão do Ubuntu Server 18.04.x LTS x64
 # Kernel >= 4.15.x
 # Testado e homologado para a versão do Nginx 1.14, MariaDB 10.1, PHP 7.2.x, Perl 5.26.x, Python 2.x/3.x, PhpMyAdmin 4.6.x
+#
+# LEMP é um grupo de softwares que são usados para exibir páginas ou aplicativos Web dinâmicos escritos em 
+# PHP/PERL/PYTHON. Este é um acrônimo de sistema operacional Linux, servidor Web Nginx (se pronuncia “Engine-X)
+# Os dados do backend são armazenados no banco de dados MySQL ou MariaDB e o processamento dinâmico é 
+# tratado pela linguagem de programação dinâmica PHP.
 #
 # O Servidor NGINX (lê-se "engine x") é um servidor leve de HTTP, Proxy Reverso e Proxy de E-mail IMAP/POP3. 
 # O Nginx consome menos memória que o Apache, pois lida com requisições Web do tipo “event-based web server”; 
@@ -26,11 +31,16 @@
 # linguagem interpretada livre, usada originalmente apenas para o desenvolvimento de aplicações presentes 
 # e atuantes no lado do servidor, capazes de gerar conteúdo dinâmico na World Wide Web.
 #
-# Perl é usada em aplicações de CGI para a web[5], para administração de sistemas linux e por várias 
+# FPM (FastCGI Process Manager) é um gerenciador de processos para gerenciar o FastCGI SAPI (Server API) 
+# em PHP. O PHP-FPM é um serviço e não um módulo. Este serviço é executado completamente independente do 
+# servidor web em um processo à parte e é suportado por qualquer servidor web compatível com FastCGI 
+# (Fast Common Gateway Interface).
+#
+# Perl é usada em aplicações de CGI para a web, para administração de sistemas linux e por várias 
 # aplicações que necessitam de facilidade de manipulação de strings.
 #
 # Python é uma linguagem de programação de alto nível,[5] interpretada de script, imperativa, orientada a 
-# objetos, funcional, de tipagem dinâmica e forte. Foi lançada por Guido van Rossum em 1991.[1] Atualmente,
+# objetos, funcional, de tipagem dinâmica e forte. Foi lançada por Guido van Rossum em 1991. Atualmente,
 # possui um modelo de desenvolvimento comunitário, aberto e gerenciado pela organização sem fins lucrativos 
 # Python Software Foundation.
 #
@@ -56,11 +66,14 @@
 # Site oficial: https://www.nginx.com/
 # Site oficial: https://mariadb.org/
 # Site oficial: https://www.php.net/
+# Site oficial: https://pecl.php.net/
+# Site oficial: https://www.php.net/manual/pt_BR/install.fpm.php
 # Site oficial: https://www.perl.org/
 # Site oficial: https://www.python.org/
 # Site oficial: https://www.phpmyadmin.net/
 #
 # Vídeo de instalação do GNU/Linux Ubuntu Server 18.04.x LTS: https://www.youtube.com/watch?v=zDdCrqNhIXI
+# Vídeo de configuração do OpenSSH Server no GNU/Linux Ubuntu Server 18.04.x LTS: https://www.youtube.com/watch?v=ecuol8Uf1EE
 #
 # Variável da Data Inicial para calcular o tempo de execução do script (VARIÁVEL MELHORADA)
 # opção do comando date: +%T (Time)
@@ -78,8 +91,9 @@ UBUNTU=$(lsb_release -rs)
 KERNEL=$(uname -r | cut -d'.' -f1,2)
 #
 # Variável do caminho do Log dos Script utilizado nesse curso (VARIÁVEL MELHORADA)
-# opções do comando cut: -d (delimiter), -f (fields)
 # $0 (variável de ambiente do nome do comando)
+# opção do comando | (piper): (Conecta a saída padrão com a entrada padrão de outro comando)
+# opções do comando cut: -d (delimiter), -f (fields)
 LOG="/var/log/$(echo $0 | cut -d'/' -f2)"
 #
 # Variáveis de configuração do usuário root e senha do MariaDB para acesso via console e do PhpMyAdmin
@@ -192,7 +206,7 @@ sleep 5
 #
 echo -e "Instalando o LEMP-SERVER, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
-	# opção do comando apt: -y (yes)
+	# opção do comando apt: -y (yes), \ (bar left) quebra de linha na opção do apt
 	apt -y install nginx mariadb-server mariadb-client mariadb-common php-fpm php-mysql \
 	perl python mcrypt apt-transport-https &>> $LOG
 echo -e "Instalação do LEMP-SERVER feito com sucesso!!!, continuando com o script...\n"
@@ -200,7 +214,7 @@ sleep 5
 #
 echo -e "Instalando as dependências do PHP do LEMP-SERVER, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
-	# opção do comando apt: -y (yes)
+	# opção do comando apt: -y (yes), \ (bar left) quebra de linha na opção do apt
 	apt -y install php-curl php-gd php-intl php-mbstring php-soap php-xml php-xmlrpc \
 	php-zip php-cli php-json php-readline php-imagick php-bcmath php-apcu &>> $LOG
 echo -e "Dependências do PHP do LEMP-SERVER feito com sucesso!!!, continuando com o script...\n"
@@ -264,7 +278,7 @@ echo -e "Copiando os arquivos de teste do PHP phpinfo.php e do HTML teste.html, 
 echo -e "Arquivos copiados com sucesso!!!, continuando com o script...\n"
 sleep 5
 #
-echo -e "Instalação do LEMP-Server e PhpMyAdmin feito com sucesso!!! Pressione <Enter> para continuar.\n"
+echo -e "Instalação do LEMP-Server e PhpMyAdmin feito com sucesso!!! Pressione <Enter> para continuar."
 read
 sleep 5
 #
@@ -272,7 +286,7 @@ echo -e "Atualizando os arquivos de configuração do Nginx, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando cp: -v (verbose)
 	cp -v /etc/nginx/nginx.conf /etc/nginx/nginx.conf.old &>> $LOG
-	cp -v conf/nginx.conf /etc/apache2/nginx.conf &>> $LOG
+	cp -v conf/nginx.conf /etc/nginx/nginx.conf &>> $LOG
 	cp -v conf/default /etc/nginx/sites-available/default &>> $LOG
 echo -e "Arquivo atualizado com sucesso!!!, continuando com o script...\n"
 sleep 5
@@ -281,7 +295,7 @@ echo -e "Editando o arquivo de configuração: nginx.conf, Pressione <Enter> par
 	# opção do comando sleep: 3 (seconds)
 	read
 	sleep 3
-	vim /etc/apache2/nginx.conf
+	vim /etc/nginx/nginx.conf
 echo -e "Arquivo editado com sucesso!!!, continuando com o script...\n"
 sleep 5
 #
@@ -293,7 +307,7 @@ echo -e "Editando o arquivo de configuração: default, Pressione <Enter> para c
 echo -e "Arquivo editado com sucesso!!!, continuando com o script...\n"
 sleep 5
 #
-echo -e "Atualizando os arquivos de configuração do PHP, aguarde..."
+echo -e "Atualizando os arquivos de configuração do PHP-FPM, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando cp: -v (verbose)
 	# opção do comando sleep: 3 (seconds)
