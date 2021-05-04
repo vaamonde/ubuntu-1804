@@ -135,60 +135,52 @@ echo -e "Após a instalação do Rocket.Chat acesse a URL: http://`hostname -I |
 echo -e "Aguarde, esse processo demora um pouco dependendo do seu Link de Internet..."
 sleep 5
 #
-#
 echo -e "Adicionando o Repositório Universal do Apt, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	add-apt-repository universe &>> $LOG
-echo -e "Repositório adicionado com sucesso!!!, continuando com o script..."
+echo -e "Repositório adicionado com sucesso!!!, continuando com o script...\n"
 sleep 5
-echo
 #
 echo -e "Adicionando o Repositório Multiversão do Apt, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	add-apt-repository multiverse &>> $LOG
-echo -e "Repositório adicionado com sucesso!!!, continuando com o script..."
+echo -e "Repositório adicionado com sucesso!!!, continuando com o script...\n"
 sleep 5
-echo
 #
 echo -e "Atualizando as listas do Apt, aguarde..."
 	#opção do comando: &>> (redirecionar a saída padrão)
 	apt update &>> $LOG
-echo -e "Listas atualizadas com sucesso!!!, continuando com o script..."
+echo -e "Listas atualizadas com sucesso!!!, continuando com o script...\n"
 sleep 5
-echo
 #
 echo -e "Atualizando o sistema, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando apt: -y (yes)
 	apt -y upgrade &>> $LOG
-echo -e "Sistema atualizado com sucesso!!!, continuando com o script..."
+echo -e "Sistema atualizado com sucesso!!!, continuando com o script...\n"
 sleep 5
-echo
 #
 echo -e "Removendo software desnecessários, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando apt: -y (yes)
 	apt -y autoremove &>> $LOG
-echo -e "Software removidos com sucesso!!!, continuando com o script..."
+echo -e "Software removidos com sucesso!!!, continuando com o script...\n"
 sleep 5
-echo
 #
 echo -e "Instalando o Rocket.Chat, aguarde...\n"
 #
 echo -e "Instalando o Rocket.Chat utilizando o Snap, aguarde..."
 	# opção do comando: &>> (redirecionar a saida padrão)
 	snap install rocketchat-server &>> $LOG
-echo -e "Rocket.chat instalado com sucesso!!!, continuando com o script..."
+echo -e "Rocket.chat instalado com sucesso!!!, continuando com o script...\n"
 sleep 5
-echo
 #
 echo -e "Verificando as portas de conexão do Rocket.Chat e do MongoDB, aguarde..."
 	# opção do comando netstat: a (all), n (numeric)
 	# opção do comando grep: \| (função OU)
 	netstat -an | grep '3000\|27017'
-echo -e "Portas verificadas com sucesso!!!, continuando com o script..."
+echo -e "Portas verificadas com sucesso!!!, continuando com o script...\n"
 sleep 5
-echo
 #
 echo -e "Instalação do Rocket.Chat feita com Sucesso!!!."
 	# script para calcular o tempo gasto (SCRIPT MELHORADO, CORRIGIDO FALHA DE HORA:MINUTO:SEGUNDOS)

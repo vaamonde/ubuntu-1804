@@ -503,13 +503,27 @@ Link da vídeo aula: https://www.youtube.com/watch?v=gboutNXHUus
 
 Link do script utilizado nesse vídeo: https://github.com/vaamonde/ubuntu-1804/blob/master/openproject.sh
 
+## **COMO instalar o LEMP Server no GNU/Linux Ubuntu Server 18.04.x LTS**
+
+Vídeo mostrando os procedimentos básicos para instalar o LEMP Server GNU/Linux Ubuntu Server 18.04 LTS
+
+O LEMP é o acrônimo para Linux + Nginx + MariaDB + PHP, é um dos principais serviços de hospedagem de páginas de internet utilizado em todo mundo, sua instalação e simples, fácil, rápida e seguro, podendo montar um estrutura de servidores de hospedagem interna ou externa.
+
+[![LEMP-SERVER](http://img.youtube.com/vi/9QJeJ18Y6Pw/0.jpg)](http://www.youtube.com/watch?v=9QJeJ18Y6Pw "LEMP-SERVER")
+
+Link da vídeo aula: https://www.youtube.com/watch?v=9QJeJ18Y6Pw&t
+
+Link do script utilizado nesse vídeo: https://github.com/vaamonde/ubuntu-1804/blob/master/lemp.sh
+
 ## **COMO instalar o WEKAN no GNU/Linux Ubuntu Server 18.04.x LTS**
 
 Vídeo mostrando os procedimentos básicos para instalar o Wekan no GNU/Linux Ubuntu Server 18.04 LTS
 
 O Wekan é um quadro Kanban de código aberto que permite criar tarefas baseadas em cartões e gerenciamento de pendências. Wekan permite criar tabuleiros nos quais os cartões podem ser movidos entre várias Colunas. Os tarefas podem ter vários membros simultâneos, o que facilita a colaboração. Você pode atribuir etiquetas coloridas aos cartões para facilitar o agrupamento e a filtragem; além disso, você pode adicionar membros a um cartão, por exemplo, atribuir uma tarefa a alguém.
 
-Link da vídeo aula: 
+[![WEKAN Kanban](http://img.youtube.com/vi/6wl4KQkWIg8/0.jpg)](http://www.youtube.com/watch?v=6wl4KQkWIg8 "WEKAN Kanban")
+
+Link da vídeo aula: https://www.youtube.com/watch?v=6wl4KQkWIg8
 
 Link do script utilizado nesse vídeo: https://github.com/vaamonde/ubuntu-1804/blob/master/wekan.sh
 
@@ -522,13 +536,3 @@ O Rocket.Chat é um servidor de bate-papo na Web, desenvolvido em JavaScript, us
 Link da vídeo aula: 
 
 Link do script utilizado nesse vídeo: https://github.com/vaamonde/ubuntu-1804/blob/master/rocketchat.sh
-
-## **COMO instalar o LEMP Server no GNU/Linux Ubuntu Server 18.04.x LTS**
-
-Vídeo mostrando os procedimentos básicos para instalar o LEMP Server GNU/Linux Ubuntu Server 18.04 LTS
-
-O LEMP é o acrônimo para Linux + Nginx + MariaDB + PHP, é um dos principais serviços de hospedagem de páginas de internet utilizado em todo mundo, sua instalação e simples, fácil, rápida e seguro, podendo montar um estrutura de servidores de hospedagem interna ou externa.
-
-Link da vídeo aula: 
-
-Link do script utilizado nesse vídeo: https://github.com/vaamonde/ubuntu-1804/blob/master/lemp.sh
