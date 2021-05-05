@@ -5,8 +5,8 @@
 # Facebook: facebook.com/BoraParaPratica
 # YouTube: youtube.com/BoraParaPratica
 # Data de criação: 04/08/2020
-# Data de atualização: 27/04/2021
-# Versão: 0.06
+# Data de atualização: 05/05/2021
+# Versão: 0.07
 # Testado e homologado para a versão do Ubuntu Server 18.04.x LTS x64
 # Kernel >= 4.15.x
 # Testado e homologado para a versão do Rocket.Chat 3.9.x e MongoDB 4.x
@@ -41,6 +41,7 @@
 # Download do Rocket.Chat Desktop: https://github.com/RocketChat/Rocket.Chat.Electron/releases/
 #
 # Vídeo de instalação do GNU/Linux Ubuntu Server 18.04.x LTS: https://www.youtube.com/watch?v=zDdCrqNhIXI
+# Vídeo de configuração do OpenSSH Server no GNU/Linux Ubuntu Server 18.04.x LTS: https://www.youtube.com/watch?v=ecuol8Uf1EE
 #
 # Variável da Data Inicial para calcular o tempo de execução do script (VARIÁVEL MELHORADA)
 # opção do comando date: +%T (Time)
@@ -132,7 +133,7 @@ echo -e "Início do script $0 em: `date +%d/%m/%Y-"("%H:%M")"`\n" &>> $LOG
 clear
 echo -e "Instalação do Rocket.Chat no GNU/Linux Ubuntu Server 18.04.x\n"
 echo -e "Após a instalação do Rocket.Chat acesse a URL: http://`hostname -I | cut -d' ' -f1`:3000\n"
-echo -e "Aguarde, esse processo demora um pouco dependendo do seu Link de Internet..."
+echo -e "Aguarde, esse processo demora um pouco dependendo do seu Link de Internet...\n"
 sleep 5
 #
 echo -e "Adicionando o Repositório Universal do Apt, aguarde..."
