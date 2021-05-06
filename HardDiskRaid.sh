@@ -5,8 +5,8 @@
 # Facebook: facebook.com/BoraParaPratica
 # YouTube: youtube.com/BoraParaPratica
 # Data de criação: 14/04/2021
-# Data de atualização: 15/04/2021
-# Versão: 0.01
+# Data de atualização: 06/05/2021
+# Versão: 0.02
 # Testado e homologado para a versão do Ubuntu Server 18.04.x LTS x64
 # Kernel >= 4.15.x
 
@@ -41,63 +41,74 @@
 sudo lshw -class disk
 
 #Verificando os Hard Disk com os comandos: Fdisk, Cfdisk e Parted
+#opção do comando fdisk: -l (list)
+#opção do comando parted: -l (list)
 sudo fdisk -l (sem suporte a GPT somente MBR)
-sudo cfdisk -P s (sem suporte a GPT somente MBR)
 sudo parted -l (com suporte a GPT e MBR)
+sudo cfdisk (sem suporte a GPT somente MBR)
 
-#Verificando os Hard Disk SDC e SDD
-sudo cfdisk -P s /dev/sdc
-sudo cfdisk -P s /dev/sdd
+#Listando os Hard Disk e Partições montadas
+sudo lsblk
 
 #Verificando o UUID (Universally Unique IDentifier) dos Hard Disk
 sudo blkid
 
 #Utilizando o fdisk para criar o particionamento no Hard Disk SDC
-sudo fdisk /dev/sdc
-	n <-- nova partição
-	p <-- primaria
-	1 <-- primeira partição
-		<-- valor do primeiro cilindro DEFAULT
-		<-- valor do cilindro final, tudo DEFAULT
+sudo fdisk /dev/sdb
+	n <-- adicionar uma nova partição
+	p <-- primaria (0 primaria, 0 estendida, 4 livres)
+	1 <-- primeira partição (1-4, padrão 1)
+		<-- valor do primeiro cilindro (padrão 2048)
+		<-- valor do último cilindro (padrão tudo alocado)
 	p <-- imprime na tela o particionamento
 	t <-- mudar o tipo de partição
-		<-- fd RAID auto-configuração
+		<-- fd Linux RAID auto-detecção (valor em Hexadecimal)
+	p <-- imprime na tela o particionamento
 	w <-- sair e gravar as informações de partição
 
 #Utilizando o fdisk para criar o particionamento no Hard Disk SDD
-sudo fdisk /dev/sdd
-	n <-- nova partição
-	p <-- primaria
-	1 <-- primeira partição
-		<-- valor do primeiro cilindro DEFAULT
-		<-- valor do cilindro final, tudo DEFAULT
+sudo fdisk /dev/sdc
+	n <-- adicionar uma nova partição
+	p <-- primaria (0 primaria, 0 estendida, 4 livres)
+	1 <-- primeira partição (1-4, padrão 1)
+		<-- valor do primeiro cilindro (padrão 2048)
+		<-- valor do último cilindro (padrão tudo alocado)
 	p <-- imprime na tela o particionamento
 	t <-- mudar o tipo de partição
-		<-- fd RAID auto-configuração
+		<-- fd Linux RAID auto-detecção (valor em Hexadecimal)
+	p <-- imprime na tela o particionamento
 	w <-- sair e gravar as informações de partição
 
 #Listando o conteúdo do diretório: /dev/ para verificar os arquivos de bloco dos Hard Disk
-sudo ls -lha /dev/s*
+#opções do comando ls: -l (long listing), -h (--human-readable), -a (--all)
+sudo ls -lha /dev/sd*
 
 #Criando o RAID-1 com os Hard Disk SDC e SDD utilizando o mdadm
 #Opção do comando mdadm: -C (create), -v (verbose), -l (level), -n (raid-devices)
-sudo mdadm -C -v /dev/md1 -l 1 -n 2 /dev/sdc1 /dev/sdd1
+#opções do comando ls: -l (long listing), -h (--human-readable), -a (--all)
+sudo mdadm -C -v /dev/md1 -l 1 -n 2 /dev/sdb1 /dev/sdc1
+	Continue creating array? y <Enter>
+sudo ls -lha /dev/md*
 
 #Criando o sistema de arquivos EXT4 no RAID-1 MD1
-sudo mkfs.ext4 /dev/md1
+#opção do comando mkfs.ext4: -v (verbose)
+sudo mkfs.ext4 -v /dev/md1
 
 #Verificando o RAID-1 criado no MD1
 #Opção do comado mdadm: -D (--detail), -E (--examine)
 sudo cat /proc/mdstat
 sudo mdadm -D /dev/md1
+sudo mdadm -E /dev/sdb1
 sudo mdadm -E /dev/sdc1
-sudo watch cat /proc/mdstat
 
 #Verificando os detalhes dos RAID-1
-sudo mdadm --detail --scan
+#Opção do comado mdadm: -D (--detail), -s (--scan)
+sudo mdadm -D -s
 
-#Atualizando o arquivo /etc/mdadm/mdadm.conf
-sudo mdadm --detail --scan | grep /1 >> /etc/mdadm/mdadm.conf
+#Atualizando o arquivo de configuração do RAID-1 /etc/mdadm/mdadm.conf
+#Opção do comado mdadm: -D (--detail), -s (--scan)
+#opção do redirecionador >>: (Redireciona a saída padrão, anexando)
+sudo mdadm -D -s >> /etc/mdadm/mdadm.conf
 
 #Editando o arquivo mdadm.conf
 sudo vim /etc/mdadm/mdadm.conf
@@ -110,11 +121,17 @@ sudo update-initramfs -u
 sudo reboot
 
 #Montando o disco do RAID-1 manualmente com o comando mount
+#opção do comando mkdir: -v (verbose)
+#opção do comando mount: -v (verbose), -l (list)
+#opção do bloco de agrupamento {}: (Agrupa comandos em um bloco)
+#opções do comando ls: -l (long listing), -h (--human-readable), -a (--all)
+#opção do redirecionamento |: (Conecta a saída padrão com a entrada padrão de outro comando)
 sudo mkdir -v /arquivos
-sudo mount /dev/md1 /arquivos
+sudo mount -v /dev/md1 /arquivos
 sudo mount -l | grep /arquivos
 sudo cd /arquivos
 sudo mkdir -v teste{1..9}
+sudo touch teste{1..9}.txt
 sudo ls -lha
 sudo cd /
 sudo umount /arquivos

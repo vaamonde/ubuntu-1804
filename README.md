@@ -533,6 +533,8 @@ Vídeo mostrando os procedimentos básicos para instalar o Rocket.Chat no GNU/Li
 
 O Rocket.Chat é um servidor de bate-papo na Web, desenvolvido em JavaScript, usando a estrutura de pilha completa do Meteor. É uma ótima solução para comunidades e empresas que desejam hospedar seu próprio serviço de bate-papo em particular ou para desenvolvedores que desejam criar e evoluir suas próprias plataformas de bate-papo.
 
-Link da vídeo aula: 
+[![Rocket.Chat](http://img.youtube.com/vi/5mpJQxLIza8/0.jpg)](http://www.youtube.com/watch?v=5mpJQxLIza8 "Rocket.Chat")
+
+Link da vídeo aula: https://www.youtube.com/watch?v=5mpJQxLIza8
 
 Link do script utilizado nesse vídeo: https://github.com/vaamonde/ubuntu-1804/blob/master/rocketchat.sh
