@@ -247,7 +247,6 @@ sleep 5
 echo -e "Instalação das Dependências do PERL, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando apt: -y (yes)
-	# pacotes em análise: libsys-syslog-perl libphp-pclzip libnet-ping-external-perl
 	apt -y install libc6-dev libcompress-raw-zlib-perl libwww-perl libdigest-md5-file-perl \
 	libnet-ssleay-perl libcrypt-ssleay-perl libnet-snmp-perl libproc-pid-file-perl libproc-daemon-perl \
 	libarchive-zip-perl libnet-cups-perl libmysqlclient-dev libapache2-mod-perl2 \
@@ -328,7 +327,14 @@ echo -e "Instalação das dependências do Perl Net::Ping via CPAN, aguarde..."
 	perl -MCPAN -e 'install Net::Ping' &>> $LOG
 echo -e "Instalação concluída com sucesso!!!, continuando com o script...\n"
 sleep 5
-#			
+#
+echo -e "Instalação das dependências do Perl Net::Ping::External via CPAN, aguarde..."
+	# opção do comando: &>> (redirecionar a saída padrão)
+	# opção do comando perl: -e (single line command)
+	perl -MCPAN -e 'install Net::Ping::External' &>> $LOG
+echo -e "Instalação concluída com sucesso!!!, continuando com o script...\n"
+sleep 5
+#
 echo -e "Instalação das dependências do LWP::UserAgent::Cached via CPAN, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando perl: -e (single line command)
@@ -336,7 +342,7 @@ echo -e "Instalação das dependências do LWP::UserAgent::Cached via CPAN, agua
 	perl -MCPAN -e 'install LWP::UserAgent::Cached' &>> $LOG
 echo -e "Instalação concluída com sucesso!!!, continuando com o script...\n"
 sleep 5
-#				
+#
 echo -e "Instalação das dependências do Mac::SysProfile via CPAN, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando perl: -e (single line command)
@@ -355,6 +361,13 @@ echo -e "Instalação das dependências do NetSNMP::OID via CPAN, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando perl: -e (single line command)
 	perl -MCPAN -e 'install NetSNMP::OID' &>> $LOG
+echo -e "Instalação concluída com sucesso!!!, continuando com o script...\n"
+sleep 5
+#
+echo -e "Instalação das dependências do Sys::Syslog via CPAN, aguarde..."
+	# opção do comando: &>> (redirecionar a saída padrão)
+	# opção do comando perl: -e (single line command)
+	perl -MCPAN -e 'install Sys::Syslog' &>> $LOG
 echo -e "Instalação concluída com sucesso!!!, continuando com o script...\n"
 sleep 5
 #
