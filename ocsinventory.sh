@@ -33,7 +33,7 @@
 # 12. Where to put Communication server plugins configuration files [/etc/ocsinventory-server/plugins]? Deixe o padrão pressione <Enter>;
 # 13. Where to put Communication server plugins Perl modules files [/etc/ocsinventory-server/perl]? Deixe o padrão pressione <Enter>;
 # 14. Do you wish to setup Rest API server on this computer ([y]/n)? y <-- digite y pressione <Enter>;
-# 15. Where do you want the API code to be store [/usr/local/share/perl/5.22.1]? Deixe o padrão pressione <Enter>;
+# 15. Where do you want the API code to be store [/usr/local/share/perl/5.26.1]? Deixe o padrão pressione <Enter>;
 # 16. Do you allow Setup renaming Communication Server Apache configuration file to 'z-ocsinventory-server.conf' ([y]/n)?: y <-- digite y pressione <Enter>;
 # 17. Do you wish to setup Administration Server (Web Administration Console) on this computer ([y]/n)?: y <-- digite y pressione <Enter>;
 # 18. Do you wish to continue ([y]/n)?: y <-- digite y pressione <Enter>;
@@ -47,10 +47,16 @@
 # 04. MySQL HostName: localhost (servidor local do MySQL)
 # 05. MySQL Port: 3306 (porta padrão do MySQL)
 # 06. Enable SSL: no
+# 07. SSL mode: default
+# 08. SSL key path: default
+# 09. SSL certificate path: default
+# 10. CA certificate path: default
+# 11. Perform the update
 #
 # USUÁRIO E SENHA PADRÃO DO OCS INVENTORY SERVER E REPORTS: 
-# USER=admin
-# PASSWORD=admin
+# LANGUADE: English
+# USER: admin
+# PASSWORD: admin
 #
 # MENSAGENS QUE SERÃO SOLICITADAS NA INSTALAÇÃO DO OCS INVENTORY AGENT:
 # 01: Please enter 'y' or 'n'?> [y] <-- pressione <Enter>
@@ -67,7 +73,7 @@
 # 12: Should I remove the old linux_agent? <-- pressione <Enter>
 # 13: Do you want to activate debug configuration option? <-- pressione <Enter>
 # 14: Do you want to use OCS Inventory NG Unix Unified agent log file? <-- pressione <Enter>
-# 15: Specify log file path you want to use?> digite: /var/log/ocsinventory-agent/activity.log, pressione <Enter>
+# 15: Specify log file path you want to use?> digite: /var/log/ocsinventory-agent/ocsagent.log, pressione <Enter>
 # 16: Do you want disable SSL CA verification configuration option (not recommended)? digite: y, pressione <Enter>
 # 17: Do you want to set CA certificate chain file path? digite: n, pressione <Enter>
 # 18: Do you want to use OCS-Inventory software deployment feature? <-- pressione <Enter>
@@ -407,7 +413,7 @@ sleep 5
 #
 echo -e "ANTES DE CONTINUAR COM O SCRIPT ACESSE A URL: http://`hostname -I | cut -d' ' -f1`/ocsreports"
 echo -e "PARA FINALIZAR A CONFIGURAÇÃO VIA WEB DO OCS INVENTORY SERVER E REPORTS, APÓS A CONFIGURAÇÃO"
-echo -e "PRESSIONE <ENTER> PARA CONTINUAR COM O SCRIPT. MAIS INFORMAÇÕES NA LINHA 43 DO SCRIPT $0"
+echo -e "PRESSIONE <ENTER> PARA CONTINUAR COM O SCRIPT. MAIS INFORMAÇÕES NA LINHA 56 DO SCRIPT $0"
 read
 sleep 5
 #
@@ -426,7 +432,7 @@ echo -e "Removendo o arquivo install.php do OCS Inventory Reports, aguarde..."
 echo -e "Arquivo removido com sucesso!!!, continuando com o script...\n"
 sleep 5
 #
-echo -e "Atualizando os arquivos de configuração do OCS Inventory Server e Reports, aguarde...\n"
+echo -e "Atualizando os arquivos de configuração do OCS Inventory Server e Reports, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando mv: -v (verbose)
 	# opção do comando cp: -v (verbose)
@@ -480,19 +486,19 @@ sleep 5
 #
 echo -e "ANTES DE CONTINUAR COM O SCRIPT ACESSE A URL: http://`hostname -I | cut -d' ' -f1`/ocsreports"
 echo -e "PARA CONFIRMAS AS ATUALIZAÇÕES VIA WEB DO OCS INVENTORY SERVER E REPORTS, APÓS A CONFIRMAÇÃO"
-echo -e "PRESSIONE <ENTER> PARA CONTINUAR COM O SCRIPT. MAIS INFORMAÇÕES NA LINHA 43 DO SCRIPT $0"
+echo -e "PRESSIONE <ENTER> PARA CONTINUAR COM O SCRIPT. MAIS INFORMAÇÕES NA LINHA 56 DO SCRIPT $0"
 read
 sleep 5
 #
 echo -e "Instalando o OCS Inventory Agent, pressione <Enter> para instalar."
 echo -e "CUIDADO!!! com as opções que serão solicitadas no decorrer da instalação do OCS Inventory Agent."
-echo -e "Veja a documentação das opções de instalação a partir da linha: 55 do arquivo $0"
+echo -e "Veja a documentação das opções de instalação a partir da linha: 61 do arquivo $0"
 	read
 	sleep 2
 	#Executando a instalação do OCS Inventory Agent
 	# opção do comando mkdir: -v (verbose)
 	mkdir -v /var/log/ocsinventory-agent/ &>> $LOG
-	touch /var/log/ocsinventory-agent/activity.log &>> $LOG
+	touch /var/log/ocsinventory-agent/ocsagent.log &>> $LOG
 	cd Ocsinventory-Unix-Agent-*
 	perl Makefile.PL &>> $LOG
 	make &>> $LOG
@@ -509,7 +515,7 @@ echo -e "Atualizando os arquivos de configuração do OCS Inventory Agent, aguar
 	cp -v conf/ocsinventory-agent.cfg /etc/ocsinventory-agent/ &>> $LOG
 	mv -v /etc/ocsinventory-agent/modules.conf /etc/ocsinventory-agent/modules.conf.bkp &>> $LOG
 	cp -v conf/modules.conf /etc/ocsinventory-agent/ &>> $LOG
-	cp -v conf/ocsinventory-agent-cron /etc/cron.d/ocsinventory-agent &>> $LOG
+	cp -v conf/ocsinventory-agent /etc/cron.d/ocsinventory-agent &>> $LOG
 echo -e "Arquivos atualizados com sucesso!!!, continuando com o script...\n"
 sleep 5
 #
