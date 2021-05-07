@@ -5,8 +5,8 @@
 # Facebook: facebook.com/BoraParaPratica
 # YouTube: youtube.com/BoraParaPratica
 # Data de criação: 04/11/2018
-# Data de atualização: 06/04/2021
-# Versão: 0.12
+# Data de atualização: 07/05/2021
+# Versão: 0.13
 # Testado e homologado para a versão do Ubuntu Server 18.04.x LTS x64
 # Kernel >= 4.15.x
 # Testado e homologado para a versão do Apache2 2.4.x, MySQL 5.7.x, PHP 7.2.x, Perl 5.26.x, Python 2.x e 3.x, PhpMyAdmin 4.6.x
@@ -192,8 +192,8 @@ echo
 echo -e "Configurando as variáveis do Debconf do MySQL para o Apt, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando | (piper): (Conecta a saída padrão com a entrada padrão de outro comando)
-	echo "mysql-server-5.7 mysql-server/root_password password $PASSWORD" |  debconf-set-selections
-	echo "mysql-server-5.7 mysql-server/root_password_again password $AGAIN" |  debconf-set-selections
+	echo "mysql-server-5.7 mysql-server/root_password password $PASSWORD" | debconf-set-selections
+	echo "mysql-server-5.7 mysql-server/root_password_again password $AGAIN" | debconf-set-selections
 	debconf-show mysql-server-5.7 &>> $LOG
 echo -e "Variáveis configuradas com sucesso!!!, continuando com o script..."
 sleep 5
@@ -211,13 +211,13 @@ echo
 echo -e "Configurando as variáveis do Debconf do PhpMyAdmin para o Apt, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando | (piper): (Conecta a saída padrão com a entrada padrão de outro comando)
-	echo "phpmyadmin phpmyadmin/internal/skip-preseed boolean true" |  debconf-set-selections
-	echo "phpmyadmin phpmyadmin/dbconfig-install boolean true" |  debconf-set-selections
-	echo "phpmyadmin phpmyadmin/app-password-confirm password $APP_PASSWORD" |  debconf-set-selections
-	echo "phpmyadmin phpmyadmin/reconfigure-webserver multiselect $WEBSERVER" |  debconf-set-selections
-	echo "phpmyadmin phpmyadmin/mysql/admin-user string $ADMINUSER" |  debconf-set-selections
-	echo "phpmyadmin phpmyadmin/mysql/admin-pass password $ADMIN_PASS" |  debconf-set-selections
-	echo "phpmyadmin phpmyadmin/mysql/app-pass password $APP_PASS" |  debconf-set-selections
+	echo "phpmyadmin phpmyadmin/internal/skip-preseed boolean true" | debconf-set-selections
+	echo "phpmyadmin phpmyadmin/dbconfig-install boolean true" | debconf-set-selections
+	echo "phpmyadmin phpmyadmin/app-password-confirm password $APP_PASSWORD" | debconf-set-selections
+	echo "phpmyadmin phpmyadmin/reconfigure-webserver multiselect $WEBSERVER" | debconf-set-selections
+	echo "phpmyadmin phpmyadmin/mysql/admin-user string $ADMINUSER" | debconf-set-selections
+	echo "phpmyadmin phpmyadmin/mysql/admin-pass password $ADMIN_PASS" | debconf-set-selections
+	echo "phpmyadmin phpmyadmin/mysql/app-pass password $APP_PASS" | debconf-set-selections
 	debconf-show phpmyadmin &>> $LOG
 echo -e "Variáveis configuradas com sucesso!!!, continuando com o script..."
 sleep 5
@@ -236,8 +236,8 @@ echo -e "Atualizando as dependências do PHP para o PhpMyAdmin, aguarde..."
 	# opção do comando echo: | = (faz a função de Enter)
 	# opção do comando cp: -v (verbose)
 	pecl channel-update pecl.php.net &>> $LOG
-	echo | pecl install mcrypt-1.0.1 &>> $LOG
-	cp -v conf/mcrypt.ini /etc/php/7.2/mods-available/ &>> $LOG
+		echo | pecl install mcrypt-1.0.1 &>> $LOG
+		cp -v conf/mcrypt.ini /etc/php/7.2/mods-available/ &>> $LOG
 	phpenmod mcrypt &>> $LOG
 	phpenmod mbstring &>> $LOG
 echo -e "Atualização das dependências feita com sucesso!!!, continuando com o script..."

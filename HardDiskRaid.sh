@@ -9,7 +9,14 @@
 # Versão: 0.02
 # Testado e homologado para a versão do Ubuntu Server 18.04.x LTS x64
 # Kernel >= 4.15.x
-
+#
+#RAID foi originalmente denominado de "Redundant Array of Inexpensive Drives" (Conjunto Redundante 
+#de Discos Baratos). Com o tempo, numa tentativa de dissociar o conceito de "discos baratos", a 
+#indústria reviu o acrônimo para "Redundant Array of Independent Disks" (Conjunto Redundante de 
+#Discos Independentes). RAID é um meio de se criar um subsistema de armazenamento composto por 
+#vários discos individuais, com a finalidade de ganhar segurança -- por meio da redundância de 
+#dados e desempenho.
+#
 #Fdisk: é um programa orientado a menus para criação e manipulação de tabelas de partição, ele 
 #compreende tabelas de partição do tipo DOS e etiquetas de disco do tipo BSD ou SUN. O fdisk 
 #não entende GPTs (tabelas de partição GUID) e não foi projetado para partições grandes, nesses 
@@ -137,5 +144,7 @@ sudo cd /
 sudo umount /arquivos
 sudo mount -l | grep /arquivos
 
-#Configurando a montagem automática do RAID-1 no arquivo Fstab
+#Configurando o ponto de montagem automático do RAID-1 no arquivo Fstab
 sudo vim /etc/fstab
+	#<file system>	<mount point>	<type>	<options>	<dump>	<pass>
+	/dev/md1		/arquivos   	ext4	defaults	   0	   2

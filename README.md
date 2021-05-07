@@ -121,6 +121,26 @@ Link da vídeo aula: https://www.youtube.com/watch?v=laiuH1zgg3U&t
 
 Link do script utilizado nesse vídeo: https://github.com/vaamonde/ubuntu-1804/blob/master/LocaleTimezoneKeyboard.sh 
 
+## **COMO configurar o RAID-1 no GNU/Linux Ubuntu Server 18.04.x LTS**
+
+Vídeo mostrando os procedimentos básicos para adicionar, particionar, formatar, montar e configurar o RAID (Redundant Array of Inexpensive Drives) 1 (Espelhamento) no GNU/Linux Ubuntu Server 18.04.x LTS
+
+Link da vídeo aula: 
+
+Link do script utilizado nesse vídeo: https://github.com/vaamonde/ubuntu-1804/blob/master/HardDiskRaid.sh
+
+## **COMO configurar o BONDING no GNU/Linux Ubuntu Server 18.04.x LTS**
+
+Vídeo mostrando os procedimentos básicos para configurar a alta disponibilidade das interfaces de rede (placa de rede) em modo Bonding (união) no GNU/Linux Ubuntu Server 18.04.x LTS
+
+Network Interface Bonding é um mecanismo usado em servidores Linux que consiste em vincular mais interfaces de rede físicas a fim de fornecer mais largura de banda do que uma única interface pode fornecer ou fornecer redundância de link em caso de falha de cabo. Este tipo de redundância de link possui vários nomes no Linux, como Bonding, Teaming ou Link Aggregation Groups (LAG).
+
+Na versão 18.04.x as configurações de Placa de Rede não fica mais no arquivo /etc/network/interfaces, hoje o projeto utiliza o software Netplan para fazer as configurações de rede.
+
+Link da vídeo aula: 
+
+Link do script utilizado nesse vídeo: https://github.com/vaamonde/ubuntu-1804/blob/master/Netplan.sh
+
 ## **COMO fazer SNAPSHOTS no VIRTUALBOX do Curso de GNU/Linux Ubuntu Server 18.04.x LTS**
 
 Vídeo mostrando os procedimentos básicos para criar o Snapshot da Máquina Virtual do Oracle do VirtualBOX do Servidor GNU/Linux Ubuntu Server 18.04.x LTS, esse recurso é importante, pois se tiver alguma falha você consegue voltar a imagens anterior se perder todos os procedimentos executados anteriormente.

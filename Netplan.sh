@@ -5,8 +5,8 @@
 # Facebook: facebook.com/BoraParaPratica
 # YouTube: youtube.com/BoraParaPratica
 # Data de criação: 22/07/2020
-# Data de atualização: 14/04/2021
-# Versão: 0.03
+# Data de atualização: 06/05/2021
+# Versão: 0.04
 # Testado e homologado para a versão do Ubuntu Server 18.04.x LTS x64
 # Kernel >= 4.15.x
 
@@ -56,7 +56,7 @@ cd /etc/netplan/
 #Instalando as dependências das Interfaces
 sudo apt install bridge-utils ifenslave
 
-#Arquivo de configurações da placa de rede
+#Arquivos de configurações da placa de rede
 /etc/netplan/50-cloud-init.yaml
 /etc/netplan/00-installer-config.yaml
 
@@ -67,10 +67,11 @@ network:
 			dhcp4: true
 	version: 2
 	
-#Aplicando as configurações
+#Aplicando as configurações e verificando os status
 sudo netplan --debug apply
 sudo netplan ip leases enp0s3
 sudo systemd-resolve --status
+sudo ifconfig enp0s3
 
 #Configuração do endereçamento IPv4 Static (Estático)
 network:
@@ -84,9 +85,10 @@ network:
 				search: [pti.intra]
 	version: 2
 
-#Aplicando as configurações
+#Aplicando as configurações e verificando os status
 sudo netplan --debug apply
 sudo systemd-resolve --status
+sudo ifconfig enp0s3
 
 #Configuração do endereçamento IPv4 Static (Estático)
 network:
@@ -105,10 +107,11 @@ network:
 				- pti.intra
 	version: 2
 
-#Aplicando as configurações
+#Aplicando as configurações e verificando os status
 sudo netplan --debug apply
 sudo systemd-resolve --status
-	
+sudo ifconfig enp0s3
+
 #Configurações de múltiplos endereços IP
 network:
 	ethernets:
@@ -128,9 +131,10 @@ network:
 				- pti.intra
 	version: 2
 
-#Aplicando as configurações
+#Aplicando as configurações e verificando os status
 sudo netplan --debug apply
 sudo systemd-resolve --status
+sudo ifconfig enp0s3
 
 #Configurações de múltiplos endereços de gateway
 network:
@@ -160,11 +164,12 @@ network:
          		metric: 100
 	version: 2
 
-#Aplicando as configurações
+#Aplicando as configurações e verificando os status
 sudo netplan --debug apply
 sudo systemd-resolve --status
+sudo ifconfig enp0s3
 
-#Configurações de bonds 802.3d:
+#Configurações de bonds 802.3d com interface dinâmica
 network:
 	bonds:
 		bond0:
@@ -177,22 +182,29 @@ network:
 				primary: enp3s0
 	version: 2
 
+#Aplicando as configurações e verificando os status
+sudo netplan --debug apply
+sudo systemd-resolve --status
+sudo ifconfig bond0
+
+#Configurações de bonds 802.3d com interface estática
 network:
 	bonds:
 		bond0:
+			dhcp4: false
 			addresses: [192.168.0.8/24]
 			gateway4: 192.168.0.1
 			nameservers:
 				addresses: [8.8.8.8,8.8.4.4]
 			interfaces:
-			- enp5s4
-			- enp5s9
-			- enp64s0
+				- enp3s0
+				- enp4s0
 	version: 2
 
-#Aplicando as configurações
+#Aplicando as configurações e verificando os status
 sudo netplan --debug apply
 sudo systemd-resolve --status
+sudo ifconfig bond0
 
 #Configurações de bridges:
 network:
@@ -207,11 +219,12 @@ network:
 			- enp1s0
 	version: 2
 
-#Aplicando as configurações
+#Aplicando as configurações e verificando os status
 sudo netplan --debug apply
 sudo systemd-resolve --status
+sudo ifconfig br0
 
-#Configurações de vlans:
+#Configurações de vlans: 
 network:
 	vlans:
         inet:
@@ -224,7 +237,7 @@ network:
                 addresses: [X.X.X.33]
 	version: 2
 
-#Aplicando as configurações
+#Aplicando as configurações e verificando os status
 sudo netplan --debug apply
 sudo systemd-resolve --status
 
@@ -243,6 +256,7 @@ network:
 			password: "pti@2018"
 	version: 2
 
-#Aplicando as configurações
+#Aplicando as configurações e verificando os status
 sudo netplan --debug apply
 sudo systemd-resolve --status
+sudo ifconfig wlp2s0b1
