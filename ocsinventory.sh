@@ -241,6 +241,7 @@ sleep 5
 echo -e "Instalação das Dependências do PERL, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando apt: -y (yes)
+	# pacotes em análise: libsys-syslog-perl libphp-pclzip libnet-ping-external-perl
 	apt -y install libc6-dev libcompress-raw-zlib-perl libwww-perl libdigest-md5-file-perl \
 	libnet-ssleay-perl libcrypt-ssleay-perl libnet-snmp-perl libproc-pid-file-perl libproc-daemon-perl \
 	libarchive-zip-perl libnet-cups-perl libphp-pclzip libmysqlclient-dev libapache2-mod-perl2 \
