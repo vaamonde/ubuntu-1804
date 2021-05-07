@@ -244,7 +244,7 @@ echo -e "Instalação das Dependências do PERL, aguarde..."
 	# pacotes em análise: libsys-syslog-perl libphp-pclzip libnet-ping-external-perl
 	apt -y install libc6-dev libcompress-raw-zlib-perl libwww-perl libdigest-md5-file-perl \
 	libnet-ssleay-perl libcrypt-ssleay-perl libnet-snmp-perl libproc-pid-file-perl libproc-daemon-perl \
-	libarchive-zip-perl libnet-cups-perl libphp-pclzip libmysqlclient-dev libapache2-mod-perl2 \
+	libarchive-zip-perl libnet-cups-perl libmysqlclient-dev libapache2-mod-perl2 \
 	libapache2-mod-php libnet-netmask-perl libio-compress-perl libxml-simple-perl libdbi-perl \
 	libdbd-mysql-perl libapache-dbi-perl libsoap-lite-perl libnet-ip-perl libmodule-build-perl \
 	libmodule-install-perl libfile-which-perl libfile-copy-recursive-perl libuniversal-require-perl \
@@ -255,8 +255,8 @@ echo -e "Instalação das Dependências do PERL, aguarde..."
 	libsocket-getaddrinfo-perl libcrypt-des-perl libnet-nbname-perl libyaml-perl libyaml-shell-perl \
 	libyaml-libyaml-perl libdata-structure-util-perl liblwp-useragent-determined-perl libio-socket-ssl-perl \
 	libdatetime-perl libthread-queue-any-perl libnet-write-perl libarchive-extract-perl libjson-pp-perl \
-	liburi-escape-xs-perl liblwp-protocol-https-perl libnet-ping-external-perl libnmap-parser-perl \
-	libmojolicious-perl libswitch-perl libplack-perl liblwp-useragent-determined-perl libsys-syslog-perl \
+	liburi-escape-xs-perl liblwp-protocol-https-perl libnmap-parser-perl \
+	libmojolicious-perl libswitch-perl libplack-perl liblwp-useragent-determined-perl \
 	libdigest-hmac-perl libossp-uuid-perl libperl-dev libsnmp-perl libsnmp-dev libsoap-lite-perl &>> $LOG
 echo -e "Instalação das Dependências feito com sucesso!!!, continuando com o script...\n"
 sleep 5
