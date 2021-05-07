@@ -454,33 +454,32 @@ sleep 5
 #
 echo -e "Editando o arquivo: z-ocsinventory-server.conf, pressione <Enter> para continuar."
 	read
-	sleep 5
 	vim /etc/apache2/conf-available/z-ocsinventory-server.conf
 echo -e "Arquivo editado com sucesso, continuando com o script...\n"
+sleep 5
 #
 echo -e "Editando o arquivo: zz-ocsinventory-restapi.conf, pressione <Enter> para continuar."
 	read
-	sleep 5
 	vim /etc/apache2/conf-available/zz-ocsinventory-restapi.conf
 echo -e "Arquivo editado com sucesso, continuando com o script...\n"
+sleep 5
 #
 echo -e "Editando o arquivo: ocsinventory-reports.conf, pressione <Enter> para continuar."
 	read
-	sleep 5
 	vim /etc/apache2/conf-available/ocsinventory-reports.conf
 echo -e "Arquivo editado com sucesso, continuando com o script...\n"
+sleep 5
 #
 echo -e "Editando o arquivo: dbconfig.inc.php, pressione <Enter> para continuar."
 	read
-	sleep 5
 	vim /usr/share/ocsinventory-reports/ocsreports/dbconfig.inc.php
 echo -e "Arquivo editado com sucesso, continuando com o script...\n"
+sleep 5
 #
 echo -e "Editando o arquivo: ocsinventory-server, pressione <Enter> para continuar."
 	read
-	sleep 5
 	vim /etc/logrotate.d/ocsinventory-server
-	systemctl restart apache2
+	systemctl restart apache2 &>> $LOG
 echo -e "Arquivo editado com sucesso, continuando com o script...\n"
 sleep 5
 #
@@ -497,12 +496,14 @@ echo -e "Veja a documentação das opções de instalação a partir da linha: 6
 	sleep 2
 	#Executando a instalação do OCS Inventory Agent
 	# opção do comando mkdir: -v (verbose)
+	# opção do comando cd: .. (retorne to root folder)
 	mkdir -v /var/log/ocsinventory-agent/ &>> $LOG
 	touch /var/log/ocsinventory-agent/ocsagent.log &>> $LOG
 	cd Ocsinventory-Unix-Agent-*
 	perl Makefile.PL &>> $LOG
 	make &>> $LOG
 	make install
+	cd ..
 echo
 echo -e "Instalação do OCS Inventory Agent feito com sucesso!!!, continuando com o script...\n"
 sleep 5
@@ -524,19 +525,18 @@ sleep 5
 #
 echo -e "Editando o arquivo: ocsinventory-agent.cfg, pressione <Enter> para continuar."
 	read
-	sleep 5
 	vim /etc/ocsinventory-agent/ocsinventory-agent.cfg
 echo -e "Arquivo editado com sucesso, continuando com o script...\n"
+sleep 5
 #
 echo -e "Editando o arquivo: modules.conf, pressione <Enter> para continuar."
 	read
-	sleep 5
 	vim /etc/ocsinventory-agent/modules.conf
 echo -e "Arquivo editado com sucesso, continuando com o script...\n"
+sleep 5
 #
 echo -e "Editando o arquivo: ocsinventory-agent-cron, pressione <Enter> para continuar."
 	read
-	sleep 5
 	vim /etc/cron.d/ocsinventory-agent
 echo -e "Arquivo editado com sucesso, continuando com o script...\n"
 sleep 5
