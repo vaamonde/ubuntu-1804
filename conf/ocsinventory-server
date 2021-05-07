@@ -1,0 +1,9 @@
+# Rotate OCS Inventory NG Communication server logs daily
+# Save 7 days old logs in compressed mode
+/var/log/ocsinventory-server/*.log {
+	daily
+	rotate 7
+	compress
+	delaycompress
+	missingok
+}
