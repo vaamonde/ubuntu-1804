@@ -558,3 +558,13 @@ O Rocket.Chat é um servidor de bate-papo na Web, desenvolvido em JavaScript, us
 Link da vídeo aula: https://www.youtube.com/watch?v=5mpJQxLIza8
 
 Link do script utilizado nesse vídeo: https://github.com/vaamonde/ubuntu-1804/blob/master/rocketchat.sh
+
+## **COMO instalar o OCS INVENTORY SERVER e AGENT no GNU/Linux Ubuntu Server 18.04.x LTS**
+
+Vídeo mostrando os procedimentos básicos para instalar o OCS Inventory Server/Reports e Agent no GNU/Linux Ubuntu Server 18.04 LTS
+
+O OCS Inventory (Open Computer and Software Inventory Next Generation) é um software livre que permite aos usuários inventariar ativos de TI. O OCS-NG coleta informações sobre o hardware e o software das máquinas conectadas, executando um programa cliente do OCS ("OCS Inventory Agent"). O OCS pode visualizar o inventário por meio de uma interface web. Além disso, o OCS inclui a capacidade de implantar aplicações em computadores de acordo com critérios de busca. O IpDiscover do lado do agente possibilita descobrir a totalidade de computadores e dispositivos em rede.
+
+Link da vídeo aula: 
+
+Link do script utilizado nesse vídeo: https://github.com/vaamonde/ubuntu-1804/blob/master/ocsinventory.sh

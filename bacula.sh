@@ -5,8 +5,8 @@
 # Facebook: facebook.com/BoraParaPratica
 # YouTube: youtube.com/BoraParaPratica
 # Data de criação: 21/03/2021
-# Data de atualização: 22/03/2021
-# Versão: 0.02
+# Data de atualização: 09/05/2021
+# Versão: 0.03
 # Testado e homologado para a versão do Ubuntu Server 18.04.x LTS x64
 # Kernel >= 4.15.x
 # Testado e homologado para a versão do Bacula 11.x e do Baculum 11.x
@@ -29,6 +29,7 @@
 # Site Oficial do Projeto Bacula: https://www.bacula.org/
 #
 # Vídeo de instalação do GNU/Linux Ubuntu Server 18.04.x LTS: https://www.youtube.com/watch?v=zDdCrqNhIXI
+# Vídeo de configuração do OpenSSH no GNU/Linux Ubuntu Server 18.04.x LTS: https://www.youtube.com/watch?v=ecuol8Uf1EE&t
 # Vídeo de instalação do LAMP Server no Ubuntu Server 18.04.x LTS: https://www.youtube.com/watch?v=6EFUu-I3
 # Vídeo de instalação do PostgreSQL no Ubuntu Server 18.04.x LTS: https://www.youtube.com/watch?v=POCafSY3LAk
 #
@@ -67,7 +68,7 @@ clear
 if [ "$USUARIO" == "0" ] && [ "$UBUNTU" == "18.04" ] && [ "$KERNEL" == "4.15" ]
 	then
 		echo -e "O usuário é Root, continuando com o script..."
-		echo -e "Distribuição é >=18.04.x, continuando com o script..."
+		echo -e "Distribuição é >= 18.04.x, continuando com o script..."
 		echo -e "Kernel é >= 4.15, continuando com o script..."
 		sleep 5
 	else
@@ -92,6 +93,7 @@ echo -n "Verificando as dependências do Bacula, aguarde... "
 		[[ $deps -ne 1 ]] && echo "Dependências.: OK" || { 
             echo -en "\nInstale as dependências acima e execute novamente este script\n";
 			echo -en "Recomendo utilizar os scripts: lamp.sh para resolver as dependências."
+			echo -en "Recomendo utilizar os scripts: postgresql.sh para resolver as dependências."
             exit 1; 
             }
 		sleep 5
@@ -117,39 +119,34 @@ sleep 5
 echo -e "Adicionando o Repositório Universal do Apt, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	add-apt-repository universe &>> $LOG
-echo -e "Repositório adicionado com sucesso!!!, continuando com o script..."
+echo -e "Repositório adicionado com sucesso!!!, continuando com o script...\n"
 sleep 5
-echo
 #
 echo -e "Adicionando o Repositório Multiversão do Apt, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	add-apt-repository multiverse &>> $LOG
-echo -e "Repositório adicionado com sucesso!!!, continuando com o script..."
+echo -e "Repositório adicionado com sucesso!!!, continuando com o script...\n"
 sleep 5
-echo
 #
 echo -e "Atualizando as listas do Apt, aguarde..."
 	#opção do comando: &>> (redirecionar a saída padrão)
 	apt update &>> $LOG
-echo -e "Listas atualizadas com sucesso!!!, continuando com o script..."
+echo -e "Listas atualizadas com sucesso!!!, continuando com o script...\n"
 sleep 5
-echo
 #
 echo -e "Atualizando o sistema, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando apt: -y (yes)
 	apt -y upgrade &>> $LOG
-echo -e "Sistema atualizado com sucesso!!!, continuando com o script..."
+echo -e "Sistema atualizado com sucesso!!!, continuando com o script...\n"
 sleep 5
-echo
 #
 echo -e "Removendo software desnecessários, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando apt: -y (yes)
 	apt -y autoremove &>> $LOG
-echo -e "Software removidos com sucesso!!!, continuando com o script..."
+echo -e "Software removidos com sucesso!!!, continuando com o script...\n"
 sleep 5
-echo
 #
 echo -e "Instalando o Bacula e Baculum, aguarde...\n"
 #
@@ -161,9 +158,8 @@ echo -e "Adicionando o repositório do Bacula, aguarde..."
 	# opção do comando apt-key: add (file name), - (arquivo recebido do redirecionar | piper)
 	cp -v conf/bacula.list /etc/apt/sources.list.d/bacula.list &>> $LOG
 	wget -q $BACULAKEY -O- | apt-key add - &>> $LOG
-echo -e "Repositório do Bacula adicionado com sucesso!!!, continuando com o script..."
+echo -e "Repositório do Bacula adicionado com sucesso!!!, continuando com o script...\n"
 sleep 5
-echo
 #
 echo -e "Adicionando o repositório do Baculum, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
@@ -173,24 +169,21 @@ echo -e "Adicionando o repositório do Baculum, aguarde..."
 	# opção do comando apt-key: add (file name), - (arquivo recebido dO redirecionar | piper)
 	cp -v conf/baculum.list /etc/apt/sources.list.d/baculum.list &>> $LOG
 	wget -q $BACULUMKEY -O- | apt-key add - &>> $LOG
-echo -e "Repositório do Baculum criado com sucesso!!!, continuando com o script..."
+echo -e "Repositório do Baculum criado com sucesso!!!, continuando com o script...\n"
 sleep 5
-echo
 #
 echo -e "Atualizando as listas do Apt com os novos repositórios, aguarde..."
 	#opção do comando: &>> (redirecionar a saída padrão)
 	apt update &>> $LOG
-echo -e "Listas atualizadas com sucesso!!!, continuando com o script..."
+echo -e "Listas atualizadas com sucesso!!!, continuando com o script...\n"
 sleep 5
-echo
 #
 echo -e "Instalando o Bacula, aguarde..."
 	# opção do comando: &>> (redirecionar a saida padrão)
 	# opção do comando apt: -y (yes)
 	apt -y install bacula-postgresql &>> $LOG
-echo -e "Bacula instalado com sucesso!!!, continuando com o script..."
+echo -e "Bacula instalado com sucesso!!!, continuando com o script...\n"
 sleep 5
-echo
 #
 echo -e "Instalando o Baculum API, aguarde..."
 	# opção do comando: &>> (redirecionar a saida padrão)
@@ -199,9 +192,8 @@ echo -e "Instalando o Baculum API, aguarde..."
 	bacula-console &>> $LOG
 	a2enmod rewrite &>> $LOG
 	a2ensite baculum-api.conf &>> $LOG
-echo -e "Baculum API instalado com sucesso!!!, continuando com o script..."
+echo -e "Baculum API instalado com sucesso!!!, continuando com o script...\n"
 sleep 5
-echo
 #
 echo -e "Instalando o Baculum WEB, aguarde..."
 	# opção do comando: &>> (redirecionar a saida padrão)
@@ -209,9 +201,8 @@ echo -e "Instalando o Baculum WEB, aguarde..."
 	apt -y install baculum-web baculum-web-apache2 &>> $LOG
 	a2ensite baculum-web.conf &>> $LOG
 	systemctl restart apache2 &>> $LOG
-echo -e "Baculum WEB instalado com sucesso!!!, continuando com o script..."
+echo -e "Baculum WEB instalado com sucesso!!!, continuando com o script...\n"
 sleep 5
-echo
 #
 echo -e "Criando o Banco de Dados no PostgreSQL do Bacula, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
@@ -220,17 +211,17 @@ echo -e "Criando o Banco de Dados no PostgreSQL do Bacula, aguarde..."
 	su - postgres -c "/opt/bacula/scripts/create_postgresql_database" &>> $LOG
 	su - postgres -c "/opt/bacula/scripts/make_postgresql_tables" &>> $LOG
 	su - postgres -c "/opt/bacula/scripts/grant_postgresql_privileges" &>> $LOG
-echo -e "Banco de dados criado com sucesso!!!, continuando com o script..."
+echo -e "Banco de dados criado com sucesso!!!, continuando com o script...\n"
 sleep 5
-echo
 #
 echo -e "Atualizando o arquivo de configuração do Bacula, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
+	# opção do comando mv: -v (verbose)
 	# opção do comando cp: -v (verbose)
+	mv -v /opt/bacula/etc/bconsole.conf /opt/bacula/etc/bconsole.conf.bkp &>> $LOG
 	cp -v conf/bconsole.conf /opt/bacula/etc/bconsole.conf &>> $LOG
-echo -e "Arquivo atualizado com sucesso!!!, continuando com o script..."
+echo -e "Arquivo atualizado com sucesso!!!, continuando com o script...\n"
 sleep 5
-echo
 #
 echo -e "Criando os atalhos em: /usr/sbin dos binários do Bacula localizados em: /opt/bacula, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
@@ -238,34 +229,30 @@ echo -e "Criando os atalhos em: /usr/sbin dos binários do Bacula localizados em
 	for i in `ls /opt/bacula/bin`; do
 		ln -sv /opt/bacula/bin/$i /usr/sbin/$i; &>> $LOG
 	done
-echo -e "Atalhos criados com sucesso!!!, continuando com o script..."
+echo -e "Atalhos criados com sucesso!!!, continuando com o script...\n"
 sleep 5
-echo
 #
 echo -e "Habilitando os Serviços do Bacula, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	systemctl enable bacula-fd.service &>> $LOG
 	systemctl enable bacula-sd.service &>> $LOG
 	systemctl enable bacula-dir.service &>> $LOG
-echo -e "Serviços habilitados com sucesso!!!, continuando com o script..."
+echo -e "Serviços habilitados com sucesso!!!, continuando com o script...\n"
 sleep 5
-echo
 #
 echo -e "Iniciando os Serviços do Bacula, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	systemctl start bacula-fd.service &>> $LOG
 	systemctl start bacula-sd.service &>> $LOG
 	systemctl start bacula-dir.service &>> $LOG
-echo -e "Serviços iniciados com sucesso!!!, continuando com o script..."
+echo -e "Serviços iniciados com sucesso!!!, continuando com o script...\n"
 sleep 5
-echo
 #
 echo -e "Verificando as portas de Conexões do Bacula e do Baculum, aguarde..."
 	# opção do comando netstat: -a (all), -n (numeric)
 	netstat -an | grep '9101\|9102\|9103\|9095\|9096'
-echo -e "Portas de conexões verificadas com sucesso!!!, continuando com o script..."
+echo -e "Portas de conexões verificadas com sucesso!!!, continuando com o script...\n"
 sleep 5
-echo
 #
 echo -e "Instalação do Bacula e Baculum feita com Sucesso!!!."
 	# script para calcular o tempo gasto (SCRIPT MELHORADO, CORRIGIDO FALHA DE HORA:MINUTO:SEGUNDOS)
