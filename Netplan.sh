@@ -22,6 +22,7 @@ sudo lcpci -v -s 00:03.0
 
 #Verificando os detalhes do hardware de placa de rede instalada
 sudo lshw -class network
+sudo lshw -class network | grep "logical name"
 
 #Verificando as configurações de endereçamento da placa de rede instalada
 #opção do comando ifconfig: -a (all)

@@ -5,8 +5,8 @@
 # Facebook: facebook.com/BoraParaPratica
 # YouTube: youtube.com/BoraParaPratica
 # Data de criação: 04/05/2021
-# Data de atualização: 07/05/2021
-# Versão: 0.03
+# Data de atualização: 09/05/2021
+# Versão: 0.04
 # Testado e homologado para a versão do Ubuntu Server 18.04.x LTS x64
 # Kernel >= 4.15.x
 # Testado e homologado para a versão do OCS Inventory Server 2.9, Agent 2.8.1
@@ -54,7 +54,7 @@
 # 11. Perform the update
 #
 # USUÁRIO E SENHA PADRÃO DO OCS INVENTORY SERVER E REPORTS: 
-# LANGUADE: English
+# LANGUAGE: English
 # USER: admin
 # PASSWORD: admin
 #
@@ -223,7 +223,7 @@ echo -e "Removendo software desnecessários, aguarde..."
 echo -e "Software removidos com sucesso!!!, continuando com o script...\n"
 sleep 5
 #
-echo -e "Instalando as Dependências do OCS Inventory Server e Agent, aguarde...\n"
+echo -e "Instalando as Dependências do OCS Inventory, PHP e Perl, aguarde...\n"
 #
 echo -e "Instalação das Dependências do OCS Inventory Server e Agent, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
@@ -298,7 +298,7 @@ echo -e "Instalação das dependências do Perl Apache2::SOAP via CPAN, aguarde.
 	# opção do comando mkdir: -v (verbose)
 	if [ -d /usr/include/apache2 ]; then
 		echo -e "Diretório /usr/include/apache2 já existe, continuando com o script..."
-		else
+	else
 		echo -e "Diretório /usr/include/apache2 não existe, criando o diretório, aguarde..."
 			mkdir -v /usr/include/apache2 &>> $LOG
 		echo -e "Diretório criado com sucesso!!!, continuando o script..."
@@ -312,12 +312,12 @@ echo -e "Instalação das dependências do Perl nvidia::ml via CPAN, aguarde..."
 	# opção do comando perl: -e (single line command)
 	# opção do comando if: [ ] = testa uma expressão, == comparação de string 
 	if [ "$NVIDIA" == "NVIDIA" ]; then
-	echo -e "Você tem o Chip Gráfico da NVIDIA, instalando o Módulo Perl, aguarde..."
-		perl -MCPAN -e 'install nvidia::ml' &>> $LOG
+		echo -e "Você tem o Chip Gráfico da NVIDIA, instalando o Módulo Perl, aguarde..."
+			perl -MCPAN -e 'install nvidia::ml' &>> $LOG
 		echo -e "Instalação concluída com sucesso!!!, continuando com o script...\n"
 		sleep 5
 	else
-	echo -e "Você não tem o Chip Gráfico da NVIDIA, continuando com o script...\n"
+		echo -e "Você não tem o Chip Gráfico da NVIDIA, continuando com o script...\n"
 		sleep 5
 	fi
 #
@@ -371,7 +371,7 @@ echo -e "Instalação das dependências do Sys::Syslog via CPAN, aguarde..."
 echo -e "Instalação concluída com sucesso!!!, continuando com o script...\n"
 sleep 5
 #
-echo -e "Instalando o OCS Inventory Server e Agent, aguarde...\n"
+echo -e "Download do OCS Inventory Server e Agent, aguarde...\n"
 #
 echo -e "Fazendo o download do OCS Inventory Server e Report, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
@@ -400,14 +400,13 @@ echo -e "CUIDADO!!! com as opções que serão solicitadas no decorrer da instal
 echo -e "Veja a documentação das opções de instalação a partir da linha: 21 do arquivo $0"
 	read
 	sleep 2
-	#Executando a instalação do OCS Inventory Server e Reports
 	cd OCSNG_UNIX_SERVER-*
 	./setup.sh
 echo
 echo -e "Instalação do OCS Inventory Server e Reports feito com sucesso!!!, continuando com o script...\n"
 sleep 5
 #
-echo -e "Configurando as opções do OCS Inventory Server e Reports no Apache, aguarde..."
+echo -e "Configurando as opções do OCS Inventory Server e Reports no Apache2, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando chmod: -R (recursive), -v (verbose), 775 (user=rwx, group=rwx, other=r-x)
 	# opção do comando chown: -R (recursive), -v (verbose), www-data (user), www-data (group)
@@ -430,12 +429,12 @@ echo -e "PRESSIONE <ENTER> PARA CONTINUAR COM O SCRIPT. MAIS INFORMAÇÕES NA LI
 read
 sleep 5
 #
-echo -e "Alterando a senha e permissões do usuário OCS no MySQL, aguarde..."
+echo -e "Alterando a senha do usuário OCS no MySQL, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando mysql: -u (user), -p (password), -e (execute), mysql (database)
 	mysql -u $USER -p$PASSWORD -e "$SETOCSPWD" mysql &>> $LOG
 	mysql -u $USER -p$PASSWORD -e "$FLUSH" mysql &>> $LOG
-echo -e "Senha e permissões do usuário OCS alteradas com sucesso!!!, continuando com o script...\n"
+echo -e "Senha alterada com sucesso!!!, continuando com o script...\n"
 sleep 5
 #
 echo -e "Removendo o arquivo install.php do OCS Inventory Reports, aguarde..."
@@ -497,7 +496,7 @@ echo -e "Arquivo editado com sucesso, continuando com o script...\n"
 sleep 5
 #
 echo -e "ANTES DE CONTINUAR COM O SCRIPT ACESSE A URL: http://`hostname -I | cut -d' ' -f1`/ocsreports"
-echo -e "PARA CONFIRMAS AS ATUALIZAÇÕES VIA WEB DO OCS INVENTORY SERVER E REPORTS, APÓS A CONFIRMAÇÃO"
+echo -e "PARA CONFIRMAR AS ATUALIZAÇÕES VIA WEB DO OCS INVENTORY SERVER E REPORTS, APÓS A CONFIRMAÇÃO"
 echo -e "PRESSIONE <ENTER> PARA CONTINUAR COM O SCRIPT. MAIS INFORMAÇÕES NA LINHA 56 DO SCRIPT $0"
 read
 sleep 5
@@ -505,11 +504,11 @@ sleep 5
 echo -e "Instalando o OCS Inventory Agent, pressione <Enter> para instalar."
 echo -e "CUIDADO!!! com as opções que serão solicitadas no decorrer da instalação do OCS Inventory Agent."
 echo -e "Veja a documentação das opções de instalação a partir da linha: 61 do arquivo $0"
-	read
-	sleep 2
-	#Executando a instalação do OCS Inventory Agent
+	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando mkdir: -v (verbose)
 	# opção do comando cd: .. (retorne to root folder)
+	read
+	sleep 2
 	mkdir -v /var/log/ocsinventory-agent/ &>> $LOG
 	touch /var/log/ocsinventory-agent/ocsagent.log &>> $LOG
 	cd Ocsinventory-Unix-Agent-*
