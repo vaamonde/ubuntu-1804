@@ -5,8 +5,8 @@
 # Facebook: facebook.com/BoraParaPratica
 # YouTube: youtube.com/BoraParaPratica
 # Data de criação: 21/03/2021
-# Data de atualização: 09/05/2021
-# Versão: 0.03
+# Data de atualização: 10/05/2021
+# Versão: 0.04
 # Testado e homologado para a versão do Ubuntu Server 18.04.x LTS x64
 # Kernel >= 4.15.x
 # Testado e homologado para a versão do Bacula 11.x e do Baculum 11.x
@@ -22,8 +22,8 @@
 # web para facilitar o trabalho com os programas da Comunidade Bacula. 
 #
 # Informações que serão solicitadas na configuração via Web do Baculum
-# Endereço padrão do Baculum API: http://localhost:9096
 # Endereço padrão do Baculum WEB: http://localhost:9095
+# Endereço padrão do Baculum API: http://localhost:9096
 # Usuário padrão: admin - Senha padrão: admin
 #
 # Site Oficial do Projeto Bacula: https://www.bacula.org/
@@ -111,8 +111,8 @@ clear
 #
 echo
 echo -e "Instalação do Bacula e Baculum no GNU/Linux Ubuntu Server 18.04.x\n"
-echo -e "Após a instalação do Baculum API acessar a URL: http://`hostname -I | cut -d' ' -f1`:9096"
-echo -e "Após a instalação do Baculum WEB acessar a URL: http://`hostname -I | cut -d' ' -f1`:9095\n"
+echo -e "Após a instalação do Baculum WEB acessar a URL: http://`hostname -I | cut -d' ' -f1`:9095"
+echo -e "Após a instalação do Baculum API acessar a URL: http://`hostname -I | cut -d' ' -f1`:9096\n"
 echo -e "Aguarde, esse processo demora um pouco dependendo do seu Link de Internet...\n"
 sleep 5
 #
@@ -148,9 +148,9 @@ echo -e "Removendo software desnecessários, aguarde..."
 echo -e "Software removidos com sucesso!!!, continuando com o script...\n"
 sleep 5
 #
-echo -e "Instalando o Bacula e Baculum, aguarde...\n"
+echo -e "Instalando o Bacula Server e Baculum WEB e API, aguarde...\n"
 #
-echo -e "Adicionando o repositório do Bacula, aguarde..."
+echo -e "Adicionando o repositório do Bacula Server, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando cp: -v (verbose)
 	# opção do comando wget: -q -O- (file)
@@ -161,7 +161,7 @@ echo -e "Adicionando o repositório do Bacula, aguarde..."
 echo -e "Repositório do Bacula adicionado com sucesso!!!, continuando com o script...\n"
 sleep 5
 #
-echo -e "Adicionando o repositório do Baculum, aguarde..."
+echo -e "Adicionando o repositório do Baculum WEB e API, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando cp: -v (verbose)
 	# opção do comando wget: -q -O- (file)
@@ -218,15 +218,6 @@ echo -e "Criando o Banco de Dados no PostgreSQL do Bacula Server, aguarde..."
 echo -e "Banco de dados criado com sucesso!!!, continuando com o script...\n"
 sleep 5
 #
-echo -e "Atualizando o arquivo de configuração do Bacula Server, aguarde..."
-	# opção do comando: &>> (redirecionar a saída padrão)
-	# opção do comando mv: -v (verbose)
-	# opção do comando cp: -v (verbose)
-	mv -v /opt/bacula/etc/bconsole.conf /opt/bacula/etc/bconsole.conf.bkp &>> $LOG
-	cp -v conf/bconsole.conf /opt/bacula/etc/bconsole.conf &>> $LOG
-echo -e "Arquivo atualizado com sucesso!!!, continuando com o script...\n"
-sleep 5
-#
 echo -e "Criando os atalhos em: /usr/sbin dos binários do Bacula Server localizados em: /opt/bacula, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando ln: -s (symbolic), -v (verbose)
@@ -235,6 +226,15 @@ echo -e "Criando os atalhos em: /usr/sbin dos binários do Bacula Server localiz
 	done
 echo -e "Atalhos criados com sucesso!!!, continuando com o script...\n"
 sleep 5
+#
+#echo -e "Atualizando o arquivo de configuração do Bacula Console, aguarde..."
+	# opção do comando: &>> (redirecionar a saída padrão)
+	# opção do comando mv: -v (verbose)
+	# opção do comando cp: -v (verbose)
+	#mv -v /opt/bacula/etc/bconsole.conf /opt/bacula/etc/bconsole.conf.bkp &>> $LOG
+	#cp -v conf/bconsole.conf /opt/bacula/etc/bconsole.conf &>> $LOG
+#echo -e "Arquivo atualizado com sucesso!!!, continuando com o script...\n"
+#sleep 5
 #
 echo -e "Habilitando os Serviços do Bacula Server (FD, SD e DIR), aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
@@ -252,13 +252,20 @@ echo -e "Iniciando os Serviços do Bacula Server (FD, SD e DIR), aguarde..."
 echo -e "Serviços iniciados com sucesso!!!, continuando com o script...\n"
 sleep 5
 #
-echo -e "Verificando as portas de Conexões do Bacula e do Baculum WEB e API, aguarde..."
+echo -e "Testando o acesso ao Bacula BConsole, pressione <Enter> para continuar."
+echo -e "Para sair do Bacula BConsole digite: quit <Enter>."
+	read
+	bconsole
+echo -e "Bacula BConsole testado com sucesso!!!, continuando com o script...\n"
+sleep 5
+#
+echo -e "Verificando as portas de Conexões do Bacula Server e do Baculum WEB e API, aguarde..."
 	# opção do comando netstat: -a (all), -n (numeric)
 	netstat -an | grep '9101\|9102\|9103\|9095\|9096'
 echo -e "Portas de conexões verificadas com sucesso!!!, continuando com o script...\n"
 sleep 5
 #
-echo -e "Instalação do Bacula e Baculum feita com Sucesso!!!."
+echo -e "Instalação do Bacula Server e Baculum WEB e API feita com Sucesso!!!."
 	# script para calcular o tempo gasto (SCRIPT MELHORADO, CORRIGIDO FALHA DE HORA:MINUTO:SEGUNDOS)
 	# opção do comando date: +%T (Time)
 	HORAFINAL=$(date +%T)
