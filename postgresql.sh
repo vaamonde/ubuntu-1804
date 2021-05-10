@@ -5,8 +5,8 @@
 # Facebook: facebook.com/BoraParaPratica
 # YouTube: youtube.com/BoraParaPratica
 # Data de criação: 11/01/2021
-# Data de atualização: 17/03/2021
-# Versão: 0.04
+# Data de atualização: 10/05/2021
+# Versão: 0.05
 # Testado e homologado para a versão do Ubuntu Server 18.04.x LTS x64
 # Kernel >= 4.15.x
 # Testado e homologado para a versão do PostgreSQL 13.x e PgAdmin 4.x
@@ -114,7 +114,7 @@ echo -e "Início do script $0 em: `date +%d/%m/%Y-"("%H:%M")"`\n" &>> $LOG
 clear
 #
 echo
-echo -e "Instalação do PostgreSQL e PgAdmin4 no GNU/Linux Ubuntu Server 18.04.x\n"
+echo -e "Instalação do PostgreSQL e PgAdmin4 no GNU/Linux Ubuntu Server 18.04.x"
 echo -e "Após a instalação do PgAdmin4 acessar a URL: http://`hostname -I | cut -d ' ' -f1`/pgadmin4\n"
 echo -e "Aguarde, esse processo demora um pouco dependendo do seu Link de Internet..."
 sleep 5
@@ -123,39 +123,34 @@ echo
 echo -e "Adicionando o Repositório Universal do Apt, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	add-apt-repository universe &>> $LOG
-echo -e "Repositório adicionado com sucesso!!!, continuando com o script..."
+echo -e "Repositório adicionado com sucesso!!!, continuando com o script...\n"
 sleep 5
-echo
 #
 echo -e "Adicionando o Repositório Multiversão do Apt, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	add-apt-repository multiverse &>> $LOG
-echo -e "Repositório adicionado com sucesso!!!, continuando com o script..."
+echo -e "Repositório adicionado com sucesso!!!, continuando com o script...\n"
 sleep 5
-echo
 #
 echo -e "Atualizando as listas do Apt, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	apt update &>> $LOG
-echo -e "Listas atualizadas com sucesso!!!, continuando com o script..."
+echo -e "Listas atualizadas com sucesso!!!, continuando com o script...\n"
 sleep 5
-echo
 #
 echo -e "Atualizando o sistema, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando apt: -y (yes)
 	apt -y upgrade &>> $LOG
-echo -e "Sistema atualizado com sucesso!!!, continuando com o script..."
+echo -e "Sistema atualizado com sucesso!!!, continuando com o script...\n"
 sleep 5
-echo
 #
 echo -e "Removendo software desnecessários, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando apt: -y (yes)
 	apt -y autoremove &>> $LOG
-echo -e "Software removidos com Sucesso!!!, continuando com o script..."
+echo -e "Software removidos com Sucesso!!!, continuando com o script...\n"
 sleep 5
-echo
 #
 echo -e "Instalando o PostgreSQL e PgAdmin4, aguarde...\n"
 #
@@ -165,9 +160,8 @@ echo -e "Adicionando o Repositório do PostgreSQL, aguarde..."
 	# opção do comando cp: -v (verbose)
     wget -qO - $KEYPOSTGRESQL | sudo apt-key add - &>> $LOG
     cp -v conf/pgdg.list /etc/apt/sources.list.d/pgdg.list &>> $LOG
-echo -e "Repositório adicionado com sucesso!!!, continuando com o script..."
+echo -e "Repositório adicionado com sucesso!!!, continuando com o script...\n"
 sleep 5
-echo
 #
 echo -e "Adicionando o Repositório do PgAdmin4, aguarde..."
 	# opção do comando: &>> (redirecionar de saída padrão)
@@ -175,75 +169,66 @@ echo -e "Adicionando o Repositório do PgAdmin4, aguarde..."
 	# opção do comando cp: -v (verbose)
     wget -qO - $KEYPGADMIN4 | sudo apt-key add - &>> $LOG
     cp -v conf/pgadmin4.list /etc/apt/sources.list.d/pgadmin4.list &>> $LOG
-echo -e "Repositório adicionado com sucesso!!!, continuando com o script..."
+echo -e "Repositório adicionado com sucesso!!!, continuando com o script...\n"
 sleep 5
-echo
 #
 echo -e "Atualizando as Lista do Apt com os novos Repositórios, aguarde..."
 	# opção do comando: &>> (redirecionar de saída padrão)
     apt update &>> $LOG
-echo -e "Listas atualizadas com sucesso!!!, continuando com o script..."
+echo -e "Listas atualizadas com sucesso!!!, continuando com o script...\n"
 sleep 5
-echo
 #
 echo -e "Instalando as dependências do PostgreSQL e do PgAdmin4, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando apt: -y (yes)
 	apt -y install build-essential libssl-dev libffi-dev libgmp3-dev virtualenv python-pip \
     libpq-dev python-dev apache2-utils libapache2-mod-wsgi libexpat1 ssl-cert python &>> $LOG
-echo -e "Instalação das dependências feita com sucesso!!!, continuando com o script..."
+echo -e "Instalação das dependências feita com sucesso!!!, continuando com o script...\n"
 sleep 5
-echo
 #
 echo -e "Instalando o PostgreSQL Server, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando apt: -y (yes)
 	apt -y install postgresql postgresql-contrib postgresql-client &>> $LOG
-echo -e "Instalação do PostgreSQL Server feito com sucesso!!!, continuando com o script..."
+echo -e "Instalação do PostgreSQL Server feito com sucesso!!!, continuando com o script...\n"
 sleep 5
-echo
 #
-echo -e "Configurando a senha do usuário: $USER o PostgreSQL Server, pressione <Enter> para continuar"
+echo -e "Configurando a senha do usuário: $USER do PostgreSQL Server, pressione <Enter> para continuar"
 echo -e "Senha que será configurada do usuário $USER: $PASSWORD"
 	# opção do comando sudo: -u (user)
     read
 	sudo -u $USER psql --command '\password postgres'
-echo -e "Senha configurada com sucesso!!!, continuando com o script..."
+echo -e "Senha configurada com sucesso!!!, continuando com o script...\n"
 sleep 5
-echo
 #
 echo -e "Instalando o PgAdmin4 e PgAdmin4 Web, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando apt: -y (yes)
 	apt -y install pgadmin4 pgadmin4-web &>> $LOG
-echo -e "Instalação do PgAdmin4 feita com sucesso!!!, continuando com o script..."
+echo -e "Instalação do PgAdmin4 feita com sucesso!!!, continuando com o script...\n"
 sleep 5
-echo
-#
 #
 echo -e "Configurando o PgAdmin4 Web, pressione <Enter> para continuar"
 echo -e "Cuidado com as mensagens que serão solicitadas: email: $EMAIL - senha: $EMAILPASS"
+echo -e "Dúvidas veja a linha: 25 do script: $0"
 	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando apt: -y (yes)
 	read
     /usr/pgadmin4/bin/./setup-web.sh
-echo -e "Configuração do PgAdmin4 Web feita com sucesso!!!, continuando com o script..."
+echo -e "Configuração do PgAdmin4 Web feita com sucesso!!!, continuando com o script...\n"
 sleep 5
-echo
 #			 
 echo -e "Reinicializando os serviços do Apache2, aguarde..."
 	systemctl restart apache2 &>> $LOG
-echo -e "Serviço reinicializado com sucesso!!!, continuando com o script..."
+echo -e "Serviço reinicializado com sucesso!!!, continuando com o script...\n"
 sleep 5
-echo
 #
 echo -e "Verificando a porta de conexão do PostgreSQL, aguarde..."
 	# opção do comando netstat: a (all), n (numeric)
 	# opção do comando grep: ' ' (aspas simples)
 	netstat -an | grep '5432'
-echo -e "Porta verificada com sucesso!!!, continuando com o script..."
+echo -e "Porta verificada com sucesso!!!, continuando com o script...\n"
 sleep 5
-echo
 #
 echo -e "Instalação do PostgreSQL e PgAdmin4 feito com Sucesso!!!"
 	# script para calcular o tempo gasto (SCRIPT MELHORADO, CORRIGIDO FALHA DE HORA:MINUTO:SEGUNDOS)

@@ -111,7 +111,7 @@ clear
 #
 echo
 echo -e "Instalação do Bacula e Baculum no GNU/Linux Ubuntu Server 18.04.x\n"
-echo -e "Após a instalação do Baculum API acessar a URL: http://`hostname -I | cut -d' ' -f1`:9096\n"
+echo -e "Após a instalação do Baculum API acessar a URL: http://`hostname -I | cut -d' ' -f1`:9096"
 echo -e "Após a instalação do Baculum WEB acessar a URL: http://`hostname -I | cut -d' ' -f1`:9095\n"
 echo -e "Aguarde, esse processo demora um pouco dependendo do seu Link de Internet...\n"
 sleep 5
@@ -178,33 +178,37 @@ echo -e "Atualizando as listas do Apt com os novos repositórios, aguarde..."
 echo -e "Listas atualizadas com sucesso!!!, continuando com o script...\n"
 sleep 5
 #
-echo -e "Instalando o Bacula, aguarde..."
+echo -e "Instalando o Bacula Server e Console, aguarde..."
 	# opção do comando: &>> (redirecionar a saida padrão)
 	# opção do comando apt: -y (yes)
-	apt -y install bacula-postgresql &>> $LOG
-echo -e "Bacula instalado com sucesso!!!, continuando com o script...\n"
+	apt -y install bacula-postgresql bacula-console &>> $LOG
+echo -e "Bacula Server e Console instalado com sucesso!!!, continuando com o script...\n"
 sleep 5
 #
-echo -e "Instalando o Baculum API, aguarde..."
-	# opção do comando: &>> (redirecionar a saida padrão)
-	# opção do comando apt: -y (yes)
-	apt -y install php-bcmath php7.0-mbstring baculum-common baculum-api baculum-api-apache2 \
-	bacula-console &>> $LOG
-	a2enmod rewrite &>> $LOG
-	a2ensite baculum-api.conf &>> $LOG
-echo -e "Baculum API instalado com sucesso!!!, continuando com o script...\n"
-sleep 5
-#
-echo -e "Instalando o Baculum WEB, aguarde..."
+echo -e "Instalando o Baculum WEB Apache2, aguarde..."
 	# opção do comando: &>> (redirecionar a saida padrão)
 	# opção do comando apt: -y (yes)
 	apt -y install baculum-web baculum-web-apache2 &>> $LOG
-	a2ensite baculum-web.conf &>> $LOG
-	systemctl restart apache2 &>> $LOG
 echo -e "Baculum WEB instalado com sucesso!!!, continuando com o script...\n"
 sleep 5
 #
-echo -e "Criando o Banco de Dados no PostgreSQL do Bacula, aguarde..."
+echo -e "Instalando o Baculum API Apache2, aguarde..."
+	# opção do comando: &>> (redirecionar a saida padrão)
+	# opção do comando apt: -y (yes)
+	apt -y install baculum-common baculum-api-apache2 &>> $LOG
+echo -e "Baculum API instalado com sucesso!!!, continuando com o script...\n"
+sleep 5
+#
+echo -e "Habilitando os Sites do Baculum WEB e API no Apache2, aguarde..."
+	# opção do comando: &>> (redirecionar a saida padrão)
+	a2enmod rewrite &>> $LOG
+	a2ensite baculum-web.conf &>> $LOG
+	a2ensite baculum-api.conf &>> $LOG
+	systemctl reload apache2
+echo -e "Baculum WEB e API habilitados com sucesso!!!, continuando com o script...\n"
+sleep 5
+#
+echo -e "Criando o Banco de Dados no PostgreSQL do Bacula Server, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando su: - ()
 	# opção do comando postgres: -c ()
@@ -214,7 +218,7 @@ echo -e "Criando o Banco de Dados no PostgreSQL do Bacula, aguarde..."
 echo -e "Banco de dados criado com sucesso!!!, continuando com o script...\n"
 sleep 5
 #
-echo -e "Atualizando o arquivo de configuração do Bacula, aguarde..."
+echo -e "Atualizando o arquivo de configuração do Bacula Server, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando mv: -v (verbose)
 	# opção do comando cp: -v (verbose)
@@ -223,16 +227,16 @@ echo -e "Atualizando o arquivo de configuração do Bacula, aguarde..."
 echo -e "Arquivo atualizado com sucesso!!!, continuando com o script...\n"
 sleep 5
 #
-echo -e "Criando os atalhos em: /usr/sbin dos binários do Bacula localizados em: /opt/bacula, aguarde..."
+echo -e "Criando os atalhos em: /usr/sbin dos binários do Bacula Server localizados em: /opt/bacula, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando ln: -s (symbolic), -v (verbose)
 	for i in `ls /opt/bacula/bin`; do
-		ln -sv /opt/bacula/bin/$i /usr/sbin/$i; &>> $LOG
+		ln -sv /opt/bacula/bin/$i /usr/sbin/$i &>> $LOG;
 	done
 echo -e "Atalhos criados com sucesso!!!, continuando com o script...\n"
 sleep 5
 #
-echo -e "Habilitando os Serviços do Bacula, aguarde..."
+echo -e "Habilitando os Serviços do Bacula Server (FD, SD e DIR), aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	systemctl enable bacula-fd.service &>> $LOG
 	systemctl enable bacula-sd.service &>> $LOG
@@ -240,7 +244,7 @@ echo -e "Habilitando os Serviços do Bacula, aguarde..."
 echo -e "Serviços habilitados com sucesso!!!, continuando com o script...\n"
 sleep 5
 #
-echo -e "Iniciando os Serviços do Bacula, aguarde..."
+echo -e "Iniciando os Serviços do Bacula Server (FD, SD e DIR), aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	systemctl start bacula-fd.service &>> $LOG
 	systemctl start bacula-sd.service &>> $LOG
@@ -248,7 +252,7 @@ echo -e "Iniciando os Serviços do Bacula, aguarde..."
 echo -e "Serviços iniciados com sucesso!!!, continuando com o script...\n"
 sleep 5
 #
-echo -e "Verificando as portas de Conexões do Bacula e do Baculum, aguarde..."
+echo -e "Verificando as portas de Conexões do Bacula e do Baculum WEB e API, aguarde..."
 	# opção do comando netstat: -a (all), -n (numeric)
 	netstat -an | grep '9101\|9102\|9103\|9095\|9096'
 echo -e "Portas de conexões verificadas com sucesso!!!, continuando com o script...\n"

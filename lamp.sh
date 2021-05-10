@@ -5,8 +5,8 @@
 # Facebook: facebook.com/BoraParaPratica
 # YouTube: youtube.com/BoraParaPratica
 # Data de criação: 04/11/2018
-# Data de atualização: 07/05/2021
-# Versão: 0.13
+# Data de atualização: 10/05/2021
+# Versão: 0.14
 # Testado e homologado para a versão do Ubuntu Server 18.04.x LTS x64
 # Kernel >= 4.15.x
 # Testado e homologado para a versão do Apache2 2.4.x, MySQL 5.7.x, PHP 7.2.x, Perl 5.26.x, Python 2.x e 3.x, PhpMyAdmin 4.6.x
@@ -155,39 +155,34 @@ echo
 echo -e "Adicionando o Repositório Universal do Apt, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	add-apt-repository universe &>> $LOG
-echo -e "Repositório adicionado com sucesso!!!, continuando com o script..."
+echo -e "Repositório adicionado com sucesso!!!, continuando com o script...\n"
 sleep 5
-echo
 #
 echo -e "Adicionando o Repositório Multiversão do Apt, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	add-apt-repository multiverse &>> $LOG
-echo -e "Repositório adicionado com sucesso!!!, continuando com o script..."
+echo -e "Repositório adicionado com sucesso!!!, continuando com o script...\n"
 sleep 5
-echo
 #
 echo -e "Atualizando as listas do Apt, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	apt update &>> $LOG
-echo -e "Listas atualizadas com sucesso!!!, continuando com o script..."
+echo -e "Listas atualizadas com sucesso!!!, continuando com o script...\n"
 sleep 5
-echo
 #
 echo -e "Atualizando o sistema, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando apt: -y (yes)
 	apt -y upgrade &>> $LOG
-echo -e "Sistema atualizado com sucesso!!!, continuando com o script..."
+echo -e "Sistema atualizado com sucesso!!!, continuando com o script...\n"
 sleep 5
-echo
 #
 echo -e "Removendo software desnecessários, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando apt: -y (yes)
 	apt -y autoremove &>> $LOG
-echo -e "Software removidos com Sucesso!!!, continuando com o script..."
+echo -e "Software removidos com Sucesso!!!, continuando com o script...\n"
 sleep 5
-echo
 #
 echo -e "Configurando as variáveis do Debconf do MySQL para o Apt, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
@@ -195,18 +190,16 @@ echo -e "Configurando as variáveis do Debconf do MySQL para o Apt, aguarde..."
 	echo "mysql-server-5.7 mysql-server/root_password password $PASSWORD" | debconf-set-selections
 	echo "mysql-server-5.7 mysql-server/root_password_again password $AGAIN" | debconf-set-selections
 	debconf-show mysql-server-5.7 &>> $LOG
-echo -e "Variáveis configuradas com sucesso!!!, continuando com o script..."
+echo -e "Variáveis configuradas com sucesso!!!, continuando com o script...\n"
 sleep 5
-echo
 #
 echo -e "Instalando o LAMP-SERVER, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando apt: -y (yes)
 	# opção do comando ^ (circunflexo): (expressão regular - Casa o começo da linha)
 	apt -y install lamp-server^ perl python apt-transport-https &>> $LOG
-echo -e "Instalação do LAMP-SERVER feito com sucesso!!!, continuando com o script..."
+echo -e "Instalação do LAMP-SERVER feito com sucesso!!!, continuando com o script...\n"
 sleep 5
-echo
 #
 echo -e "Configurando as variáveis do Debconf do PhpMyAdmin para o Apt, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
@@ -219,17 +212,15 @@ echo -e "Configurando as variáveis do Debconf do PhpMyAdmin para o Apt, aguarde
 	echo "phpmyadmin phpmyadmin/mysql/admin-pass password $ADMIN_PASS" | debconf-set-selections
 	echo "phpmyadmin phpmyadmin/mysql/app-pass password $APP_PASS" | debconf-set-selections
 	debconf-show phpmyadmin &>> $LOG
-echo -e "Variáveis configuradas com sucesso!!!, continuando com o script..."
+echo -e "Variáveis configuradas com sucesso!!!, continuando com o script...\n"
 sleep 5
-echo
 #
 echo -e "Instalando o PhpMyAdmin, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando apt: -y (yes)
-	apt -y install phpmyadmin php-mbstring php-gettext php-dev libmcrypt-dev php-pear pwgen &>> $LOG
-echo -e "Instalação do PhpMyAdmin feita com sucesso!!!, continuando com o script..."
+	apt -y install phpmyadmin php-bcmath php-mbstring php-gettext php-dev libmcrypt-dev php-pear pwgen &>> $LOG
+echo -e "Instalação do PhpMyAdmin feita com sucesso!!!, continuando com o script...\n"
 sleep 5
-echo
 #				 
 echo -e "Atualizando as dependências do PHP para o PhpMyAdmin, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
@@ -240,18 +231,16 @@ echo -e "Atualizando as dependências do PHP para o PhpMyAdmin, aguarde..."
 		cp -v conf/mcrypt.ini /etc/php/7.2/mods-available/ &>> $LOG
 	phpenmod mcrypt &>> $LOG
 	phpenmod mbstring &>> $LOG
-echo -e "Atualização das dependências feita com sucesso!!!, continuando com o script..."
+echo -e "Atualização das dependências feita com sucesso!!!, continuando com o script...\n"
 sleep 5
-echo
 #
 echo -e "Aplicando os Patch de Correção do PhpMyAdmin, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando cp: -v (verbose)
 	cp -v conf/sql.lib.php /usr/share/phpmyadmin/libraries/ &>> $LOG
 	cp -v conf/plugin_interface.lib.php /usr/share/phpmyadmin/libraries/ &>> $LOG
-echo -e "Patch de correção aplicados com sucesso!!!, continuando com o script..."
+echo -e "Patch de correção aplicados com sucesso!!!, continuando com o script...\n"
 sleep 5
-echo
 #
 echo -e "Copiando os arquivos de teste do PHP phpinfo.php e do HTML teste.html, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
@@ -260,14 +249,12 @@ echo -e "Copiando os arquivos de teste do PHP phpinfo.php e do HTML teste.html, 
 	cp -v conf/phpinfo.php /var/www/html/phpinfo.php &>> $LOG
 	cp -v conf/teste.html /var/www/html/teste.html &>> $LOG
 	chown -v www-data.www-data /var/www/html/* &>> $LOG
-echo -e "Arquivos copiados com sucesso!!!, continuando com o script..."
+echo -e "Arquivos copiados com sucesso!!!, continuando com o script...\n"
 sleep 5
-echo
 #
 echo -e "Instalação do LAMP-Server e PhpMyAdmin feito com sucesso!!! Pressione <Enter> para continuar."
 read
 sleep 5
-echo
 #
 echo -e "Atualizando e editando o arquivo de configuração do Apache2, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
@@ -279,9 +266,8 @@ echo -e "Atualizando e editando o arquivo de configuração do Apache2, aguarde.
 		read
 		sleep 3
 		vim /etc/apache2/apache2.conf
-echo -e "Arquivo atualizado com sucesso!!!, continuando com o script..."
+echo -e "Arquivo atualizado com sucesso!!!, continuando com o script...\n"
 sleep 5
-echo
 #
 echo -e "Atualizando e editando o arquivo de configuração do PHP, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
@@ -293,24 +279,21 @@ echo -e "Atualizando e editando o arquivo de configuração do PHP, aguarde..."
 		read
 		sleep 3
 		vim /etc/php/7.2/apache2/php.ini
-echo -e "Arquivo atualizado com sucesso!!!, continuando com o script..."
+echo -e "Arquivo atualizado com sucesso!!!, continuando com o script...\n"
 sleep 5
-echo
 #
 echo -e "Reinicializando o serviço do Apache2, aguarde..."
 	systemctl restart apache2
-echo -e "Serviço reinicializado com sucesso!!!, continuando com o script..."
+echo -e "Serviço reinicializado com sucesso!!!, continuando com o script...\n"
 sleep 5
-echo
 #
 echo -e "Permitindo o Root do MySQL se autenticar remotamente, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando mysql: -u (user), -p (password) -e (execute)
 	mysql -u $USER -p$PASSWORD -e "$GRANTALL" mysql &>> $LOG
 	mysql -u $USER -p$PASSWORD -e "$FLUSH" mysql &>> $LOG
-echo -e "Permissão alterada com sucesso!!!, continuando com o script..."
+echo -e "Permissão alterada com sucesso!!!, continuando com o script...\n"
 sleep 5
-echo
 #
 echo -e "Atualizando e editando o arquivo de configuração do MySQL, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
@@ -322,23 +305,20 @@ echo -e "Atualizando e editando o arquivo de configuração do MySQL, aguarde...
 		read
 		sleep 3
 		vim /etc/mysql/mysql.conf.d/mysqld.cnf
-echo -e "Arquivo atualizado com sucesso!!!, continuando com o script..."
+echo -e "Arquivo atualizado com sucesso!!!, continuando com o script...\n"
 sleep 5
-echo
 #
 echo -e "Reinicializando os serviços do MySQL, aguarde..."
 	systemctl restart mysql
-echo -e "Serviço reinicializado com sucesso!!!, continuando com o script..."
+echo -e "Serviço reinicializado com sucesso!!!, continuando com o script...\n"
 sleep 5
-echo
 #
 echo -e "Verificando as portas de Conexão do Apache2 e do MySQL, aguarde..."
 	# opção do comando netstat: a (all), n (numeric)
 	# opção do comando grep: ' ' (aspas simples) protege uma string, \| (Escape e opção OU)
 	netstat -an | grep '80\|3306'
-echo -e "Portas verificadas com sucesso!!!, continuando com o script..."
+echo -e "Portas verificadas com sucesso!!!, continuando com o script...\n"
 sleep 5
-echo
 #
 echo -e "Instalação do LAMP-SERVER feito com Sucesso!!!"
 	# script para calcular o tempo gasto (SCRIPT MELHORADO, CORRIGIDO FALHA DE HORA:MINUTO:SEGUNDOS)
