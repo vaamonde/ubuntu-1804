@@ -5,8 +5,8 @@
 # Facebook: facebook.com/BoraParaPratica
 # YouTube: youtube.com/BoraParaPratica
 # Data de criação: 04/05/2021
-# Data de atualização: 09/05/2021
-# Versão: 0.04
+# Data de atualização: 10/05/2021
+# Versão: 0.05
 # Testado e homologado para a versão do Ubuntu Server 18.04.x LTS x64
 # Kernel >= 4.15.x
 # Testado e homologado para a versão do OCS Inventory Server 2.9, Agent 2.8.1
@@ -336,7 +336,7 @@ echo -e "Instalação das dependências do Perl Net::Ping::External via CPAN, ag
 echo -e "Instalação concluída com sucesso!!!, continuando com o script...\n"
 sleep 5
 #
-echo -e "Instalação das dependências do LWP::UserAgent::Cached via CPAN, aguarde..."
+echo -e "Instalação das dependências do Perl LWP::UserAgent::Cached via CPAN, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando perl: -e (single line command)
 	# Mensagem: Append this modules to installation queue? [y] <-- Pressione <Enter>
@@ -344,28 +344,28 @@ echo -e "Instalação das dependências do LWP::UserAgent::Cached via CPAN, agua
 echo -e "Instalação concluída com sucesso!!!, continuando com o script...\n"
 sleep 5
 #
-echo -e "Instalação das dependências do Mac::SysProfile via CPAN, aguarde..."
+echo -e "Instalação das dependências do Perl Mac::SysProfile via CPAN, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando perl: -e (single line command)
 	perl -MCPAN -e 'install Mac::SysProfile' &>> $LOG
 echo -e "Instalação concluída com sucesso!!!, continuando com o script...\n"
 sleep 5
 #
-echo -e "Instalação das dependências do Mojolicious::Lite via CPAN, aguarde..."
+echo -e "Instalação das dependências do Perl Mojolicious::Lite via CPAN, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando perl: -e (single line command)
 	perl -MCPAN -e 'install Mojolicious::Lite' &>> $LOG
 echo -e "Instalação concluída com sucesso!!!, continuando com o script...\n"
 sleep 5
 #
-echo -e "Instalação das dependências do NetSNMP::OID via CPAN, aguarde..."
+echo -e "Instalação das dependências do Perl NetSNMP::OID via CPAN, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando perl: -e (single line command)
 	perl -MCPAN -e 'install NetSNMP::OID' &>> $LOG
 echo -e "Instalação concluída com sucesso!!!, continuando com o script...\n"
 sleep 5
 #
-echo -e "Instalação das dependências do Sys::Syslog via CPAN, aguarde..."
+echo -e "Instalação das dependências do Perl Sys::Syslog via CPAN, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando perl: -e (single line command)
 	perl -MCPAN -e 'install Sys::Syslog' &>> $LOG
@@ -468,32 +468,32 @@ sleep 5
 echo -e "Editando o arquivo: z-ocsinventory-server.conf, pressione <Enter> para continuar."
 	read
 	vim /etc/apache2/conf-available/z-ocsinventory-server.conf
-echo -e "Arquivo editado com sucesso, continuando com o script...\n"
+echo -e "Arquivo editado com sucesso!!!, continuando com o script...\n"
 sleep 5
 #
 echo -e "Editando o arquivo: zz-ocsinventory-restapi.conf, pressione <Enter> para continuar."
 	read
 	vim /etc/apache2/conf-available/zz-ocsinventory-restapi.conf
-echo -e "Arquivo editado com sucesso, continuando com o script...\n"
+echo -e "Arquivo editado com sucesso!!!, continuando com o script...\n"
 sleep 5
 #
 echo -e "Editando o arquivo: ocsinventory-reports.conf, pressione <Enter> para continuar."
 	read
 	vim /etc/apache2/conf-available/ocsinventory-reports.conf
-echo -e "Arquivo editado com sucesso, continuando com o script...\n"
+echo -e "Arquivo editado com sucesso!!!, continuando com o script...\n"
 sleep 5
 #
 echo -e "Editando o arquivo: dbconfig.inc.php, pressione <Enter> para continuar."
 	read
 	vim /usr/share/ocsinventory-reports/ocsreports/dbconfig.inc.php
-echo -e "Arquivo editado com sucesso, continuando com o script...\n"
+echo -e "Arquivo editado com sucesso!!!, continuando com o script...\n"
 sleep 5
 #
 echo -e "Editando o arquivo: ocsinventory-server, pressione <Enter> para continuar."
 	read
 	vim /etc/logrotate.d/ocsinventory-server
 	systemctl restart apache2 &>> $LOG
-echo -e "Arquivo editado com sucesso, continuando com o script...\n"
+echo -e "Arquivo editado com sucesso!!!, continuando com o script...\n"
 sleep 5
 #
 echo -e "ANTES DE CONTINUAR COM O SCRIPT ACESSE A URL: http://`hostname -I | cut -d' ' -f1`/ocsreports"
@@ -539,19 +539,19 @@ sleep 5
 echo -e "Editando o arquivo: ocsinventory-agent.cfg, pressione <Enter> para continuar."
 	read
 	vim /etc/ocsinventory-agent/ocsinventory-agent.cfg
-echo -e "Arquivo editado com sucesso, continuando com o script...\n"
+echo -e "Arquivo editado com sucesso!!!, continuando com o script...\n"
 sleep 5
 #
 echo -e "Editando o arquivo: modules.conf, pressione <Enter> para continuar."
 	read
 	vim /etc/ocsinventory-agent/modules.conf
-echo -e "Arquivo editado com sucesso, continuando com o script...\n"
+echo -e "Arquivo editado com sucesso!!!, continuando com o script...\n"
 sleep 5
 #
-echo -e "Editando o arquivo: ocsinventory-agent-cron, pressione <Enter> para continuar."
+echo -e "Editando o arquivo: ocsinventory-agent, pressione <Enter> para continuar."
 	read
 	vim /etc/cron.d/ocsinventory-agent
-echo -e "Arquivo editado com sucesso, continuando com o script...\n"
+echo -e "Arquivo editado com sucesso!!!, continuando com o script...\n"
 sleep 5
 #
 echo -e "Forçando o inventário do OCS Inventory Agent com as novas configurações, aguarde..."
