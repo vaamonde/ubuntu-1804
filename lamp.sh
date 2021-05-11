@@ -141,7 +141,7 @@ echo -e "APACHE (Apache HTTP Server) - Servidor de Hospedagem de Páginas Web - 
 echo -e "Após a instalação do Apache2 acessar a URL: http://`hostname -I | cut -d ' ' -f1`/"
 echo -e "Testar a linguagem HTML acessando a URL: http://`hostname -I | cut -d ' ' -f1`/teste.html\n"
 echo -e "MYSQL (SGBD) - Sistemas de Gerenciamento de Banco de Dados - Porta 3306"
-echo -e "Após a instalação do MySQL acessar o console: mysql -u root -p\n"
+echo -e "Após a instalação do MySQL acessar o console: mysql -u root -p (senha: $PASSWORD)\n"
 echo -e "PHP (Personal Home Page - PHP: Hypertext Preprocessor) - Linguagem de Programação Dinâmica para Web"
 echo -e "Após a instalação do PHP acessar a URL: http://`hostname -I | cut -d ' ' -f1`/phpinfo.php\n"
 echo -e "PERL - Linguagem de programação multi-plataforma\n"

@@ -194,7 +194,8 @@ sleep 5
 echo -e "Instalando o Bacula Server e Console, aguarde..."
 	# opção do comando: &>> (redirecionar a saida padrão)
 	# opção do comando apt: -y (yes)
-	apt -y install bacula-postgresql bacula-console &>> $LOG
+	#apt -y install bacula-postgresql bacula-console &>> $LOG
+	apt -y install bacula-server bacula-client bacula-common bacula-mysql bacula-console
 echo -e "Bacula Server e Console instalado com sucesso!!!, continuando com o script...\n"
 sleep 5
 #
