@@ -26,6 +26,20 @@
 # Endereço padrão do Baculum API: http://localhost:9096
 # Usuário padrão: admin - Senha padrão: admin
 #
+# PRIMEIRA ETAPA: CONFIGURAR O BACULUM API: http://localhost:9096
+# 01. Step 1 - select language
+#	Language: English <Next>
+# 02. Step 2 - share the Bacula Catalog Database
+#	Do you want to setup and to share the Bacula Catalog Database access for this API instance?: 
+#	Select: Yes
+#	Database type: PostgreSQL
+#	Database name: bacula
+#	Login: bacula
+#	Password: (default, no password)
+#	IP address (or hostname): localhost
+#	Port: 5432
+#	Connection test: <Test>
+#
 # Site Oficial do Projeto Bacula: https://www.bacula.org/
 #
 # Vídeo de instalação do GNU/Linux Ubuntu Server 18.04.x LTS: https://www.youtube.com/watch?v=zDdCrqNhIXI
@@ -83,7 +97,7 @@ fi
 # || (operador lógico OU), 2> (redirecionar de saída de erro STDERR), && = operador lógico AND, { } = agrupa comandos em blocos
 # [ ] = testa uma expressão, retornando 0 ou 1, -ne = é diferente (NotEqual)
 echo -n "Verificando as dependências do Bacula, aguarde... "
-	for name in apt-transport-https apache2 php python postgresql postgresql-client
+	for name in apt-transport-https apache2 php python
 	do
   		[[ $(dpkg -s $name 2> /dev/null) ]] || { 
               echo -en "\n\nO software: $name precisa ser instalado. \nUse o comando 'apt install $name'\n";
@@ -93,7 +107,6 @@ echo -n "Verificando as dependências do Bacula, aguarde... "
 		[[ $deps -ne 1 ]] && echo "Dependências.: OK" || { 
             echo -en "\nInstale as dependências acima e execute novamente este script\n";
 			echo -en "Recomendo utilizar os scripts: lamp.sh para resolver as dependências."
-			echo -en "Recomendo utilizar os scripts: postgresql.sh para resolver as dependências."
             exit 1; 
             }
 		sleep 5
@@ -226,15 +239,6 @@ echo -e "Criando os atalhos em: /usr/sbin dos binários do Bacula Server localiz
 	done
 echo -e "Atalhos criados com sucesso!!!, continuando com o script...\n"
 sleep 5
-#
-#echo -e "Atualizando o arquivo de configuração do Bacula Console, aguarde..."
-	# opção do comando: &>> (redirecionar a saída padrão)
-	# opção do comando mv: -v (verbose)
-	# opção do comando cp: -v (verbose)
-	#mv -v /opt/bacula/etc/bconsole.conf /opt/bacula/etc/bconsole.conf.bkp &>> $LOG
-	#cp -v conf/bconsole.conf /opt/bacula/etc/bconsole.conf &>> $LOG
-#echo -e "Arquivo atualizado com sucesso!!!, continuando com o script...\n"
-#sleep 5
 #
 echo -e "Habilitando os Serviços do Bacula Server (FD, SD e DIR), aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
