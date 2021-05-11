@@ -1,0 +1,7 @@
+Defaults:www-data !requiretty
+www-data ALL = (root) NOPASSWD: /usr/sbin/bconsole
+www-data ALL = (root) NOPASSWD: /usr/sbin/bdirjson
+www-data ALL = (root) NOPASSWD: /usr/sbin/bsdjson
+www-data ALL = (root) NOPASSWD: /usr/sbin/bfdjson
+www-data ALL = (root) NOPASSWD: /usr/sbin/bbconsjson
+
