@@ -5,8 +5,8 @@
 # Facebook: facebook.com/BoraParaPratica
 # YouTube: youtube.com/BoraParaPratica
 # Data de criação: 21/03/2021
-# Data de atualização: 10/05/2021
-# Versão: 0.04
+# Data de atualização: 11/05/2021
+# Versão: 0.05
 # Testado e homologado para a versão do Ubuntu Server 18.04.x LTS x64
 # Kernel >= 4.15.x
 # Testado e homologado para a versão do Bacula 11.x e do Baculum 11.x
@@ -28,24 +28,84 @@
 #
 # PRIMEIRA ETAPA: CONFIGURAR O BACULUM API: http://localhost:9096
 # 01. Step 1 - select language
-#	Language: English <Next>
+#	Language: English 
+#	<Next>
 # 02. Step 2 - share the Bacula Catalog Database
 #	Do you want to setup and to share the Bacula Catalog Database access for this API instance?: 
 #	Select: Yes
-#	Database type: PostgreSQL
+#	Database type: MySQL
 #	Database name: bacula
-#	Login: bacula
-#	Password: (default, no password)
+#	Login: root
+#	Password: pti@2018
 #	IP address (or hostname): localhost
-#	Port: 5432
+#	Port: 3306
 #	Connection test: <Test>
+#	<Next>
+# 03. Step 3 - share the Bacula Bconsole commands interface
+#	Do you want to setup and share the Bacula Bconsole interface to execute commands in this API instance?
+#	Select: Yes
+#	Bconsole binary file path: /usr/sbin/bconsole
+#	Bconsole admin config file path: /opt/bacula/etc/bconsole.conf
+#	Use sudo: Yes
+#	Bconsole connection test: <Test>
+#	<Next>
+# 04. Step 4 - share the Bacula configuration interface
+#	Do you want to setup and share the Bacula configuration interface to configure Bacula components via this API instance?
+#	Select: Yes
+#	General configuration
+#		Baculum working directory for Bacula config: /etc/baculum/Config-api-apache
+#		Use sudo: Yes
+#	Director
+#		bdirjson binary file path: /usr/sbin/bdirjson
+#		Main Director config file path (usually bacula-dir.conf): /opt/bacula/etc/bacula-dir.conf
+#	Storage Daemon
+#		bsdjson binary file path: /usr/sbin/bsdjson
+#		Main Storage Daemon config file path (usually bacula-sd.conf): /opt/bacula/etc/bacula-sd.conf
+#	File Daemon/Client
+#		bfdjson binary file path: /usr/sbin/bfdjson
+#		Main File Daemon config file path (usually bacula-fd.conf): /opt/bacula/etc/bacula-fd.conf
+#	Bconsole
+#		bbconsjson binary file path: /usr/sbin/bbconsjson
+#		Admin Bconsole config file path (usually bconsole.conf): /opt/bacula/etc/bconsole.conf
+#	<Test Configuration>
+#	<Next>
+# 05. Step 5 - authentication to AP
+#	Use HTTP Basic authentication: Yes
+#	Administration login: admin
+#	Administration password: admin
+#	Retype administration password: admin
+#	<Next>
+# 06. @@Step 7 - Finish@@
+#	<save>
+#
+# SEGUNDA ETAPA: CONFIGURAR O BACULUM WEB: http://localhost:9096
+# 01. Step 1 - select language
+#	Language: English 
+#	<Next>
+# 02. Step 2 - add API instances
+#	Baculum web interface requires to add at least one Baculum API instance with shared Catalog access. Please add API instance.
+#		Add API host
+#			Protocol: HTTP
+#			IP Address/Hostname: localhost
+#			Port: 9096
+#			Use HTTP Basic authentication: Yes
+#			API Login: admin
+#			API Password: admin
+#			API connection test: <Test>
+#		<Next>
+# 03. Step 3 - authentication params to Baculum Web pane
+#	Administration login: admin
+#	Administration password: admin
+#	Retype administration password: admin
+#	<Next>
+# 04. Step 4 - Finish
+#	<Save>
 #
 # Site Oficial do Projeto Bacula: https://www.bacula.org/
 #
 # Vídeo de instalação do GNU/Linux Ubuntu Server 18.04.x LTS: https://www.youtube.com/watch?v=zDdCrqNhIXI
 # Vídeo de configuração do OpenSSH no GNU/Linux Ubuntu Server 18.04.x LTS: https://www.youtube.com/watch?v=ecuol8Uf1EE&t
 # Vídeo de instalação do LAMP Server no Ubuntu Server 18.04.x LTS: https://www.youtube.com/watch?v=6EFUu-I3
-# Vídeo de instalação do PostgreSQL no Ubuntu Server 18.04.x LTS: https://www.youtube.com/watch?v=POCafSY3LAk
 #
 # Variável da Data Inicial para calcular o tempo de execução do script (VARIÁVEL MELHORADA)
 # opção do comando date: +%T (Time)
@@ -97,7 +157,7 @@ fi
 # || (operador lógico OU), 2> (redirecionar de saída de erro STDERR), && = operador lógico AND, { } = agrupa comandos em blocos
 # [ ] = testa uma expressão, retornando 0 ou 1, -ne = é diferente (NotEqual)
 echo -n "Verificando as dependências do Bacula, aguarde... "
-	for name in apt-transport-https apache2 php python
+	for name in apt-transport-https apache2 php python mysql-server mysql-common
 	do
   		[[ $(dpkg -s $name 2> /dev/null) ]] || { 
               echo -en "\n\nO software: $name precisa ser instalado. \nUse o comando 'apt install $name'\n";
@@ -194,8 +254,7 @@ sleep 5
 echo -e "Instalando o Bacula Server e Console, aguarde..."
 	# opção do comando: &>> (redirecionar a saida padrão)
 	# opção do comando apt: -y (yes)
-	#apt -y install bacula-postgresql bacula-console &>> $LOG
-	apt -y install bacula-server bacula-client bacula-common bacula-mysql bacula-console
+	apt -y install bacula-client bacula-common bacula-mysql bacula-console
 echo -e "Bacula Server e Console instalado com sucesso!!!, continuando com o script...\n"
 sleep 5
 #
@@ -222,23 +281,20 @@ echo -e "Habilitando os Sites do Baculum WEB e API no Apache2, aguarde..."
 echo -e "Baculum WEB e API habilitados com sucesso!!!, continuando com o script...\n"
 sleep 5
 #
-echo -e "Criando o Banco de Dados no PostgreSQL do Bacula Server, aguarde..."
-	# opção do comando: &>> (redirecionar a saída padrão)
-	# opção do comando su: - ()
-	# opção do comando postgres: -c ()
-	su - postgres -c "/opt/bacula/scripts/create_postgresql_database" &>> $LOG
-	su - postgres -c "/opt/bacula/scripts/make_postgresql_tables" &>> $LOG
-	su - postgres -c "/opt/bacula/scripts/grant_postgresql_privileges" &>> $LOG
-echo -e "Banco de dados criado com sucesso!!!, continuando com o script...\n"
-sleep 5
-#
-echo -e "Criando os atalhos em: /usr/sbin dos binários do Bacula Server localizados em: /opt/bacula, aguarde..."
+echo -e "Criando os atalhos em: /usr/sbin dos binários do Bacula Server, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando ln: -s (symbolic), -v (verbose)
 	for i in `ls /opt/bacula/bin`; do
 		ln -sv /opt/bacula/bin/$i /usr/sbin/$i &>> $LOG;
 	done
 echo -e "Atalhos criados com sucesso!!!, continuando com o script...\n"
+sleep 5
+#
+echo -e "Atualizando o arquivo baclum.api do Sudoers, aguarde..."
+	# opção do comando: &>> (redirecionar a saída padrão)
+	# opção do comando ln: -s (symbolic), -v (verbose)
+	cp -v conf/baculum-api /etc/sudoers.d/ &>> $LOG
+echo -e "Arquivo atualizado com sucesso!!!, continuando com o script...\n"
 sleep 5
 #
 echo -e "Habilitando os Serviços do Bacula Server (FD, SD e DIR), aguarde..."
