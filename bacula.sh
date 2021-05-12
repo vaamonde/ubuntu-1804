@@ -130,7 +130,7 @@ KERNEL=$(uname -r | cut -d'.' -f1,2)
 # $0 (variável de ambiente do nome do comando)
 LOG="/var/log/$(echo $0 | cut -d'/' -f2)"
 #
-# Declarando as variáveis de download do Bacula (Link atualizado no dia 21/03/2021)
+# Declarando as variáveis de download do Bacula (Link atualizado no dia 12/05/2021)
 BACULAKEY="https://www.bacula.org/downloads/Bacula-4096-Distribution-Verification-key.asc"
 BACULUMKEY="http://bacula.org/downloads/baculum/baculum.pub"
 #
@@ -171,9 +171,6 @@ echo -n "Verificando as dependências do Bacula, aguarde... "
             exit 1; 
             }
 		sleep 5
-#
-# Exportando o recurso de Noninteractive do Debconf para não solicitar telas de configuração
-export DEBIAN_FRONTEND="noninteractive"
 #
 # Script de instalação do Bacula no GNU/Linux Ubuntu Server 18.04.x
 # opção do comando echo: -e (enable interpretation of backslash escapes), \n (new line)
@@ -279,7 +276,7 @@ echo -e "Habilitando os Sites do Baculum WEB e API no Apache2, aguarde..."
 	a2enmod rewrite &>> $LOG
 	a2ensite baculum-web.conf &>> $LOG
 	a2ensite baculum-api.conf &>> $LOG
-	systemctl reload apache2
+	systemctl reload apache2 &>> $LOG
 echo -e "Baculum WEB e API habilitados com sucesso!!!, continuando com o script...\n"
 sleep 5
 #
