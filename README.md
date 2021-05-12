@@ -565,6 +565,20 @@ Vídeo mostrando os procedimentos básicos para instalar o OCS Inventory Server/
 
 O OCS Inventory (Open Computer and Software Inventory Next Generation) é um software livre que permite aos usuários inventariar ativos de TI. O OCS-NG coleta informações sobre o hardware e o software das máquinas conectadas, executando um programa cliente do OCS ("OCS Inventory Agent"). O OCS pode visualizar o inventário por meio de uma interface web. Além disso, o OCS inclui a capacidade de implantar aplicações em computadores de acordo com critérios de busca. O IpDiscover do lado do agente possibilita descobrir a totalidade de computadores e dispositivos em rede.
 
-Link da vídeo aula: 
+[![OCS Inventory](http://img.youtube.com/vi/6soGeSK-Rxs/0.jpg)](http://www.youtube.com/watch?v=6soGeSK-Rxs "OCS Inventory")
+
+Link da vídeo aula: https://www.youtube.com/watch?v=6soGeSK-Rxs
 
 Link do script utilizado nesse vídeo: https://github.com/vaamonde/ubuntu-1804/blob/master/ocsinventory.sh
+
+## **COMO instalar o BACULA e BACULUM no GNU/Linux Ubuntu Server 18.04.x LTS**
+
+Vídeo mostrando os procedimentos básicos para instalar o Bacula System e Baculum Web no GNU/Linux Ubuntu Server 18.04 LTS
+
+O Bacula é um conjunto de software de código aberto que permitem o gerenciamento de backups, restaurações e verificação de dados através de uma rede de computadores de diversos tipos. É relativamente fácil de usar e muito eficiente, enquanto oferece muitas funcionalidades avançadas de gerenciamento de armazenamento, as quais facilitam a encontrar e recuperar arquivos perdidos ou corrompidos. Com ele é possível fazer backup remotamente de Linux, Solaris, FreeBSD, NetBSD, Windows, Mac OS X, etc... 
+
+O Baculum fornece duas aplicações web: o Baculum Web como interface web para gerenciar o Bacula e a API do Baculum, que é a interface de programação do Bacula. Ambas as ferramentas conectadas criam um ambiente web para facilitar o trabalho com os programas da Comunidade Bacula. 
+
+Link da vídeo aula: 
+
+Link do script utilizado nesse vídeo: https://github.com/vaamonde/ubuntu-1804/blob/master/bacula.sh
