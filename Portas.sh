@@ -38,3 +38,4 @@
 026: wekan.sh:			HTTP: 3000, MONGODB: 27019
 027: rocketcjat.sh:		HTTP: 3000, MONGODB: 27017
 028: ocsinventory.sh:	HTTP: 80, MYSQL: 3306
+029: bacula.sh:			HTTP: 80, MYSQL: 3306, BACULA: 9101, 9102, 9103 BACULUM: 9095, 9096
