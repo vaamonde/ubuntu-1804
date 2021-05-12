@@ -10,6 +10,7 @@
 # Kernel >= 4.15.x
 # Testado e homologado para a versão do Bacula 11.x e do Baculum 11.x
 
+#Liberação dos comandos do Bacula acessar o Baculum via WEB/API
 Defaults:www-data !requiretty
 www-data ALL = (root) NOPASSWD: /usr/sbin/bconsole
 www-data ALL = (root) NOPASSWD: /usr/sbin/bdirjson

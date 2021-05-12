@@ -300,6 +300,20 @@ echo -e "Atualizando o arquivo baculum.api do Sudoers e hosts.allow do TCPWrappe
 echo -e "Arquivos atualizados com sucesso!!!, continuando com o script...\n"
 sleep 5
 #
+echo -e "Editando o arquivo baculum.api, pressione: <Enter> para continuar"
+	read
+	sleep 3
+	vim /etc/sudoers.d/baculum-api
+echo -e "Arquivo editado com sucesso!!!, continuando com o script...\n"
+sleep 5
+#
+echo -e "Editando o arquivo hosts.allow, pressione: <Enter> para continuar"
+	read
+	sleep 3
+	vim /etc/hosts.allow
+echo -e "Arquivo editado com sucesso!!!, continuando com o script...\n"
+sleep 5
+#
 echo -e "Habilitando os Serviços do Bacula Server (FD, SD e DIR), aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	systemctl enable bacula-fd.service &>> $LOG
