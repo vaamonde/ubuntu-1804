@@ -71,9 +71,9 @@
 #	<Next>
 # 05. Step 5 - authentication to AP
 #	Use HTTP Basic authentication: Yes
-#	Administration login: admin
-#	Administration password: admin
-#	Retype administration password: admin
+#	Administration login: vaamonde
+#	Administration password: vaamonde
+#	Retype administration password: vaamonde
 #	<Next>
 # 06. @@Step 7 - Finish@@
 #	<save>
@@ -89,14 +89,14 @@
 #			IP Address/Hostname: localhost
 #			Port: 9096
 #			Use HTTP Basic authentication: Yes
-#			API Login: admin
-#			API Password: admin
+#			API Login: vaamonde
+#			API Password: vaamonde
 #			API connection test: <Test>
 #		<Next>
 # 03. Step 3 - authentication params to Baculum Web pane
-#	Administration login: admin
-#	Administration password: admin
-#	Retype administration password: admin
+#	Administration login: robson
+#	Administration password: robson
+#	Retype administration password: robson
 #	<Next>
 # 04. Step 4 - Finish
 #	<Save>
@@ -256,7 +256,7 @@ sleep 5
 echo -e "Instalando o Bacula Server e Console com suporte ao MySQL, aguarde..."
 	# opção do comando: &>> (redirecionar a saida padrão)
 	# opção do comando apt: -y (yes)
-	apt -y install bacula-client bacula-common bacula-mysql bacula-console
+	apt -y install bacula-client bacula-common bacula-mysql bacula-console &>> $LOG
 echo -e "Bacula Server e Console instalado com sucesso!!!, continuando com o script...\n"
 sleep 5
 #
@@ -292,11 +292,12 @@ echo -e "Criando os atalhos em: /usr/sbin dos binários do Bacula Server, aguard
 echo -e "Atalhos criados com sucesso!!!, continuando com o script...\n"
 sleep 5
 #
-echo -e "Atualizando o arquivo baculum.api do Sudoers, aguarde..."
+echo -e "Atualizando o arquivo baculum.api do Sudoers e hosts.allow do TCPWrappers, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando cp: -v (verbose)
 	cp -v conf/baculum-api /etc/sudoers.d/ &>> $LOG
-echo -e "Arquivo atualizado com sucesso!!!, continuando com o script...\n"
+	cp -v conf/hosts.allow /etc/ &>> $LOG
+echo -e "Arquivos atualizados com sucesso!!!, continuando com o script...\n"
 sleep 5
 #
 echo -e "Habilitando os Serviços do Bacula Server (FD, SD e DIR), aguarde..."
