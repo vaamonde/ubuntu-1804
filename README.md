@@ -113,7 +113,9 @@ Link do script utilizado nesse vídeo: https://github.com/vaamonde/ubuntu-1804/b
 
 ## **COMO configurar o LOCALE, TIMEZONE, UTC, UTF e KEYBOARD no GNU/Linux Ubuntu Server 18.04.x LTS**
 
-Vídeo mostrando os procedimentos básicos para configurar o LOCALE (Localidade), Timezone (Fuso Horário), Data e Hora, sincronização da Data e Hora do Sistema Operacional e o Hardware (BIOS), sincronização da Data e Hora de Servidores NTP, configuração de Teclado ABNT-2, Configuração do UTF-8 no Console do Servidor GNU/Linux Ubuntu Server 18.04.x LTS
+Vídeo mostrando os procedimentos básicos para configurar o Locale, UTC, UTF e Keyboard no GNU/Linux Ubuntu Server 18.04.x LTS
+
+Configuração do LOCALE (Localidade), Timezone (Fuso Horário), Data e Hora, sincronização da Data e Hora do Sistema Operacional e o Hardware (BIOS), sincronização da Data e Hora de Servidores NTP, configuração de Teclado ABNT-2, Configuração do UTF-8 no Console do Servidor GNU/Linux Ubuntu Server 18.04.x LTS
 
 [![Configurando o Locale](http://img.youtube.com/vi/laiuH1zgg3U/0.jpg)](http://www.youtube.com/watch?v=laiuH1zgg3U "Configurando o Locale")
 
@@ -124,6 +126,8 @@ Link do script utilizado nesse vídeo: https://github.com/vaamonde/ubuntu-1804/b
 ## **COMO configurar o RAID-1 no GNU/Linux Ubuntu Server 18.04.x LTS**
 
 Vídeo mostrando os procedimentos básicos para adicionar, particionar, formatar, montar e configurar o RAID (Redundant Array of Inexpensive Drives) 1 (Espelhamento) no GNU/Linux Ubuntu Server 18.04.x LTS
+
+RAID é um meio de se criar um subsistema de armazenamento composto por vários discos individuais, com a finalidade de ganhar segurança por meio da redundância de dados e desempenho. Popularmente, RAID seriam dois ou mais discos trabalhando simultaneamente para um mesmo fim, por exemplo, citando o exemplo de RAID 1 logo abaixo, serviria como um espelhamento simples, rápido e confiável entre dois discos, para se fazer uma cópia idêntica de um disco em outro. 
 
 Link da vídeo aula: 
 
@@ -301,7 +305,7 @@ Link do script utilizado nesse vídeo: https://github.com/vaamonde/ubuntu-1804/b
 
 Vídeo mostrando os procedimentos básicos para instalar o OPENFIRE no GNU/Linux Ubuntu Server 18.04 LTS
 
-Extensible Messaging and Presence Protocol (XMPP) (conhecido anteriormente como Jabber) é um protocolo aberto, extensível, baseado em XML, para sistemas de mensagens instantâneas, desenvolvido originalmente para mensagens instantâneas e informação de presença formalizado pelo IETF. Softwares com base XMPP são distribuídos em milhares de servidores através da internet, e usados por cerca de dez milhões de pessoas em todo mundo, de acordo com a  XMPP Standards Foundation.
+Extensible Messaging and Presence Protocol (XMPP) (conhecido anteriormente como Jabber) é um protocolo aberto, extensível, baseado em XML, para sistemas de mensagens instantâneas, desenvolvido originalmente para mensagens instantâneas e informação de presença formalizado pelo IETF. Softwares com base XMPP são distribuídos em milhares de servidores através da internet, e usados por cerca de dez milhões de pessoas em todo mundo, de acordo com a XMPP Standards Foundation.
 
 O Openfire (anteriormente conhecido como Wildfire e Jive Messenger) é um servidor de mensagens instantâneas e de conversas em grupo que usa o servidor XMPP escrito em Java e licenciado sob a licença Apache 2.0.
 
@@ -451,7 +455,7 @@ Link da vídeo aula: https://www.youtube.com/watch?v=hAqaPS0Rlgw
 
 Link do script utilizado nesse vídeo: https://github.com/vaamonde/ubuntu-1804/blob/master/zabbix.sh
 
-## **COMO instalar o NTOPNG no GNU/Linux Ubuntu Server 18.04.x LTS**
+## **COMO instalar o NTOP-NG no GNU/Linux Ubuntu Server 18.04.x LTS**
 
 Vídeo mostrando os procedimentos básicos para instalar o NTop-NG no GNU/Linux Ubuntu Server 18.04 LTS
 
@@ -573,12 +577,14 @@ Link do script utilizado nesse vídeo: https://github.com/vaamonde/ubuntu-1804/b
 
 ## **COMO instalar o BACULA e BACULUM no GNU/Linux Ubuntu Server 18.04.x LTS**
 
-Vídeo mostrando os procedimentos básicos para instalar o Bacula System e Baculum Web no GNU/Linux Ubuntu Server 18.04 LTS
+Vídeo mostrando os procedimentos básicos para instalar o Bacula Community e Baculum Web no GNU/Linux Ubuntu Server 18.04 LTS
 
 O Bacula é um conjunto de software de código aberto que permitem o gerenciamento de backups, restaurações e verificação de dados através de uma rede de computadores de diversos tipos. É relativamente fácil de usar e muito eficiente, enquanto oferece muitas funcionalidades avançadas de gerenciamento de armazenamento, as quais facilitam a encontrar e recuperar arquivos perdidos ou corrompidos. Com ele é possível fazer backup remotamente de Linux, Solaris, FreeBSD, NetBSD, Windows, Mac OS X, etc... 
 
 O Baculum fornece duas aplicações web: o Baculum Web como interface web para gerenciar o Bacula e a API do Baculum, que é a interface de programação do Bacula. Ambas as ferramentas conectadas criam um ambiente web para facilitar o trabalho com os programas da Comunidade Bacula. 
 
-Link da vídeo aula: 
+[![Bacula e Baculum](http://img.youtube.com/vi/LwDCVv4K3zs/0.jpg)](http://www.youtube.com/watch?v=LwDCVv4K3zs "Bacula e Baculum")
+
+Link da vídeo aula: https://www.youtube.com/watch?v=LwDCVv4K3zs
 
 Link do script utilizado nesse vídeo: https://github.com/vaamonde/ubuntu-1804/blob/master/bacula.sh
