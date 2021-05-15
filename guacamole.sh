@@ -5,8 +5,8 @@
 # Facebook: facebook.com/BoraParaPratica
 # YouTube: youtube.com/BoraParaPratica
 # Data de criação: 04/01/2021
-# Data de atualização: 05/03/2021
-# Versão: 0.05
+# Data de atualização: 15/05/2021
+# Versão: 0.06
 # Testado e homologado para a versão do Ubuntu Server 18.04.x LTS x64
 # Kernel >= 4.15.x
 # Testado e homologado para a versão do Apache Guacamole Server 1.3.x e Cliente 1.3.x
@@ -23,11 +23,11 @@
 # Instalação do Vino VNC Server no Linux Mint 19.x e 20.x
 # 	sudo apt update
 #	sudo apt install vino
-#   sudo gsettings set org.gnome.Vino prompt-enabled true
+#	sudo gsettings set org.gnome.Vino prompt-enabled true
 #	sudo gsettings set org.gnome.Vino require-encryption false
 #	cd /usr/lib/vino/
 #	./vino-server &
-#   sudo netstat -pl | grep 5900
+#	sudo netstat -pl | grep 5900
 #	sudo nc -vz 127.0.0.1 5900
 #
 # Instalação do Telnet Server no Ubuntu Server 18.04.x
@@ -168,9 +168,9 @@ echo -e "Instalando as Dependências do Apache Guacamole Server, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando apt: -y (yes)
 	apt -y install libcairo2-dev libjpeg-turbo8-dev libpng-dev libtool-bin libossp-uuid-dev \
-    libavcodec-dev libavformat-dev libavutil-dev libswscale-dev freerdp2-dev libpango1.0-dev \
-    libssh2-1-dev libtelnet-dev libvncserver-dev libwebsockets-dev libpulse-dev libssl-dev \
-    libvorbis-dev libwebp-dev gcc-6 g++-6 make libfreerdp-dev freerdp2-x11 libguac-client-rdp0 &>> $LOG
+	libavcodec-dev libavformat-dev libavutil-dev libswscale-dev freerdp2-dev libpango1.0-dev \
+	libssh2-1-dev libtelnet-dev libvncserver-dev libwebsockets-dev libpulse-dev libssl-dev \
+	libvorbis-dev libwebp-dev gcc-6 g++-6 make libfreerdp-dev freerdp2-x11 libguac-client-rdp0 &>> $LOG
 echo -e "Dependências instaladas com sucesso!!!, continuando com o script..."
 sleep 5
 echo
@@ -180,7 +180,7 @@ echo -e "Fazendo o download do Apache Guacamole Server do site Oficial, aguarde.
 	# opção do comando rm: -v (verbose), -f (force), -R (recursive)
 	# opção do comando wget: -O (output document file)
 	rm -v guacamole.tar.gz &>> $LOG
-    rm -Rfv guacamole-server-*/ &>> $LOG
+	rm -Rfv guacamole-server-*/ &>> $LOG
 	wget $SERVER -O guacamole.tar.gz &>> $LOG
 echo -e "Download do Apache Guacamole Server feito com sucesso!!!, continuando com o script..."
 sleep 5
@@ -198,12 +198,12 @@ echo -e "Instalando o Apache Guacamole Server, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando autoreconf: -f (force), -i (install)
 	cd guacamole-server-*/ &>> $LOG
-        autoreconf -fi &>> $LOG
-        ./configure --with-init-dir=/etc/init.d &>> $LOG
-        make &>> $LOG
-        make install &>> $LOG
-        ldconfig &>> $LOG
-    cd .. &>> $LOG
+		autoreconf -fi &>> $LOG
+		./configure --with-init-dir=/etc/init.d &>> $LOG
+		make &>> $LOG
+		make install &>> $LOG
+		ldconfig &>> $LOG
+	cd .. &>> $LOG
 echo -e "Apache Guacamole Server instalado com sucesso!!!, continuando com o script..."
 sleep 5
 echo
@@ -221,12 +221,12 @@ echo -e "Criando o diretório e baixando o Apache Guacamole Client, aguarde..."
 	# opção do comando mkdir: -v (verbose), {} (block command)
 	# opção do comando {}: Agrupa comandos em um bloco
 	# opção do comando wget: -O (output document file)
-    # opção do comando ln: -s (symbolic), -v (verbose)
+	# opção do comando ln: -s (symbolic), -v (verbose)
 	mkdir -v /etc/guacamole &>> $LOG
 	mkdir -v /etc/guacamole/{extensions,lib} &>> $LOG
 	wget $CLIENT -O /etc/guacamole/guacamole.war &>> $LOG
-    ln -sv /etc/guacamole/guacamole.war $WEBAPPS &>> $LOG
-    ln -sv /etc/guacamole $TOMCAT.guacamole &>> $LOG
+	ln -sv /etc/guacamole/guacamole.war $WEBAPPS &>> $LOG
+	ln -sv /etc/guacamole $TOMCAT.guacamole &>> $LOG
 echo -e "Download dos Apache Guacamole Client feito com sucesso!!!, continuando com o script..."
 sleep 5
 echo
@@ -236,8 +236,8 @@ echo -e "Atualizando os arquivos de configuração do Apache Guacamole Client, a
 	# opção do comando cp: -v (verbose)
 	cp -v conf/guacamole.properties /etc/guacamole/guacamole.properties &>> $LOG
 	cp -v conf/user-mapping.xml /etc/guacamole/user-mapping.xml &>> $LOG
-    cp -v /etc/default/tomcat9 /etc/default/tomcat9.old &>> $LOG
-    cp -v conf/tomcat9 /etc/default/tomcat9 &>> $LOG
+	cp -v /etc/default/tomcat9 /etc/default/tomcat9.old &>> $LOG
+	cp -v conf/tomcat9 /etc/default/tomcat9 &>> $LOG
 echo -e "Arquivos atualizados com sucesso!!!, continuando com o script...\n"
 	echo -e "Editando o arquivo de configuração do Apache Guacamole Properties, pressione <Enter> para continuar"
 		read
