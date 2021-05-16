@@ -69,6 +69,7 @@ network:
 	version: 2
 	
 #Aplicando as configurações e verificando os status
+sudo netplan --debug try
 sudo netplan --debug apply
 sudo netplan ip leases enp0s3
 sudo systemd-resolve --status
@@ -87,6 +88,7 @@ network:
 	version: 2
 
 #Aplicando as configurações e verificando os status
+sudo netplan --debug try
 sudo netplan --debug apply
 sudo systemd-resolve --status
 sudo ifconfig enp0s3
@@ -109,6 +111,7 @@ network:
 	version: 2
 
 #Aplicando as configurações e verificando os status
+sudo netplan --debug try
 sudo netplan --debug apply
 sudo systemd-resolve --status
 sudo ifconfig enp0s3
@@ -133,6 +136,7 @@ network:
 	version: 2
 
 #Aplicando as configurações e verificando os status
+sudo netplan --debug try
 sudo netplan --debug apply
 sudo systemd-resolve --status
 sudo ifconfig enp0s3
@@ -166,43 +170,60 @@ network:
 	version: 2
 
 #Aplicando as configurações e verificando os status
+sudo netplan --debug try
 sudo netplan --debug apply
 sudo systemd-resolve --status
 sudo ifconfig enp0s3
 
 #Configurações de bonds 802.3d com interface dinâmica
+#Obs: no Oracle VirtualBOX as Placas de Rede precisa está configurado o modo
+#Conectado a: Placa de rede exclusiva de hospedeiro (host-only) - Nome: vboxnet0
 network:
+	ethernets:
+	enp0s3:
+		dhcp4: false
+	enp0s8
+		dhcp4: false
 	bonds:
 		bond0:
 			dhcp4: true
 			interfaces:
-				- enp3s0
-				- enp4s0
+				- enp0s3
+				- enp0s8
 			parameters:
 				mode: active-backup
 				primary: enp3s0
 	version: 2
 
 #Aplicando as configurações e verificando os status
+sudo netplan --debug try
 sudo netplan --debug apply
 sudo systemd-resolve --status
 sudo ifconfig bond0
 
 #Configurações de bonds 802.3d com interface estática
+#Obs: no Oracle VirtualBOX as Placas de Rede precisa está configurado o modo
+#Conectado a: Placa de rede exclusiva de hospedeiro (host-only) - Nome: vboxnet
 network:
+	ethernets:
+	enp0s3:
+		dhcp4: false
+	enp0s8
+		dhcp4: false
 	bonds:
 		bond0:
 			dhcp4: false
+			interfaces:
+				- enp0s3
+				- enp8s8
 			addresses: [192.168.0.8/24]
 			gateway4: 192.168.0.1
 			nameservers:
 				addresses: [8.8.8.8,8.8.4.4]
-			interfaces:
-				- enp3s0
-				- enp4s0
 	version: 2
 
 #Aplicando as configurações e verificando os status
+sudo netplan --debug try
 sudo netplan --debug apply
 sudo systemd-resolve --status
 sudo ifconfig bond0
@@ -221,6 +242,7 @@ network:
 	version: 2
 
 #Aplicando as configurações e verificando os status
+sudo netplan --debug try
 sudo netplan --debug apply
 sudo systemd-resolve --status
 sudo ifconfig br0
@@ -239,6 +261,7 @@ network:
 	version: 2
 
 #Aplicando as configurações e verificando os status
+sudo netplan --debug try
 sudo netplan --debug apply
 sudo systemd-resolve --status
 
@@ -258,6 +281,7 @@ network:
 	version: 2
 
 #Aplicando as configurações e verificando os status
+sudo netplan --debug try
 sudo netplan --debug apply
 sudo systemd-resolve --status
 sudo ifconfig wlp2s0b1
