@@ -193,10 +193,10 @@ echo -e "Atualizando a Chave do Bind9 DNS Server no ISC DHCP Server, aguarde..."
 	# opção do comando cp: -v (verbose)
 	rm -v K$USERUPDATE* &>> $LOG
 	dnssec-keygen -r /dev/urandom -a HMAC-MD5 -b 128 -n USER $USERUPDATE &>> $LOG
-	KEYGEN=$(cat K$USERUPDATE.private | grep Key | cut -d' ' -f2)
-	sed "s/secret vaamonde; =/secret $KEYGEN;/" /etc/dhcp/dhcpd.conf > /tmp/dhcpd.conf.old
-	sed "s/secret "vaamonde"; =/secret "$KEYGEN";/" /etc/bind/named.conf > /tmp/named.conf.old
-	sed "s/secret "vaamonde"; =/secret "$KEYGEN";/" /etc/bind/named.conf.local > /tmp/named.conf.local.old
+	KEYGEN=$(cat K$USERUPDATE*.private | grep Key | cut -d' ' -f2)
+	sed "s/secret vaamonde;/secret $KEYGEN;/" /etc/dhcp/dhcpd.conf > /tmp/dhcpd.conf.old
+	sed 's/secret "vaamonde";/secret "'$KEYGEN'";/' /etc/bind/named.conf > /tmp/named.conf.old
+	sed 's/secret "vaamonde";/secret "'$KEYGEN'";/' /etc/bind/named.conf.local > /tmp/named.conf.local.old
 	cp -v /tmp/dhcpd.conf.old /etc/dhcp/dhcpd.conf &>> $LOG
 	cp -v /tmp/named.conf.old /etc/bind/named.conf &>> $LOG
 	cp -v /tmp/named.conf.local.old /etc/bind/named.conf.local &>> $LOG
