@@ -1,0 +1,10 @@
+$ttl 3600
+1.16.172.in-addr.arpa.	IN	SOA	ptispo01ws01.pti.intra. vaamonde.pti.intra. (
+			1621367421
+			3600
+			600
+			1209600
+			3600 )
+1.16.172.in-addr.arpa.	IN	NS	ptispo01ws01.pti.intra.
+20.1.16.172.in-addr.arpa.	IN	PTR	ptispo01ws01.
+254.1.16.172.in-addr.arpa.	IN	PTR	ptispo01fw01.

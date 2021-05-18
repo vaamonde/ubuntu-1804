@@ -1,0 +1,10 @@
+$ttl 3600
+pti.intra.	IN	SOA	ptispo01ws01.pti.intra. vaamonde.pti.intra. (
+			1621367341
+			3600
+			600
+			1209600
+			3600 )
+pti.intra.	IN	NS	ptispo01ws01.pti.intra.
+ptispo01ws01.pti.intra.	IN	A	172.16.1.20
+ptispo01fw01.pti.intra.	IN	A	172.16.1.254
