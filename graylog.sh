@@ -5,7 +5,7 @@
 # Facebook: facebook.com/BoraParaPratica
 # YouTube: youtube.com/BoraParaPratica
 # Data de criação: 26/07/2020
-# Data de atualização: 01/01/2021
+# Data de atualização: 18/05/2021
 # Versão: 0.04
 # Testado e homologado para a versão do Ubuntu Server 18.04.x LTS x64
 # Kernel >= 4.15.x
@@ -105,7 +105,7 @@ echo -e "Início do script $0 em: `date +%d/%m/%Y-"("%H:%M")"`\n" &>> $LOG
 clear
 #
 echo
-echo -e "Instalação do Graylog no GNU/Linux Ubuntu Server 18.04.x\n"
+echo -e "Instalação do Graylog no GNU/Linux Ubuntu Server 18.04.x"
 echo -e "Após a instalação do Graylog acessar a URL: http://`hostname -I | cut -d' ' -f1`:19000/\n"
 echo -e "Aguarde, esse processo demora um pouco dependendo do seu Link de Internet...\n"
 sleep 5
@@ -113,39 +113,34 @@ sleep 5
 echo -e "Adicionando o Repositório Universal do Apt, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	add-apt-repository universe &>> $LOG
-echo -e "Repositório adicionado com sucesso!!!, continuando com o script..."
+echo -e "Repositório adicionado com sucesso!!!, continuando com o script...\n"
 sleep 5
-echo
 #
 echo -e "Adicionando o Repositório Multiversão do Apt, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	add-apt-repository multiverse &>> $LOG
-echo -e "Repositório adicionado com sucesso!!!, continuando com o script..."
+echo -e "Repositório adicionado com sucesso!!!, continuando com o script...\n"
 sleep 5
-echo
 #
 echo -e "Atualizando as listas do Apt, aguarde..."
 	#opção do comando: &>> (redirecionar a saída padrão)
 	apt update &>> $LOG
-echo -e "Listas atualizadas com sucesso!!!, continuando com o script..."
+echo -e "Listas atualizadas com sucesso!!!, continuando com o script...\n"
 sleep 5
-echo
 #
 echo -e "Atualizando o sistema, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando apt: -y (yes)
 	apt -y upgrade &>> $LOG
-echo -e "Sistema atualizado com sucesso!!!, continuando com o script..."
+echo -e "Sistema atualizado com sucesso!!!, continuando com o script...\n"
 sleep 5
-echo
 #
 echo -e "Removendo software desnecessários, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando apt: -y (yes)
 	apt -y autoremove &>> $LOG
-echo -e "Software removidos com sucesso!!!, continuando com o script..."
+echo -e "Software removidos com sucesso!!!, continuando com o script...\n"
 sleep 5
-echo
 #
 echo -e "Instalando o Graylog, aguarde...\n"
 #
@@ -157,9 +152,8 @@ echo -e "Adicionando o repositório do MongoDB, aguarde..."
 	# opção do comando cp: -v (verbose)
 	wget -qO - $KEYSRVMONGODB | apt-key add - &>> $LOG
 	cp -v conf/mongodb-org-4.2.list /etc/apt/sources.list.d/ &>> $LOG
-echo -e "Repositório do MongoDB adicionado com sucesso!!!, continuando com o script..."
+echo -e "Repositório do MongoDB adicionado com sucesso!!!, continuando com o script...\n"
 sleep 5
-echo
 #
 echo -e "Adicionando o repositório do Elasticsearch, aguarde..."
 	# baixando e instalando a chave GPG do Elasticsearch
@@ -169,9 +163,8 @@ echo -e "Adicionando o repositório do Elasticsearch, aguarde..."
 	# opção do comando cp: -v (verbose)
 	wget -qO - $KEYELASTICSEARCH | apt-key add - &>> $LOG
 	cp -v conf/elastic-6.x.list /etc/apt/sources.list.d/ &>> $LOG
-echo -e "Repositório do Elasticsearch adicionado com sucesso!!!, continuando com o script..."
+echo -e "Repositório do Elasticsearch adicionado com sucesso!!!, continuando com o script...\n"
 sleep 5
-echo
 #
 echo -e "Adicionando o repositório do Graylog, aguarde..."
 	# removendo o download da versão anterior do repositório do Graylog
@@ -184,9 +177,8 @@ echo -e "Adicionando o repositório do Graylog, aguarde..."
 	rm -v graylog.deb &>> $LOG
 	wget $REPGRAYLOG -O graylog.deb &>> $LOG
 	dpkg -i graylog.deb &>> $LOG
-echo -e "Repositório do Graylog adicionado com sucesso!!!, continuando com o script..."
+echo -e "Repositório do Graylog adicionado com sucesso!!!, continuando com o script...\n"
 sleep 5
-echo
 #
 echo -e "Instalando as dependências do Graylog, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
@@ -198,9 +190,8 @@ echo -e "Instalando as dependências do Graylog, aguarde..."
 	default-jre uuid-runtime pwgen ca-certificates-java &>> $LOG
 	java -version &>> $LOG
 	update-java-alternatives -l &>> $LOG
-echo -e "Dependências do Graylog instaladas com sucesso!!!, continuando com o script..."
+echo -e "Dependências do Graylog instaladas com sucesso!!!, continuando com o script...\n"
 sleep 5
-echo
 #
 echo -e "Instalando o MongoDB, aguarde..."
 	# opção do comando: &>> (redirecionar a saida padrão)
@@ -208,18 +199,16 @@ echo -e "Instalando o MongoDB, aguarde..."
   	apt -y install mongodb-org &>> $LOG
 	systemctl enable mongod &>> $LOG
 	systemctl restart mongod &>> $LOG
-echo -e "MongoDB instalado com sucesso!!!, continuando com o script..."
+echo -e "MongoDB instalado com sucesso!!!, continuando com o script...\n"
 sleep 5
-echo
 #
 echo -e "Instalando o Elasticsearch, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando apt: -y (yes)
 	# opção do comando cp: -v (verbose)
 	apt -y install elasticsearch-oss &>> $LOG
-echo -e "Elasticsearch instalado com sucesso!!!, continuando com o script..."
+echo -e "Elasticsearch instalado com sucesso!!!, continuando com o script...\n"
 sleep 5
-echo
 #
 echo -e "Atualizando os arquivos de configuração do Elasticsearch, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
@@ -230,35 +219,38 @@ echo -e "Atualizando os arquivos de configuração do Elasticsearch, aguarde..."
 	cp -v conf/elasticsearch.yml /etc/elasticsearch/elasticsearch.yml &>> $LOG
 	cp -v conf/jvm.options /etc/elasticsearch/jvm.options &>> $LOG
 echo -e "Arquivos atualizados com sucesso!!!, continuando com o script...\n"
-	echo -e "Editando o arquivo de configuração do Elasticsearch, pressione <Enter> para continuar"
-		read
-		sleep 3
-		vim /etc/elasticsearch/elasticsearch.yml +14
-	echo -e "Arquivo editado com sucesso!!!, continuando com o script...\n"
-	echo -e "Editando o arquivo de configuração do Java do Elasticsearch, pressione <Enter> para continuar"
-		read
-		sleep 3
-		vim /etc/elasticsearch/jvm.options +15
-	echo -e "Arquivo editado com sucesso!!!, continuando com o script...\n"
+sleep 5
+#
+echo -e "Editando o arquivo de configuração do Elasticsearch, pressione <Enter> para continuar"
+	read
+	sleep 3
+	vim /etc/elasticsearch/elasticsearch.yml +14
+echo -e "Arquivo editado com sucesso!!!, continuando com o script...\n"
+sleep 5
+#
+echo -e "Editando o arquivo de configuração do Java do Elasticsearch, pressione <Enter> para continuar"
+	read
+	sleep 3
+	vim /etc/elasticsearch/jvm.options +15
+echo -e "Arquivo editado com sucesso!!!, continuando com o script...\n"
+sleep 5
+#
+echo -e "Inicializando o serviço do Elasticsearch, aguarde..."
 	systemctl enable elasticsearch &>> $LOG
 	systemctl restart elasticsearch &>> $LOG
-echo -e "Arquivos atualizados com com sucesso!!!, continuando com o script..."
+echo -e "Serviço inicializado com sucesso!!!, continuando com o script...\n"
 sleep 5
-echo
 #
 echo -e "Instalando o Graylog, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando: | piper (conecta a saída padrão com a entrada padrão de outro comando)
 	# opção do comando apt: -y (yes)
 	apt install -y graylog-server graylog-integrations-plugins &>> $LOG
-echo -e "Graylog instalado com sucesso!!!, continuando com o script..."
+echo -e "Graylog instalado com sucesso!!!, continuando com o script...\n"
 sleep 5
-echo
 #
 echo -e "Editando o arquivo de configuração do Graylog, pressione <Enter> para editar..."
 	# opção do comando: &>> (redirecionar a saída padrão)
-	# opção do comando pwgen: -N (num passwords), -s (secure)
-	# opção do comando tr: -d (delete)
 	# opção do comando cut: -d (delimiter), -f (fields)
 	# opção do comando cp: -v (verbose)
 	# opção do comando sed: s (replacement)
@@ -268,29 +260,23 @@ echo -e "Editando o arquivo de configuração do Graylog, pressione <Enter> para
 	sed "s/password_secret =/password_secret = $SECRET/" /etc/graylog/server/server.conf > /tmp/server.conf.old
 	sed "s/root_password_sha2 =/root_password_sha2 = $SHA2/" /tmp/server.conf.old > /etc/graylog/server/server.conf
 	vim /etc/graylog/server/server.conf
-echo -e "Arquivo do Graylog editado com sucesso!!!, continuando com o script..."
+echo -e "Arquivo do Graylog editado com sucesso!!!, continuando com o script...\n"
 sleep 5
-echo
 #
-echo -e "Habilitando o Serviço do Graylog, aguarde..."
+echo -e "Habilitando e Iniciando o Serviço Graylog, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	systemctl enable graylog-server &>> $LOG
-    sleep 5
 	systemctl restart graylog-server &>> $LOG
-    sleep 5
     systemctl status graylog-server &>> $LOG
-    sleep 5
-echo -e "Serviço do Graylog habilitado com sucesso!!!, continuando com o script..."
+echo -e "Serviço do Graylog iniciado com sucesso!!!, continuando com o script...\n"
 sleep 5
-echo
 #
 echo -e "Verificando a porta de conexão do Graylog, MongoDB e Elasticsearch, aguarde..."
 	# opção do comando netstat: -a (all), -n (numeric)
 	# opção do comando grep: \| (função OU)
 	netstat -an | grep ':19000\|27017\|9200'
-echo -e "Portas de conexões verificadas com sucesso!!!, continuando com o script..."
+echo -e "Portas de conexões verificadas com sucesso!!!, continuando com o script...\n"
 sleep 5
-echo
 #
 echo -e "Instalação do Graylog feita com Sucesso!!!."
 	# script para calcular o tempo gasto (SCRIPT MELHORADO, CORRIGIDO FALHA DE HORA:MINUTO:SEGUNDOS)

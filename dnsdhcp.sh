@@ -23,6 +23,14 @@
 # (DHCP) a uma rede. Essa implementação, também conhecida como ISC DHCP, é uma das primeiras e mais 
 # conhecidas, mas agora existem várias outras implementações de software de servidor DHCP disponíveis.
 #
+# Diretório e Arquivo de banco de dados do Leasing ofertados pelo ISC DHCP Server:
+# Localização: /var/lib/dhcp/dhcpd.leases
+# Monitoramento do Log: tail -f /var/log/syslog | grep dhcpd
+#
+# Diretório das Zonas de Pesquisa Direta e Reversa do Bind9 DNS Server:
+# Localização: /var/lib/bind/
+# Monitoramento do Log: tail -f /var/log/syslog | grep named
+#
 # Site Oficial do Projeto Bind9: https://www.isc.org/bind/
 # Site Oficial do Projeto ICS DHCP: https://www.isc.org/dhcp/
 #
@@ -50,6 +58,9 @@ KERNEL=$(uname -r | cut -d'.' -f1,2)
 # opções do comando cut: -d (delimiter), -f (fields)
 # $0 (variável de ambiente do nome do comando)
 LOG="/var/log/$(echo $0 | cut -d'/' -f2)"
+#
+# Variável utilizada na geração da chave de integração do Bind9 DNS Server e do ISC DHCP Server
+USERUPDATE="vaamonde"
 #
 # Exportando o recurso de Noninteractive do Debconf para não solicitar telas de configuração
 export DEBIAN_FRONTEND="noninteractive"
@@ -121,7 +132,7 @@ sleep 5
 echo -e "Instalando o Bind9 e ISC DHCP, aguarde..."
 	# opção do comando: &>> (redirecionar a saida padrão)
 	# opção do comando apt: -y (yes)
-	apt -y bind9 bind9utils dnsutils net-tools isc-dhcp-server &>> $LOG
+	apt -y install bind9 bind9utils dnsutils net-tools isc-dhcp-server &>> $LOG
 echo -e "Bind9 e ISC DHCP instalado com sucesso!!!, continuando com o script...\n"
 sleep 5
 #
@@ -138,9 +149,14 @@ echo -e "Arquivo editado com sucesso!!!, continuando com o script...\n"
 sleep 5
 #
 echo -e "Editando o arquivo 50-cloud-init.yaml, pressione <Enter> para continuar."
-	# opção do comando: &>> (redirecionar a saida padrão)
 	read
 	vim /etc/netplan/50-cloud-init.yaml
+echo -e "Arquivo editado com sucesso!!!, continuando com o script...\n"
+sleep 5
+#
+echo -e "Editando o arquivo resolv.conf pressione <Enter> para continuar."
+	read
+	vim /etc/resolv.conf
 echo -e "Arquivo editado com sucesso!!!, continuando com o script...\n"
 sleep 5
 #
@@ -163,54 +179,69 @@ echo -e "Atualizando os arquivos de configuração do Bind9 DNS Server, aguarde.
 	cp -v conf/named.conf /etc/bind/named.conf &>> $LOG
 	cp -v conf/named.conf.options /etc/bind/named.conf.options &>> $LOG
 	cp -v conf/named.conf.local /etc/bind/named.conf.local &>> $LOG
-	cp -v conf/pti.intra.zone /var/lib/bind/pti.intra.zone &>> $LOG
-	cp -v conf/pti.intra.rev.zone /var/lib/bind/pti.intra.rev.zone &>> $LOG
+	cp -v conf/pti.intra.hosts /var/lib/bind/pti.intra.hosts &>> $LOG
+	cp -v conf/172.16.1.rev /var/lib/bind/172.16.1.rev &>> $LOG
 echo -e "Arquivos atualizados com sucesso!!!, continuando com o script...\n"
 sleep 5
 #
 echo -e "Atualizando a Chave do Bind9 DNS Server no ISC DHCP Server, aguarde..."
 	# opção do comando: &>> (redirecionar a saida padrão)
+	# opção do comando rm: -v (verbose)
+	# opção do comando dnssec-keygen: -r (randomdev), -a (algorithm), -b (keysize), -n (nametype)
+	# opção do comando cut: -d (delimiter), -f (fields)
+	# opção do comando sed: s (replacement)
 	# opção do comando cp: -v (verbose)
-	# opção do comando chown: -v (verbose), root (user), root (group)
-	# opção do comando chmod: -v (verbose), 640 (User=RW-, Group=R--, Other=---)
-	cp -v /etc/bind/rndc.key /etc/dhcp/ddns-keys/ &>> $LOG
-	chown -v root:root /etc/dhcp/ddns-keys/rndc.key &>> $LOG
-	chmod -v 640 /etc/dhcp/ddns-keys/rndc.key &>> $LOG
+	rm -v K$USERUPDATE* &>> $LOG
+	dnssec-keygen -r /dev/urandom -a HMAC-MD5 -b 128 -n USER $USERUPDATE &>> $LOG
+	KEYGEN=$(cat K$USERUPDATE.private | grep Key | cut -d' ' -f2)
+	sed "s/secret vaamonde; =/secret $KEYGEN;/" /etc/dhcp/dhcpd.conf > /tmp/dhcpd.conf.old
+	sed "s/secret "vaamonde"; =/secret "$KEYGEN";/" /etc/bind/named.conf > /tmp/named.conf.old
+	sed "s/secret "vaamonde"; =/secret "$KEYGEN";/" /etc/bind/named.conf.local > /tmp/named.conf.local.old
+	cp -v /tmp/dhcpd.conf.old /etc/dhcp/dhcpd.conf &>> $LOG
+	cp -v /tmp/named.conf.old /etc/bind/named.conf &>> $LOG
+	cp -v /tmp/named.conf.local.old /etc/bind/named.conf.local &>> $LOG
 echo -e "Atualização da chave feita com sucesso!!!, continuando com o script...\n"
 sleep 5
 #
 echo -e "Editando o arquivo named.conf, pressione <Enter> para continuar."
-	# opção do comando: &>> (redirecionar a saida padrão)
 	read
 	vim /etc/bind/named.conf
 echo -e "Arquivo editado com sucesso!!!, continuando com o script...\n"
 sleep 5
 #
-echo -e "Editando o arquivo named.conf.options, pressione <Enter> para continuar."
-	# opção do comando: &>> (redirecionar a saida padrão)
-	read
-	vim /etc/bind/named.conf.options
-echo -e "Arquivo editado com sucesso!!!, continuando com o script...\n"
-sleep 5
-#
 echo -e "Editando o arquivo named.conf.local, pressione <Enter> para continuar."
-	# opção do comando: &>> (redirecionar a saida padrão)
 	read
 	vim /etc/bind/named.conf.local
 echo -e "Arquivo editado com sucesso!!!, continuando com o script...\n"
 sleep 5
 #
-echo -e "Editando o arquivo pti.intra.zone, pressione <Enter> para continuar."
-	# opção do comando: &>> (redirecionar a saida padrão)
+echo -e "Editando o arquivo named.conf.options, pressione <Enter> para continuar."
 	read
-	vim /var/lib/bind/pti.intra.zone
+	vim /etc/bind/named.conf.options
 echo -e "Arquivo editado com sucesso!!!, continuando com o script...\n"
 sleep 5
 #
-echo -e "Editando o arquivo pti.intra.rev.zone, pressione <Enter> para continuar."
+echo -e "Editando o arquivo pti.intra.hosts, pressione <Enter> para continuar."
 	# opção do comando: &>> (redirecionar a saida padrão)
+	# opção do comando chown: -v (verbose), -root (user), bind (group)
 	read
-	vim /var/lib/bind/pti.intra.rev.zone
+	vim /var/lib/bind/pti.intra.hosts
+	chown -v root:bind /var/lib/bind/pti.intra.hosts &>> $LOG
+echo -e "Arquivo editado com sucesso!!!, continuando com o script...\n"
+sleep 5
+#
+echo -e "Editando o arquivo 172.16.1.rev, pressione <Enter> para continuar."
+	# opção do comando: &>> (redirecionar a saida padrão)
+	# opção do comando chown: -v (verbose), -root (user), bind (group)
+	read
+	vim /var/lib/bind/172.16.1.rev
+	chown -v root:bind /var/lib/bind/172.16.1.rev &>> $LOG
+echo -e "Arquivo editado com sucesso!!!, continuando com o script...\n"
+sleep 5
+#
+echo -e "Editando o arquivo dhcpd.conf, pressione <Enter> para continuar."
+	read
+	vim /etc/dhcp/dhcpd.conf
 echo -e "Arquivo editado com sucesso!!!, continuando com o script...\n"
 sleep 5
 #
@@ -218,7 +249,7 @@ echo -e "Inicializando os serviços do Bind9 DNS Server, ISC DHCP Server e Netpl
 	# opção do comando: &>> (redirecionar a saida padrão)
 	netplan --debug apply &>> $LOG
 	systemctl start isc-dhcp-server &>> $LOG
-	systemctl start bind9 &>> $LOG
+	systemctl restart bind9 &>> $LOG
 echo -e "Serviços inicializados com com sucesso!!!, continuando com o script...\n"
 sleep 5
 #
