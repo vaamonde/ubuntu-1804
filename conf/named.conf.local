@@ -1,0 +1,27 @@
+// Autor: Robson Vaamonde
+// Site: www.procedimentosemti.com.br
+// Facebook: facebook.com/ProcedimentosEmTI
+// Facebook: facebook.com/BoraParaPratica
+// YouTube: youtube.com/BoraParaPratica
+// Data de criação: 17/05/2021
+// Data de atualização: 17/05/2021
+// Versão: 0.1
+// Testado e homologado para a versão do Ubuntu Server 18.04 LTS x64
+// Kernel >= 4.15.x
+
+// Incluindo as chaves de integração do Bind9 DNS Server e do ISC DHCP Server
+include "/etc/bind/rndc.key";
+
+// Configuração de Zona de Pesquisa Direta do Bind9 DNS Server
+zone "pti.intra" {
+     type master;
+     file "/var/lib/bind/pti.intra.zone";
+     allow-update { key rndc-key; };
+};
+
+// Configuração da Zona de Pesquisa Reversa do Bind9 DNS Server
+zone "1.16.172.in-addr.arpa" {
+     type master;
+     file "/var/lib/bind/pti.intra.rev.zone";
+     allow-update { key rndc-key; };
+};

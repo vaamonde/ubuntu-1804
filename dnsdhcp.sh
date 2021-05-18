@@ -125,7 +125,109 @@ echo -e "Instalando o Bind9 e ISC DHCP, aguarde..."
 echo -e "Bind9 e ISC DHCP instalado com sucesso!!!, continuando com o script...\n"
 sleep 5
 #
-
+echo -e "Editando o arquivo hostname, pressione <Enter> para continuar."
+	read
+	vim /etc/hostname
+echo -e "Arquivo editado com sucesso!!!, continuando com o script...\n"
+sleep 5
+#
+echo -e "Editando o arquivo hosts, pressione <Enter> para continuar."
+	read
+	vim /etc/hosts
+echo -e "Arquivo editado com sucesso!!!, continuando com o script...\n"
+sleep 5
+#
+echo -e "Editando o arquivo 50-cloud-init.yaml, pressione <Enter> para continuar."
+	# opção do comando: &>> (redirecionar a saida padrão)
+	read
+	vim /etc/netplan/50-cloud-init.yaml
+echo -e "Arquivo editado com sucesso!!!, continuando com o script...\n"
+sleep 5
+#
+echo -e "Atualizando o arquivo de configuração do ISC DHCP Server, aguarde..."
+	# opção do comando: &>> (redirecionar a saida padrão)
+	# opção do comando mv: -v (verbose)
+	# opção do comando cp: -v (verbose)
+	mv -v /etc/dhcp/dhcpd.conf /etc/dhcp/dhcpd.conf.bkp &>> $LOG
+	cp -v conf/dhcpd.conf /etc/dhcp/dhcpd.conf &>> $LOG
+echo -e "Arquivo atualizado com sucesso!!!, continuando com o script...\n"
+sleep 5
+#
+echo -e "Atualizando os arquivos de configuração do Bind9 DNS Server, aguarde..."
+	# opção do comando: &>> (redirecionar a saida padrão)
+	# opção do comando mv: -v (verbose)
+	# opção do comando cp: -v (verbose)
+	mv -v /etc/bind/named.conf /etc/bind/named.conf.bkp &>> $LOG
+	mv -v /etc/bind/named.conf.options /etc/bind/named.conf.options.bkp &>> $LOG
+	mv -v /etc/bind/named.conf.local /etc/bind/named.conf.local.bkp &>> $LOG
+	cp -v conf/named.conf /etc/bind/named.conf &>> $LOG
+	cp -v conf/named.conf.options /etc/bind/named.conf.options &>> $LOG
+	cp -v conf/named.conf.local /etc/bind/named.conf.local &>> $LOG
+	cp -v conf/pti.intra.zone /var/lib/bind/pti.intra.zone &>> $LOG
+	cp -v conf/pti.intra.rev.zone /var/lib/bind/pti.intra.rev.zone &>> $LOG
+echo -e "Arquivos atualizados com sucesso!!!, continuando com o script...\n"
+sleep 5
+#
+echo -e "Atualizando a Chave do Bind9 DNS Server no ISC DHCP Server, aguarde..."
+	# opção do comando: &>> (redirecionar a saida padrão)
+	# opção do comando cp: -v (verbose)
+	# opção do comando chown: -v (verbose), root (user), root (group)
+	# opção do comando chmod: -v (verbose), 640 (User=RW-, Group=R--, Other=---)
+	cp -v /etc/bind/rndc.key /etc/dhcp/ddns-keys/ &>> $LOG
+	chown -v root:root /etc/dhcp/ddns-keys/rndc.key &>> $LOG
+	chmod -v 640 /etc/dhcp/ddns-keys/rndc.key &>> $LOG
+echo -e "Atualização da chave feita com sucesso!!!, continuando com o script...\n"
+sleep 5
+#
+echo -e "Editando o arquivo named.conf, pressione <Enter> para continuar."
+	# opção do comando: &>> (redirecionar a saida padrão)
+	read
+	vim /etc/bind/named.conf
+echo -e "Arquivo editado com sucesso!!!, continuando com o script...\n"
+sleep 5
+#
+echo -e "Editando o arquivo named.conf.options, pressione <Enter> para continuar."
+	# opção do comando: &>> (redirecionar a saida padrão)
+	read
+	vim /etc/bind/named.conf.options
+echo -e "Arquivo editado com sucesso!!!, continuando com o script...\n"
+sleep 5
+#
+echo -e "Editando o arquivo named.conf.local, pressione <Enter> para continuar."
+	# opção do comando: &>> (redirecionar a saida padrão)
+	read
+	vim /etc/bind/named.conf.local
+echo -e "Arquivo editado com sucesso!!!, continuando com o script...\n"
+sleep 5
+#
+echo -e "Editando o arquivo pti.intra.zone, pressione <Enter> para continuar."
+	# opção do comando: &>> (redirecionar a saida padrão)
+	read
+	vim /var/lib/bind/pti.intra.zone
+echo -e "Arquivo editado com sucesso!!!, continuando com o script...\n"
+sleep 5
+#
+echo -e "Editando o arquivo pti.intra.rev.zone, pressione <Enter> para continuar."
+	# opção do comando: &>> (redirecionar a saida padrão)
+	read
+	vim /var/lib/bind/pti.intra.rev.zone
+echo -e "Arquivo editado com sucesso!!!, continuando com o script...\n"
+sleep 5
+#
+echo -e "Inicializando os serviços do Bind9 DNS Server, ISC DHCP Server e Netplan, aguarde..."
+	# opção do comando: &>> (redirecionar a saida padrão)
+	netplan --debug apply &>> $LOG
+	systemctl start isc-dhcp-server &>> $LOG
+	systemctl start bind9 &>> $LOG
+echo -e "Serviços inicializados com com sucesso!!!, continuando com o script...\n"
+sleep 5
+#
+echo -e "Verificando as portas de Conexões do Bind9 DNS Server e do ISC DHCP Server, aguarde..."
+	# opção do comando netstat: -a (all), -n (numeric)
+	netstat -an | grep '53\|67'
+echo -e "Portas de conexões verificadas com sucesso!!!, continuando com o script...\n"
+sleep 5
+#
 echo -e "Instalação do Bind9 DNS Server integrado com o ICS DHCP Server feita com Sucesso!!!."
 	# script para calcular o tempo gasto (SCRIPT MELHORADO, CORRIGIDO FALHA DE HORA:MINUTO:SEGUNDOS)
 	# opção do comando date: +%T (Time)
