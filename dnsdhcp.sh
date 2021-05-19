@@ -157,12 +157,6 @@ echo -e "Editando o arquivo 50-cloud-init.yaml, pressione <Enter> para continuar
 echo -e "Arquivo editado com sucesso!!!, continuando com o script...\n"
 sleep 5
 #
-echo -e "Editando o arquivo resolv.conf pressione <Enter> para continuar."
-	read
-	vim /etc/resolv.conf
-echo -e "Arquivo editado com sucesso!!!, continuando com o script...\n"
-sleep 5
-#
 echo -e "Atualizando o arquivo de configuração do ISC DHCP Server, aguarde..."
 	# opção do comando: &>> (redirecionar a saida padrão)
 	# opção do comando mv: -v (verbose)

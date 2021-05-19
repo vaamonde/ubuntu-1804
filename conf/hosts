@@ -10,7 +10,7 @@
 # Kernel >= 4.15.x
 
 # Configuração do Banco de dados DNS estático IPv4 do servidor local
-#IPv4		FQDN					CNAME	
+# IPv4		FQDN					CNAME	
 127.0.0.1 	localhost.localdomain	localhost
 127.0.1.1 	ptispo01ws01.pti.intra	ptispo01ws01
 172.16.1.20	ptispo01ws01.pti.intra	ptispo01ws01
