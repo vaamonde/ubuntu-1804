@@ -9,9 +9,9 @@
 ; Testado e homologado para a versão do Ubuntu Server 18.04.x LTS x64
 ; Kernel >= 4.15.x
 
-$ORIGIN pti.intra.
+$ORIGIN 1.16.172.in-addr.arpa.
 $TTL 3600 ; 1 (uma) semana de TTL (Time to Live)
-1.16.172.in-addr.arpa		IN		SOA		ptispo01ws01.pti.intra. vaamonde.pti.intra. (
+@		IN		SOA		ptispo01ws01.pti.intra. vaamonde.pti.intra. (
 				1 ; serial
 				604800 ; atualização 1 (uma) semana
 				86400 ; retenção 1 (um) dia
@@ -19,6 +19,8 @@ $TTL 3600 ; 1 (uma) semana de TTL (Time to Live)
 				604800 ; minímo retenção de 1 (uma) semana
 				)
 ;
-		IN		NS		ptispo01ws01.pti.intra.
+@		IN		NS		ptispo01ws01.pti.intra.
+@		IN		MX		10 mail.pti.intra.
+;
 20		IN		PTR		ptispo01ws01.pti.intra.
 254		IN		PTR		ptispo01fw01.pti.intra.
