@@ -32,7 +32,7 @@
 # Monitoramento do Log: tail -f /var/log/syslog | grep named
 #
 # Monitorando o Bind9 DNS Server e o ISC DHCP Server simultaneamente
-# Comando: ail -f /var/log/syslog | grep -E \(dhcpd\|named\)
+# Comando: tail -f /var/log/syslog | grep -E \(dhcpd\|named\)
 #
 # Site Oficial do Projeto Bind9: https://www.isc.org/bind/
 # Site Oficial do Projeto ICS DHCP: https://www.isc.org/dhcp/
@@ -243,13 +243,13 @@ sleep 5
 #
 echo -e "Editando o arquivo dnsupdate-cron, pressione <Enter> para continuar."
 	read
-	vim /etc/dhcp/dhcpd.conf
+	vim /etc/cron.d/dnsupdate-cron
 echo -e "Arquivo editado com sucesso!!!, continuando com o script...\n"
 sleep 5
 #
 echo -e "Editando o arquivo dhcpd.conf, pressione <Enter> para continuar."
 	read
-	vim /etc/cron.d/dnsupdate-cron
+	vim /etc/dhcp/dhcpd.conf
 echo -e "Arquivo editado com sucesso!!!, continuando com o script...\n"
 sleep 5
 #
