@@ -62,7 +62,7 @@ KERNEL=$(uname -r | cut -d'.' -f1,2)
 # $0 (variável de ambiente do nome do comando)
 LOG="/var/log/$(echo $0 | cut -d'/' -f2)"
 #
-# Variável utilizada na geração da chave de integração do Bind9 DNS Server e do ISC DHCP Server
+# Variável utilizada na geração da chave de atualização do Bind9 DNS Server utilizada no ISC DHCP Server
 USERUPDATE="vaamonde"
 #
 # Exportando o recurso de Noninteractive do Debconf para não solicitar telas de configuração
@@ -93,7 +93,9 @@ echo -e "Início do script $0 em: `date +%d/%m/%Y-"("%H:%M")"`\n" &>> $LOG
 clear
 #
 echo
-echo -e "Instalação do Bind9 integrado com o ICS DHCP no GNU/Linux Ubuntu Server 18.04.x\n"
+echo -e "Instalação do Bind9 DNS Server integrado com o ICS DHCP Server no GNU/Linux Ubuntu Server 18.04.x"
+echo -e "Porta padrão utilizada pelo Bind9 DNS Server: 53"
+echo -e "Porta padrão utilizada pelo ISC DHCP Server.: 67\n"
 echo -e "Aguarde, esse processo demora um pouco dependendo do seu Link de Internet...\n"
 sleep 5
 #
@@ -132,11 +134,11 @@ sleep 5
 echo -e "Instalando o Bind9 DNS Server e ISC DHCP Server, aguarde...\n"
 sleep 5
 #
-echo -e "Instalando o Bind9 e ISC DHCP, aguarde..."
+echo -e "Instalando o Bind9 DNS Server e o ISC DHCP Server, aguarde..."
 	# opção do comando: &>> (redirecionar a saida padrão)
 	# opção do comando apt: -y (yes)
 	apt -y install bind9 bind9utils dnsutils net-tools isc-dhcp-server &>> $LOG
-echo -e "Bind9 e ISC DHCP instalado com sucesso!!!, continuando com o script...\n"
+echo -e "Bind9 DNS Server e o ISC DHCP Server instalado com sucesso!!!, continuando com o script...\n"
 sleep 5
 #
 echo -e "Editando o arquivo hostname, pressione <Enter> para continuar."
@@ -152,6 +154,7 @@ echo -e "Arquivo editado com sucesso!!!, continuando com o script...\n"
 sleep 5
 #
 echo -e "Editando o arquivo 50-cloud-init.yaml, pressione <Enter> para continuar."
+echo -e "Cuidado: o nome do arquivo de configuração da placa de rede pode mudar"
 	read
 	vim /etc/netplan/50-cloud-init.yaml
 echo -e "Arquivo editado com sucesso!!!, continuando com o script...\n"
@@ -182,7 +185,7 @@ echo -e "Atualizando os arquivos de configuração do Bind9 DNS Server, aguarde.
 echo -e "Arquivos atualizados com sucesso!!!, continuando com o script...\n"
 sleep 5
 #
-echo -e "Atualizando a Chave do Bind9 DNS Server no ISC DHCP Server, aguarde..."
+echo -e "Gerando a Chave de atualização do Bind9 DNS Server utilizada no ISC DHCP Server, aguarde..."
 	# opção do comando: &>> (redirecionar a saida padrão)
 	# opção do comando rm: -v (verbose)
 	# opção do comando dnssec-keygen: -r (randomdev), -a (algorithm), -b (keysize), -n (nametype)
@@ -191,9 +194,9 @@ echo -e "Atualizando a Chave do Bind9 DNS Server no ISC DHCP Server, aguarde..."
 	# opção do comando cp: -v (verbose)
 	rm -v K$USERUPDATE* &>> $LOG
 	dnssec-keygen -r /dev/urandom -a HMAC-MD5 -b 128 -n USER $USERUPDATE &>> $LOG
-	KEYGEN=$(cat K$USERUPDATE*.private | grep Key | cut -d' ' -f2)
-	sed "s/secret vaamonde;/secret $KEYGEN;/" /etc/dhcp/dhcpd.conf > /tmp/dhcpd.conf.old
-	sed 's/secret "vaamonde";/secret "'$KEYGEN'";/' /etc/bind/named.conf.local > /tmp/named.conf.local.old
+		KEYGEN=$(cat K$USERUPDATE*.private | grep Key | cut -d' ' -f2)
+		sed "s/secret vaamonde;/secret $KEYGEN;/" /etc/dhcp/dhcpd.conf > /tmp/dhcpd.conf.old
+		sed 's/secret "vaamonde";/secret "'$KEYGEN'";/' /etc/bind/named.conf.local > /tmp/named.conf.local.old
 	cp -v /tmp/dhcpd.conf.old /etc/dhcp/dhcpd.conf &>> $LOG
 	cp -v /tmp/named.conf.local.old /etc/bind/named.conf.local &>> $LOG
 echo -e "Atualização da chave feita com sucesso!!!, continuando com o script...\n"
@@ -247,7 +250,7 @@ echo -e "Editando o arquivo dhcpd.conf, pressione <Enter> para continuar."
 echo -e "Arquivo editado com sucesso!!!, continuando com o script...\n"
 sleep 5
 #
-echo -e "Inicializando os serviços do Bind9 DNS Server, ISC DHCP Server e Netplan, aguarde..."
+echo -e "Inicializando os serviços do Bind9 DNS Server, ISC DHCP Server e do Netplan, aguarde..."
 	# opção do comando: &>> (redirecionar a saida padrão)
 	netplan --debug apply &>> $LOG
 	systemctl start isc-dhcp-server &>> $LOG

@@ -227,6 +227,18 @@ Link da vídeo aula: https://www.youtube.com/watch?v=ecuol8Uf1EE
 
 Link do script utilizado nesse vídeo: https://github.com/vaamonde/ubuntu-1804/blob/master/openssh.sh
 
+## **COMO instalar e configurar o Bind9 DNS Server e ISC DHCP Server no GNU/Linux Ubuntu Server 18.04.x LTS**
+
+Vídeo mostrando os procedimentos básicos para instalar e configurar o Bind9 DNS Server com atualização dinâmica do ISC DHCP Server no GNU/Linux Ubuntu Server 18.04 LTS
+
+O Bind DNS Server BIND (Berkeley Internet Name Domain ou, como chamado previamente, Berkeley Internet Name Daemon) é o servidor para o protocolo DNS mais utilizado na Internet, especialmente em sistemas do tipo Unix, onde ele pode ser considerado um padrão de facto. Foi criado por quatro estudantes de graduação, membros de um grupo de pesquisas em ciência da computação da Universidade de Berkeley, e foi distribuído pela primeira vez com o sistema operacional 4.3 BSD. Atualmente o BIND é suportado e mantido pelo Internet Systems Consortium.
+
+O ISC DHCP Server dhcpd (uma abreviação de "daemon DHCP") é um programa de servidor DHCP que opera como um daemon em um servidor para fornecer serviço de protocolo de configuração dinâmica de hosts (DHCP) a uma rede. Essa implementação, também conhecida como ISC DHCP, é uma das primeiras e mais conhecidas, mas agora existem várias outras implementações de software de servidor DHCP disponíveis.
+
+Link da vídeo aula: 
+
+Link do script utilizado nesse vídeo: https://github.com/vaamonde/ubuntu-1804/blob/master/dnsdhcp.sh
+
 ## **COMO instalar o LAMP Server no GNU/Linux Ubuntu Server 18.04.x LTS**
 
 Vídeo mostrando os procedimentos básicos para instalar o LAMP Server GNU/Linux Ubuntu Server 18.04 LTS
