@@ -5,8 +5,8 @@
 # Facebook: facebook.com/BoraParaPratica
 # YouTube: youtube.com/BoraParaPratica
 # Data de criação: 16/05/2021
-# Data de atualização: 18/05/2021
-# Versão: 0.02
+# Data de atualização: 19/05/2021
+# Versão: 0.03
 # Testado e homologado para a versão do Ubuntu Server 18.04.x LTS x64
 # Kernel >= 4.15.x
 # Testado e homologado para a versão do Bind9 v9.11.x e do ISC DHCP Server
@@ -184,6 +184,7 @@ echo -e "Atualizando os arquivos de configuração do Bind9 DNS Server, aguarde.
 	cp -v conf/named.conf.options /etc/bind/named.conf.options &>> $LOG
 	cp -v conf/pti.intra.hosts /var/lib/bind/pti.intra.hosts &>> $LOG
 	cp -v conf/172.16.1.rev /var/lib/bind/172.16.1.rev &>> $LOG
+	cp -v conf/dnsupdate-cron /etc/cron.d/dnsupdate-cron &>> $LOG
 echo -e "Arquivos atualizados com sucesso!!!, continuando com o script...\n"
 sleep 5
 #
@@ -240,9 +241,15 @@ echo -e "Editando o arquivo 172.16.1.rev, pressione <Enter> para continuar."
 echo -e "Arquivo editado com sucesso!!!, continuando com o script...\n"
 sleep 5
 #
-echo -e "Editando o arquivo dhcpd.conf, pressione <Enter> para continuar."
+echo -e "Editando o arquivo dnsupdate-cron, pressione <Enter> para continuar."
 	read
 	vim /etc/dhcp/dhcpd.conf
+echo -e "Arquivo editado com sucesso!!!, continuando com o script...\n"
+sleep 5
+#
+echo -e "Editando o arquivo dhcpd.conf, pressione <Enter> para continuar."
+	read
+	vim /etc/cron.d/dnsupdate-cron
 echo -e "Arquivo editado com sucesso!!!, continuando com o script...\n"
 sleep 5
 #
