@@ -11,7 +11,7 @@
 
 $ORIGIN pti.intra.
 $TTL 3600 ; 1 (uma) semana de TTL (Time to Live)
-@		IN		SOA		ptispo01ws01.pti.intra. vaamonde.pti.intra. (
+1.16.172.in-addr.arpa		IN		SOA		ptispo01ws01.pti.intra. vaamonde.pti.intra. (
 				1 ; serial
 				604800 ; atualização 1 (uma) semana
 				86400 ; retenção 1 (um) dia
