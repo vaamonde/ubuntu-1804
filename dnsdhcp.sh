@@ -64,6 +64,9 @@ LOG="/var/log/$(echo $0 | cut -d'/' -f2)"
 #
 # Variável utilizada na geração da chave de atualização do Bind9 DNS Server utilizada no ISC DHCP Server
 USERUPDATE="vaamonde"
+DOMAIN="pti.intra"
+DOMAINREV="1.16.172.in-addr.arpa"
+NETWORK="172.16.1."
 #
 # Exportando o recurso de Noninteractive do Debconf para não solicitar telas de configuração
 export DEBIAN_FRONTEND="noninteractive"
@@ -215,8 +218,10 @@ echo -e "Arquivo editado com sucesso!!!, continuando com o script...\n"
 sleep 5
 #
 echo -e "Editando o arquivo named.conf.options, pressione <Enter> para continuar."
+	# opção do comando: &>> (redirecionar a saida padrão)
 	read
 	vim /etc/bind/named.conf.options
+	named-checkconf &>> $LOG
 echo -e "Arquivo editado com sucesso!!!, continuando com o script...\n"
 sleep 5
 #
@@ -226,6 +231,7 @@ echo -e "Editando o arquivo pti.intra.hosts, pressione <Enter> para continuar."
 	read
 	vim /var/lib/bind/pti.intra.hosts
 	chown -v root:bind /var/lib/bind/pti.intra.hosts &>> $LOG
+	named-checkzone $DOMAIN /var/lib/bind/pti.intra.hosts &>> $LOG
 echo -e "Arquivo editado com sucesso!!!, continuando com o script...\n"
 sleep 5
 #
@@ -235,6 +241,8 @@ echo -e "Editando o arquivo 172.16.1.rev, pressione <Enter> para continuar."
 	read
 	vim /var/lib/bind/172.16.1.rev
 	chown -v root:bind /var/lib/bind/172.16.1.rev &>> $LOG
+	named-checkzone $DOMAINREV /var/lib/bind/172.16.1.rev &>> $LOG
+	named-checkzone $NETWORK /var/lib/bind/172.16.1.rev &>> $LOG
 echo -e "Arquivo editado com sucesso!!!, continuando com o script...\n"
 sleep 5
 #
@@ -245,8 +253,11 @@ echo -e "Arquivo editado com sucesso!!!, continuando com o script...\n"
 sleep 5
 #
 echo -e "Editando o arquivo dhcpd.conf, pressione <Enter> para continuar."
+	# opção do comando: &>> (redirecionar a saida padrão)
+	# opção do comando dhcpd: -T (test the configuration file)
 	read
 	vim /etc/dhcp/dhcpd.conf
+	dhcpd -t &>> $LOG
 echo -e "Arquivo editado com sucesso!!!, continuando com o script...\n"
 sleep 5
 #
@@ -255,6 +266,7 @@ echo -e "Inicializando os serviços do Bind9 DNS Server, ISC DHCP Server e do Ne
 	netplan --debug apply &>> $LOG
 	systemctl start isc-dhcp-server &>> $LOG
 	systemctl restart bind9 &>> $LOG
+	rndc sync -clean &>> $LOG
 echo -e "Serviços inicializados com com sucesso!!!, continuando com o script...\n"
 sleep 5
 #

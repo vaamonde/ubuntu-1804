@@ -26,7 +26,7 @@ zone "pti.intra" IN {
 };
 
 // Configuração da Zona de Pesquisa Reversa do Bind9 DNS Server
-zone "1.16.172.in-addr.arpa" {
+zone "1.16.172.in-addr.arpa" IN {
 	type master;
 	file "/var/lib/bind/172.16.1.rev";
 	allow-update { key rndc-key; };

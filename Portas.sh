@@ -5,8 +5,8 @@
 # Facebook: facebook.com/BoraParaPratica
 # YouTube: youtube.com/BoraParaPratica
 # Data de criação: 10/02/2019
-# Data de atualização: 12/05/2021
-# Versão: 0.08
+# Data de atualização: 19/05/2021
+# Versão: 0.09
 # Testado e homologado para a versão do Ubuntu Server 18.04.x LTS x64
 # Kernel >= 4.15.x
 
@@ -39,3 +39,4 @@
 027: rocketcjat.sh:		HTTP: 3000, MONGODB: 27017
 028: ocsinventory.sh:	HTTP: 80, MYSQL: 3306
 029: bacula.sh:			HTTP: 80, MYSQL: 3306, BACULA: 9101, 9102, 9103 BACULUM: 9095, 9096
+030: dnsdhcp.sh:		BIND9: 53, ISC DHCP: 67

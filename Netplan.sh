@@ -1,4 +1,4 @@
-#!/bin/bash
+dinâmica#!/bin/bash
 # Autor: Robson Vaamonde
 # Site: www.procedimentosemti.com.br
 # Facebook: facebook.com/ProcedimentosEmTI
@@ -176,14 +176,16 @@ sudo systemd-resolve --status
 sudo ifconfig enp0s3
 
 #Configurações de bonds 802.3d com interface dinâmica
-#Obs: no Oracle VirtualBOX as Placas de Rede precisa está configurado o modo
+#Obs: no Oracle VirtualBOX as Placas de Rede precisam está configuradas no modo
 #Conectado a: Placa de rede exclusiva de hospedeiro (host-only) - Nome: vboxnet0
+#Instalar o aplicativo: sudo apt update && sudo apt install ifenslave bridge-utils
+#Iniciar o módulo: sudo modprobe bonding 
 network:
 	ethernets:
-	enp0s3:
-		dhcp4: false
-	enp0s8
-		dhcp4: false
+		enp0s3:
+			dhcp4: false
+		enp0s8
+			dhcp4: false
 	bonds:
 		bond0:
 			dhcp4: true
@@ -191,8 +193,7 @@ network:
 				- enp0s3
 				- enp0s8
 			parameters:
-				mode: active-backup
-				primary: enp3s0
+				mode: balance-rr
 	version: 2
 
 #Aplicando as configurações e verificando os status
@@ -206,20 +207,22 @@ sudo ifconfig bond0
 #Conectado a: Placa de rede exclusiva de hospedeiro (host-only) - Nome: vboxnet
 network:
 	ethernets:
-	enp0s3:
-		dhcp4: false
-	enp0s8
-		dhcp4: false
+		enp0s3:
+			dhcp4: false
+		enp0s8
+			dhcp4: false
 	bonds:
 		bond0:
 			dhcp4: false
 			interfaces:
 				- enp0s3
-				- enp8s8
-			addresses: [192.168.0.8/24]
-			gateway4: 192.168.0.1
+				- enp0s8
+			addresses: [172.16.1.20/24]
+			gateway4: 172.16.1.254
 			nameservers:
-				addresses: [8.8.8.8,8.8.4.4]
+				addresses: [172.16.1.254,8.8.8.8,8.8.4.4]
+			parameters:
+				mode: balance-rr
 	version: 2
 
 #Aplicando as configurações e verificando os status
@@ -230,15 +233,14 @@ sudo ifconfig bond0
 
 #Configurações de bridges:
 network:
-	renderer: networkd
 	ethernets:
-		enp1s0:
-			dhcp4: no
+		enp0s3:
+			dhcp4: false
 	bridges:
 		br0:
 			dhcp4: yes
 			interfaces:
-			- enp1s0
+				- enp0s3
 	version: 2
 
 #Aplicando as configurações e verificando os status
@@ -253,11 +255,11 @@ network:
         inet:
             id: 50
             link: bond0
-            addresses: [X.X.X.X/24]
-            gateway4: X.X.X.252
-            dhcp4: no
+            addresses: [172.16.1.20/24]
+            gateway4: 172.16.1.254
+            dhcp4: false
             nameservers:
-                addresses: [X.X.X.33]
+                addresses: [172.16.1.254,8.8.8.8,8.8.4.4]
 	version: 2
 
 #Aplicando as configurações e verificando os status
@@ -265,23 +267,23 @@ sudo netplan --debug try
 sudo netplan --debug apply
 sudo systemd-resolve --status
 
-#Configurações de wi-fi:
+#Configurações de Wi-Fi (Wireless) com IPv4 Estático:
 network:
 	wifis:
-		wlp2s0b1:
-		dhcp4: no
-		dhcp6: no
-		addresses: [192.168.0.21/24]
-		gateway4: 192.168.0.1
-		nameservers:
-			addresses: [192.168.0.1, 8.8.8.8]
-		access-points:
-			"pti-intra":
-			password: "pti@2018"
+		wlp4s0:
+			dhcp4: no
+			dhcp6: no
+			addresses: [192.168.0.21/24]
+			gateway4: 192.168.0.1
+			nameservers:
+				addresses: [192.168.0.1, 8.8.8.8]
+			access-points:
+				"pti-intra":
+				password: "pti@2018"
 	version: 2
 
 #Aplicando as configurações e verificando os status
 sudo netplan --debug try
 sudo netplan --debug apply
 sudo systemd-resolve --status
-sudo ifconfig wlp2s0b1
+sudo ifconfig wlp4s0
