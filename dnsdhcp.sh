@@ -5,8 +5,8 @@
 # Facebook: facebook.com/BoraParaPratica
 # YouTube: youtube.com/BoraParaPratica
 # Data de criação: 16/05/2021
-# Data de atualização: 16/05/2021
-# Versão: 0.01
+# Data de atualização: 18/05/2021
+# Versão: 0.02
 # Testado e homologado para a versão do Ubuntu Server 18.04.x LTS x64
 # Kernel >= 4.15.x
 # Testado e homologado para a versão do Bind9 v9.11.x e do ISC DHCP Server
@@ -30,6 +30,9 @@
 # Diretório das Zonas de Pesquisa Direta e Reversa do Bind9 DNS Server:
 # Localização: /var/lib/bind/
 # Monitoramento do Log: tail -f /var/log/syslog | grep named
+#
+# Monitorando o Bind9 DNS Server e o ISC DHCP Server simultaneamente
+# Comando: ail -f /var/log/syslog | grep -E \(dhcpd\|named\)
 #
 # Site Oficial do Projeto Bind9: https://www.isc.org/bind/
 # Site Oficial do Projeto ICS DHCP: https://www.isc.org/dhcp/
@@ -174,11 +177,11 @@ echo -e "Atualizando os arquivos de configuração do Bind9 DNS Server, aguarde.
 	# opção do comando mv: -v (verbose)
 	# opção do comando cp: -v (verbose)
 	mv -v /etc/bind/named.conf /etc/bind/named.conf.bkp &>> $LOG
-	mv -v /etc/bind/named.conf.options /etc/bind/named.conf.options.bkp &>> $LOG
 	mv -v /etc/bind/named.conf.local /etc/bind/named.conf.local.bkp &>> $LOG
+	mv -v /etc/bind/named.conf.options /etc/bind/named.conf.options.bkp &>> $LOG
 	cp -v conf/named.conf /etc/bind/named.conf &>> $LOG
-	cp -v conf/named.conf.options /etc/bind/named.conf.options &>> $LOG
 	cp -v conf/named.conf.local /etc/bind/named.conf.local &>> $LOG
+	cp -v conf/named.conf.options /etc/bind/named.conf.options &>> $LOG
 	cp -v conf/pti.intra.hosts /var/lib/bind/pti.intra.hosts &>> $LOG
 	cp -v conf/172.16.1.rev /var/lib/bind/172.16.1.rev &>> $LOG
 echo -e "Arquivos atualizados com sucesso!!!, continuando com o script...\n"
@@ -195,10 +198,8 @@ echo -e "Atualizando a Chave do Bind9 DNS Server no ISC DHCP Server, aguarde..."
 	dnssec-keygen -r /dev/urandom -a HMAC-MD5 -b 128 -n USER $USERUPDATE &>> $LOG
 	KEYGEN=$(cat K$USERUPDATE*.private | grep Key | cut -d' ' -f2)
 	sed "s/secret vaamonde;/secret $KEYGEN;/" /etc/dhcp/dhcpd.conf > /tmp/dhcpd.conf.old
-	sed 's/secret "vaamonde";/secret "'$KEYGEN'";/' /etc/bind/named.conf > /tmp/named.conf.old
 	sed 's/secret "vaamonde";/secret "'$KEYGEN'";/' /etc/bind/named.conf.local > /tmp/named.conf.local.old
 	cp -v /tmp/dhcpd.conf.old /etc/dhcp/dhcpd.conf &>> $LOG
-	cp -v /tmp/named.conf.old /etc/bind/named.conf &>> $LOG
 	cp -v /tmp/named.conf.local.old /etc/bind/named.conf.local &>> $LOG
 echo -e "Atualização da chave feita com sucesso!!!, continuando com o script...\n"
 sleep 5
