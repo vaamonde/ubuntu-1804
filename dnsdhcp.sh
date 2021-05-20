@@ -338,8 +338,9 @@ echo -e "Editando o arquivo de configuração Default do Apache2, pressione <Ent
 	# opção do comando cp: -v (verbose)
 	read
 	sleep 3
-	cp -v conf/000-default.conf /etc/apache2/site-available/ &>> $LOG
-	vim /etc/apache2/site-available/000-default.conf
+	cp -v conf/facilemanager.conf /etc/apache2/conf-available/ &>> $LOG
+	vim //etc/apache2/conf-available/facilemanager.conf
+	a2enconf facilemanager &>> $LOG
 	a2enmod rewrite &>> $LOG
 	systemctl restart apache2 &>> $LOG
 echo -e "Arquivo editado com sucesso!!!, continuando com o script...\n"
