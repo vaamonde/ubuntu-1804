@@ -112,7 +112,7 @@ echo -n "Verificando as dependências do FacileManager, aguarde... "
 	done
 		[[ $deps -ne 1 ]] && echo "Dependências.: OK" || { 
 			echo -en "\nInstale as dependências acima e execute novamente este script\n";
-			echo -en "Recomendo utilizar o script: lamp.sh para resolver as dependências."
+			echo -en "Recomendo utilizar o script: lamp.sh para resolver as dependências.\n"
 			echo -en "Recomendo utilizar o script: netdata.sh para resolver as dependências."
 			exit 1;
 			}
@@ -334,9 +334,13 @@ echo -e "FacileManager instalado com sucesso!!!, continuando com o script...\n"
 sleep 5
 #
 echo -e "Editando o arquivo de configuração Default do Apache2, pressione <Enter> para continuar"
+	# opção do comando: &>> (redirecionar a saida padrão)
+	# opção do comando cp: -v (verbose)
 	read
 	sleep 3
-	vim /etc/apache2/site-available/default
+	cp -v conf/000-default.conf /etc/apache2/site-available/ &>> $LOG
+	vim /etc/apache2/site-available/000-default.conf
+	a2enmod rewrite &>> $LOG
 	systemctl restart apache2 &>> $LOG
 echo -e "Arquivo editado com sucesso!!!, continuando com o script...\n"
 sleep 5
