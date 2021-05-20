@@ -40,8 +40,6 @@ options {
 	datasize default;
 	version none;
 	server-id none;
-	#dnssec-validation auto;
-	#dnssec-enable no;
 	empty-zones-enable no;
 	recursion yes;
 

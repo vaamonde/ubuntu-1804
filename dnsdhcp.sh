@@ -5,8 +5,8 @@
 # Facebook: facebook.com/BoraParaPratica
 # YouTube: youtube.com/BoraParaPratica
 # Data de criação: 16/05/2021
-# Data de atualização: 19/05/2021
-# Versão: 0.03
+# Data de atualização: 20/05/2021
+# Versão: 0.04
 # Testado e homologado para a versão do Ubuntu Server 18.04.x LTS x64
 # Kernel >= 4.15.x
 # Testado e homologado para a versão do Bind9 v9.11.x e do ISC DHCP Server
@@ -23,10 +23,6 @@
 # (DHCP) a uma rede. Essa implementação, também conhecida como ISC DHCP, é uma das primeiras e mais 
 # conhecidas, mas agora existem várias outras implementações de software de servidor DHCP disponíveis.
 #
-# O FacileManager é um conjunto modular de aplicativos web desenvolvido para administrar servidores de
-# DNS, DHCP, Firewall, SQL e Wi-Fi (Wireless). O facileManager é modular no seu design para que você 
-# não precise instalar todos os módulos no seu ambiente, apenas instale aqueles de que precisa.
-#
 # Diretório e Arquivo de banco de dados do Leasing ofertados pelo ISC DHCP Server:
 # Localização: /var/lib/dhcp/dhcpd.leases
 # Monitoramento do Log: tail -f /var/log/syslog | grep dhcpd
@@ -38,15 +34,13 @@
 # Monitorando o Bind9 DNS Server e o ISC DHCP Server simultaneamente
 # Comando: tail -f /var/log/syslog | grep -E \(dhcpd\|named\)
 #
-# Informações que serão solicitadas na configuração via Web do Baculum
-# 01.
-#
 # Site Oficial do Projeto Bind9: https://www.isc.org/bind/
 # Site Oficial do Projeto ICS DHCP: https://www.isc.org/dhcp/
-# Site Oficial do Projeto FacileManager: http://www.facilemanager.com/
 #
 # Vídeo de instalação do GNU/Linux Ubuntu Server 18.04.x LTS: https://www.youtube.com/watch?v=zDdCrqNhIXI
 # Vídeo de configuração do OpenSSH no GNU/Linux Ubuntu Server 18.04.x LTS: https://www.youtube.com/watch?v=ecuol8Uf1EE&t
+# Vídeo de instalação do LAMP Server no Ubuntu Server 18.04.x LTS: https://www.youtube.com/watch?v=6EFUu-I3
+# Vídeo de instalação do Netdata no Ubuntu Server 18.04.x LTS: 
 #
 # Variável da Data Inicial para calcular o tempo de execução do script (VARIÁVEL MELHORADA)
 # opção do comando date: +%T (Time)
@@ -75,9 +69,6 @@ USERUPDATE="vaamonde"
 DOMAIN="pti.intra"
 DOMAINREV="1.16.172.in-addr.arpa"
 NETWORK="172.16.1."
-#
-# Declarando a variável de download do FacileManager (Link atualizado no dia 20/05/2021)
-FACILEMANAGER="http://www.facilemanager.com/download/facilemanager-complete-4.0.3.tar.gz"
 #
 # Exportando o recurso de Noninteractive do Debconf para não solicitar telas de configuração
 export DEBIAN_FRONTEND="noninteractive"
@@ -130,7 +121,6 @@ echo
 echo -e "Instalação do Bind9 DNS Server integrado com o ICS DHCP Server no GNU/Linux Ubuntu Server 18.04.x"
 echo -e "Porta padrão utilizada pelo Bind9 DNS Server: 53"
 echo -e "Porta padrão utilizada pelo ISC DHCP Server.: 67\n"
-echo -e "Após a instalação do FacileManager acessar a URL: http://`hostname -I | cut -d' ' -f1`/facilemanager/\n"
 echo -e "Após a instalação do Netdata acessar a URL: http://`hostname -I | cut -d ' ' -f1`:19999/\n"
 echo -e "Aguarde, esse processo demora um pouco dependendo do seu Link de Internet...\n"
 sleep 5
@@ -207,8 +197,12 @@ sleep 5
 #
 echo -e "Atualizando os arquivos de configuração do Bind9 DNS Server, aguarde..."
 	# opção do comando: &>> (redirecionar a saida padrão)
+	# opção do comando mkdir: -v (verbose)
+	# opção do comando chown: -R (recursive), -v (verbose), bind (user), bind (group)
 	# opção do comando mv: -v (verbose)
 	# opção do comando cp: -v (verbose)
+	mkdir -v /var/log/named/ &>> $LOG
+	chown -Rv bind.bind /var/log/named/ &>> $LOG
 	mv -v /etc/bind/named.conf /etc/bind/named.conf.bkp &>> $LOG
 	mv -v /etc/bind/named.conf.local /etc/bind/named.conf.local.bkp &>> $LOG
 	mv -v /etc/bind/named.conf.options /etc/bind/named.conf.options.bkp &>> $LOG
@@ -298,8 +292,9 @@ echo -e "Inicializando os serviços do Bind9 DNS Server, ISC DHCP Server e do Ne
 	# opção do comando: &>> (redirecionar a saida padrão)
 	netplan --debug apply &>> $LOG
 	systemctl start isc-dhcp-server &>> $LOG
-	systemctl restart bind9 &>> $LOG
+	systemctl reload bind9 &>> $LOG
 	rndc sync -clean &>> $LOG
+	rndc stats &>> $LOG
 echo -e "Serviços inicializados com com sucesso!!!, continuando com o script...\n"
 sleep 5
 #
@@ -307,43 +302,6 @@ echo -e "Verificando as portas de Conexões do Bind9 DNS Server e do ISC DHCP Se
 	# opção do comando netstat: -a (all), -n (numeric)
 	netstat -an | grep '53\|67'
 echo -e "Portas de conexões verificadas com sucesso!!!, continuando com o script...\n"
-sleep 5
-#
-echo -e "Instalando o FacileManager, aguarde...\n"
-#
-echo -e "Fazendo o download do site Oficial do FacileManager, aguarde..."
-	# opção do comando: &>> (redirecionar a saida padrão)
-	# opção do comando rm: -v (verbose)
-	# opção do comando wget: -O (output document file)
-	rm -v facilemanager.tar.gz &>> $LOG
-	wget $FACILEMANAGER -O facilemanager.tar.gz &>> $LOG
-echo -e "Download do FacileManager feito com sucesso!!!, continuando com o script...\n"
-sleep 5
-#
-echo -e "Instalando o FacileManager, aguarde..."
-	# opção do comando: &>> (redirecionar a saida padrão)
-	# opção do comando tar: -z (gzip), -x (extract), -v (verbose), -f (file)
-	# opção do comando mv: -v (verbose)
-	# opção do comando chown: -R (recursive), -v (verbose), www-data.www-data (user and group)
-	# opção do comando chmod: -R (recursive), -v (verbose), 755 (User=RWX, Group=R-X, Other=R-X)
-	tar -zxvf facilemanager.tar.gz &>> $LOG
-	mv -v facileManager/ /var/www/html/facilemanager/ &>> $LOG
-	chown -Rv www-data:www-data /var/www/html/facilemanager/ &>> $LOG
-	chmod -Rv 755 /var/www/html/facilemanager/ &>> $LOG
-echo -e "FacileManager instalado com sucesso!!!, continuando com o script...\n"
-sleep 5
-#
-echo -e "Editando o arquivo de configuração Default do Apache2, pressione <Enter> para continuar"
-	# opção do comando: &>> (redirecionar a saida padrão)
-	# opção do comando cp: -v (verbose)
-	read
-	sleep 3
-	cp -v conf/facilemanager.conf /etc/apache2/conf-available/ &>> $LOG
-	vim //etc/apache2/conf-available/facilemanager.conf
-	a2enconf facilemanager &>> $LOG
-	a2enmod rewrite &>> $LOG
-	systemctl restart apache2 &>> $LOG
-echo -e "Arquivo editado com sucesso!!!, continuando com o script...\n"
 sleep 5
 #
 echo -e "Instalação do Bind9 DNS Server integrado com o ICS DHCP Server feita com Sucesso!!!."

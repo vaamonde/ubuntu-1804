@@ -158,25 +158,27 @@ echo -e "Instalação do Netdata feita com sucesso!!!, continuando com o script.
 sleep 5
 #
 echo -e "Editando o arquivo de monitoramento do MySQL, pressione <Enter> para editar"
-echo -e "Adicionar o usuário: 'root' é a senha: 'pti@2018' nas configurações do tcp:"
 echo -e "Remover os comentários das variáveis: user e pass"
+echo -e "Adicionar o usuário: 'root' é a senha: 'pti@2018' nas configurações do tcp:"
 	read
 	vim /usr/lib/netdata/conf.d/python.d/mysql.conf +151
 echo -e "Arquivo editado com sucesso!!!, continuando com o script...\n"
 sleep 5
 #
-#====================== EM DESENVOLVIMENTO ========================
+echo -e "Editando o arquivo de monitoramento do ISC DHCP Server, pressione <Enter> para editar"
+echo -e "Remover os comentários das variáveis: job_name, name, leases_path, pools e office"
+echo -e "Adicionar o name: dhcppti, leases_path: /var/lib/dhcp/dhcpd.leases e office: 172.16.1.0/24"
+	read
+	vim /usr/lib/netdata/conf.d/python.d/isc_dhcpd.conf +53
+echo -e "Arquivo editado com sucesso!!!, continuando com o script...\n"
+sleep 5
 #
-#echo -e "Editando o arquivo de monitoramento do ISC DHCP Server, pressione <Enter> para editar"
-#	read
-#	vim /usr/lib/netdata/conf.d/python.d/isc_dhcpd.conf
-#echo -e "Arquivo editado com sucesso!!!, continuando com o script...\n"
-#sleep 5
-#
+#====================== EM DESENVOLVIMENTO ====================== 
 #echo -e "Editando o arquivo de monitoramento do Bind9 DNS Server, pressione <Enter> para editar"
+#echo -e "Remover os comentários das variáveis: job_name, name, named_stats_path"
+#echo -e "Adicionar o name: dnsppti, named_stats_path: /var/log/named/named.stats"
 #	read
-#	vim /usr/lib/netdata/conf.d/python.d/named.conf.options
-#	vim /usr/lib/netdata/conf.d/python.d/bind_rndc.conf
+#	vim /usr/lib/netdata/conf.d/python.d/bind_rndc.conf +53
 #echo -e "Arquivo editado com sucesso!!!, continuando com o script...\n"
 #sleep 5
 #
