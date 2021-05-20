@@ -23,6 +23,10 @@
 # (DHCP) a uma rede. Essa implementação, também conhecida como ISC DHCP, é uma das primeiras e mais 
 # conhecidas, mas agora existem várias outras implementações de software de servidor DHCP disponíveis.
 #
+# O FacileManager é um conjunto modular de aplicativos web desenvolvido para administrar servidores de
+# DNS, DHCP, Firewall, SQL e Wi-Fi (Wireless). O facileManager é modular no seu design para que você 
+# não precise instalar todos os módulos no seu ambiente, apenas instale aqueles de que precisa.
+#
 # Diretório e Arquivo de banco de dados do Leasing ofertados pelo ISC DHCP Server:
 # Localização: /var/lib/dhcp/dhcpd.leases
 # Monitoramento do Log: tail -f /var/log/syslog | grep dhcpd
@@ -34,8 +38,12 @@
 # Monitorando o Bind9 DNS Server e o ISC DHCP Server simultaneamente
 # Comando: tail -f /var/log/syslog | grep -E \(dhcpd\|named\)
 #
+# Informações que serão solicitadas na configuração via Web do Baculum
+# 01.
+#
 # Site Oficial do Projeto Bind9: https://www.isc.org/bind/
 # Site Oficial do Projeto ICS DHCP: https://www.isc.org/dhcp/
+# Site Oficial do Projeto FacileManager: http://www.facilemanager.com/
 #
 # Vídeo de instalação do GNU/Linux Ubuntu Server 18.04.x LTS: https://www.youtube.com/watch?v=zDdCrqNhIXI
 # Vídeo de configuração do OpenSSH no GNU/Linux Ubuntu Server 18.04.x LTS: https://www.youtube.com/watch?v=ecuol8Uf1EE&t
@@ -62,11 +70,14 @@ KERNEL=$(uname -r | cut -d'.' -f1,2)
 # $0 (variável de ambiente do nome do comando)
 LOG="/var/log/$(echo $0 | cut -d'/' -f2)"
 #
-# Variável utilizada na geração da chave de atualização do Bind9 DNS Server utilizada no ISC DHCP Server
+# Declarando as variáveis de geração da chave de atualização dos registros do Bind9 DNS Server integrado no ISC DHCP Server
 USERUPDATE="vaamonde"
 DOMAIN="pti.intra"
 DOMAINREV="1.16.172.in-addr.arpa"
 NETWORK="172.16.1."
+#
+# Declarando a variável de download do FacileManager (Link atualizado no dia 20/05/2021)
+FACILEMANAGER="http://www.facilemanager.com/download/facilemanager-complete-4.0.3.tar.gz"
 #
 # Exportando o recurso de Noninteractive do Debconf para não solicitar telas de configuração
 export DEBIAN_FRONTEND="noninteractive"
@@ -87,6 +98,26 @@ if [ "$USUARIO" == "0" ] && [ "$UBUNTU" == "18.04" ] && [ "$KERNEL" == "4.15" ]
 		exit 1
 fi
 #
+# Verificando se as dependências do FacileManager estão instaladas
+# opção do dpkg: -s (status), opção do echo: -e (interpretador de escapes de barra invertida), -n (permite nova linha)
+# || (operador lógico OU), 2> (redirecionar de saída de erro STDERR), && = operador lógico AND, { } = agrupa comandos em blocos
+# [ ] = testa uma expressão, retornando 0 ou 1, -ne = é diferente (NotEqual)
+echo -n "Verificando as dependências do FacileManager, aguarde... "
+	for name in mysql-server mysql-common apache2 php
+	do
+		[[ $(dpkg -s $name 2> /dev/null) ]] || { 
+			echo -en "\n\nO software: $name precisa ser instalado. \nUse o comando 'apt install $name'\n";
+			deps=1; 
+			}
+	done
+		[[ $deps -ne 1 ]] && echo "Dependências.: OK" || { 
+			echo -en "\nInstale as dependências acima e execute novamente este script\n";
+			echo -en "Recomendo utilizar o script: lamp.sh para resolver as dependências."
+			echo -en "Recomendo utilizar o script: netdata.sh para resolver as dependências."
+			exit 1;
+			}
+	sleep 5
+#
 # Script de instalação do Bind9 DNS Server integrado com o ICS DHCP Server no GNU/Linux Ubuntu Server 18.04.x
 # opção do comando echo: -e (enable interpretation of backslash escapes), \n (new line)
 # opção do comando hostname: -I (all IP address)
@@ -99,6 +130,8 @@ echo
 echo -e "Instalação do Bind9 DNS Server integrado com o ICS DHCP Server no GNU/Linux Ubuntu Server 18.04.x"
 echo -e "Porta padrão utilizada pelo Bind9 DNS Server: 53"
 echo -e "Porta padrão utilizada pelo ISC DHCP Server.: 67\n"
+echo -e "Após a instalação do FacileManager acessar a URL: http://`hostname -I | cut -d' ' -f1`/facilemanager/\n"
+echo -e "Após a instalação do Netdata acessar a URL: http://`hostname -I | cut -d ' ' -f1`:19999/\n"
 echo -e "Aguarde, esse processo demora um pouco dependendo do seu Link de Internet...\n"
 sleep 5
 #
@@ -274,6 +307,38 @@ echo -e "Verificando as portas de Conexões do Bind9 DNS Server e do ISC DHCP Se
 	# opção do comando netstat: -a (all), -n (numeric)
 	netstat -an | grep '53\|67'
 echo -e "Portas de conexões verificadas com sucesso!!!, continuando com o script...\n"
+sleep 5
+#
+echo -e "Instalando o FacileManager, aguarde...\n"
+#
+echo -e "Fazendo o download do site Oficial do FacileManager, aguarde..."
+	# opção do comando: &>> (redirecionar a saida padrão)
+	# opção do comando rm: -v (verbose)
+	# opção do comando wget: -O (output document file)
+	rm -v facilemanager.tar.gz &>> $LOG
+	wget $FACILEMANAGER -O facilemanager.tar.gz &>> $LOG
+echo -e "Download do FacileManager feito com sucesso!!!, continuando com o script...\n"
+sleep 5
+#
+echo -e "Instalando o FacileManager, aguarde..."
+	# opção do comando: &>> (redirecionar a saida padrão)
+	# opção do comando tar: -z (gzip), -x (extract), -v (verbose), -f (file)
+	# opção do comando mv: -v (verbose)
+	# opção do comando chown: -R (recursive), -v (verbose), www-data.www-data (user and group)
+	# opção do comando chmod: -R (recursive), -v (verbose), 755 (User=RWX, Group=R-X, Other=R-X)
+	tar -zxvf facilemanager.tar.gz &>> $LOG
+	mv -v facileManager/ /var/www/html/facilemanager/ &>> $LOG
+	chown -Rv www-data:www-data /var/www/html/facilemanager/ &>> $LOG
+	chmod -Rv 755 /var/www/html/facilemanager/ &>> $LOG
+echo -e "FacileManager instalado com sucesso!!!, continuando com o script...\n"
+sleep 5
+#
+echo -e "Editando o arquivo de configuração Default do Apache2, pressione <Enter> para continuar"
+	read
+	sleep 3
+	vim /etc/apache2/site-available/default
+	systemctl restart apache2 &>> $LOG
+echo -e "Arquivo editado com sucesso!!!, continuando com o script...\n"
 sleep 5
 #
 echo -e "Instalação do Bind9 DNS Server integrado com o ICS DHCP Server feita com Sucesso!!!."

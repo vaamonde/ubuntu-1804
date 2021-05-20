@@ -5,8 +5,8 @@
 # Facebook: facebook.com/BoraParaPratica
 # YouTube: youtube.com/BoraParaPratica
 # Data de criação: 08/02/2019
-# Data de atualização: 10/12/2020
-# Versão: 0.07
+# Data de atualização: 20/05/2021
+# Versão: 0.08
 # Testado e homologado para a versão do Ubuntu Server 18.04.x LTS x64
 # Kernel >= 4.15.x
 # Testado e homologado para a versão do GLPI-9.5.x
@@ -45,6 +45,7 @@
 # Site oficial: https://glpi-project.org/pt-br/
 #
 # Vídeo de instalação do GNU/Linux Ubuntu Server 18.04.x LTS: https://www.youtube.com/watch?v=zDdCrqNhIXI
+# Vídeo de configuração do OpenSSH no GNU/Linux Ubuntu Server 18.04.x LTS: https://www.youtube.com/watch?v=ecuol8Uf1EE&t
 # Vídeo de instalação do LAMP Server no Ubuntu Server 18.04.x LTS: https://www.youtube.com/watch?v=6EFUu-I3
 #
 # Variável da Data Inicial para calcular o tempo de execução do script (VARIÁVEL MELHORADA)
@@ -87,8 +88,8 @@ GRANTDATABASE="GRANT USAGE ON *.* TO 'glpi' IDENTIFIED BY 'glpi';"
 GRANTALL="GRANT ALL PRIVILEGES ON glpi.* TO 'glpi' IDENTIFIED BY 'glpi';"
 FLUSH="FLUSH PRIVILEGES;"
 #
-# Declarando a variável de download do GLPI (Link atualizado no dia 09/12/2020)
-RELEASE="https://github.com/glpi-project/glpi/releases/download/9.5.3/glpi-9.5.3.tgz"
+# Declarando a variável de download do GLPI (Link atualizado no dia 20/05/2021)
+RELEASE="https://github.com/glpi-project/glpi/releases/download/9.5.5/glpi-9.5.5.tgz"
 #
 # Exportando o recurso de Noninteractive do Debconf para não solicitar telas de configuração
 export DEBIAN_FRONTEND="noninteractive"
@@ -136,7 +137,7 @@ echo -e "Início do script $0 em: `date +%d/%m/%Y-"("%H:%M")"`\n" &>> $LOG
 clear
 #
 echo
-echo -e "Instalação do GLPI no GNU/Linux Ubuntu Server 18.04.x\n"
+echo -e "Instalação do GLPI no GNU/Linux Ubuntu Server 18.04.x"
 echo -e "Após a instalação do GLPI acessar a URL: http://`hostname -I | cut -d' ' -f1`/glpi/\n"
 echo -e "Aguarde, esse processo demora um pouco dependendo do seu Link de Internet...\n"
 sleep 5
@@ -144,40 +145,36 @@ sleep 5
 echo -e "Adicionando o Repositório Universal do Apt, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	add-apt-repository universe &>> $LOG
-echo -e "Repositório adicionado com sucesso!!!, continuando com o script..."
+echo -e "Repositório adicionado com sucesso!!!, continuando com o script...\n"
 sleep 5
-echo
 #
 echo -e "Adicionando o Repositório Multiversão do Apt, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	add-apt-repository multiverse &>> $LOG
-echo -e "Repositório adicionado com sucesso!!!, continuando com o script..."
+echo -e "Repositório adicionado com sucesso!!!, continuando com o script...\n"
 sleep 5
-echo
 #
 echo -e "Atualizando as listas do Apt, aguarde..."
 	#opção do comando: &>> (redirecionar a saída padrão)
 	apt update &>> $LOG
-echo -e "Listas atualizadas com sucesso!!!, continuando com o script..."
+echo -e "Listas atualizadas com sucesso!!!, continuando com o script...\n"
 sleep 5
-echo
 #
 echo -e "Atualizando o sistema, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando apt: -y (yes)
 	apt -y upgrade &>> $LOG
-echo -e "Sistema atualizado com sucesso!!!, continuando com o script..."
+echo -e "Sistema atualizado com sucesso!!!, continuando com o script...\n"
 sleep 5
-echo
 #
 echo -e "Removendo software desnecessários, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando apt: -y (yes)
 	apt -y autoremove &>> $LOG
-echo -e "Software removidos com sucesso!!!, continuando com o script..."
+echo -e "Software removidos com sucesso!!!, continuando com o script...\n"
 sleep 5
 #
-echo -e "Instalando o GLPI, aguarde...\n"
+echo -e "Instalando o GLPI Help Desk, aguarde...\n"
 #
 echo -e "Instalando as dependências do GLPI, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
@@ -185,29 +182,21 @@ echo -e "Instalando as dependências do GLPI, aguarde..."
 	apt -y install php-curl php-gd php-intl php-pear php-imagick php-imap php-memcache php-pspell php-mysql \
 	php-recode php-tidy php-xmlrpc php-xsl php-mbstring php-gettext php-ldap php-cas php-apcu libapache2-mod-php \
 	php-json php-iconv php-xml php-cli xmlrpc-api-utils &>> $LOG
-echo -e "Dependências instaladas com sucesso!!!, continuando com o script..."
+echo -e "Dependências instaladas com sucesso!!!, continuando com o script...\n"
 sleep 5
-echo
 #
 echo -e "Fazendo o download do GLPI do site Oficial, aguarde..."
-	# removendo versões anteriores baixadas do GLPI
-	# baixando a versão do GLPI
 	# opção do comando: &>> (redirecionar a saida padrão)
 	# opção do comando rm: -v (verbose)
 	# opção do comando wget: -O (output document file)
 	rm -v glpi.tgz &>> $LOG
 	wget $RELEASE -O glpi.tgz &>> $LOG
-echo -e "Download do GLPI feito com sucesso!!!, continuando com o script..."
+echo -e "Download do GLPI feito com sucesso!!!, continuando com o script...\n"
 sleep 5
-echo
 #
 echo -e "Instalando o GLPI, aguarde..."
-	# descompactando o GLPI
-	# movendo o diretório do GLPI para o diretório da raiz do Apache
-	# alterando o dono do diretório do GLPI
-	# alterando as permissões do diretório do GLPI
 	# opção do comando: &>> (redirecionar a saida padrão)
-	# opção do comando tar: -j (bzip2), -x (extract), -v (verbose), -f (file)
+	# opção do comando tar: -z (gzip), -x (extract), -v (verbose), -f (file)
 	# opção do comando mv: -v (verbose)
 	# opção do comando chown: -R (recursive), -v (verbose), www-data.www-data (user and group)
 	# opção do comando chmod: -R (recursive), -v (verbose), 755 (User=RWX, Group=R-X, Other=R-X)
@@ -215,11 +204,9 @@ echo -e "Instalando o GLPI, aguarde..."
 	mv -v glpi/ /var/www/html/glpi/ &>> $LOG
 	chown -Rv www-data:www-data /var/www/html/glpi/ &>> $LOG
 	chmod -Rv 755 /var/www/html/glpi/ &>> $LOG
-echo -e "GLPI instalado com sucesso!!!, continuando com o script..."
+echo -e "GLPI instalado com sucesso!!!, continuando com o script...\n"
 sleep 5
-echo
 #
-
 echo -e "Criando o Banco de Dados do GLPI, aguarde..."
 	# criando a base de dados do GLPI
 	# opção do comando: &>> (redirecionar a saida padrão)
@@ -229,9 +216,8 @@ echo -e "Criando o Banco de Dados do GLPI, aguarde..."
 	mysql -u $USER -p$PASSWORD -e "$GRANTDATABASE" mysql &>> $LOG
 	mysql -u $USER -p$PASSWORD -e "$GRANTALL" mysql &>> $LOG
 	mysql -u $USER -p$PASSWORD -e "$FLUSH" mysql &>> $LOG
-echo -e "Banco de Dados criado com sucesso!!!, continuando com o script..."
+echo -e "Banco de Dados criado com sucesso!!!, continuando com o script...\n"
 sleep 5
-echo
 #
 echo -e "Habilitando os recursos do Apache2 para suportar o GLPI, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
@@ -243,26 +229,21 @@ echo -e "Habilitando os recursos do Apache2 para suportar o GLPI, aguarde..."
 	cp -v conf/glpi-cron /etc/cron.d/ &>> $LOG
 	phpenmod apcu &>> $LOG
 	a2enconf glpi &>> $LOG
-echo -e "Recursos habilitados com sucesso!!!, continuando com o script..."
+echo -e "Recursos habilitados com sucesso!!!, continuando com o script...\n"
 sleep 5
-echo
 #
 echo -e "Editando o arquivo de configuração do Apache2 do GLPI, pressione <Enter> para continuar"
 	read
-	sleep 3
 	vim /etc/apache2/conf-available/glpi.conf
 	systemctl restart apache2 &>> $LOG
-echo -e "Arquivo editado com sucesso!!!, continuando com o script..."
+echo -e "Arquivo editado com sucesso!!!, continuando com o script...\n"
 sleep 5
-echo
 #
 echo -e "Editando o arquivo de agendamento do GLPI, pressione <Enter> para continuar"
 	read
-	sleep 3
 	vim /etc/cron.d/glpi-cron
-echo -e "Arquivo editado com sucesso!!!, continuando com o script..."
+echo -e "Arquivo editado com sucesso!!!, continuando com o script...\n"
 sleep 5
-echo
 #
 echo -e "Instalação do GLPI Help Desk feita com Sucesso!!!."
 	# script para calcular o tempo gasto (SCRIPT MELHORADO, CORRIGIDO FALHA DE HORA:MINUTO:SEGUNDOS)

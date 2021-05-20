@@ -5,8 +5,8 @@
 # Facebook: facebook.com/BoraParaPratica
 # YouTube: youtube.com/BoraParaPratica
 # Data de criação: 11/11/2018
-# Data de atualização: 24/03/2021
-# Versão: 0.10
+# Data de atualização: 20/05/2021
+# Versão: 0.11
 # Testado e homologado para a versão do Ubuntu Server 18.04.x LTS x64
 # Kernel >= 4.15.x
 # Testado e homologado para a versão do Netdata 1.23.x
@@ -67,7 +67,6 @@ if [ "$USUARIO" == "0" ] && [ "$UBUNTU" == "18.04" ] && [ "$KERNEL" == "4.15" ]
 		exit 1
 fi
 #
-#
 # Verificando se as dependências do Netdata estão instaladas
 # opção do dpkg: -s (status), opção do echo: -e (interpretador de escapes de barra invertida), -n (permite nova linha)
 # || (operador lógico OU), 2> (redirecionar de saída de erro STDERR), && = operador lógico AND, { } = agrupa comandos em blocos
@@ -96,48 +95,42 @@ echo -e "Início do script $0 em: `date +%d/%m/%Y-"("%H:%M")"`\n" &>> $LOG
 clear
 #
 echo
-echo -e "Instalação do Netdata no GNU/Linux Ubuntu Server 18.04.x\n"
+echo -e "Instalação do Netdata no GNU/Linux Ubuntu Server 18.04.x"
 echo -e "Após a instalação do Netdata acessar a URL: http://`hostname -I | cut -d ' ' -f1`:19999/\n"
-echo -e "Aguarde, esse processo demora um pouco dependendo do seu Link de Internet..."
+echo -e "Aguarde, esse processo demora um pouco dependendo do seu Link de Internet...\n"
 sleep 5
-echo
 #
 echo -e "Adicionando o Repositório Universal do Apt, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	add-apt-repository universe &>> $LOG
-echo -e "Repositório adicionado com sucesso!!!, continuando com o script..."
+echo -e "Repositório adicionado com sucesso!!!, continuando com o script...\n"
 sleep 5
-echo
 #
 echo -e "Adicionando o Repositório Multiversão do Apt, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	add-apt-repository multiverse &>> $LOG
-echo -e "Repositório adicionado com sucesso!!!, continuando com o script..."
+echo -e "Repositório adicionado com sucesso!!!, continuando com o script...\n"
 sleep 5
-echo
 #
 echo -e "Atualizando as listas do Apt, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	apt update &>> $LOG
-echo -e "Listas atualizadas com sucesso!!!, continuando com o script..."
+echo -e "Listas atualizadas com sucesso!!!, continuando com o script...\n"
 sleep 5
-echo
 #
 echo -e "Atualizando o sistema, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando apt: -y (yes)
 	apt -y upgrade &>> $LOG
-echo -e "Sistema atualizado com sucesso!!!, continuando com o script..."
+echo -e "Sistema atualizado com sucesso!!!, continuando com o script...\n"
 sleep 5
-echo
 #
 echo -e "Removendo software desnecessários, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando apt: -y (yes)
 	apt -y autoremove &>> $LOG
-echo -e "Software removidos com sucesso!!!, continuando com o script..."
+echo -e "Software removidos com sucesso!!!, continuando com o script...\n"
 sleep 5
-echo
 #
 echo -e "Instalando o Netdata, aguarde...\n"
 #
@@ -147,49 +140,57 @@ echo -e "Instalando as dependências do Netdata, aguarde..."
 	apt -y install zlib1g-dev gcc make git autoconf autogen automake pkg-config uuid-dev python python-mysqldb python-pip \
 	python-dev python3-dev libmysqlclient-dev python-ipaddress libuv1-dev libwebsockets8 libwebsockets-dev libjson-c-dev \
 	libbpfcc-dev liblz4-dev libjudy-dev libelf-dev libmnl-dev autoconf-archive curl cmake &>> $LOG
-echo -e "Instalação das dependências feita com sucesso!!!, continuando com o script..."
+echo -e "Instalação das dependências feita com sucesso!!!, continuando com o script...\n"
 sleep 5
-echo
 #
 echo -e "Fazendo a clonagem do Netdata do Github, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	git clone $NETDATA &>> $LOG
-echo -e "Clonagem do Netdata feita com sucesso!!!, continuando com o script..."
+echo -e "Clonagem do Netdata feita com sucesso!!!, continuando com o script...\n"
 sleep 5
-echo
 #				 
 echo -e "Instalando o Netdata, esse processo demora um pouco, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando echo |: faz a função de Enter no Script
 	cd netdata/
 	echo | ./netdata-installer.sh &>> $LOG
-echo -e "Instalação do Netdata feita com sucesso!!!, continuando com o script..."
+echo -e "Instalação do Netdata feita com sucesso!!!, continuando com o script...\n"
 sleep 5
-echo
 #
 echo -e "Editando o arquivo de monitoramento do MySQL, pressione <Enter> para editar"
 echo -e "Adicionar o usuário: 'root' é a senha: 'pti@2018' nas configurações do tcp:"
 echo -e "Remover os comentários das variáveis: user e pass"
 	read
-	sleep 5
 	vim /usr/lib/netdata/conf.d/python.d/mysql.conf +151
-echo -e "Arquivo editado com sucesso!!!, continuando com o script..."
+echo -e "Arquivo editado com sucesso!!!, continuando com o script...\n"
 sleep 5
-echo
+#
+#====================== EM DESENVOLVIMENTO ========================
+#
+#echo -e "Editando o arquivo de monitoramento do ISC DHCP Server, pressione <Enter> para editar"
+#	read
+#	vim /usr/lib/netdata/conf.d/python.d/isc_dhcpd.conf
+#echo -e "Arquivo editado com sucesso!!!, continuando com o script...\n"
+#sleep 5
+#
+#echo -e "Editando o arquivo de monitoramento do Bind9 DNS Server, pressione <Enter> para editar"
+#	read
+#	vim /usr/lib/netdata/conf.d/python.d/named.conf.options
+#	vim /usr/lib/netdata/conf.d/python.d/bind_rndc.conf
+#echo -e "Arquivo editado com sucesso!!!, continuando com o script...\n"
+#sleep 5
 #
 echo -e "Reinicializando o serviço do Netdata, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	systemctl restart netdata &>> $LOG
-echo -e "Serviço reinicializado com sucesso!!!, continuando com o script..."
+echo -e "Serviço reinicializado com sucesso!!!, continuando com o script...\n"
 sleep 5
-echo
 #
 echo -e "Verificando a porta de conexão do Netdata, aguarde..."
 	# opção do comando netstat: -a (all), -n (numeric)
 	netstat -an | grep 19999
-echo -e "Porta de conexão verificada com sucesso!!!, continuando com o script..."
+echo -e "Porta de conexão verificada com sucesso!!!, continuando com o script...\n"
 sleep 5
-echo
 #
 echo -e "Instalação do Netdata feita com Sucesso!!!"
 	# script para calcular o tempo gasto (SCRIPT MELHORADO, CORRIGIDO FALHA DE HORA:MINUTO:SEGUNDOS)
