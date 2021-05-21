@@ -5,8 +5,8 @@
 # Facebook: facebook.com/BoraParaPratica
 # YouTube: youtube.com/BoraParaPratica
 # Data de criação: 16/05/2021
-# Data de atualização: 20/05/2021
-# Versão: 0.04
+# Data de atualização: 21/05/2021
+# Versão: 0.05
 # Testado e homologado para a versão do Ubuntu Server 18.04.x LTS x64
 # Kernel >= 4.15.x
 # Testado e homologado para a versão do Bind9 v9.11.x e do ISC DHCP Server
@@ -39,8 +39,6 @@
 #
 # Vídeo de instalação do GNU/Linux Ubuntu Server 18.04.x LTS: https://www.youtube.com/watch?v=zDdCrqNhIXI
 # Vídeo de configuração do OpenSSH no GNU/Linux Ubuntu Server 18.04.x LTS: https://www.youtube.com/watch?v=ecuol8Uf1EE&t
-# Vídeo de instalação do LAMP Server no Ubuntu Server 18.04.x LTS: https://www.youtube.com/watch?v=6EFUu-I3
-# Vídeo de instalação do Netdata no Ubuntu Server 18.04.x LTS: 
 #
 # Variável da Data Inicial para calcular o tempo de execução do script (VARIÁVEL MELHORADA)
 # opção do comando date: +%T (Time)
@@ -64,7 +62,8 @@ KERNEL=$(uname -r | cut -d'.' -f1,2)
 # $0 (variável de ambiente do nome do comando)
 LOG="/var/log/$(echo $0 | cut -d'/' -f2)"
 #
-# Declarando as variáveis de geração da chave de atualização dos registros do Bind9 DNS Server integrado no ISC DHCP Server
+# Declarando as variáveis de geração da chave de atualização dos registros do Bind9 DNS Server integrado
+# no ISC DHCP Server e informações da Pesquisa Direta do Domínio e Reversa
 USERUPDATE="vaamonde"
 DOMAIN="pti.intra"
 DOMAINREV="1.16.172.in-addr.arpa"
@@ -89,26 +88,6 @@ if [ "$USUARIO" == "0" ] && [ "$UBUNTU" == "18.04" ] && [ "$KERNEL" == "4.15" ]
 		exit 1
 fi
 #
-# Verificando se as dependências do FacileManager estão instaladas
-# opção do dpkg: -s (status), opção do echo: -e (interpretador de escapes de barra invertida), -n (permite nova linha)
-# || (operador lógico OU), 2> (redirecionar de saída de erro STDERR), && = operador lógico AND, { } = agrupa comandos em blocos
-# [ ] = testa uma expressão, retornando 0 ou 1, -ne = é diferente (NotEqual)
-echo -n "Verificando as dependências do FacileManager, aguarde... "
-	for name in mysql-server mysql-common apache2 php
-	do
-		[[ $(dpkg -s $name 2> /dev/null) ]] || { 
-			echo -en "\n\nO software: $name precisa ser instalado. \nUse o comando 'apt install $name'\n";
-			deps=1; 
-			}
-	done
-		[[ $deps -ne 1 ]] && echo "Dependências.: OK" || { 
-			echo -en "\nInstale as dependências acima e execute novamente este script\n";
-			echo -en "Recomendo utilizar o script: lamp.sh para resolver as dependências.\n"
-			echo -en "Recomendo utilizar o script: netdata.sh para resolver as dependências."
-			exit 1;
-			}
-	sleep 5
-#
 # Script de instalação do Bind9 DNS Server integrado com o ICS DHCP Server no GNU/Linux Ubuntu Server 18.04.x
 # opção do comando echo: -e (enable interpretation of backslash escapes), \n (new line)
 # opção do comando hostname: -I (all IP address)
@@ -121,7 +100,6 @@ echo
 echo -e "Instalação do Bind9 DNS Server integrado com o ICS DHCP Server no GNU/Linux Ubuntu Server 18.04.x"
 echo -e "Porta padrão utilizada pelo Bind9 DNS Server: 53"
 echo -e "Porta padrão utilizada pelo ISC DHCP Server.: 67\n"
-echo -e "Após a instalação do Netdata acessar a URL: http://`hostname -I | cut -d ' ' -f1`:19999/\n"
 echo -e "Aguarde, esse processo demora um pouco dependendo do seu Link de Internet...\n"
 sleep 5
 #
@@ -180,7 +158,7 @@ echo -e "Arquivo editado com sucesso!!!, continuando com o script...\n"
 sleep 5
 #
 echo -e "Editando o arquivo 50-cloud-init.yaml, pressione <Enter> para continuar."
-echo -e "Cuidado: o nome do arquivo de configuração da placa de rede pode mudar"
+echo -e "CUIDADO!!!: o nome do arquivo de configuração da placa de rede pode mudar"
 	read
 	vim /etc/netplan/50-cloud-init.yaml
 echo -e "Arquivo editado com sucesso!!!, continuando com o script...\n"
@@ -202,7 +180,7 @@ echo -e "Atualizando os arquivos de configuração do Bind9 DNS Server, aguarde.
 	# opção do comando mv: -v (verbose)
 	# opção do comando cp: -v (verbose)
 	mkdir -v /var/log/named/ &>> $LOG
-	chown -Rv bind.bind /var/log/named/ &>> $LOG
+	chown -Rv bind:bind /var/log/named/ &>> $LOG
 	mv -v /etc/bind/named.conf /etc/bind/named.conf.bkp &>> $LOG
 	mv -v /etc/bind/named.conf.local /etc/bind/named.conf.local.bkp &>> $LOG
 	mv -v /etc/bind/named.conf.options /etc/bind/named.conf.options.bkp &>> $LOG
@@ -292,6 +270,7 @@ echo -e "Inicializando os serviços do Bind9 DNS Server, ISC DHCP Server e do Ne
 	# opção do comando: &>> (redirecionar a saida padrão)
 	netplan --debug apply &>> $LOG
 	systemctl start isc-dhcp-server &>> $LOG
+	systemctl restart bind9 &>> $LOG
 	systemctl reload bind9 &>> $LOG
 	rndc sync -clean &>> $LOG
 	rndc stats &>> $LOG
