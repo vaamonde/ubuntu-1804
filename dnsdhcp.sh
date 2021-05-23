@@ -141,7 +141,7 @@ sleep 5
 echo -e "Instalando o Bind9 DNS Server e o ISC DHCP Server, aguarde..."
 	# opção do comando: &>> (redirecionar a saida padrão)
 	# opção do comando apt: -y (yes)
-	apt -y install bind9 bind9utils dnsutils net-tools isc-dhcp-server &>> $LOG
+	apt -y install bind9 bind9utils bind9-doc dnsutils net-tools isc-dhcp-server &>> $LOG
 echo -e "Bind9 DNS Server e o ISC DHCP Server instalado com sucesso!!!, continuando com o script...\n"
 sleep 5
 #

@@ -77,7 +77,7 @@ fi
 # || (operador lógico OU), 2> (redirecionar de saída de erro STDERR), && = operador lógico AND, { } = agrupa comandos em blocos
 # [ ] = testa uma expressão, retornando 0 ou 1, -ne = é diferente (NotEqual)
 echo -n "Verificando as dependências do Zimbra Collaboration Community, aguarde... "
-	for name in bind9 bind9utils isc-dhcp-server 
+	for name in bind9 bind9utils 
 	do
 		[[ $(dpkg -s $name 2> /dev/null) ]] || { 
 			echo -en "\n\nO software: $name precisa ser instalado. \nUse o comando 'apt install $name'\n";
