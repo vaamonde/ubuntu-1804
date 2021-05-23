@@ -147,6 +147,7 @@ vim /etc/mdadm/mdadm.conf
 # opção do bloco de agrupamento {}: (Agrupa comandos em um bloco)
 # opções do comando ls: -l (long listing), -h (--human-readable), -a (--all)
 # opção do redirecionamento |: (Conecta a saída padrão com a entrada padrão de outro comando)
+# Material de apoio: https://www.guiafoca.org/guiaonline/iniciante/ch04s05.html
 mkdir -v /arquivos
 mount -v /dev/md1 /arquivos
 mount -l | grep /arquivos
@@ -164,6 +165,7 @@ mount -l | grep /arquivos
 # opção do bloco de agrupamento {}: (Agrupa comandos em um bloco)
 # opções do comando ls: -l (long listing), -h (--human-readable), -a (--all)
 # opção do redirecionamento |: (Conecta a saída padrão com a entrada padrão de outro comando)
+# Material de apoio: https://www.guiafoca.org/guiaonline/iniciante/ch04s05.html
 mkdir -v /backup
 mount -v /dev/sdd1 /backup
 mount -l | grep /backup
@@ -176,7 +178,14 @@ umount /backup
 mount -l | grep /backup
 
 # Configurando o ponto de montagem automático do Array do RAID-1 e do Backup no arquivo Fstab
+# Material de apoio: https://www.guiafoca.org/guiaonline/intermediario/ch05s13.html#disc-fstab
 vim /etc/fstab
+	#File System: partição do HD, o CD-ROM, disquete, pendrive ou pasta de rede a serem montados no boot
+	#Mount Point: local onde serão montadas as partições, dispositivos e pastas compartilhadas da rede
+	#Type: sistema de aquivos utilizado, mais comuns são: swap, ext4, ReiserFS, XFS, JFS, VFAT, NTFS, etc
+	#Options: regras de montagem, permissão para cada ponto de montagem: defaults aplica as regras padrão
+	#Dump: opção de backup da partição onde: 0 está desativado e 1 está ativo
+	#Pass: opção de verificação da partição onde: 0 não verifica, 1 verificação / "raiz", 2 outra partições
 	#<file system>	<mount point>	<type>	<options>	<dump>	<pass>
 	/dev/md1		/arquivos   	ext4	defaults	   0	   2
 	/dev/sdd1		/backup			ext4	defaults	   0	   2
