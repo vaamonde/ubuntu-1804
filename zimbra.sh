@@ -17,7 +17,37 @@
 # usuários finais às informações e atividades em suas nuvens pessoais. 
 #
 # MENSAGENS QUE SERÃO SOLICITADAS NA INSTALAÇÃO DO ZIMBRA COLLABORATION COMMUNITY:
-#
+# 01. Do you agree with the terms of the software license agreement? [N] Y <Enter>
+# 02. Use Zimbra's package repository [Y] <Enter>
+# 03. Install zimbra-ldap [Y] Y <Enter>
+# 04. Install zimbra-logger [Y] <enter>
+# 05. Install zimbra-mta [Y] <Enter>
+# 06. Install zimbra-dnscache [Y] N <Enter>
+# 07. Install zimbra-snmp [Y] <Enter>
+# 08. Install zimbra-store [Y] <Enter>
+# 09. Install zimbra-apache [Y] <Enter>
+# 10. Install zimbra-spell [Y] <Enter>
+# 11. Install zimbra-memcached [Y] <Enter>
+# 12. Install zimbra-proxy [Y] <Enter>
+# 13. Install zimbra-drive [Y] <Enter>
+# 14. Install zimbra-imapd (BETA - for evaluation only) [N] Y <Enter>
+# 15. Install zimbra-chat [Y] <Enter>
+# 16. The system will be modified.  Continue? [N] Y <Enter>
+# 17. Address unconfigured (**) items  (? - help) 1 <Enter>
+#	17.1 Select, or 'r' for previous menu [r] 8 <Enter>
+#	17.2 Enter the number for the local timezone: [14] 43 <Enter>
+#	17.3 Select, or 'r' for previous menu [r]
+# 18. Address unconfigured (**) items  (? - help) 5 <Enter>
+#	18.1 Select, or 'r' for previous menu [r] 4 <Enter>
+#	18.2 Password for admin@ptispo01ws01.pti.intra (min 6 characters): [SC96AHIMO] pti@2018 <Enter>
+#	18.3 Select, or 'r' for previous menu [r] <Enter>
+
+
+# 00. 
+# 00. Save config in file: [/opt/zimbra/config.17003] <Enter>
+# 00. Address unconfigured (**) items  (? - help) q <Enter>
+# 00. Quit without applying changes? [No] y
+
 # INFORMAÇÕES QUE SERÃO SOLICITADAS VIA WEB (NAVEGADOR) DO ZIMBRA COLLABORATION COMMUNITY:
 #
 # Site Oficial do Projeto Zimbra: https://www.zimbra.org
@@ -163,7 +193,6 @@ echo -e "Veja a documentação das opções de instalação a partir da linha: 2
 	sleep 2
 	cd zcs*/
 		./install.sh
-		echo
 	cd ..
 echo -e "Instalação do Zimbra Collaboration Community feito com sucesso!!!, continuando com o script...\n"
 sleep 5
