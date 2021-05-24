@@ -179,6 +179,7 @@ mount -l | grep /backup
 
 # Configurando o ponto de montagem automático do Array do RAID-1 e do Backup no arquivo Fstab
 # Material de apoio: https://www.guiafoca.org/guiaonline/intermediario/ch05s13.html#disc-fstab
+cp -v /etc/fstab /etc/fstab.bkp
 vim /etc/fstab
 	#File System: partição do HD, o CD-ROM, disquete, pendrive ou pasta de rede a serem montados no boot
 	#Mount Point: local onde serão montadas as partições, dispositivos e pastas compartilhadas da rede
