@@ -129,7 +129,9 @@ Vídeo mostrando os procedimentos básicos para adicionar, particionar, formatar
 
 RAID é um meio de se criar um subsistema de armazenamento composto por vários discos individuais, com a finalidade de ganhar segurança por meio da redundância de dados e desempenho. Popularmente, RAID seriam dois ou mais discos trabalhando simultaneamente para um mesmo fim, por exemplo, citando o exemplo de RAID 1 logo abaixo, serviria como um espelhamento simples, rápido e confiável entre dois discos, para se fazer uma cópia idêntica de um disco em outro. 
 
-Link da vídeo aula: 
+[![Configurando o RAID-1](http://img.youtube.com/vi/HqBu0wr0iyw/0.jpg)](http://www.youtube.com/watch?v=HqBu0wr0iyw "Configurando o RAID-1")
+
+Link da vídeo aula: https://www.youtube.com/watch?v=HqBu0wr0iyw
 
 Link do script utilizado nesse vídeo: https://github.com/vaamonde/ubuntu-1804/blob/master/HardDiskRaid.sh
 
