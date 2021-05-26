@@ -105,7 +105,7 @@ echo -e "Início do script $0 em: `date +%d/%m/%Y-"("%H:%M")"`\n" &>> $LOG
 clear
 #
 echo
-echo -e "Configuração do OpenSSL no GNU/Linux Ubuntu Server 18.04.x"
+echo -e "Configuração do OpenSSL no GNU/Linux Ubuntu Server 18.04.x\n"
 echo -e "Após a configuração do TLS/SSL no Apache2 acessar a URL: https://`hostname -I | cut -d' ' -f1`/"
 echo -e "Confirmar o acesso com o Nome FQDN na URL: https://`hostname -A | cut -d' ' -f1`/"
 echo -e "Confirmar o acesso com o Nome Domínio na URL: https://`hostname -d | cut -d' ' -f1`/\n"
@@ -209,9 +209,9 @@ echo -e "Arquivo CSR verificado com sucesso!!!, continuando com o script...\n"
 sleep 5
 #
 echo -e "Criando o arquivo CRT (PEM Privacy Enhanced Mail), nome FQDN: `hostname`, aguarde..."
-	# opção do comando openssl: x509 (X.509 Certificate Data Management), -req (PKCS#10 X.509 Certificate Signing Request 
-	# (CSR) Management), -days (validate certificate file), -in (input file CSR), -singkey (file RSA), -out (output file CRT)
-	openssl x509 -req -days 3650 -in pti-intra.csr -signkey pti-intra.key -out pti-intra.crt &>> $LOG
+	# opção do comando openssl: req (PKCS#10 X.509 Certificate Signing Request (CSR) Management), -x509 (X.509 Certificate Data
+	# Management), -nodes (), -days (validate certificate file), -in (input file CSR), -singkey (file RSA), -out (output file CRT)
+	openssl req -x509 -nodes -days 3650 -sha256 -in pti-intra.csr -signkey pti-intra.key -out pti-intra.crt &>> $LOG
 echo -e "Arquivo CRT criado com sucesso!!!, continuando com o script...\n"
 sleep 5
 #
