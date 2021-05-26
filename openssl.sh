@@ -55,6 +55,9 @@ KERNEL=$(uname -r | cut -d'.' -f1,2)
 # $0 (variável de ambiente do nome do comando)
 LOG="/var/log/$(echo $0 | cut -d'/' -f2)"
 #
+# Declarando a variável de Senha (passphrase) utilizada na geração da chave privada do OpenSSL
+PASSPHRASE="vaamonde"
+#
 # Exportando o recurso de Noninteractive do Debconf para não solicitar telas de configuração
 export DEBIAN_FRONTEND="noninteractive"
 #
@@ -147,78 +150,68 @@ echo -e "Atualizando o arquivo de configuração do OpenSSL, aguarde..."
 echo -e "Arquivo atualizado com sucesso!!!, continuando com o script...\n"
 sleep 5
 #
-echo -e "Editando o arquivo configuração do OpenSSL, aguarde..."
+echo -e "Editando o arquivo configuração do OpenSSL, pressione <Enter> para continuar."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	read
-	vim /etc/ssl/pti-ssl.conf &>> $LOG
+	vim /etc/ssl/pti-ssl.conf
 echo -e "Arquivo editado com sucesso!!!, continuando com o script...\n"
 sleep 5
 #
-echo -e "Criando o Chave de Criptografia de 4096 bits, senha padrão: vaamonde, aguarde..." 
+echo -e "Criando o Chave Privada de Criptografia de 4096 bits, senha padrão: $PASSPHRASE, aguarde..." 
+	# opção do comando: &>> (redirecionar a saída padrão)
+	# opção do comando rm: -v (verbose)
 	# opção do comando openssl: genrsa (Generation of RSA Private Key), -des3 (Triple-DES Cipher), -out (output file)
-	openssl genrsa \
-		-des3 \
-		-out pti-intra.key 4096
+	# -passout (accept password arguments output), pass: (The actual password is password), 4096 ()
+	rm -v pti-intra.* &>> $LOG
+	openssl genrsa -des3 -out pti-intra.key -passout pass:$PASSPHRASE 4096 &>> $LOG
 echo -e "Chave de criptografia criada com sucesso!!!, continuando com o script...\n"
 sleep 2
 #
-echo -e "Renomeando o arquivo de chaves pti-intra.key pti-intra.old.key, aguarde..."
+echo -e "Renomeando o arquivo de chave privada pti-intra.key para pti-intra.old.key, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando mv: v (verbose)
 	mv -v pti-intra.key pti-intra.old.key &>> $LOG
 echo -e "Arquivo renomeado com sucesso!!!, continuando com o script...\n"
 sleep 2
 #
-echo -e "Alterando as informações das chaves de criptografia, senha padrão: vaamonde, aguarde..."
-	# opção do comando openssl: rsa (RSA key management), -in (input file), -out (output file)
-	openssl rsa \
-		-in  pti-intra.old.key \
-		-out pti-intra.key
+echo -e "Alterando as informações da chave privada de criptografia, senha padrão: $PASSPHRASE, aguarde..."
+	# opção do comando openssl: rsa (RSA key management), -in (input file), -out (output file), -passin (accept password 
+	# arguments input), pass: (The actual password is password)
+	openssl rsa -in pti-intra.old.key -out pti-intra.key -passin pass:$PASSPHRASE &>> $LOG
 echo -e "Chave alterada com sucesso!!!, continuando com o script..."
 sleep 2
 echo
 #
 echo -e "Criando o arquivo CSR (Certificate Signing Request), nome FQDN: `hostname`, aguarde..."
-	# opção do comando openssl: req (PKCS#10 X.509 Certificate Signing Request (CSR) Management), -new (new CSR), -key (input file RSA), -out (output file CSR)
-	# Criando o arquivo CSR, mensagens que serão solicitadas para a criação do certificado
-	# Country Name (2 letter code): BR <-- pressione <Enter>
-	# State or Province Name (full name): Brasil <-- pressione <Enter>
-	# Locality Name (eg, city): Sao Paulo <-- pressione <Enter>
-	# Organization Name (eg, company): Bora para Pratica <-- pressione <Enter>
-	# Organization Unit Name (eg, section): Procedimentos em TI <-- pressione <Enter>
-	# Common Name (eg, server FQDN or YOUR name): ptispo01ws01.pti.intra <-- pressione <Enter>
-	# Email Address: pti@pti.intra <-- pressione <Enter>
-	# A challenge password: <-- pressione <Enter>
-	# A optional company name: <-- pressione <Enter>
-	openssl req \
-		-new \
-		-key pti-intra.key \
-		-out pti-intra.csr \
-		-config /etc/ssl/pti-ssl.conf
+	# opção do comando openssl: req (PKCS#10 X.509 Certificate Signing Request (CSR) Management), -new (new CSR), 
+	# -key (input file RSA), -out (output file CSR), -config (external configuration file)
+	# Criando o arquivo CSR, mensagens que serão solicitadas na criação da unidade certificadora
+	# 	Country Name (2 letter code): BR <-- pressione <Enter>
+	# 	State or Province Name (full name): Brasil <-- pressione <Enter>
+	# 	Locality Name (eg, city): Sao Paulo <-- pressione <Enter>
+	# 	Organization Name (eg, company): Bora para Pratica <-- pressione <Enter>
+	# 	Organization Unit Name (eg, section): Procedimentos em TI <-- pressione <Enter>
+	# 	Common Name (eg, server FQDN or YOUR name): ptispo01ws01.pti.intra <-- pressione <Enter>
+	# 	Email Address: pti@pti.intra <-- pressione <Enter>
+	# 	A optional company name: <-- pressione <Enter>
+	openssl req -new -key pti-intra.key -out pti-intra.csr -config /etc/ssl/pti-ssl.conf
 echo -e "Arquivo CSR criado com sucesso!!!, continuando com o script...\n"
-sleep 2
+sleep 5
 #
 echo -e "Verificando o arquivo CSR (Certificate Signing Request) criado, aguarde..."
-	openssl req \
-		-text \
-		-noout \
-		-in pti-intra.csr
+	# opção do comando: &>> (redirecionar a saída padrão)
+	# opção do comando openssl: req (PKCS#10 X.509 Certificate Signing Request (CSR) Management), -text (Print the in text), 
+	# -noout (omits the output of the encoded version), -in (input file CSR)
+	openssl req -text -noout -in pti-intra.csr &>> $LOG
 echo -e "Arquivo CSR verificado com sucesso!!!, continuando com o script...\n"
-sleep 2
+sleep 5
 #
-echo -e "Alterando o arquivo CSR (Certificate Signing Request), nome FQDN: `hostname`, aguarde..."
-	# opção do comando openssl: x509 (X.509 Certificate Data Management), -req (PKCS#10 X.509 Certificate Signing Request (CSR) Management), -days
-	# (validate certificate file), -in (input file CSR), -singkey (file RSA), -out (output file CRT)
-	openssl x509 \
-		-req \
-		-days 3650 \
-		-in pti-intra.csr \
-		-signkey pti-intra.key \
-		-out pti-intra.crt \
-		-extensions req_ext \
-		-extfile /etc/ssl/pti-ssl.conf
-echo -e "Arquivo CSR alterado com sucesso!!!, continuando com o script...\n"
-sleep 2
+echo -e "Criando o arquivo CRT (PEM Privacy Enhanced Mail), nome FQDN: `hostname`, aguarde..."
+	# opção do comando openssl: x509 (X.509 Certificate Data Management), -req (PKCS#10 X.509 Certificate Signing Request 
+	# (CSR) Management), -days (validate certificate file), -in (input file CSR), -singkey (file RSA), -out (output file CRT)
+	openssl x509 -req -days 3650 -in pti-intra.csr -signkey pti-intra.key -out pti-intra.crt &>> $LOG
+echo -e "Arquivo CRT criado com sucesso!!!, continuando com o script...\n"
+sleep 5
 #
 echo -e "Atualizando os Diretórios do OpenSSL com o novo certificado criado, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
@@ -232,22 +225,24 @@ echo -e "Atualizando o arquivo de configuração do Apache2 HTTPS, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando mv: -v (verbose)
 	# opção do comando cp: -v (verbose)
-	mv -v /etc/apache2/sites-available/default-ssl.conf /etc/apache2/sites-available/default-ssl.conf.bkp
-	cp -v conf/default-ssl.conf /etc/apache2/sites-available/
+	mv -v /etc/apache2/sites-available/default-ssl.conf /etc/apache2/sites-available/default-ssl.conf.bkp &>> $LOG
+	cp -v conf/default-ssl.conf /etc/apache2/sites-available/ &>> $LOG
 echo -e "Arquivo atualizado com sucesso!!!, continuando com o script...\n"
-sleep 2
+sleep 5
 #
 echo -e "Editando o arquivo de configuração do Apache2 HTTPS, pressione <Enter> para continuar"
 	read
-	vim /etc/apache2/sites-available/default-ssl.conf 
+	vim /etc/apache2/sites-available/default-ssl.conf
 echo -e "Arquivo editado com sucesso!!!, continuando com o script...\n"
-sleep 2
+sleep 5
 #
 echo -e "Criando o diretório de Download para baixar a Unidade Certificadora, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando mkdir: -v (verbose)
+	# opção do comando chown: -v (verbose), www-data (user), www-data (group)
 	# opção do comando cp: -v (verbose)
 	mkdir -v /var/www.html/download/ &>> $LOG
+	chown -v www-data:www-data /var/www/html/download &>> $LOG
 	cp -v pti-intra.crt /var/www.html/download/ &>> $LOG
 echo -e "Diretório criado com sucesso!!!, continuando com o script...\n"
 sleep 2
@@ -270,7 +265,7 @@ sleep 5
 echo -e "Verificando as portas de conexões do Apache2, aguarde..."
 	# opção do comando netstat: a (all), n (numeric)
 	# opção do comando grep: -i (ignore case)
-	netstat -an | grep '80\|443'
+	netstat -an | grep ':80\|:443'
 echo -e "Portas verificadas com sucesso!!!, continuando com o script...\n"
 sleep 5
 #	
