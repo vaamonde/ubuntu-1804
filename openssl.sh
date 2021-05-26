@@ -159,32 +159,37 @@ echo -e "Editando o arquivo configuração do OpenSSL, pressione <Enter> para co
 echo -e "Arquivo editado com sucesso!!!, continuando com o script...\n"
 sleep 5
 #
-echo -e "Criando o Chave Privada de Criptografia de 4096 bits, senha padrão: $PASSPHRASE, aguarde..." 
+echo -e "Criando o Chave Privada Criptografada de 4096 bits, senha padrão: $PASSPHRASE, aguarde..." 
 	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando rm: -v (verbose)
 	# opção do comando openssl: genrsa (Generation of RSA Private Key), -des3 (Triple-DES Cipher), -out (output file)
 	# -passout (accept password arguments output), pass: (The actual password is password), 4096 ()
 	rm -v pti-intra.* &>> $LOG
-	openssl genrsa -des3 -out pti-intra.key -passout pass:$PASSPHRASE 4096 &>> $LOG
-echo -e "Chave de criptografia criada com sucesso!!!, continuando com o script...\n"
+	openssl genrsa -des3 -out pti-intra.key -passout pass:$PASSPHRASE 4096
+echo -e "Chave privada criptografada criada com sucesso!!!, continuando com o script...\n"
 sleep 2
 #
-echo -e "Renomeando o arquivo de chave privada pti-intra.key para pti-intra.old.key, aguarde..."
+#echo -e "Renomeando o arquivo de chave privada pti-intra.key para pti-intra.old.key, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando mv: v (verbose)
-	mv -v pti-intra.key pti-intra.old.key &>> $LOG
-echo -e "Arquivo renomeado com sucesso!!!, continuando com o script...\n"
-sleep 2
+#	mv -v pti-intra.key pti-intra.old.key &>> $LOG
+#echo -e "Arquivo renomeado com sucesso!!!, continuando com o script...\n"
+#sleep 2
 #
-echo -e "Alterando as informações da chave privada de criptografia, senha padrão: $PASSPHRASE, aguarde..."
+#echo -e "Alterando as informações da chave privada de criptografia, senha padrão: $PASSPHRASE, aguarde..."
 	# opção do comando openssl: rsa (RSA key management), -in (input file), -out (output file), -passin (accept password 
 	# arguments input), pass: (The actual password is password)
-	openssl rsa -in pti-intra.old.key -out pti-intra.key -passin pass:$PASSPHRASE &>> $LOG
-echo -e "Chave alterada com sucesso!!!, continuando com o script..."
-sleep 2
-echo
+#	openssl rsa -sha256 -in pti-intra.old.key -out pti-intra.key -passin pass:$PASSPHRASE &>> $LOG
+#echo -e "Chave alterada com sucesso!!!, continuando com o script...\n"
+#sleep 2
 #
-echo -e "Criando o arquivo CSR (Certificate Signing Request), nome FQDN: `hostname`, aguarde..."
+echo -e "Verificando o arquivo de chave privada criptografada criada, aguarde..."
+	# opção do comando: &>> (redirecionar a saída padrão)
+	openssl rsa -noout -modulus -in pti-intra.key | openssl md5
+echo -e "Arquivo de chave privada verificado com sucesso!!!, continuando com o script...\n"
+sleep 5
+#
+#echo -e "Criando o arquivo CSR (Certificate Signing Request), nome FQDN: `hostname`, aguarde..."
 	# opção do comando openssl: req (PKCS#10 X.509 Certificate Signing Request (CSR) Management), -new (new CSR), 
 	# -key (input file RSA), -out (output file CSR), -config (external configuration file)
 	# Criando o arquivo CSR, mensagens que serão solicitadas na criação da unidade certificadora
@@ -196,23 +201,30 @@ echo -e "Criando o arquivo CSR (Certificate Signing Request), nome FQDN: `hostna
 	# 	Common Name (eg, server FQDN or YOUR name): ptispo01ws01.pti.intra <-- pressione <Enter>
 	# 	Email Address: pti@pti.intra <-- pressione <Enter>
 	# 	A optional company name: <-- pressione <Enter>
-	openssl req -new -key pti-intra.key -out pti-intra.csr -config /etc/ssl/pti-ssl.conf
-echo -e "Arquivo CSR criado com sucesso!!!, continuando com o script...\n"
-sleep 5
+#	openssl req -new -key pti-intra.key -out pti-intra.csr -config /etc/ssl/pti-ssl.conf
+#echo -e "Arquivo CSR criado com sucesso!!!, continuando com o script...\n"
+#sleep 5
 #
-echo -e "Verificando o arquivo CSR (Certificate Signing Request) criado, aguarde..."
+#echo -e "Verificando o arquivo CSR (Certificate Signing Request) criado, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando openssl: req (PKCS#10 X.509 Certificate Signing Request (CSR) Management), -text (Print the in text), 
 	# -noout (omits the output of the encoded version), -in (input file CSR)
-	openssl req -text -noout -in pti-intra.csr &>> $LOG
-echo -e "Arquivo CSR verificado com sucesso!!!, continuando com o script...\n"
-sleep 5
+#	openssl req -text -noout -in pti-intra.csr &>> $LOG
+#echo -e "Arquivo CSR verificado com sucesso!!!, continuando com o script...\n"
+#sleep 5
 #
-echo -e "Criando o arquivo CRT (PEM Privacy Enhanced Mail), nome FQDN: `hostname`, aguarde..."
+echo -e "Criando o CA (Certified Authority | Root Certificate) e o arquivo CRT (PEM Privacy Enhanced Mail), nome FQDN: `hostname`, aguarde..."
 	# opção do comando openssl: req (PKCS#10 X.509 Certificate Signing Request (CSR) Management), -x509 (X.509 Certificate Data
 	# Management), -days (validate certificate file), -in (input file CSR), -singkey (file RSA), -out (output file CRT)
-	openssl x509 -req -days 3650 -in pti-intra.csr -signkey pti-intra.key -out pti-intra.crt &>> $LOG
-echo -e "Arquivo CRT criado com sucesso!!!, continuando com o script...\n"
+#	openssl x509 -req -days 3650 -in pti-intra.csr -signkey pti-intra.key -out pti-intra.crt &>> $LOG
+	openssl req -x509 -new -nodes -key pti-intra.key -sha256 -days 3650 -out pti-intra.crt -config /etc/ssl/pti-ssl.conf
+echo -e "Criação da CA e do arquivo CRT feito com sucesso!!!, continuando com o script...\n"
+sleep 5
+#
+echo -e "Verificando o arquivo CRT (PEM Privacy Enhanced Mail) criado, aguarde..."
+	# opção do comando: &>> (redirecionar a saída padrão)
+	openssl x509 -noout -modulus -in pti-intra.crt | openssl md5
+echo -e "Arquivo CRT verificado com sucesso!!!, continuando com o script...\n"
 sleep 5
 #
 echo -e "Atualizando os Diretórios do OpenSSL com o novo certificado criado, aguarde..."
