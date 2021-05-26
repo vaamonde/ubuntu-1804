@@ -241,9 +241,9 @@ echo -e "Criando o diretório de Download para baixar a Unidade Certificadora, a
 	# opção do comando mkdir: -v (verbose)
 	# opção do comando chown: -v (verbose), www-data (user), www-data (group)
 	# opção do comando cp: -v (verbose)
-	mkdir -v /var/www.html/download/ &>> $LOG
-	chown -v www-data:www-data /var/www/html/download &>> $LOG
-	cp -v pti-intra.crt /var/www.html/download/ &>> $LOG
+	mkdir -v /var/www/html/download/ &>> $LOG
+	chown -v www-data:www-data /var/www/html/download/ &>> $LOG
+	cp -v pti-intra.crt /var/www/html/download/ &>> $LOG
 echo -e "Diretório criado com sucesso!!!, continuando com o script...\n"
 sleep 2
 #
