@@ -108,7 +108,7 @@ echo
 echo -e "Configuração do OpenSSL no GNU/Linux Ubuntu Server 18.04.x"
 echo -e "Após a configuração do TLS/SSL no Apache2 acessar a URL: https://`hostname -I | cut -d' ' -f1`/"
 echo -e "Confirmar o acesso com o Nome FQDN na URL: https://`hostname -A | cut -d' ' -f1`/"
-echo -e "Confirmar o acesso com o Nome Domínio na URL: https://`hostname -d | cut -d' ' -f1`/n"
+echo -e "Confirmar o acesso com o Nome Domínio na URL: https://`hostname -d | cut -d' ' -f1`/\n"
 sleep 5
 #
 echo -e "Adicionando o Repositório Universal do Apt, aguarde..."
