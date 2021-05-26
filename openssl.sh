@@ -162,12 +162,13 @@ sleep 5
 echo -e "Criando o Chave Privada Criptografada de 4096 bits, senha padrão: $PASSPHRASE, aguarde..." 
 	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando rm: -v (verbose)
-	# opção do comando openssl: genrsa (Generation of RSA Private Key), 
+	# opção do comando openssl: genrsa (Generation of RSA Private Key),
+	#							-des3 ()
 	#							-out (output file), -passout (accept password arguments output), 
 	#							pass: (The actual password is password), 
 	#							4096 (size key bit: 1024, 2048, 3072 or 4096)
 	rm -v pti-intra.* &>> $LOG
-	openssl genrsa -out pti-intra.key -passout pass:$PASSPHRASE 4096 &>> $LOG
+	openssl genrsa -des3 -out pti-intra.key -passout pass:$PASSPHRASE 4096 &>> $LOG
 echo -e "Chave privada criptografada criada com sucesso!!!, continuando com o script...\n"
 sleep 2
 #
@@ -205,7 +206,9 @@ sleep 5
 #
 echo -e "Criando o arquivo CSR (Certificate Signing Request), com nome FQDN: `hostname`, aguarde..."
 	# opção do comando openssl: req (PKCS#10 X.509 Certificate Signing Request (CSR) Management), 
-	#							-new (new CSR), 
+	#							-new (new CSR),
+	#							-sha256 ()
+	#							-nodes ()
 	# 							-key (input file RSA), 
 	#							-out (output file CSR), 
 	#							-config (external configuration file)
@@ -217,7 +220,7 @@ echo -e "Criando o arquivo CSR (Certificate Signing Request), com nome FQDN: `ho
 	# 	Organization Unit Name (eg, section): Procedimentos em TI <-- pressione <Enter>
 	# 	Common Name (eg, server FQDN or YOUR name): ptispo01ws01.pti.intra <-- pressione <Enter>
 	# 	Email Address: pti@pti.intra <-- pressione <Enter>
-	openssl req -new -key pti-intra.key -out pti-intra.csr -config /etc/ssl/pti-ssl.conf
+	openssl req -new -sha256 -nodes -key pti-intra.key -out pti-intra.csr -config /etc/ssl/pti-ssl.conf
 echo -e "Criação do CSR feito com sucesso!!!, continuando com o script...\n"
 sleep 5
 #
@@ -241,7 +244,10 @@ echo -e "Criando o certificado assinado CRT (Certificate Request Trust), com nom
 	#							-CAkey (input file KEY),
 	#							-CAcreateserial (), 
 	#							-out (output file CRT)
-	openssl x509 -req -days 3650 -sha256 -in pti-intra.csr -CA pti-intra.pem -CAkey pti-intra.key -CAcreateserial -out pti-intra.crt &>> $LOG
+	#							-extfile ()
+	#							-extensions ()
+	openssl x509 -req -days 3650 -sha256 -in pti-intra.csr -CA pti-intra.pem -CAkey pti-intra.key -CAcreateserial \
+	-out pti-intra.crt -extfile /etc/ssl/pti-ssl.conf -extensions v3_ca &>> $LOG
 echo -e "Criação do certificado assinado feito com sucesso!!!, continuando com o script...\n"
 sleep 5
 #
