@@ -5,8 +5,8 @@
 # Facebook: facebook.com/BoraParaPratica
 # YouTube: youtube.com/BoraParaPratica
 # Data de criação: 25/05/2021
-# Data de atualização: 25/05/2021
-# Versão: 0.01
+# Data de atualização: 26/05/2021
+# Versão: 0.02
 # Testado e homologado para a versão do Ubuntu Server 18.04.x LTS x64
 # Kernel >= 4.15.x
 # Testado e homologado para a versão do OpenSSL
@@ -172,18 +172,18 @@ echo -e "Criando o Chave Privada Criptografada de 4096 bits, senha padrão: $PAS
 echo -e "Chave privada criptografada criada com sucesso!!!, continuando com o script...\n"
 sleep 2
 #
-echo -e "Verificando o arquivo de chave privada criptografada criada, aguarde..."
+echo -e "Verificando o arquivo de chave privada criptografada criada, senha padrão: $PASSPHRASE, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando openssl: rsa (), 
 	#							-noout (omits the output of the encoded version), 
 	#							-modulus (), 
 	#							-in (input file KEY), 
 	#							md5 ()
-	openssl rsa -noout -modulus -in pti-intra.key | openssl md5 &>> $LOG
+	openssl rsa -noout -modulus -in pti-intra.key | openssl md5
 echo -e "Arquivo de chave privada verificado com sucesso!!!, continuando com o script...\n"
 sleep 5
 #
-echo -e "Criando o CA (Certified Authority - Root Certificate) e o arquivo PEM (PEM Privacy Enhanced Mail), aguarde..."
+echo -e "Criando o CA (Certified Authority - Root Certificate) e o arquivo PEM (PEM Privacy Enhanced Mail), senha padrão: $PASSPHRASE, aguarde..."
 	# opção do comando openssl: req (PKCS#10 X.509 Certificate Signing Request (CSR) Management), 
 	#							-x509 (X.509 Certificate Data Management), 
 	#							-new (new PEM), 
@@ -204,7 +204,7 @@ echo -e "Criando o CA (Certified Authority - Root Certificate) e o arquivo PEM (
 echo -e "Criação do CA feito sucesso!!!, continuando com o script...\n"
 sleep 5
 #
-echo -e "Criando o arquivo CSR (Certificate Signing Request), com nome FQDN: `hostname`, aguarde..."
+echo -e "Criando o arquivo CSR (Certificate Signing Request), com nome FQDN: `hostname`, senha padrão: $PASSPHRASE, aguarde..."
 	# opção do comando openssl: req (PKCS#10 X.509 Certificate Signing Request (CSR) Management), 
 	#							-new (new CSR),
 	#							-sha256 ()
@@ -234,7 +234,7 @@ echo -e "Verificando o arquivo CSR (Certificate Signing Request) criado, aguarde
 echo -e "Arquivo CSR verificado com sucesso!!!, continuando com o script...\n"
 sleep 5
 #
-echo -e "Criando o certificado assinado CRT (Certificate Request Trust), com nome FQDN: `hostname`, aguarde..."
+echo -e "Criando o certificado assinado CRT (Certificate Request Trust), com nome FQDN: `hostname`, senha padrão: $PASSPHRASE, aguarde..."
 	# opção do comando openssl: x509 (X.509 Certificate Data Management),  
 	#							-req (PKCS#10 X.509 Certificate Signing Request (CSR) Management),
 	#							-days (validate certificate file),
@@ -244,10 +244,10 @@ echo -e "Criando o certificado assinado CRT (Certificate Request Trust), com nom
 	#							-CAkey (input file KEY),
 	#							-CAcreateserial (), 
 	#							-out (output file CRT)
-	#							-extfile ()
+	#							-extfile (external configuration file)
 	#							-extensions ()
 	openssl x509 -req -days 3650 -sha256 -in pti-intra.csr -CA pti-intra.pem -CAkey pti-intra.key -CAcreateserial \
-	-out pti-intra.crt -extfile /etc/ssl/pti-ssl.conf -extensions v3_ca &>> $LOG
+	-out pti-intra.crt -extfile /etc/ssl/pti-ssl.conf -extensions v3_ca
 echo -e "Criação do certificado assinado feito com sucesso!!!, continuando com o script...\n"
 sleep 5
 #
