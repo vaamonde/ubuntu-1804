@@ -211,7 +211,7 @@ sleep 5
 echo -e "Criando o arquivo CRT (PEM Privacy Enhanced Mail), nome FQDN: `hostname`, aguarde..."
 	# opção do comando openssl: req (PKCS#10 X.509 Certificate Signing Request (CSR) Management), -x509 (X.509 Certificate Data
 	# Management), -days (validate certificate file), -in (input file CSR), -singkey (file RSA), -out (output file CRT)
-	openssl -x509 -req -days 3650 -in pti-intra.csr -signkey pti-intra.key -out pti-intra.crt &>> $LOG
+	openssl x509 -req -days 3650 -in pti-intra.csr -signkey pti-intra.key -out pti-intra.crt &>> $LOG
 echo -e "Arquivo CRT criado com sucesso!!!, continuando com o script...\n"
 sleep 5
 #
