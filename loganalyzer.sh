@@ -58,6 +58,7 @@
 # Site oficial: https://loganalyzer.adiscon.com/
 #
 # Vídeo de instalação do GNU/Linux Ubuntu Server 18.04.x LTS: https://www.youtube.com/watch?v=zDdCrqNhIXI
+# Vídeo de configuração do OpenSSH no GNU/Linux Ubuntu Server 18.04.x LTS: https://www.youtube.com/watch?v=ecuol8Uf1EE&t
 # vídeo de instalação do LAMP Server no GNU/Linux Ubuntu Server 18.04.x LTS: https://www.youtube.com/watch?v=6EFUu-I3u4s
 #
 # Variável da Data Inicial para calcular o tempo de execução do script (VARIÁVEL MELHORADA)
@@ -82,8 +83,8 @@ KERNEL=$(uname -r | cut -d'.' -f1,2)
 # $0 (variável de ambiente do nome do comando)
 LOG="/var/log/$(echo $0 | cut -d'/' -f2)"
 #
-# Declarando as variáveis para o download do LogAnalyzer (Link atualizado no dia 22/07/2020)
-LOGANALYZER="http://download.adiscon.com/loganalyzer/loganalyzer-4.1.11.tar.gz"
+# Declarando as variáveis para o download do LogAnalyzer (Link atualizado no dia 27/05/2021)
+LOGANALYZER="http://download.adiscon.com/loganalyzer/loganalyzer-4.1.12.tar.gz"
 PTBR="https://loganalyzer.adiscon.com/plugins/files/translations/loganalyzer_lang_pt_BR_3.2.3.zip"
 #
 # Declarando as variáveis de autenticação no MySQL
@@ -145,7 +146,7 @@ fi
 # || (operador lógico OU), 2> (redirecionar de saída de erro STDERR), && = operador lógico AND, { } = agrupa comandos em blocos
 # [ ] = testa uma expressão, retornando 0 ou 1, -ne = é diferente (NotEqual)
 echo -n "Verificando as dependências do LogAnalyzer, aguarde... "
-	for name in mysql-server mysql-common apache2 php
+	for name in mysql-server mysql-common apache2 php unzip
 	do
   		[[ $(dpkg -s $name 2> /dev/null) ]] || { 
               echo -en "\n\nO software: $name precisa ser instalado. \nUse o comando 'apt install $name'\n";
@@ -168,48 +169,42 @@ echo -e "Início do script $0 em: `date +%d/%m/%Y-"("%H:%M")"`\n" &>> $LOG
 clear
 #
 echo
-echo -e "Instalação do LogAnalyzer no GNU/Linux Ubuntu Server 18.04.x\n"
+echo -e "Instalação do LogAnalyzer no GNU/Linux Ubuntu Server 18.04.x"
 echo -e "Após a instalação do LogAnalyzer acessar a URL: http://`hostname -I | cut -d ' ' -f1`/log/\n"
-echo -e "Aguarde, esse processo demora um pouco dependendo do seu Link de Internet..."
+echo -e "Aguarde, esse processo demora um pouco dependendo do seu Link de Internet...\n"
 sleep 5
-echo
 #
 echo -e "Adicionando o Repositório Universal do Apt, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	add-apt-repository universe &>> $LOG
-echo -e "Repositório adicionado com sucesso!!!, continuando com o script..."
+echo -e "Repositório adicionado com sucesso!!!, continuando com o script...\n"
 sleep 5
-echo
 #
 echo -e "Adicionando o Repositório Multiversão do Apt, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	add-apt-repository multiverse &>> $LOG
-echo -e "Repositório adicionado com sucesso!!!, continuando com o script..."
+echo -e "Repositório adicionado com sucesso!!!, continuando com o script...\n"
 sleep 5
-echo
 #
 echo -e "Atualizando as listas do Apt, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	apt update &>> $LOG
-echo -e "Listas atualizadas com sucesso!!!, continuando com o script..."
+echo -e "Listas atualizadas com sucesso!!!, continuando com o script...\n"
 sleep 5
-echo
 #
 echo -e "Atualizando o sistema, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando apt: -y (yes)
 	apt -y upgrade &>> $LOG
-echo -e "Sistema atualizado com sucesso!!!, continuando com o script..."
+echo -e "Sistema atualizado com sucesso!!!, continuando com o script...\n"
 sleep 5
-echo
 #
 echo -e "Removendo software desnecessários, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando apt: -y (yes)
 	apt -y autoremove &>> $LOG
-echo -e "Software removidos com sucesso!!!, continuando com o script..."
+echo -e "Software removidos com sucesso!!!, continuando com o script...\n"
 sleep 5
-echo
 #
 echo -e "Instalando as dependências do LogAnalyzer, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
@@ -217,9 +212,8 @@ echo -e "Instalando as dependências do LogAnalyzer, aguarde..."
 	echo "rsyslog-mysql rsyslog-mysql/dbconfig-install boolean false" | debconf-set-selections &>> $LOG
     debconf-show rsyslog-mysql &>> $LOG
 	apt -y install rsyslog-mysql &>> $LOG
-echo -e "Dependências instaladas com sucesso!!!, continuando com o script"
+echo -e "Dependências instaladas com sucesso!!!, continuando com o script...\n"
 sleep 5
-echo
 #
 echo -e "Criando a Base de Dados do Rsyslog, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
@@ -230,9 +224,8 @@ echo -e "Criando a Base de Dados do Rsyslog, aguarde..."
 	mysql -u $MYSQLUSER -p$MYSQLPASS -e "$RSYSLOGGRANTALL" mysql &>> $LOG
 	mysql -u $MYSQLUSER -p$MYSQLPASS -e "$RSYSLOGFLUSH" mysql &>> $LOG
 	mysql -u$MYSQLUSER -D $RSYSLOGDB -p$MYSQLPASS < $RSYSLOGINSTALL &>> $LOG
-echo -e "Base de Dados do Rsyslog criada com sucesso!!!, continuando o script..."
+echo -e "Base de Dados do Rsyslog criada com sucesso!!!, continuando o script...\n"
 sleep 5
-echo
 #
 echo -e "Criando a Base de Dados do LogAnalyzer, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
@@ -242,22 +235,19 @@ echo -e "Criando a Base de Dados do LogAnalyzer, aguarde..."
 	mysql -u $MYSQLUSER -p$MYSQLPASS -e "$LOGGRANTDATABASE" mysql &>> $LOG
 	mysql -u $MYSQLUSER -p$MYSQLPASS -e "$LOGGRANTALL" mysql &>> $LOG
 	mysql -u $MYSQLUSER -p$MYSQLPASS -e "$LOGFLUSH" mysql &>> $LOG
-echo -e "Base de Dados do LogAnalyzer criada com sucesso!!!, continuando o script..."
+echo -e "Base de Dados do LogAnalyzer criada com sucesso!!!, continuando o script...\n"
 sleep 5
-echo
 #
 echo -e "Atualizando os arquivos de configuração do Rsyslog, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando cp: -v (verbose)
 	cp -v conf/rsyslog.conf /etc/rsyslog.conf >> $LOG
 	cp -v conf/mysql.conf /etc/rsyslog.d/mysql.conf >> $LOG
-echo -e "Arquivos atualizadas com sucesso!!!, continuando com o script..."
+echo -e "Arquivos atualizadas com sucesso!!!, continuando com o script...\n"
 sleep 5
-echo
 #
-echo -e "Instalando o LogAnalyzer, aguarde..."
+echo -e "Instalando o LogAnalyzer, aguarde...\n"
 sleep 5
-echo
 #
 echo -e "Fazendo o download do LogAnalyzer do site oficial, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
@@ -268,25 +258,23 @@ echo -e "Fazendo o download do LogAnalyzer do site oficial, aguarde..."
 	rm -v pt_BR.zip &>> $LOG
 	wget $LOGANALYZER -O loganalyzer.tar.gz &>> $LOG
 	wget $PTBR -O pt_BR.zip &>> $LOG
-echo -e "Download LogAnalyzer feito com sucesso!!!, continuando com o script..."
+echo -e "Download LogAnalyzer feito com sucesso!!!, continuando com o script...\n"
 sleep 5
-echo
 #
 echo -e "Descompactando o LogAnalyzer, aguarde..."
 	# opção do comando: &>> (redirecionar a entrada padrão)
 	# opção do comando tar: -z (gzip), -x (extract), -v (verbose), -f (file)
 	tar -xzvf loganalyzer.tar.gz &>> $LOG
 	unzip pt_BR.zip &>> $LOG
-echo -e "Descompactação do LogAnalyzer feita com sucesso!!!, continuando com o script..."
+echo -e "Descompactação do LogAnalyzer feita com sucesso!!!, continuando com o script...\n"
 sleep 5
-echo
 #
 echo -e "Copiando os arquivos de configuração do LogAnalyzer, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando mkdir: -v (verbose)
 	# opção do comando cp: -R (recurse), -v (verbose)
 	# opção do comando chmod: -v (verbose), 775 (Dono=R-X,Grupo=R-X=Outros=R-X)
-	# opção do comando chown: -R (recursive), -v (verbose), www-data.www-data (Usuário.Grupo)
+	# opção do comando chown: -R (recursive), -v (verbose), www-data (user), www-data (group)
 	LOGANALYZERDIR=`echo loganalyzer*/`
 	SOURCE="src/*"
 	mkdir -v /var/www/html/log &>> $LOG
@@ -295,45 +283,36 @@ echo -e "Copiando os arquivos de configuração do LogAnalyzer, aguarde..."
 	touch /var/www/html/log/config.php &>> $LOG
 	chmod -v 666 /var/www/html/log/config.php &>> $LOG
 	chown -Rv www-data.www-data /var/www/html/log/ &>> $LOG
-echo -e "Arquivos copiados com sucesso!!!, continuando com o script..."
+echo -e "Arquivos copiados com sucesso!!!, continuando com o script...\n"
 sleep 5
-echo
 #
-echo -e "Instalação do LogAnalyzer feita com sucesso!!! Pressione <Enter> para continuar."
-read
-sleep 3
+echo -e "Instalação do LogAnalyzer feita com sucesso!!!, continuando com o script...\n"
+sleep 5
 #
-echo -e "Editando o arquivo de configuração do Rsyslog, aguarde..."
-	echo -e "Pressione <Enter> para editar o arquivo: rsyslog.conf"
+echo -e "Editando o arquivo rsyslog.conf do Rsyslog, Pressione <Enter> para continuar."
 	read
-	sleep 3
 	vim /etc/rsyslog.conf
-echo -e "Arquivo editado com sucesso!!!, continuando com o script..."
+echo -e "Arquivo editado com sucesso!!!, continuando com o script...\n"
 sleep 5
-echo
 #
-echo -e "Editando o arquivo de configuração do MySQL do Rsyslog, aguarde..."
-	echo -e "Pressione <Enter> para editar o arquivo: mysql.conf"
+echo -e "Editando o arquivo mysql.conf do MySQL do Rsyslog, Pressione <Enter> para continuar."
 	read
 	sleep 3
 	vim /etc/rsyslog.d/mysql.conf
-echo -e "Arquivo editado com sucesso!!!, continuando com o script..."
+echo -e "Arquivo editado com sucesso!!!, continuando com o script...\n"
 sleep 5
-echo
 #
 echo -e "Reinicializando o Serviço do Rsyslog, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	systemctl restart rsyslog &>> $LOG
-echo -e "Serviço do Rsyslog reinicializado com sucesso!!!, continuando com o script..."
+echo -e "Serviço do Rsyslog reinicializado com sucesso!!!, continuando com o script...\n"
 sleep 5
-echo
 #
 echo -e "Verificando a porta de conexão do Syslog/Rsyslog, aguarde..."
 	# opção do comando netstat: -a (all), -n (numeric)
 	netstat -an | grep 514
-echo -e "Porta de conexão do Syslog/Rsyslog verificado com sucesso!!!, continuando o script..."
+echo -e "Porta de conexão do Syslog/Rsyslog verificado com sucesso!!!, continuando o script...\n"
 sleep 5
-echo
 #
 echo -e "Instalação do LogAnalyzer feita com Sucesso!!!"
 	# script para calcular o tempo gasto (SCRIPT MELHORADO, CORRIGIDO FALHA DE HORA:MINUTO:SEGUNDOS)
