@@ -9,7 +9,7 @@
 # Versão: 0.02
 # Testado e homologado para a versão do Ubuntu Server 18.04.x LTS x64
 # Kernel >= 4.15.x
-# Testado e homologado para a versão do OpenSSL
+# Testado e homologado para a versão do OpenSSL 1.1.x
 #
 # OpenSSL é uma implementação de código aberto dos protocolos SSL e TLS. A biblioteca (escrita na 
 # linguagem C) implementa as funções básicas de criptografia e disponibiliza várias funções utilitárias.
@@ -164,7 +164,7 @@ echo -e "Criando o Chave Privada Criptografada de 4096 bits, senha padrão: $PAS
 	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando rm: -v (verbose)
 	# opção do comando openssl: genrsa (Generation of RSA Private Key),
-	#							-des3 ()
+	#							-des3 (triple DES Encryption)
 	#							-out (output file), -passout (accept password arguments output), 
 	#							pass: (The actual password is password), 
 	#							4096 (size key bit: 1024, 2048, 3072 or 4096)
@@ -176,7 +176,7 @@ sleep 5
 echo -e "Removendo a senha da chave privada criptografada, senha padrão: $PASSPHRASE, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando mv: -v (verbose)
-	# opção do comando openssl: rsa (),
+	# opção do comando openssl: rsa (RSA Private Key),
 	#							-in (input file KEY),
 	#							-out (output file KEY)
 	mv -v pti-intra.key pti-intra-old.key &>> $LOG
@@ -184,42 +184,21 @@ echo -e "Removendo a senha da chave privada criptografada, senha padrão: $PASSP
 echo -e "Senha da chave privada criptografada removida com sucesso!!!, continuando com o script...\n"
 sleep 5
 #
-echo -e "Verificando o arquivo de chave privada criptografada, senha padrão: $PASSPHRASE, aguarde..."
+echo -e "Verificando o arquivo de chave privada criptografada, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
-	# opção do comando openssl: rsa (), 
+	# opção do comando openssl: rsa (RSA Private Key), 
 	#							-noout (omits the output of the encoded version), 
-	#							-modulus (), 
+	#							-modulus (internal data called a modulus), 
 	#							-in (input file KEY), 
-	#							md5 ()
+	#							md5 (MD5 checksums)
 	openssl rsa -noout -modulus -in pti-intra.key | openssl md5
 echo -e "Arquivo de chave privada verificado com sucesso!!!, continuando com o script...\n"
 sleep 5
 #
-echo -e "Criando o CA (Certified Authority - Root Certificate) e PEM (PEM Privacy Enhanced Mail), senha padrão: $PASSPHRASE, aguarde..."
-	# opção do comando openssl: req (PKCS#10 X.509 Certificate Signing Request (CSR) Management), 
-	#							-x509 (X.509 Certificate Data Management), 
-	#							-new (new PEM), 
-	#							-key (input file RSA), 
-	#							-sha256 (), 
-	#							-days (validate certificated), 
-	#							-out (output file PEM), 
-	#							-config (external configuration file)
-	# Criando o arquivo PEM, mensagens que serão solicitadas na criação da CA
-	# 	Country Name (2 letter code): BR <-- pressione <Enter>
-	# 	State or Province Name (full name): Brasil <-- pressione <Enter>
-	# 	Locality Name (eg, city): Sao Paulo <-- pressione <Enter>
-	# 	Organization Name (eg, company): Bora para Pratica <-- pressione <Enter>
-	# 	Organization Unit Name (eg, section): Procedimentos em TI <-- pressione <Enter>
-	# 	Common Name (eg, server FQDN or YOUR name): ptispo01ws01.pti.intra <-- pressione <Enter>
-	# 	Email Address: pti@pti.intra <-- pressione <Enter>
-	openssl req -x509 -new -nodes -key pti-intra.key -sha256 -days 3650 -out pti-intra.pem -config /etc/ssl/pti-ssl.conf
-echo -e "Criação do CA feito sucesso!!!, continuando com o script...\n"
-sleep 5
-#
-echo -e "Criando o arquivo CSR (Certificate Signing Request), com nome FQDN: `hostname`, senha padrão: $PASSPHRASE, aguarde..."
+echo -e "Criando o arquivo CSR (Certificate Signing Request), com DOMAIN: `hostname -d`, aguarde..."
 	# opção do comando openssl: req (PKCS#10 X.509 Certificate Signing Request (CSR) Management), 
 	#							-new (new CSR),
-	#							-sha256 ()
+	#							-sha256 (Cryptographic hashes)
 	#							-nodes ()
 	# 							-key (input file RSA), 
 	#							-out (output file CSR), 
@@ -236,7 +215,7 @@ echo -e "Criando o arquivo CSR (Certificate Signing Request), com nome FQDN: `ho
 echo -e "Criação do CSR feito com sucesso!!!, continuando com o script...\n"
 sleep 5
 #
-echo -e "Verificando o arquivo CSR (Certificate Signing Request) criado, aguarde..."
+echo -e "Verificando o arquivo CSR (Certificate Signing Request), aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando openssl: req (PKCS#10 X.509 Certificate Signing Request (CSR) Management), 
 	#							-text (Print the in text), 
@@ -246,11 +225,11 @@ echo -e "Verificando o arquivo CSR (Certificate Signing Request) criado, aguarde
 echo -e "Arquivo CSR verificado com sucesso!!!, continuando com o script...\n"
 sleep 5
 #
-echo -e "Criando o certificado assinado CRT (Certificate Request Trust), com nome FQDN: `hostname`, senha padrão: $PASSPHRASE, aguarde..."
+echo -e "Criando o certificado assinado CRT (Certificate Request Trust), com DOMÍNIO: `hostname -d`, aguarde..."
 	# opção do comando openssl: x509 (X.509 Certificate Data Management),  
 	#							-req (PKCS#10 X.509 Certificate Signing Request (CSR) Management),
 	#							-days (validate certificate file),
-	#							-sha256 ()
+	#							-sha256 (Cryptographic hashes)
 	#							-in (input file CSR),
 	#							-CA (input file PEM),
 	#							-CAkey (input file KEY),
@@ -258,18 +237,18 @@ echo -e "Criando o certificado assinado CRT (Certificate Request Trust), com nom
 	#							-out (output file CRT)
 	#							-extfile (external configuration file)
 	#							-extensions ()
-	openssl x509 -req -days 3650 -sha256 -in pti-intra.csr -CA pti-intra.pem -CAkey pti-intra.key -CAcreateserial \
-	-out pti-intra.crt -extfile /etc/ssl/pti-ssl.conf -extensions v3_ca
+	openssl x509 -req -days 3650 -sha256 -in pti-intra.csr -signkey pti-intra.key \
+	-out pti-intra.crt -extfile /etc/ssl/pti-ssl.conf -extensions v3_req
 echo -e "Criação do certificado assinado feito com sucesso!!!, continuando com o script...\n"
 sleep 5
 #
-echo -e "Verificando o arquivo CRT (Certificate Request Trust) criado, aguarde..."
+echo -e "Verificando o arquivo CRT (Certificate Request Trust), aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando openssl: x509 (X.509 Certificate Data Management), 
 	#							-noout (omits the output of the encoded version), 
-	#							-modulus (), 
+	#							-modulus (internal data called a modulus), 
 	#							-in (input file CRT), 
-	#							md5 ()
+	#							md5 (MD5 checksums)
 	openssl x509 -noout -modulus -in pti-intra.crt | openssl md5
 echo -e "Arquivo CRT verificado com sucesso!!!, continuando com o script...\n"
 sleep 5
@@ -305,11 +284,11 @@ echo -e "Criando o diretório de Download para baixar a Unidade Certificadora, a
 	mkdir -v /var/www/html/download/ &>> $LOG
 	chown -v www-data:www-data /var/www/html/download/ &>> $LOG
 	cp -v pti-intra.crt /var/www/html/download/ &>> $LOG
-	cp -v pti-intra.pem /var/www/html/download/ &>> $LOG
+	cp -v pti-intra.csr /var/www/html/download/ &>> $LOG
 echo -e "Diretório criado com sucesso!!!, continuando com o script...\n"
 sleep 2
 #
-echo -e "Habilitando o suporte ao SSL e o Site HTTPS do Apache2, pressione <Enter> para continuar"
+echo -e "Habilitando o suporte ao SSL e o Site HTTPS do Apache2, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	a2enmod ssl &>> $LOG
 	a2enmod headers &>> $LOG
