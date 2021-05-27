@@ -99,7 +99,8 @@ echo -n "Verificando as dependências do OpenSSL, aguarde... "
 #
 # Script de configuração do OpenSSL no GNU/Linux Ubuntu Server 18.04.x
 # opção do comando echo: -e (enable interpretation of backslash escapes), \n (new line)
-# opção do comando hostname: -I (all IP address)
+# opção do comando hostname: -I (all IP address), -A (all FQDN name), -d (domain)
+# opções do comando cut: -d (delimiter), -f (fields)
 # opção do comando date: + (format), %d (day), %m (month), %Y (year 1970), %H (hour 24), %M (minute 60)
 echo -e "Início do script $0 em: `date +%d/%m/%Y-"("%H:%M")"`\n" &>> $LOG
 clear
@@ -168,11 +169,22 @@ echo -e "Criando o Chave Privada Criptografada de 4096 bits, senha padrão: $PAS
 	#							pass: (The actual password is password), 
 	#							4096 (size key bit: 1024, 2048, 3072 or 4096)
 	rm -v pti-intra.* &>> $LOG
-	openssl genrsa -des3 -out pti-intra.key -passout pass:$PASSPHRASE 4096 &>> $LOG
+	openssl genrsa -des3 -out pti-intra.key -passout pass:$PASSPHRASE 4096
 echo -e "Chave privada criptografada criada com sucesso!!!, continuando com o script...\n"
-sleep 2
+sleep 5
 #
-echo -e "Verificando o arquivo de chave privada criptografada criada, senha padrão: $PASSPHRASE, aguarde..."
+echo -e "Removendo a senha da chave privada criptografada, senha padrão: $PASSPHRASE, aguarde..."
+	# opção do comando: &>> (redirecionar a saída padrão)
+	# opção do comando mv: -v (verbose)
+	# opção do comando openssl: rsa (),
+	#							-in (input file KEY),
+	#							-out (output file KEY)
+	mv -v pti-intra.key pti-intra-old.key &>> $LOG
+	openssl rsa -in pti-intra-old.key -out pti-intra.key
+echo -e "Senha da chave privada criptografada removida com sucesso!!!, continuando com o script...\n"
+sleep 5
+#
+echo -e "Verificando o arquivo de chave privada criptografada, senha padrão: $PASSPHRASE, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando openssl: rsa (), 
 	#							-noout (omits the output of the encoded version), 
@@ -183,7 +195,7 @@ echo -e "Verificando o arquivo de chave privada criptografada criada, senha padr
 echo -e "Arquivo de chave privada verificado com sucesso!!!, continuando com o script...\n"
 sleep 5
 #
-echo -e "Criando o CA (Certified Authority - Root Certificate) e o arquivo PEM (PEM Privacy Enhanced Mail), senha padrão: $PASSPHRASE, aguarde..."
+echo -e "Criando o CA (Certified Authority - Root Certificate) e PEM (PEM Privacy Enhanced Mail), senha padrão: $PASSPHRASE, aguarde..."
 	# opção do comando openssl: req (PKCS#10 X.509 Certificate Signing Request (CSR) Management), 
 	#							-x509 (X.509 Certificate Data Management), 
 	#							-new (new PEM), 
@@ -230,7 +242,7 @@ echo -e "Verificando o arquivo CSR (Certificate Signing Request) criado, aguarde
 	#							-text (Print the in text), 
 	# 							-noout (omits the output of the encoded version), 
 	#							-in (input file CSR)
-	openssl req -text -noout -in pti-intra.csr &>> $LOG
+	openssl req -text -noout -in pti-intra.csr
 echo -e "Arquivo CSR verificado com sucesso!!!, continuando com o script...\n"
 sleep 5
 #
@@ -258,7 +270,7 @@ echo -e "Verificando o arquivo CRT (Certificate Request Trust) criado, aguarde..
 	#							-modulus (), 
 	#							-in (input file CRT), 
 	#							md5 ()
-	openssl x509 -noout -modulus -in pti-intra.crt | openssl md5 &>> $LOG
+	openssl x509 -noout -modulus -in pti-intra.crt | openssl md5
 echo -e "Arquivo CRT verificado com sucesso!!!, continuando com o script...\n"
 sleep 5
 #
