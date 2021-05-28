@@ -5,8 +5,8 @@
 # Facebook: facebook.com/BoraParaPratica
 # YouTube: youtube.com/BoraParaPratica
 # Data de criação: 25/05/2021
-# Data de atualização: 26/05/2021
-# Versão: 0.02
+# Data de atualização: 28/05/2021
+# Versão: 0.03
 # Testado e homologado para a versão do Ubuntu Server 18.04.x LTS x64
 # Kernel >= 4.15.x
 # Testado e homologado para a versão do OpenSSL 1.1.x
@@ -31,7 +31,7 @@
 # Vídeo de instalação do GNU/Linux Ubuntu Server 18.04.x LTS: https://www.youtube.com/watch?v=zDdCrqNhIXI
 # Vídeo de configuração do OpenSSH no GNU/Linux Ubuntu Server 18.04.x LTS: https://www.youtube.com/watch?v=ecuol8Uf1EE&t
 # Vídeo de instalação do LAMP Server no Ubuntu Server 18.04.x LTS: https://www.youtube.com/watch?v=6EFUu-I3
-# Vídeo de instalação do Bind9 DNS e ISC DHCP Server no Ubuntu Server 18.04.x LTS: 
+# Vídeo de instalação do Bind9 DNS e ISC DHCP Server no Ubuntu Server 18.04.x LTS: https://www.youtube.com/watch?v=NvD9Vchsvbk
 #
 # Variável da Data Inicial para calcular o tempo de execução do script (VARIÁVEL MELHORADA)
 # opção do comando date: +%T (Time)
