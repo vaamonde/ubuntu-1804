@@ -150,14 +150,14 @@ echo -e "Configuração do OpenSSL e TLS/SSL no Apache2, aguarde...\n"
 echo -e "Atualizando o arquivo de configuração do OpenSSL, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando cp: -v (verbose)
-	cp -v conf/pti-ssl.conf /etc/ssl/pti-ssl.conf &>> $LOG
+	#cp -v conf/pti-ssl.conf /etc/ssl/pti-ssl.conf &>> $LOG
 echo -e "Arquivo atualizado com sucesso!!!, continuando com o script...\n"
 sleep 5
 #
 echo -e "Editando o arquivo configuração do OpenSSL, pressione <Enter> para continuar."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	read
-	vim /etc/ssl/pti-ssl.conf
+	#vim /etc/ssl/pti-ssl.conf
 echo -e "Arquivo editado com sucesso!!!, continuando com o script...\n"
 sleep 5
 #
@@ -180,8 +180,9 @@ echo -e "Removendo a senha da chave privada criptografada, senha padrão: $PASSP
 	# opção do comando openssl: rsa (RSA Private Key),
 	#							-in (input file KEY),
 	#							-out (output file KEY)
+	#							-passin ()
 	mv -v pti-intra.key pti-intra-old.key &>> $LOG
-	openssl rsa -in pti-intra-old.key -out pti-intra.key
+	openssl rsa -in pti-intra-old.key -out pti-intra.key -passin pass:$PASSPHRASE
 echo -e "Senha da chave privada criptografada removida com sucesso!!!, continuando com o script...\n"
 sleep 5
 #
@@ -212,7 +213,7 @@ echo -e "Criando o arquivo CSR (Certificate Signing Request), com DOMAIN: `hostn
 	# 	Organization Unit Name (eg, section): Procedimentos em TI <-- pressione <Enter>
 	# 	Common Name (eg, server FQDN or YOUR name): ptispo01ws01.pti.intra <-- pressione <Enter>
 	# 	Email Address: pti@pti.intra <-- pressione <Enter>
-	openssl req -new -sha256 -nodes -key pti-intra.key -out pti-intra.csr -config /etc/ssl/pti-ssl.conf
+	openssl req -new -sha256 -nodes -key pti-intra.key -out pti-intra.csr -config /etc/ssl/pti-ssl-subject.conf
 echo -e "Criação do CSR feito com sucesso!!!, continuando com o script...\n"
 sleep 5
 #

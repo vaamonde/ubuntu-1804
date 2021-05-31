@@ -150,7 +150,7 @@ echo -e "Instalação e configuração do Certbot e criação do Virtual Host, a
 #
 echo -e "Adicionando o PPA do Certbot, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
-	add-apt-repository $PPA &>> $LOG
+	echo | add-apt-repository $PPA &>> $LOG
 	apt update &>> $LOG
 echo -e "PPA do Certbot adicionado com sucesso!!!, continuando com o script...\n"
 sleep 5
@@ -198,6 +198,11 @@ sleep 5
 #
 echo -e "Criando o Certificado do Certbot para suportar o HTTPS no Virtual Host, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
+	# Informações que serão solicitadas pelo Certbot
+	# 01. Enter email address (used for urgent renewal and security notices) (Enter 'c' to cancel): seuemail <Enter>
+	# 02. Please read the Terms of Service at: A <Enter>
+	# 03. Would you be willing to share your email address with the Electronic Frontier Foundation: Y <Enter>
+	# 04. 
 	certbot --apache -d $D1 -d $D2 -d $D3
 echo -e "Certificado criado com sucesso!!!, continuando com o script...\n"
 sleep 2
