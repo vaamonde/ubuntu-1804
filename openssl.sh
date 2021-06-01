@@ -78,6 +78,8 @@ LOG="/var/log/$(echo $0 | cut -d'/' -f2)"
 #
 # Declarando a variável de Senha (passphrase) utilizada na geração da chave privada do OpenSSL
 PASSPHRASE="vaamonde"
+BITS="4096"
+CRIPTO="aes256"
 #
 # Exportando o recurso de Noninteractive do Debconf para não solicitar telas de configuração
 export DEBIAN_FRONTEND="noninteractive"
@@ -166,37 +168,74 @@ echo -e "Removendo software desnecessários, aguarde..."
 echo -e "Software removidos com sucesso!!!, continuando com o script...\n"
 sleep 5
 #
-echo -e "Configuração do OpenSSL e TLS/SSL no Apache2, aguarde...\n"
+echo -e "Configuração do OpenSSL para criação da CA e Certificados, aguarde...\n"
 #
-echo -e "Atualizando os arquivos de configuração da CA e do CSR, aguarde..."
+echo -e "Criando a estrutura de diretórios do CA e dos Certificados, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
+	# opção do comando mkdir: -v (verbose), {} (agrupa comandos em blocos)
+	mkdir -v /etc/ssl/{newcerts,certs,crl,private,requests} &>> $LOG
+echo -e "Estrutura de diretórios criada com sucesso!!!, continuando com o script...\n"
+sleep 5
+#
+echo -e "Atualizando os arquivos de configuração da CA e dos Certificados, aguarde..."
+	# opção do comando: &>> (redirecionar a saída padrão adicionando)
+	# opção do comando touch: {} (agrupa comandos em blocos)
 	# opção do comando cp: -v (verbose)
+	touch /etc/ssl/{index.txt,index.txt.attr} &>> $LOG
+	echo '1' > /etc/ssl/serial &>> $LOG
 	cp -v conf/pti-ca.conf /etc/ssl/pti-ca.conf &>> $LOG
-	cp -v conf/pti-csr.conf /etc/ssl/pti-csr.conf &>> $LOG
+	#cp -v conf/pti-csr.conf /etc/ssl/pti-csr.conf &>> $LOG
 echo -e "Arquivos atualizados com sucesso!!!, continuando com o script...\n"
 sleep 5
 #
 echo -e "Editando o arquivo configuração da CA, pressione <Enter> para continuar."
 	# opção do comando: &>> (redirecionar a saída padrão)
-	read
-	vim /etc/ssl/pti-ca.conf
+	#read
+	#vim /etc/ssl/pti-ca.conf
 echo -e "Arquivo editado com sucesso!!!, continuando com o script...\n"
+sleep 5
+#
+echo -e "Criando o Chave Privada Criptografada de $BITS bits da CA, senha padrão: $PASSPHRASE, aguarde..." 
+	# opção do comando: &>> (redirecionar a saída padrão)
+	# opção do comando rm: -v (verbose)
+	# opção do comando openssl: genrsa (Generation of RSA Private Key),
+	#							-aes256 (), sha256 (Cryptographic hashes)
+	#							-out (output file), 
+	#							-passout (accept password arguments output), 
+	#							pass: (The actual password is password), 
+	#							4096 (size key bit: 1024, 2048, 3072 or 4096)
+	openssl genrsa -$CRIPTO -out /etc/ssl/private/ca-ptikey.key -passout pass:$PASSPHRASE $BITS &>> $LOG
+echo -e "Chave privada criptografada da CA criada com sucesso!!!, continuando com o script...\n"
+sleep 5
+#
+echo -e "Removendo a senha da chave privada criptografada da CA, senha padrão: $PASSPHRASE, aguarde..."
+	# opção do comando: &>> (redirecionar a saída padrão)
+	# opção do comando mv: -v (verbose)
+	# opção do comando openssl: rsa (RSA Private Key),
+	#							-in (input file KEY),
+	#							-out (output file KEY),
+	#							-passin (accept password arguments input),
+	#							pass: (The actual password is password)
+	# opção do comando rm: -v (verbose)
+	mv -v /etc/ssl/private/ca-ptikey.key /etc/ssl/private/ca-ptikey.key.old &>> $LOG
+	openssl rsa -in /etc/ssl/private/ca-ptikey.key.old -out /etc/ssl/private/ca-ptikey.key -passin pass:$PASSPHRASE &>> $LOG
+	rm -v /etc/ssl/private/ca-ptikey.key.old &>> $LOG
+echo -e "Senha da chave privada criptografada da CA removida com sucesso!!!, continuando com o script...\n"
+sleep 5
+#
+echo -e "Verificando o arquivo de chave privada criptografada da CA, aguarde..."
+	# opção do comando: &>> (redirecionar a saída padrão)
+	# opção do comando openssl: rsa (RSA Private Key), 
+	#							-noout (omits the output of the encoded version), 
+	#							-modulus (internal data called a modulus), 
+	#							-in (input file KEY), 
+	#							md5 (MD5 checksums)
+	openssl rsa -noout -modulus -in /etc/ssl/private/ca-ptikey.key | openssl md5 &>> $LOG
+echo -e "Arquivo de chave privada da CA verificada com sucesso!!!, continuando com o script...\n"
 sleep 5
 #
 
 #================================ EM DESENVOLVIMENTO ===================================
-# CRIANDO A CA
-#mkdir -v /etc/ssl/{newcerts,certs,crl,private,requests}
-#touch /etc/ssl/{index.txt,index.txt.attr}
-#echo '1234' > /etc/ssl/serial
-
-#Primeira Etapa: Criação da Chave Privada da Autoridade Certificadora CA:
-#01. criando a chave privada da CA
-#openssl genrsa -aes256 -out /etc/ssl/private/ca-ptikey.pem -passout pass:vaamonde 4096
-
-#02. removendo a solicitação de senha da chave privada da CA
-#mv -v /etc/ssl/private/ca-ptikey.pem /etc/ssl/private/ca-ptikey.pem.old
-#openssl rsa -in /etc/ssl/private/ca-ptikey.pem.old -out /etc/ssl/private/ca-ptikey.pem -passin pass:vaamonde
 
 #03. gerando a CA
 #openssl req -new -x509 -key /etc/ssl/private/ca-ptikey.pem -out /etc/ssl/certs/ca-pticert.pem -days 3650 -set_serial 0 -config /etc/ssl/pti-ssl.conf
