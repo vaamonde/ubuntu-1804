@@ -188,13 +188,6 @@ echo -e "Atualizando os arquivos de configuração da CA e dos Certificados, agu
 echo -e "Arquivos atualizados com sucesso!!!, continuando com o script...\n"
 sleep 5
 #
-echo -e "Editando o arquivo configuração da CA, pressione <Enter> para continuar."
-	# opção do comando: &>> (redirecionar a saída padrão)
-	#read
-	#vim /etc/ssl/pti-ca.conf
-echo -e "Arquivo editado com sucesso!!!, continuando com o script...\n"
-sleep 5
-#
 echo -e "Criando o Chave Privada Criptografada de $BITS bits da CA, senha padrão: $PASSPHRASE, aguarde..." 
 	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando rm: -v (verbose)
@@ -234,42 +227,60 @@ echo -e "Verificando o arquivo de chave privada criptografada da CA, aguarde..."
 echo -e "Arquivo de chave privada da CA verificada com sucesso!!!, continuando com o script...\n"
 sleep 5
 #
-
-#================================ EM DESENVOLVIMENTO ===================================
-
-#03. gerando a CA
-#openssl req -new -x509 -key /etc/ssl/private/ca-ptikey.pem -out /etc/ssl/certs/ca-pticert.pem -days 3650 -set_serial 0 -config /etc/ssl/pti-ssl.conf
-
-
-#Segunda Etapa: Criando o certificado do servidor
-#01. criando a chave privada do certificado
-#openssl genrsa -aes256 -out /etc/ssl/private/srv-ptikey.pem -passout pass:vaamonde 4096
-
-#02. removendo a solicitação de senha da chave privada do servidor
-#mv -v /etc/ssl/private/srv-ptikey.pem /etc/ssl/private/srv-ptikey.pem.old
-#openssl rsa -in /etc/ssl/private/srv-ptikey.pem.old -out /etc/ssl/private/srv-ptikey.pem -passin pass:vaamonde
-
-#03. gerando o certificado
-#openssl req -new -nodes -key /etc/ssl/private/srv-ptikey.pem -out /etc/ssl/requests/srv-pti.csr -config /etc/ssl/pti-ssl.conf
-
-#04. validando o certificado com a CA
-#openssl ca -in /etc/ssl/request/srv-pti.csr -out /etc/ssl/requests/srv-pti.pem -config /etc/ssl/pti-ca.conf
-
-echo -e "Criando o Chave Privada Criptografada de 4096 bits, senha padrão: $PASSPHRASE, aguarde..." 
+echo -e "Editando o arquivo configuração da CA, pressione <Enter> para continuar."
 	# opção do comando: &>> (redirecionar a saída padrão)
-	# opção do comando rm: -v (verbose)
+	read
+	vim /etc/ssl/pti-ca.conf
+echo -e "Arquivo editado com sucesso!!!, continuando com o script...\n"
+sleep 5
+#
+echo -e "Criando a CA (certificate authority), confirme as mensagens do arquivo: pti-ca.conf, aguarde..."
+	# opção do comando: &>> (redirecionar a saída padrão)
+	# opção do comando openssl: req (PKCS#10 X.509 Certificate Signing Request (CSR) Management),
+	#							-new (new PEM),
+	#							-x509 (X.509 Certificate Data Management),
+	#							-key (input file KEY RSA),
+	#							-out (output file PEM),
+	#							-days (),
+	#							-set_serial (),
+	#							-config ().
+	# Criando o arquivo PEM, mensagens que serão solicitadas na criação da CA
+	# 	Country Name (2 letter code): BR <-- pressione <Enter>
+	# 	State or Province Name (full name): Brasil <-- pressione <Enter>
+	# 	Locality Name (eg, city): Sao Paulo <-- pressione <Enter>
+	# 	Organization Name (eg, company): Bora para Pratica <-- pressione <Enter>
+	# 	Organization Unit Name (eg, section): Procedimentos em TI <-- pressione <Enter>
+	# 	Common Name (eg, server FQDN or YOUR name): pti.intra <-- pressione <Enter>
+	# 	Email Address: pti@pti.intra <-- pressione <Enter>
+	openssl req -new -x509 -key /etc/ssl/private/ca-ptikey.key -out /etc/ssl/certs/ca-pticert.pem \
+	-days 3650 -set_serial 0 -config /etc/ssl/pti-ca.conf
+echo -e "CA criada com sucesso!!!, continuando com o script...\n"
+sleep 5
+#
+echo -e "Verificando o arquivo PEM (Privacy Enhanced Mail) da CA, aguarde..."
+	# opção do comando: &>> (redirecionar a saída padrão)
+	# opção do comando openssl: x509 (X.509 Certificate Data Management), 
+	#							-noout (omits the output of the encoded version), 
+	#							-modulus (internal data called a modulus), 
+	#							-in (input file CRT), 
+	#							md5 (MD5 checksums)
+	openssl x509 -noout -modulus -in /etc/ssl/certs/ca-pticert.pem | openssl md5 &>> $LOG
+echo -e "Arquivo PEM da CA verificado com sucesso!!!, continuando com o script...\n"
+sleep 5
+#
+echo -e "Criando o Chave Privada Criptografada de $BITS do Apache2, senha padrão: $PASSPHRASE, aguarde..." 
+	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando openssl: genrsa (Generation of RSA Private Key),
-	#							-des3 (triple DES Encryption)
+	#							- ()
 	#							-out (output file), 
 	#							-passout (accept password arguments output), 
 	#							pass: (The actual password is password), 
 	#							4096 (size key bit: 1024, 2048, 3072 or 4096)
-	rm -v pti-intra.* &>> $LOG
-	openssl genrsa -des3 -out pti-intra.key -passout pass:$PASSPHRASE 4096 &>> $LOG
-echo -e "Chave privada criptografada criada com sucesso!!!, continuando com o script...\n"
+	openssl genrsa -$CRIPTO -out /etc/ssl/private/apache2-ptikey.key -passout pass:$PASSPHRASE $BITS &>> $LOG
+echo -e "Chave privada criptografada do Apache2 criada com sucesso!!!, continuando com o script...\n"
 sleep 5
 #
-echo -e "Removendo a senha da chave privada criptografada, senha padrão: $PASSPHRASE, aguarde..."
+echo -e "Removendo a senha da chave privada criptografada do Apache2, senha padrão: $PASSPHRASE, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando mv: -v (verbose)
 	# opção do comando openssl: rsa (RSA Private Key),
@@ -277,23 +288,25 @@ echo -e "Removendo a senha da chave privada criptografada, senha padrão: $PASSP
 	#							-out (output file KEY),
 	#							-passin (accept password arguments input),
 	#							pass: (The actual password is password)
-	mv -v pti-intra.key pti-intra-old.key &>> $LOG
-	openssl rsa -in pti-intra-old.key -out pti-intra.key -passin pass:$PASSPHRASE &>> $LOG
-echo -e "Senha da chave privada criptografada removida com sucesso!!!, continuando com o script...\n"
+	# opção do comando rm: -v (verbose)
+	mv -v /etc/ssl/private/apache2-ptikey.key /etc/ssl/private/apache2-ptikey.key.old &>> $LOG
+	openssl rsa -in /etc/ssl/private/apache2-ptikey.key.old -out /etc/ssl/private/apache2-ptikey.key -passin pass:$PASSPHRASE &>> $LOG
+	rm -v /etc/ssl/private/apache2-ptikey.key.old &>> $LOG
+echo -e "Senha da chave privada criptografada da CA removida com sucesso!!!, continuando com o script...\n"
 sleep 5
 #
-echo -e "Verificando o arquivo de chave privada criptografada, aguarde..."
+echo -e "Verificando o arquivo de chave privada criptografada do Apache2, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando openssl: rsa (RSA Private Key), 
 	#							-noout (omits the output of the encoded version), 
 	#							-modulus (internal data called a modulus), 
 	#							-in (input file KEY), 
 	#							md5 (MD5 checksums)
-	openssl rsa -noout -modulus -in pti-intra.key | openssl md5 &>> $LOG
-echo -e "Arquivo de chave privada verificado com sucesso!!!, continuando com o script...\n"
+	openssl rsa -noout -modulus -in /etc/ssl/private/apache2-ptikey.key | openssl md5 &>> $LOG
+echo -e "Arquivo de chave privada do Apache2 verificado com sucesso!!!, continuando com o script...\n"
 sleep 5
 #
-echo -e "Criando o arquivo CSR (Certificate Signing Request), com DOMAIN: `hostname -d`, aguarde..."
+echo -e "Criando o arquivo CSR (Certificate Signing Request), confirme as mensagens do arquivo: pti-ssl.conf, aguarde..."
 	# opção do comando openssl: req (PKCS#10 X.509 Certificate Signing Request (CSR) Management), 
 	#							-new (new CSR),
 	#							-sha256 (Cryptographic hashes)
@@ -307,12 +320,27 @@ echo -e "Criando o arquivo CSR (Certificate Signing Request), com DOMAIN: `hostn
 	# 	Locality Name (eg, city): Sao Paulo <-- pressione <Enter>
 	# 	Organization Name (eg, company): Bora para Pratica <-- pressione <Enter>
 	# 	Organization Unit Name (eg, section): Procedimentos em TI <-- pressione <Enter>
-	# 	Common Name (eg, server FQDN or YOUR name): ptispo01ws01.pti.intra <-- pressione <Enter>
+	# 	Common Name (eg, server FQDN or YOUR name): pti.intra <-- pressione <Enter>
 	# 	Email Address: pti@pti.intra <-- pressione <Enter>
-	openssl req -new -sha256 -nodes -key pti-intra.key -out pti-intra.csr -config /etc/ssl/pti-ssl.conf
+	openssl req -new -$CRIPTO -nodes -key /etc/ssl/private/apache2-ptikey.key -out /etc/ssl/requests/apach2-pticert.csr -config /etc/ssl/pti-ssl.conf
 echo -e "Criação do CSR feito com sucesso!!!, continuando com o script...\n"
 sleep 5
 #
+
+#================================ EM DESENVOLVIMENTO ===================================
+
+
+#03. gerando o certificado
+#openssl req -new -nodes -key /etc/ssl/private/srv-ptikey.pem -out /etc/ssl/requests/srv-pti.csr -config /etc/ssl/pti-ssl.conf
+
+#04. validando o certificado com a CA
+#openssl ca -in /etc/ssl/request/srv-pti.csr -out /etc/ssl/requests/srv-pti.pem -config /etc/ssl/pti-ca.conf
+
+#================================ EM DESENVOLVIMENTO ===================================
+
+
+
+
 echo -e "Verificando o arquivo CSR (Certificate Signing Request), aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando openssl: req (PKCS#10 X.509 Certificate Signing Request (CSR) Management), 
