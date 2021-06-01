@@ -5,8 +5,8 @@
 # Facebook: facebook.com/BoraParaPratica
 # YouTube: youtube.com/BoraParaPratica
 # Data de criação: 25/05/2021
-# Data de atualização: 31/05/2021
-# Versão: 0.04
+# Data de atualização: 01/06/2021
+# Versão: 0.05
 # Testado e homologado para a versão do Ubuntu Server 18.04.x LTS x64
 # Kernel >= 4.15.x
 # Testado e homologado para a versão do OpenSSL 1.1.x
@@ -182,9 +182,9 @@ echo -e "Atualizando os arquivos de configuração da CA e dos Certificados, agu
 	# opção do comando touch: {} (agrupa comandos em blocos)
 	# opção do comando cp: -v (verbose)
 	touch /etc/ssl/{index.txt,index.txt.attr} &>> $LOG
-	echo '1' > /etc/ssl/serial &>> $LOG
+	echo '1234' > /etc/ssl/serial &>> $LOG
 	cp -v conf/pti-ca.conf /etc/ssl/pti-ca.conf &>> $LOG
-	#cp -v conf/pti-csr.conf /etc/ssl/pti-csr.conf &>> $LOG
+	cp -v conf/pti-ssl.conf /etc/ssl/pti-ssl.conf &>> $LOG
 echo -e "Arquivos atualizados com sucesso!!!, continuando com o script...\n"
 sleep 5
 #
@@ -271,7 +271,7 @@ sleep 5
 echo -e "Criando o Chave Privada Criptografada de $BITS do Apache2, senha padrão: $PASSPHRASE, aguarde..." 
 	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando openssl: genrsa (Generation of RSA Private Key),
-	#							- ()
+	#							-aes256 (), sha256 ()
 	#							-out (output file), 
 	#							-passout (accept password arguments output), 
 	#							pass: (The actual password is password), 
@@ -290,7 +290,8 @@ echo -e "Removendo a senha da chave privada criptografada do Apache2, senha padr
 	#							pass: (The actual password is password)
 	# opção do comando rm: -v (verbose)
 	mv -v /etc/ssl/private/apache2-ptikey.key /etc/ssl/private/apache2-ptikey.key.old &>> $LOG
-	openssl rsa -in /etc/ssl/private/apache2-ptikey.key.old -out /etc/ssl/private/apache2-ptikey.key -passin pass:$PASSPHRASE &>> $LOG
+	openssl rsa -in /etc/ssl/private/apache2-ptikey.key.old -out /etc/ssl/private/apache2-ptikey.key \
+	-passin pass:$PASSPHRASE &>> $LOG
 	rm -v /etc/ssl/private/apache2-ptikey.key.old &>> $LOG
 echo -e "Senha da chave privada criptografada da CA removida com sucesso!!!, continuando com o script...\n"
 sleep 5
@@ -306,10 +307,16 @@ echo -e "Verificando o arquivo de chave privada criptografada do Apache2, aguard
 echo -e "Arquivo de chave privada do Apache2 verificado com sucesso!!!, continuando com o script...\n"
 sleep 5
 #
+echo -e "Editando o arquivo configuração do Certificado do Apache2, pressione <Enter> para continuar."
+	# opção do comando: &>> (redirecionar a saída padrão)
+	read
+	vim /etc/ssl/pti-ssl.conf
+echo -e "Arquivo editado com sucesso!!!, continuando com o script...\n"
+sleep 5
+#
 echo -e "Criando o arquivo CSR (Certificate Signing Request), confirme as mensagens do arquivo: pti-ssl.conf, aguarde..."
 	# opção do comando openssl: req (PKCS#10 X.509 Certificate Signing Request (CSR) Management), 
 	#							-new (new CSR),
-	#							-sha256 (Cryptographic hashes)
 	#							-nodes ()
 	# 							-key (input file RSA), 
 	#							-out (output file CSR), 
@@ -322,65 +329,67 @@ echo -e "Criando o arquivo CSR (Certificate Signing Request), confirme as mensag
 	# 	Organization Unit Name (eg, section): Procedimentos em TI <-- pressione <Enter>
 	# 	Common Name (eg, server FQDN or YOUR name): pti.intra <-- pressione <Enter>
 	# 	Email Address: pti@pti.intra <-- pressione <Enter>
-	openssl req -new -$CRIPTO -nodes -key /etc/ssl/private/apache2-ptikey.key -out /etc/ssl/requests/apach2-pticert.csr -config /etc/ssl/pti-ssl.conf
+	openssl req -new -nodes -key /etc/ssl/private/apache2-ptikey.key -out \
+	/etc/ssl/requests/apache2-pticert.csr -config /etc/ssl/pti-ssl.conf
 echo -e "Criação do CSR feito com sucesso!!!, continuando com o script...\n"
 sleep 5
 #
-
-#================================ EM DESENVOLVIMENTO ===================================
-
-
-#03. gerando o certificado
-#openssl req -new -nodes -key /etc/ssl/private/srv-ptikey.pem -out /etc/ssl/requests/srv-pti.csr -config /etc/ssl/pti-ssl.conf
-
-#04. validando o certificado com a CA
-#openssl ca -in /etc/ssl/request/srv-pti.csr -out /etc/ssl/requests/srv-pti.pem -config /etc/ssl/pti-ca.conf
-
-#================================ EM DESENVOLVIMENTO ===================================
-
-
-
-
-echo -e "Verificando o arquivo CSR (Certificate Signing Request), aguarde..."
+echo -e "Verificando o arquivo CSR (Certificate Signing Request) do Apache2, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando openssl: req (PKCS#10 X.509 Certificate Signing Request (CSR) Management), 
 	#							-text (Print the in text), 
 	# 							-noout (omits the output of the encoded version), 
 	#							-in (input file CSR)
-	openssl req -text -noout -in pti-intra.csr &>> $LOG
+	openssl req -text -noout -in /etc/ssl/requests/apache2-pticert.csr &>> $LOG
 echo -e "Arquivo CSR verificado com sucesso!!!, continuando com o script...\n"
 sleep 5
 #
-echo -e "Criando o certificado assinado CRT (Certificate Request Trust), com DOMÍNIO: `hostname -d`, aguarde..."
-	# opção do comando openssl: x509 (X.509 Certificate Data Management),  
-	#							-req (PKCS#10 X.509 Certificate Signing Request (CSR) Management),
-	#							-days (validate certificate file),
-	#							-sha256 (Cryptographic hashes)
-	#							-in (input file CSR),
-	#							-signkey ().
-	#							-out (output file CRT)
-	openssl x509 -req -days 3650 -sha256 -in pti-intra.csr -signkey pti-intra.key -out pti-intra.crt &>> $LOG
-echo -e "Criação do certificado assinado feito com sucesso!!!, continuando com o script...\n"
+echo -e "Validando o arquivo PEM (Privacy Enhanced Mail) do Apache2 com a CA, aguarde..."
+	# opção do comando: &>> (redirecionar a saída padrão)
+	# opção do comando openssl: ca (),
+	#							-in (input file CSR), 
+	#							-out (output file PEM),
+	#							-config (external configuration file)
+	# Sign the certificate? [y/n]: y <Enter>
+	# 1 out of 1 certificate request certified, commit? [y/n]: y <Enter>
+	openssl ca -in /etc/ssl/request/apache2-pticert.csr -out /etc/ssl/request/apache2-pticert.pem \
+	-config /etc/ssl/pti-ca.conf
+echo -e "Arquivo PEM do Apache2 validado com sucesso!!!, continuando com o script...\n"
 sleep 5
 #
-echo -e "Verificando o arquivo CRT (Certificate Request Trust), aguarde..."
+echo -e "Verificando o arquivo PEM (Privacy Enhanced Mail) do Apache2, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando openssl: x509 (X.509 Certificate Data Management), 
 	#							-noout (omits the output of the encoded version), 
 	#							-modulus (internal data called a modulus), 
 	#							-in (input file CRT), 
 	#							md5 (MD5 checksums)
-	openssl x509 -noout -modulus -in pti-intra.crt | openssl md5 &>> $LOG
-echo -e "Arquivo CRT verificado com sucesso!!!, continuando com o script...\n"
+	openssl x509 -noout -modulus -in /etc/ssl/requests/apache2-pticert.pem | openssl md5 &>> $LOG
+echo -e "Arquivo PEM do Apache2 verificado com sucesso!!!, continuando com o script...\n"
 sleep 5
 #
-echo -e "Atualizando os Diretórios do OpenSSL com o novo certificado criado, aguarde..."
+echo -e "Criando o certificado assinado CRT (Certificate Request Trust), do Apache2, aguarde..."
+	# opção do comando openssl: x509 (X.509 Certificate Data Management),  
+	#							-req (PKCS#10 X.509 Certificate Signing Request (CSR) Management),
+	#							-days (validate certificate file),
+	#							-in (input file CSR),
+	#							-signkey (private share key).
+	#							-out (output file CRT)
+	openssl x509 -req -days 3650 -in /etc/ssl/request/apache2-pticert.csr -signkey \
+	/etc/ssl/private/apache2-ptikey.key -out /etc/ssl/certs/apache2-pticert.crt &>> $LOG
+echo -e "Criação do certificado assinado do Apache2 feito com sucesso!!!, continuando com o script...\n"
+sleep 5
+#
+echo -e "Verificando o arquivo CRT (Certificate Request Trust) do Apache2, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
-	# opção do comando cp: -v (verbose)
-	cp -v pti-intra.crt /etc/ssl/certs/ &>> $LOG
-	cp -v pti-intra.key /etc/ssl/private/ &>> $LOG
-echo -e "Arquivos atualizados com sucesso!!!, continuando com o script...\n"
-sleep 2
+	# opção do comando openssl: x509 (X.509 Certificate Data Management), 
+	#							-noout (omits the output of the encoded version), 
+	#							-modulus (internal data called a modulus), 
+	#							-in (input file CRT), 
+	#							md5 (MD5 checksums)
+	openssl x509 -noout -modulus -in /etc/ssl/certs/apache2-pticert.crt | openssl md5 &>> $LOG
+echo -e "Arquivo CRT do Apache2 verificado com sucesso!!!, continuando com o script...\n"
+sleep 5
 #
 echo -e "Atualizando o arquivo de configuração do Apache2 HTTPS, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
@@ -404,8 +413,7 @@ echo -e "Criando o diretório de Download para baixar a Unidade Certificadora, a
 	# opção do comando cp: -v (verbose)
 	mkdir -v /var/www/html/download/ &>> $LOG
 	chown -v www-data:www-data /var/www/html/download/ &>> $LOG
-	cp -v pti-intra.crt /var/www/html/download/ &>> $LOG
-	cp -v pti-intra.csr /var/www/html/download/ &>> $LOG
+	cp -v /etc/ssl/certs/apache2-pticert.crt /var/www/html/download/ &>> $LOG
 echo -e "Diretório criado com sucesso!!!, continuando com o script...\n"
 sleep 2
 #
