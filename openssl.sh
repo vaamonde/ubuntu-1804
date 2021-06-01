@@ -182,7 +182,7 @@ echo -e "Atualizando os arquivos de configuração da CA e dos Certificados, agu
 	# opção do comando touch: {} (agrupa comandos em blocos)
 	# opção do comando cp: -v (verbose)
 	touch /etc/ssl/{index.txt,index.txt.attr} &>> $LOG
-	echo '1234' > /etc/ssl/serial &>> $LOG
+	echo "1234" > /etc/ssl/serial
 	cp -v conf/pti-ca.conf /etc/ssl/pti-ca.conf &>> $LOG
 	cp -v conf/pti-ssl.conf /etc/ssl/pti-ssl.conf &>> $LOG
 echo -e "Arquivos atualizados com sucesso!!!, continuando com o script...\n"
@@ -352,7 +352,7 @@ echo -e "Validando o arquivo PEM (Privacy Enhanced Mail) do Apache2 com a CA, ag
 	#							-config (external configuration file)
 	# Sign the certificate? [y/n]: y <Enter>
 	# 1 out of 1 certificate request certified, commit? [y/n]: y <Enter>
-	openssl ca -in /etc/ssl/request/apache2-pticert.csr -out /etc/ssl/request/apache2-pticert.pem \
+	openssl ca -in /etc/ssl/requests/apache2-pticert.csr -out /etc/ssl/requests/apache2-pticert.pem \
 	-config /etc/ssl/pti-ca.conf
 echo -e "Arquivo PEM do Apache2 validado com sucesso!!!, continuando com o script...\n"
 sleep 5
@@ -375,7 +375,7 @@ echo -e "Criando o certificado assinado CRT (Certificate Request Trust), do Apac
 	#							-in (input file CSR),
 	#							-signkey (private share key).
 	#							-out (output file CRT)
-	openssl x509 -req -days 3650 -in /etc/ssl/request/apache2-pticert.csr -signkey \
+	openssl x509 -req -days 3650 -in /etc/ssl/requests/apache2-pticert.csr -signkey \
 	/etc/ssl/private/apache2-ptikey.key -out /etc/ssl/certs/apache2-pticert.crt &>> $LOG
 echo -e "Criação do certificado assinado do Apache2 feito com sucesso!!!, continuando com o script...\n"
 sleep 5
