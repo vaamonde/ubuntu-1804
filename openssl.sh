@@ -5,8 +5,8 @@
 # Facebook: facebook.com/BoraParaPratica
 # YouTube: youtube.com/BoraParaPratica
 # Data de criação: 25/05/2021
-# Data de atualização: 28/05/2021
-# Versão: 0.03
+# Data de atualização: 31/05/2021
+# Versão: 0.04
 # Testado e homologado para a versão do Ubuntu Server 18.04.x LTS x64
 # Kernel >= 4.15.x
 # Testado e homologado para a versão do OpenSSL 1.1.x
@@ -25,6 +25,27 @@
 # computadores. Várias versões do protocolo encontram amplo uso em aplicativos como navegação na web, 
 # email, mensagens instantâneas e voz sobre IP (VoIP). Os sites podem usar o TLS para proteger todas 
 # as comunicações entre seus servidores e navegadores web.
+
+#Encodings (also used as extensions)
+#    .DER = The DER extension is used for binary DER encoded certificates. These files may also bear the 
+#	  CER or the CRT extension.   Proper English usage would be “I have a DER encoded certificate” not “I 
+#	  have a DER certificate”.
+#    .PEM = The PEM extension is used for different types of X.509v3 files which contain ASCII (Base64) 
+#	  armored data prefixed with a “—– BEGIN …” line.
+
+#Common Extensions
+#    .CRT = The CRT extension is used for certificates. The certificates may be encoded as binary DER or 
+#	 as ASCII PEM. The CER and CRT extensions are nearly synonymous.  Most common among *nix systems
+#    .CER = alternate form of .crt (Microsoft Convention) You can use MS to convert .crt to .cer (.both 
+#	 DER encoded .cer, or base64[PEM] encoded .cer)  The .cer file extension is also recognized by IE as 
+#	 a command to run a MS cryptoAPI command (specifically rundll32.exe cryptext.dll,CryptExtOpenCER) which
+#	 displays a dialogue for importing and/or viewing certificate contents.
+#    .KEY = The KEY extension is used both for public and private PKCS#8 keys. The keys may be encoded as
+#	 binary DER or as ASCII PEM.
+
+#The only time CRT and CER can safely be interchanged is when the encoding type can be identical.  (
+#ie  PEM encoded CRT = PEM encoded CER)
+
 #
 # Site Oficial do Projeto: https://www.openssl.org/
 #
@@ -147,20 +168,54 @@ sleep 5
 #
 echo -e "Configuração do OpenSSL e TLS/SSL no Apache2, aguarde...\n"
 #
-echo -e "Atualizando o arquivo de configuração do OpenSSL, aguarde..."
+echo -e "Atualizando os arquivos de configuração da CA e do CSR, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando cp: -v (verbose)
-	cp -v conf/pti-ssl.conf /etc/ssl/pti-ssl.conf &>> $LOG
-echo -e "Arquivo atualizado com sucesso!!!, continuando com o script...\n"
+	cp -v conf/pti-ca.conf /etc/ssl/pti-ca.conf &>> $LOG
+	cp -v conf/pti-csr.conf /etc/ssl/pti-csr.conf &>> $LOG
+echo -e "Arquivos atualizados com sucesso!!!, continuando com o script...\n"
 sleep 5
 #
-echo -e "Editando o arquivo configuração do OpenSSL, pressione <Enter> para continuar."
+echo -e "Editando o arquivo configuração da CA, pressione <Enter> para continuar."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	read
-	vim /etc/ssl/pti-ssl.conf
+	vim /etc/ssl/pti-ca.conf
 echo -e "Arquivo editado com sucesso!!!, continuando com o script...\n"
 sleep 5
 #
+
+#================================ EM DESENVOLVIMENTO ===================================
+# CRIANDO A CA
+#mkdir -v /etc/ssl/{newcerts,certs,crl,private,requests}
+#touch /etc/ssl/{index.txt,index.txt.attr}
+#echo '1234' > /etc/ssl/serial
+
+#Primeira Etapa: Criação da Chave Privada da Autoridade Certificadora CA:
+#01. criando a chave privada da CA
+#openssl genrsa -aes256 -out /etc/ssl/private/ca-ptikey.pem -passout pass:vaamonde 4096
+
+#02. removendo a solicitação de senha da chave privada da CA
+#mv -v /etc/ssl/private/ca-ptikey.pem /etc/ssl/private/ca-ptikey.pem.old
+#openssl rsa -in /etc/ssl/private/ca-ptikey.pem.old -out /etc/ssl/private/ca-ptikey.pem -passin pass:vaamonde
+
+#03. gerando a CA
+#openssl req -new -x509 -key /etc/ssl/private/ca-ptikey.pem -out /etc/ssl/certs/ca-pticert.pem -days 3650 -set_serial 0 -config /etc/ssl/pti-ssl.conf
+
+
+#Segunda Etapa: Criando o certificado do servidor
+#01. criando a chave privada do certificado
+#openssl genrsa -aes256 -out /etc/ssl/private/srv-ptikey.pem -passout pass:vaamonde 4096
+
+#02. removendo a solicitação de senha da chave privada do servidor
+#mv -v /etc/ssl/private/srv-ptikey.pem /etc/ssl/private/srv-ptikey.pem.old
+#openssl rsa -in /etc/ssl/private/srv-ptikey.pem.old -out /etc/ssl/private/srv-ptikey.pem -passin pass:vaamonde
+
+#03. gerando o certificado
+#openssl req -new -nodes -key /etc/ssl/private/srv-ptikey.pem -out /etc/ssl/requests/srv-pti.csr -config /etc/ssl/pti-ssl.conf
+
+#04. validando o certificado com a CA
+#openssl ca -in /etc/ssl/request/srv-pti.csr -out /etc/ssl/requests/srv-pti.pem -config /etc/ssl/pti-ca.conf
+
 echo -e "Criando o Chave Privada Criptografada de 4096 bits, senha padrão: $PASSPHRASE, aguarde..." 
 	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando rm: -v (verbose)
