@@ -76,10 +76,10 @@ KERNEL=$(uname -r | cut -d'.' -f1,2)
 # $0 (variável de ambiente do nome do comando)
 LOG="/var/log/$(echo $0 | cut -d'/' -f2)"
 #
-# Declarando a variável de Senha (passphrase) utilizada na geração da chave privada do OpenSSL
+# Declarando as variáveis utilizadas na geração da chave privada e certificados do OpenSSL
 PASSPHRASE="vaamonde"
-BITS="4096"
-CRIPTO="aes256"
+BITS="4096" #opções: 1024, 2048, 3072 ou 4096)
+CRIPTO="sha256" #opções: sha224, sha256, sha384 ou sha512)
 #
 # Exportando o recurso de Noninteractive do Debconf para não solicitar telas de configuração
 export DEBIAN_FRONTEND="noninteractive"
@@ -133,7 +133,7 @@ echo -e "Configuração do OpenSSL no GNU/Linux Ubuntu Server 18.04.x\n"
 echo -e "Após a configuração do TLS/SSL no Apache2 acessar a URL: https://`hostname -I | cut -d' ' -f1`/"
 echo -e "Confirmar o acesso com o Nome FQDN na URL: https://`hostname -A | cut -d' ' -f1`/"
 echo -e "Confirmar o acesso com o Nome Domínio na URL: https://`hostname -d | cut -d' ' -f1`/"
-echo -e "Confirmar o acesso com o Nome CNAME na URL: https://www.`hostname -d | cut -d' ' -f1`/\n"S
+echo -e "Confirmar o acesso com o Nome CNAME na URL: https://www.`hostname -d | cut -d' ' -f1`/\n"
 sleep 5
 #
 echo -e "Adicionando o Repositório Universal do Apt, aguarde..."
@@ -192,7 +192,7 @@ echo -e "Criando o Chave Privada Criptografada de $BITS bits da CA, senha padrã
 	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando rm: -v (verbose)
 	# opção do comando openssl: genrsa (Generation of RSA Private Key),
-	#							-aes256 (), sha256 (Cryptographic hashes)
+	#							-sha256 (Digest Algorithm Cryptographic hashes)
 	#							-out (output file), 
 	#							-passout (accept password arguments output), 
 	#							pass: (The actual password is password), 
@@ -252,7 +252,7 @@ echo -e "Criando a CA (certificate authority), confirme as mensagens do arquivo:
 	# 	Organization Unit Name (eg, section): Procedimentos em TI <-- pressione <Enter>
 	# 	Common Name (eg, server FQDN or YOUR name): pti.intra <-- pressione <Enter>
 	# 	Email Address: pti@pti.intra <-- pressione <Enter>
-	openssl req -new -x509 -key /etc/ssl/private/ca-ptikey.key -out /etc/ssl/certs/ca-pticert.pem \
+	openssl req -new -x509 -$CRIPTO -key /etc/ssl/private/ca-ptikey.key -out /etc/ssl/certs/ca-pticert.pem \
 	-days 3650 -set_serial 0 -config /etc/ssl/pti-ca.conf
 echo -e "CA criada com sucesso!!!, continuando com o script...\n"
 sleep 5
@@ -293,7 +293,7 @@ echo -e "Removendo a senha da chave privada criptografada do Apache2, senha padr
 	openssl rsa -in /etc/ssl/private/apache2-ptikey.key.old -out /etc/ssl/private/apache2-ptikey.key \
 	-passin pass:$PASSPHRASE &>> $LOG
 	rm -v /etc/ssl/private/apache2-ptikey.key.old &>> $LOG
-echo -e "Senha da chave privada criptografada da CA removida com sucesso!!!, continuando com o script...\n"
+echo -e "Senha da chave privada criptografada do Apache2 removida com sucesso!!!, continuando com o script...\n"
 sleep 5
 #
 echo -e "Verificando o arquivo de chave privada criptografada do Apache2, aguarde..."
