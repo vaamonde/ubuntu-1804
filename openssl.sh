@@ -258,7 +258,7 @@ echo -e "Criando a CA Interna, confirme as mensagens do arquivo: pti-ca.conf, ag
 	openssl req -new -x509 -$CRIPTO -key /etc/ssl/private/ca-ptikey.key -out \
 	/etc/ssl/newcerts/ca-ptipem.pem -days 3650 -set_serial 0 -extensions v3_ca \
 	-config /etc/ssl/pti-ca.conf
-echo -e "CA criada com sucesso!!!, continuando com o script...\n"
+echo -e "CA Interna criada com sucesso!!!, continuando com o script...\n"
 sleep 5
 #
 echo -e "Verificando o arquivo PEM (Privacy Enhanced Mail) da CA, aguarde..."
@@ -369,7 +369,7 @@ echo -e "Criando o certificado assinado CRT (Certificate Request Trust), do Apac
 	#							-extensions (),
 	#							-extfile ().
 	openssl x509 -req -days 3650 -$CRIPTO -in /etc/ssl/requests/apache2-pticsr.csr -CA \
-	/etc/ssl/newcerts/ca-pticert.pem -CAkey /etc/ssl/private/ca-ptikey.key -CAcreateserial \
+	/etc/ssl/newcerts/ca-ptipem.pem -CAkey /etc/ssl/private/ca-ptikey.key -CAcreateserial \
 	-out /etc/ssl/newcerts/apache2-pticrt.crt -extensions v3_req -extfile /etc/ssl/pti-ssl.conf
 echo -e "Criação do certificado assinado do Apache2 feito com sucesso!!!, continuando com o script...\n"
 sleep 5
