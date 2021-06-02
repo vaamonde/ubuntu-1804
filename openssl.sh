@@ -76,10 +76,10 @@ KERNEL=$(uname -r | cut -d'.' -f1,2)
 # $0 (variável de ambiente do nome do comando)
 LOG="/var/log/$(echo $0 | cut -d'/' -f2)"
 #
-# Declarando as variáveis utilizadas na geração da chave privada e certificados do OpenSSL
+# Declarando as variáveis utilizadas na geração da chave privada/pública e dos certificados do OpenSSL
 PASSPHRASE="vaamonde"
-BITS="4096" #opções: 1024, 2048, 3072 ou 4096)
-CRIPTO="sha256" #opções: sha224, sha256, sha384 ou sha512)
+BITS="4096" #opções: 1024, 2048 (padrão), 3072 ou 4096)
+CRIPTO="sha256" #opções: sha224, sha256 (padrão), sha384 ou sha512)
 #
 # Exportando o recurso de Noninteractive do Debconf para não solicitar telas de configuração
 export DEBIAN_FRONTEND="noninteractive"
@@ -212,7 +212,8 @@ echo -e "Removendo a senha da chave privada criptografada da CA, senha padrão: 
 	#							pass: (The actual password is password)
 	# opção do comando rm: -v (verbose)
 	mv -v /etc/ssl/private/ca-ptikey.key /etc/ssl/private/ca-ptikey.key.old &>> $LOG
-	openssl rsa -in /etc/ssl/private/ca-ptikey.key.old -out /etc/ssl/private/ca-ptikey.key -passin pass:$PASSPHRASE &>> $LOG
+	openssl rsa -in /etc/ssl/private/ca-ptikey.key.old -out /etc/ssl/private/ca-ptikey.key \
+	-passin pass:$PASSPHRASE &>> $LOG
 	rm -v /etc/ssl/private/ca-ptikey.key.old &>> $LOG
 echo -e "Senha da chave privada criptografada da CA removida com sucesso!!!, continuando com o script...\n"
 sleep 5
@@ -254,8 +255,9 @@ echo -e "Criando a CA Interna, confirme as mensagens do arquivo: pti-ca.conf, ag
 	# 	Organization Unit Name (eg, section): Procedimentos em TI <-- pressione <Enter>
 	# 	Common Name (eg, server FQDN or YOUR name): pti.intra <-- pressione <Enter>
 	# 	Email Address: pti@pti.intra <-- pressione <Enter>
-	openssl req -new -x509 -$CRIPTO -key /etc/ssl/private/ca-ptikey.key -out /etc/ssl/certs/ca-pticert.pem \
-	-days 3650 -set_serial 0 -extensions v3_ca -config /etc/ssl/pti-ca.conf
+	openssl req -new -x509 -$CRIPTO -key /etc/ssl/private/ca-ptikey.key -out \
+	/etc/ssl/newcerts/ca-ptipem.pem -days 3650 -set_serial 0 -extensions v3_ca \
+	-config /etc/ssl/pti-ca.conf
 echo -e "CA criada com sucesso!!!, continuando com o script...\n"
 sleep 5
 #
@@ -267,8 +269,8 @@ echo -e "Verificando o arquivo PEM (Privacy Enhanced Mail) da CA, aguarde..."
 	#							-text (Print the in text), 
 	#							-in (input file PEM), 
 	#							md5 (MD5 checksums)
-	openssl x509 -noout -modulus -in /etc/ssl/certs/ca-pticert.pem | openssl md5 &>> $LOG
-	openssl x509 -noout -text -in /etc/ssl/certs/ca-pticert.pem &>> $LOG
+	openssl x509 -noout -modulus -in /etc/ssl/newcerts/ca-ptipem.pem | openssl md5 &>> $LOG
+	openssl x509 -noout -text -in /etc/ssl/newcerts/ca-ptipem.pem &>> $LOG
 echo -e "Arquivo PEM da CA verificado com sucesso!!!, continuando com o script...\n"
 sleep 5
 #
@@ -349,7 +351,7 @@ echo -e "Verificando o arquivo CSR (Certificate Signing Request) do Apache2, agu
 	#							-text (Print the in text), 
 	# 							-noout (omits the output of the encoded version), 
 	#							-in (input file CSR)
-	openssl req -text -noout -in /etc/ssl/requests/apache2-pticert.csr &>> $LOG
+	openssl req -text -noout -in /etc/ssl/requests/apache2-pticsr.csr &>> $LOG
 echo -e "Arquivo CSR verificado com sucesso!!!, continuando com o script...\n"
 sleep 5
 #
@@ -367,8 +369,8 @@ echo -e "Criando o certificado assinado CRT (Certificate Request Trust), do Apac
 	#							-extensions (),
 	#							-extfile ().
 	openssl x509 -req -days 3650 -$CRIPTO -in /etc/ssl/requests/apache2-pticsr.csr -CA \
-	/etc/ssl/certs/ca-pticert.pem -CAkey /etc/ssl/private/ca-ptikey.key -CAcreateserial \
-	-out /etc/ssl/certs/apache2-pticrt.crt -extensions v3_req -extfile /etc/ssl/pti-ssl.conf
+	/etc/ssl/newcerts/ca-pticert.pem -CAkey /etc/ssl/private/ca-ptikey.key -CAcreateserial \
+	-out /etc/ssl/newcerts/apache2-pticrt.crt -extensions v3_req -extfile /etc/ssl/pti-ssl.conf
 echo -e "Criação do certificado assinado do Apache2 feito com sucesso!!!, continuando com o script...\n"
 sleep 5
 #
@@ -380,9 +382,12 @@ echo -e "Verificando o arquivo CRT (Certificate Request Trust) do Apache2, aguar
 	#							-modulus (internal data called a modulus), 
 	#							-in (input file CRT), 
 	#							md5 (MD5 checksums)
-	openssl x509 -noout -modulus -in /etc/ssl/certs/apache2-pticrt.crt | openssl md5 &>> $LOG
-	openssl x509 -text -noout -in /etc/ssl/certs/apache2-pticrt.crt &>> $LOG
+	openssl x509 -noout -modulus -in /etc/ssl/newcerts/apache2-pticrt.crt | openssl md5 &>> $LOG
+	openssl x509 -text -noout -in /etc/ssl/newcerts/apache2-pticrt.crt &>> $LOG
 echo -e "Arquivo CRT do Apache2 verificado com sucesso!!!, continuando com o script...\n"
+sleep 5
+#
+echo -e "Terceira Etapa: Configurando o suporte ao HTTPS no Apache2, aguarde...\n"
 sleep 5
 #
 echo -e "Atualizando o arquivo de configuração do Apache2 HTTPS, aguarde..."
@@ -407,7 +412,8 @@ echo -e "Criando o diretório de Download para baixar a Unidade Certificadora, a
 	# opção do comando cp: -v (verbose)
 	mkdir -v /var/www/html/download/ &>> $LOG
 	chown -v www-data:www-data /var/www/html/download/ &>> $LOG
-	cp -v /etc/ssl/certs/apache2-pticert.crt /var/www/html/download/ &>> $LOG
+	cp -v /etc/ssl/newcerts/apache2-pticrt.crt /var/www/html/download/ &>> $LOG
+	cp -v /etc/ssl/newcerts/ca-ptipem.pem /var/www/html/download/ &>> $LOG
 echo -e "Diretório criado com sucesso!!!, continuando com o script...\n"
 sleep 2
 #
