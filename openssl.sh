@@ -105,7 +105,7 @@ fi
 # || (operador lógico OU), 2> (redirecionar de saída de erro STDERR), && = operador lógico AND, { } = agrupa comandos em blocos
 # [ ] = testa uma expressão, retornando 0 ou 1, -ne = é diferente (NotEqual)
 echo -n "Verificando as dependências do OpenSSL, aguarde... "
-	for name in openssl apache2 bind9
+	for name in openssl libssl1.0.0 libssl1.1 apache2 bind9
 	do
   		[[ $(dpkg -s $name 2> /dev/null) ]] || { 
               echo -en "\n\nO software: $name precisa ser instalado. \nUse o comando 'apt install $name'\n";
@@ -197,7 +197,7 @@ echo -e "Criando o Chave Privada Criptografada de $BITS bits da CA, senha padrã
 	#							-passout (accept password arguments output), 
 	#							pass: (The actual password is password), 
 	#							4096 (size key bit: 1024, 2048, 3072 or 4096)
-	openssl genrsa -$CRIPTO -out /etc/ssl/private/ca-ptikey.key -passout pass:$PASSPHRASE $BITS &>> $LOG
+	openssl genrsa -aes256 -out /etc/ssl/private/ca-ptikey.key -passout pass:$PASSPHRASE $BITS &>> $LOG
 echo -e "Chave privada criptografada da CA criada com sucesso!!!, continuando com o script...\n"
 sleep 5
 #
@@ -243,6 +243,7 @@ echo -e "Criando a CA (certificate authority), confirme as mensagens do arquivo:
 	#							-out (output file PEM),
 	#							-days (),
 	#							-set_serial (),
+	#							-extensions (),
 	#							-config ().
 	# Criando o arquivo PEM, mensagens que serão solicitadas na criação da CA
 	# 	Country Name (2 letter code): BR <-- pressione <Enter>
@@ -253,7 +254,7 @@ echo -e "Criando a CA (certificate authority), confirme as mensagens do arquivo:
 	# 	Common Name (eg, server FQDN or YOUR name): pti.intra <-- pressione <Enter>
 	# 	Email Address: pti@pti.intra <-- pressione <Enter>
 	openssl req -new -x509 -$CRIPTO -key /etc/ssl/private/ca-ptikey.key -out /etc/ssl/certs/ca-pticert.pem \
-	-days 3650 -set_serial 0 -config /etc/ssl/pti-ca.conf
+	-days 3650 -set_serial 0 -extensions v3_ca -config /etc/ssl/pti-ca.conf
 echo -e "CA criada com sucesso!!!, continuando com o script...\n"
 sleep 5
 #
@@ -265,6 +266,7 @@ echo -e "Verificando o arquivo PEM (Privacy Enhanced Mail) da CA, aguarde..."
 	#							-in (input file CRT), 
 	#							md5 (MD5 checksums)
 	openssl x509 -noout -modulus -in /etc/ssl/certs/ca-pticert.pem | openssl md5 &>> $LOG
+	openssl x509 -noout -text -in /etc/ssl/certs/ca-pticert.pem &>> $LOG
 echo -e "Arquivo PEM da CA verificado com sucesso!!!, continuando com o script...\n"
 sleep 5
 #
