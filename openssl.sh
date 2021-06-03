@@ -54,10 +54,10 @@
 #
 # Instalação da Autoridade Certificadora CA no Mozilla Firefox
 # Abrir menu de Aplicativo
-#	Preferências
+#	Preferências ou Opções
 #		Pesquisar em preferências: Ver certificados
 #			Autoridades
-#				Importar: ca-ptipem.pem
+#				Importar: ca-ptipem.crt
 #					Yes: Confiar nesta CA para identificar sites
 #					Yes: Confiar nesa autoridade certificadora para identificar usuários de email
 #				Bora para Pratica
@@ -66,7 +66,7 @@
 # Instalação da Autoridade Certificadora CA no Google Chrome
 # chrome://settings/certificates
 #	Autoridades
-#		Importar: ca-ptipem.pem
+#		Importar: ca-ptipem.crt
 #			Yes: Confiar neste certificado para a identificação de websites.
 #			Yes: Confiar neste certificado para identificar usuários de e-mail
 #			Yes: Confiar neste certificado para a identificação de criadores de software
@@ -77,34 +77,33 @@
 # Instalação da Autoridade Certificadora CA no GNU/Linux
 # Pasta: Download
 #		Abrir como Root (Botão direito do Mouse: Abrir como root)
-#			Copiar: ca-ptipem.pem
+#			Copiar: ca-ptipem.crt
 #			Para: /usr/local/share/ca-certificates/
-#			Renomear o arquivo para: ca-ptipem.crt
 #		Terminal
 #			sudo update-ca-certificates
 #
 # Instalação da Autoridade Certificadora CA no Microsoft Windows
 # Pasta: Download
-#		ca-ptipem.pem (clicar duas vezes em cima do certificado)
+#		ca-ptipem.crt (clicar duas vezes em cima do certificado)
 #			Abrir
-#				Certificado
-#					Geral
-#						Instalar Certificado...
-#							Assistente para Importação de Certificados
-#								Máquina Local <Avançar>
-#									Deseja permitir que este aplicativo faça alterações no seu dispositivo? <sim>
-#										Colocar todos os certificados no repositório a seguir
-#											Repositório de Certificados <Procurar>
-#												Autoridades de Certificação Raiz Confiáveis <OK>
-#												<Avançar>
-#												<Concluir>
-#												<OK>
+#				Instalar Certificado...
+#					Assistente para Importação de Certificados
+#						Máquina Local <Avançar>
+#							Deseja permitir que este aplicativo faça alterações no seu dispositivo? <sim>
+#								Colocar todos os certificados no repositório a seguir
+#									Repositório de Certificados <Procurar>
+#										Autoridades de Certificação Raiz Confiáveis <OK>
+#										<Avançar>
+#										<Concluir>
+#										<OK>
+#										<OK>
 #
 # Pesquisa do Windows
 #	Gerenciar Certificados de Computador <Sim>
 #		Autoridades de Certificação Raiz Confiáveis
 #			Certificados
-#				pti-intra
+#				Emitido para:
+#					pti-intra
 #
 # Site Oficial do Projeto: https://www.openssl.org/
 # Manual do OpenSSL: https://man.openbsd.org/openssl.1
@@ -138,7 +137,7 @@ LOG="/var/log/$(echo $0 | cut -d'/' -f2)"
 #
 # Declarando as variáveis utilizadas na geração da chave privada/pública e dos certificados do OpenSSL
 PASSPHRASE="vaamonde"
-BITS="4096" #opções: 1024, 2048 (padrão), 3072 ou 4096)
+BITS="2048" #opções: 1024, 2048 (padrão), 3072 ou 4096)
 CRIPTO="sha256" #opções: sha224, sha256 (padrão), sha384 ou sha512)
 #
 # Exportando o recurso de Noninteractive do Debconf para não solicitar telas de configuração
@@ -258,7 +257,7 @@ echo -e "Criando o Chave Privada Criptografada de $BITS bits da CA, senha padrã
 	#							-out (The output file to write to, or standard output if not specified), 
 	#							-passout (The output file password source), 
 	#							pass: (The actual password is password), 
-	#							4096 (The size of the private key to generate in bits, size key bit: 1024, 2048, 3072 or 4096)
+	#							bits (The size of the private key to generate in bits, size key bit: 1024, 2048, 3072 or 4096)
 	openssl genrsa -aes256 -out /etc/ssl/private/ca-ptikey.key -passout pass:$PASSPHRASE $BITS &>> $LOG
 echo -e "Chave privada criptografada da CA criada com sucesso!!!, continuando com o script...\n"
 sleep 5
@@ -346,7 +345,7 @@ echo -e "Criando o Chave Privada Criptografada de $BITS do Apache2, senha padrã
 	#							-out (The output file to write to, or standard output if not specified), 
 	#							-passout (The output file password source), 
 	#							pass: (The actual password is password), 
-	#							4096 (The size of the private key to generate in bits, size key bit: 1024, 2048, 3072 or 4096)
+	#							bits (The size of the private key to generate in bits, size key bit: 1024, 2048, 3072 or 4096)
 	openssl genrsa -aes256 -out /etc/ssl/private/apache2-ptikey.key -passout pass:$PASSPHRASE $BITS &>> $LOG
 echo -e "Chave privada criptografada do Apache2 criada com sucesso!!!, continuando com o script...\n"
 sleep 5
@@ -476,6 +475,7 @@ echo -e "Criando o diretório de Download para baixar a Unidade Certificadora CA
 	mkdir -v /var/www/html/download/ &>> $LOG
 	chown -v www-data:www-data /var/www/html/download/ &>> $LOG
 	cp -v /etc/ssl/newcerts/ca-ptipem.pem /var/www/html/download/ &>> $LOG
+	openssl x509 -outform der -in /etc/ssl/newcerts/ca-ptipem.pem -out /var/www/html/download/ca-ptipem.crt &>> $LOG
 echo -e "Diretório criado com sucesso!!!, continuando com o script...\n"
 sleep 2
 #
