@@ -6,7 +6,7 @@
 # YouTube: youtube.com/BoraParaPratica
 # Data de criação: 25/05/2021
 # Data de atualização: 02/06/2021
-# Versão: 0.04
+# Versão: 0.05
 # Testado e homologado para a versão do Ubuntu Server 18.04.x LTS x64
 # Kernel >= 4.15.x
 # Testado e homologado para a versão do OpenSSL 1.1.x
@@ -25,29 +25,33 @@
 # computadores. Várias versões do protocolo encontram amplo uso em aplicativos como navegação na web, 
 # email, mensagens instantâneas e voz sobre IP (VoIP). Os sites podem usar o TLS para proteger todas 
 # as comunicações entre seus servidores e navegadores web.
-
-#Encodings (also used as extensions)
-#    .DER = The DER extension is used for binary DER encoded certificates. These files may also bear the 
-#	  CER or the CRT extension.   Proper English usage would be “I have a DER encoded certificate” not “I 
-#	  have a DER certificate”.
-#    .PEM = The PEM extension is used for different types of X.509v3 files which contain ASCII (Base64) 
-#	  armored data prefixed with a “—– BEGIN …” line.
-
-#Common Extensions
-#    .CRT = The CRT extension is used for certificates. The certificates may be encoded as binary DER or 
-#	 as ASCII PEM. The CER and CRT extensions are nearly synonymous.  Most common among *nix systems
-#    .CER = alternate form of .crt (Microsoft Convention) You can use MS to convert .crt to .cer (.both 
-#	 DER encoded .cer, or base64[PEM] encoded .cer)  The .cer file extension is also recognized by IE as 
-#	 a command to run a MS cryptoAPI command (specifically rundll32.exe cryptext.dll,CryptExtOpenCER) which
-#	 displays a dialogue for importing and/or viewing certificate contents.
-#    .KEY = The KEY extension is used both for public and private PKCS#8 keys. The keys may be encoded as
-#	 binary DER or as ASCII PEM.
-
-#The only time CRT and CER can safely be interchanged is when the encoding type can be identical.  (
-#ie  PEM encoded CRT = PEM encoded CER)
-
+#
+# Codificações e Extensões Comuns (também usadas como extensões)
+#
+# *.DER = A extensão DER é usada para certificados binários codificados por DER. Esses arquivos também 
+# podem ter a extensão CER ou CRT. O uso adequado do inglês seria “Eu tenho um certificado codificado 
+# DER” e não “Eu tenho um certificado DER”.
+#
+# *.PEM = A extensão PEM é usada para diferentes tipos de arquivos X.509v3 que contêm dados blindados 
+# ASCII (Base64) prefixados com uma linha “—– BEGIN…”.
+#
+# *.CRT = A extensão CRT é usada para certificados. Os certificados podem ser codificados como DER binário 
+# ou ASCII PEM. As extensões CER e CRT são quase sinônimos. Mais comum entre os sistemas *nix.
+#
+# *.CER = forma alternativa de .crt (Convenção da Microsoft) Você pode usar o MS para converter .crt em 
+# .cer (.both DER codificado .cer ou base64 [PEM] codificado .cer) A extensão de arquivo .cer também é 
+# reconhecida pelo IE como um comando para executar um comando MS cryptoAPI (especificamente rundll32.exe 
+# cryptext.dll, CryptExtOpenCER) que exibe uma caixa de diálogo para importar e / ou visualizar o conteúdo 
+# do certificado.
+#
+# *.KEY = A extensão KEY é usada para chaves PKCS # 8 públicas e privadas. As chaves podem ser codificadas 
+# como DER binário ou ASCII PEM.
+#
+# O único momento em que CRT e CER podem ser trocados com segurança é quando o tipo de codificação pode 
+# ser idêntico. (ou seja, CRT codificado por PEM = CER codificado por PEM).
 #
 # Site Oficial do Projeto: https://www.openssl.org/
+# Manual do OpenSSL: https://man.openbsd.org/openssl.1
 #
 # Vídeo de instalação do GNU/Linux Ubuntu Server 18.04.x LTS: https://www.youtube.com/watch?v=zDdCrqNhIXI
 # Vídeo de configuração do OpenSSH no GNU/Linux Ubuntu Server 18.04.x LTS: https://www.youtube.com/watch?v=ecuol8Uf1EE&t
@@ -192,12 +196,12 @@ sleep 5
 echo -e "Criando o Chave Privada Criptografada de $BITS bits da CA, senha padrão: $PASSPHRASE, aguarde..." 
 	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando rm: -v (verbose)
-	# opção do comando openssl: genrsa (Generation of RSA Private Key),
-	#							-aes256 ()
-	#							-out (output file), 
-	#							-passout (accept password arguments output), 
+	# opção do comando openssl: genrsa (command generates an RSA private key),
+	#							-aes256 (Encrypt private keys using AES)
+	#							-out (The output file to write to, or standard output if not specified), 
+	#							-passout (The output file password source), 
 	#							pass: (The actual password is password), 
-	#							4096 (size key bit: 1024, 2048, 3072 or 4096)
+	#							4096 (The size of the private key to generate in bits, size key bit: 1024, 2048, 3072 or 4096)
 	openssl genrsa -aes256 -out /etc/ssl/private/ca-ptikey.key -passout pass:$PASSPHRASE $BITS &>> $LOG
 echo -e "Chave privada criptografada da CA criada com sucesso!!!, continuando com o script...\n"
 sleep 5
@@ -205,10 +209,10 @@ sleep 5
 echo -e "Removendo a senha da chave privada criptografada da CA, senha padrão: $PASSPHRASE, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando mv: -v (verbose)
-	# opção do comando openssl: rsa (RSA Private Key),
-	#							-in (input file KEY),
-	#							-out (output file KEY),
-	#							-passin (accept password arguments input),
+	# opção do comando openssl: rsa (command processes RSA keys),
+	#							-in (The input file to read from, or standard input if not specified),
+	#							-out (The output file to write to, or standard output if not specified),
+	#							-passin (The key password source),
 	#							pass: (The actual password is password)
 	# opção do comando rm: -v (verbose)
 	mv -v /etc/ssl/private/ca-ptikey.key /etc/ssl/private/ca-ptikey.key.old &>> $LOG
@@ -220,11 +224,11 @@ sleep 5
 #
 echo -e "Verificando o arquivo de chave privada criptografada da CA, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
-	# opção do comando openssl: rsa (RSA Private Key), 
-	#							-noout (omits the output of the encoded version), 
-	#							-modulus (internal data called a modulus), 
-	#							-in (input file KEY), 
-	#							md5 (MD5 checksums)
+	# opção do comando openssl: rsa (command processes RSA keys), 
+	#							-noout (Do not output the encoded version of the key), 
+	#							-modulus (Print the value of the modulus of the key), 
+	#							-in (The input file to read from, or standard input if not specified), 
+	#							md5 (The message digest to use MD5 checksums)
 	openssl rsa -noout -modulus -in /etc/ssl/private/ca-ptikey.key | openssl md5 &>> $LOG
 echo -e "Arquivo de chave privada da CA verificada com sucesso!!!, continuando com o script...\n"
 sleep 5
@@ -238,15 +242,15 @@ sleep 5
 #
 echo -e "Criando a CA Interna, confirme as mensagens do arquivo: pti-ca.conf, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
-	# opção do comando openssl: req (PKCS#10 X.509 Certificate Signing Request (CSR) Management),
-	#							-new (new PEM),
-	#							-x509 (X.509 Certificate Data Management),
-	#							-key (input file KEY RSA),
-	#							-out (output file PEM),
-	#							-days (),
-	#							-set_serial (),
-	#							-extensions (),
-	#							-config ().
+	# opção do comando openssl: req (command primarily creates and processes certificate requests in PKCS#10 format),
+	#							-new (Generate a new certificate request),
+	#							-x509 (Output a self-signed certificate instead of a certificate request),
+	#							-key (The file to read the private key from),
+	#							-out (The output file to write to, or standard output if not specified),
+	#							-days (Specify the number of days to certify the certificate for),
+	#							-set_serial (Serial number to use when outputting a self-signed certificate),
+	#							-extensions (Specify alternative sections to include certificate extensions),
+	#							-config (Specify an alternative configuration file).
 	# Criando o arquivo PEM, mensagens que serão solicitadas na criação da CA
 	# 	Country Name (2 letter code): BR <-- pressione <Enter>
 	# 	State or Province Name (full name): Brasil <-- pressione <Enter>
@@ -263,12 +267,12 @@ sleep 5
 #
 echo -e "Verificando o arquivo PEM (Privacy Enhanced Mail) da CA, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
-	# opção do comando openssl: x509 (X.509 Certificate Data Management), 
-	#							-noout (omits the output of the encoded version), 
-	#							-modulus (internal data called a modulus),
-	#							-text (Print the in text), 
-	#							-in (input file PEM), 
-	#							md5 (MD5 checksums)
+	# opção do comando openssl: x509 (command is a multi-purpose certificate utility), 
+	#							-noout (Do not output the encoded version of the request), 
+	#							-modulus (Print the value of the modulus of the public key contained in the certificate),
+	#							-text (Print the full certificate in text form), 
+	#							-in (The input file to read from, or standard input if not specified), 
+	#							md5 (The message digest to use MD5 checksums)
 	openssl x509 -noout -modulus -in /etc/ssl/newcerts/ca-ptipem.pem | openssl md5 &>> $LOG
 	openssl x509 -noout -text -in /etc/ssl/newcerts/ca-ptipem.pem &>> $LOG
 echo -e "Arquivo PEM da CA verificado com sucesso!!!, continuando com o script...\n"
@@ -279,12 +283,12 @@ sleep 5
 #
 echo -e "Criando o Chave Privada Criptografada de $BITS do Apache2, senha padrão: $PASSPHRASE, aguarde..." 
 	# opção do comando: &>> (redirecionar a saída padrão)
-	# opção do comando openssl: genrsa (Generation of RSA Private Key),
-	#							-aes256 (),
-	#							-out (output file), 
-	#							-passout (accept password arguments output), 
+	# opção do comando openssl: genrsa (command generates an RSA private key),
+	#							-aes256 (Encrypt private keys using AES)
+	#							-out (The output file to write to, or standard output if not specified), 
+	#							-passout (The output file password source), 
 	#							pass: (The actual password is password), 
-	#							4096 (size key bit: 1024, 2048, 3072 or 4096)
+	#							4096 (The size of the private key to generate in bits, size key bit: 1024, 2048, 3072 or 4096)
 	openssl genrsa -aes256 -out /etc/ssl/private/apache2-ptikey.key -passout pass:$PASSPHRASE $BITS &>> $LOG
 echo -e "Chave privada criptografada do Apache2 criada com sucesso!!!, continuando com o script...\n"
 sleep 5
@@ -292,10 +296,10 @@ sleep 5
 echo -e "Removendo a senha da chave privada criptografada do Apache2, senha padrão: $PASSPHRASE, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando mv: -v (verbose)
-	# opção do comando openssl: rsa (RSA Private Key),
-	#							-in (input file KEY),
-	#							-out (output file KEY),
-	#							-passin (accept password arguments input),
+	# opção do comando openssl: rsa (command processes RSA keys),
+	#							-in (The input file to read from, or standard input if not specified),
+	#							-out (The output file to write to, or standard output if not specified),
+	#							-passin (The key password source),
 	#							pass: (The actual password is password)
 	# opção do comando rm: -v (verbose)
 	mv -v /etc/ssl/private/apache2-ptikey.key /etc/ssl/private/apache2-ptikey.key.old &>> $LOG
@@ -307,11 +311,11 @@ sleep 5
 #
 echo -e "Verificando o arquivo de chave privada criptografada do Apache2, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
-	# opção do comando openssl: rsa (RSA Private Key), 
-	#							-noout (omits the output of the encoded version), 
-	#							-modulus (internal data called a modulus), 
-	#							-in (input file KEY), 
-	#							md5 (MD5 checksums)
+	# opção do comando openssl: rsa (command processes RSA keys), 
+	#							-noout (Do not output the encoded version of the key), 
+	#							-modulus (Print the value of the modulus of the key), 
+	#							-in (The input file to read from, or standard input if not specified), 
+	#							md5 (The message digest to use MD5 checksums)
 	openssl rsa -noout -modulus -in /etc/ssl/private/apache2-ptikey.key | openssl md5 &>> $LOG
 echo -e "Arquivo de chave privada do Apache2 verificado com sucesso!!!, continuando com o script...\n"
 sleep 5
@@ -324,14 +328,14 @@ echo -e "Arquivo editado com sucesso!!!, continuando com o script...\n"
 sleep 5
 #
 echo -e "Criando o arquivo CSR (Certificate Signing Request), confirme as mensagens do arquivo: pti-ssl.conf, aguarde..."
-	# opção do comando openssl: req (PKCS#10 X.509 Certificate Signing Request (CSR) Management), 
-	#							-new (new CSR),
-	#							-sha256 ()
-	#							-nodes (),
-	# 							-key (input file RSA), 
-	#							-out (output file CSR),
-	#							-extensions (), 
-	#							-config (external configuration file)
+	# opção do comando openssl: req (command primarily creates and processes certificate requests in PKCS#10 format), 
+	#							-new (Generate a new certificate request),
+	#							-sha256 (The message digest to sign the request with)
+	#							-nodes (Do not encrypt the private key),
+	# 							-key (The file to read the private key from), 
+	#							-out (The output file to write to, or standard output if not specified),
+	#							-extensions (Specify alternative sections to include certificate extensions), 
+	#							-config (Specify an alternative configuration file)
 	# Criando o arquivo CSR, mensagens que serão solicitadas na criação do CSR
 	# 	Country Name (2 letter code): BR <-- pressione <Enter>
 	# 	State or Province Name (full name): Brasil <-- pressione <Enter>
@@ -347,41 +351,41 @@ sleep 5
 #
 echo -e "Verificando o arquivo CSR (Certificate Signing Request) do Apache2, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
-	# opção do comando openssl: req (PKCS#10 X.509 Certificate Signing Request (CSR) Management), 
-	#							-text (Print the in text), 
-	# 							-noout (omits the output of the encoded version), 
-	#							-in (input file CSR)
+	# opção do comando openssl: req (command primarily creates and processes certificate requests in PKCS#10 format), 
+	#							-text (Print the certificate request in plain text), 
+	# 							-noout (Do not output the encoded version of the request), 
+	#							-in (The input file to read a request from, or standard input if not specified)
 	openssl req -text -noout -in /etc/ssl/requests/apache2-pticsr.csr &>> $LOG
 echo -e "Arquivo CSR verificado com sucesso!!!, continuando com o script...\n"
 sleep 5
 #
 echo -e "Criando o certificado assinado CRT (Certificate Request Trust), do Apache2, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão
-	# opção do comando openssl: x509 (X.509 Certificate Data Management),  
-	#							-req (PKCS#10 X.509 Certificate Signing Request (CSR) Management),
-	#							-days (validate certificate file),
-	#							-sha256 (),							
-	#							-in (input file CSR),
-	#							-CA (file ca),
-	#							-CAkey (private share key CA),
-	#							-CAcreatesrial (),
-	#							-out (output file CRT)
-	#							-extensions (),
-	#							-extfile ().
+	# opção do comando openssl: x509 (command is a multi-purpose certificate utility),  
+	#							-req (Expect a certificate request on input instead of a certificate),
+	#							-days (The number of days to make a certificate valid for),
+	#							-sha256 (The message digest to sign the request with),							
+	#							-in (The input file to read from, or standard input if not specified),
+	#							-CA (The CA certificate to be used for signing),
+	#							-CAkey (Set the CA private key to sign a certificate with),
+	#							-CAcreatesrial (Create the CA serial number file if it does not exist instead of generating an error),
+	#							-out (The output file to write to, or standard output if none is specified)
+	#							-extensions (The section to add certificate extensions from),
+	#							-extfile (File containing certificate extensions to use).
 	openssl x509 -req -days 3650 -$CRIPTO -in /etc/ssl/requests/apache2-pticsr.csr -CA \
 	/etc/ssl/newcerts/ca-ptipem.pem -CAkey /etc/ssl/private/ca-ptikey.key -CAcreateserial \
-	-out /etc/ssl/newcerts/apache2-pticrt.crt -extensions v3_req -extfile /etc/ssl/pti-ssl.conf
+	-out /etc/ssl/newcerts/apache2-pticrt.crt -extensions v3_req -extfile /etc/ssl/pti-ssl.conf &>> $LOG
 echo -e "Criação do certificado assinado do Apache2 feito com sucesso!!!, continuando com o script...\n"
 sleep 5
 #
 echo -e "Verificando o arquivo CRT (Certificate Request Trust) do Apache2, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
-	# opção do comando openssl: x509 (X.509 Certificate Data Management), 
-	#							-noout (omits the output of the encoded version),
-	#							-text (), 
-	#							-modulus (internal data called a modulus), 
-	#							-in (input file CRT), 
-	#							md5 (MD5 checksums)
+	# opção do comando openssl: x509 (command is a multi-purpose certificate utility), 
+	#							-noout (Do not output the encoded version of the request),
+	#							-text (Print the full certificate in text form), 
+	#							-modulus (Print the value of the modulus of the public key contained in the certificate), 
+	#							-in (he input file to read from, or standard input if not specified), 
+	#							md5 (The message digest to use MD5 checksums)
 	openssl x509 -noout -modulus -in /etc/ssl/newcerts/apache2-pticrt.crt | openssl md5 &>> $LOG
 	openssl x509 -text -noout -in /etc/ssl/newcerts/apache2-pticrt.crt &>> $LOG
 echo -e "Arquivo CRT do Apache2 verificado com sucesso!!!, continuando com o script...\n"
@@ -412,7 +416,6 @@ echo -e "Criando o diretório de Download para baixar a Unidade Certificadora, a
 	# opção do comando cp: -v (verbose)
 	mkdir -v /var/www/html/download/ &>> $LOG
 	chown -v www-data:www-data /var/www/html/download/ &>> $LOG
-	cp -v /etc/ssl/newcerts/apache2-pticrt.crt /var/www/html/download/ &>> $LOG
 	cp -v /etc/ssl/newcerts/ca-ptipem.pem /var/www/html/download/ &>> $LOG
 echo -e "Diretório criado com sucesso!!!, continuando com o script...\n"
 sleep 2
