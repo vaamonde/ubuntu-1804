@@ -52,6 +52,60 @@
 #
 # Instalação da Autoridade Certificadora CA no GNU/Linux, Windows e Navegadores
 #
+# Instalação da Autoridade Certificadora CA no Mozilla Firefox
+# Abrir menu de Aplicativo
+#	Preferências
+#		Pesquisar em preferências: Ver certificados
+#			Autoridades
+#				Importar: ca-ptipem.pem
+#					Yes: Confiar nesta CA para identificar sites
+#					Yes: Confiar nesa autoridade certificadora para identificar usuários de email
+#				Bora para Pratica
+#					pti-intra
+#
+# Instalação da Autoridade Certificadora CA no Google Chrome
+# chrome://settings/certificates
+#	Autoridades
+#		Importar: ca-ptipem.pem
+#			Yes: Confiar neste certificado para a identificação de websites.
+#			Yes: Confiar neste certificado para identificar usuários de e-mail
+#			Yes: Confiar neste certificado para a identificação de criadores de software
+#		org-Bora para Pratica
+#			pti-intra
+#	chrome://restart
+#
+# Instalação da Autoridade Certificadora CA no GNU/Linux
+# Pasta: Download
+#		Abrir como Root (Botão direito do Mouse: Abrir como root)
+#			Copiar: ca-ptipem.pem
+#			Para: /usr/local/share/ca-certificates/
+#			Renomear o arquivo para: ca-ptipem.crt
+#		Terminal
+#			sudo update-ca-certificates
+#
+# Instalação da Autoridade Certificadora CA no Microsoft Windows
+# Pasta: Download
+#		ca-ptipem.pem (clicar duas vezes em cima do certificado)
+#			Abrir
+#				Certificado
+#					Geral
+#						Instalar Certificado...
+#							Assistente para Importação de Certificados
+#								Máquina Local <Avançar>
+#									Deseja permitir que este aplicativo faça alterações no seu dispositivo? <sim>
+#										Colocar todos os certificados no repositório a seguir
+#											Repositório de Certificados <Procurar>
+#												Autoridades de Certificação Raiz Confiáveis <OK>
+#												<Avançar>
+#												<Concluir>
+#												<OK>
+#
+# Pesquisa do Windows
+#	Gerenciar Certificados de Computador <Sim>
+#		Autoridades de Certificação Raiz Confiáveis
+#			Certificados
+#				pti-intra
+#
 # Site Oficial do Projeto: https://www.openssl.org/
 # Manual do OpenSSL: https://man.openbsd.org/openssl.1
 #
