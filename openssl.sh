@@ -5,8 +5,8 @@
 # Facebook: facebook.com/BoraParaPratica
 # YouTube: youtube.com/BoraParaPratica
 # Data de criação: 25/05/2021
-# Data de atualização: 02/06/2021
-# Versão: 0.05
+# Data de atualização: 03/06/2021
+# Versão: 0.06
 # Testado e homologado para a versão do Ubuntu Server 18.04.x LTS x64
 # Kernel >= 4.15.x
 # Testado e homologado para a versão do OpenSSL 1.1.x
@@ -49,6 +49,8 @@
 #
 # O único momento em que CRT e CER podem ser trocados com segurança é quando o tipo de codificação pode 
 # ser idêntico. (ou seja, CRT codificado por PEM = CER codificado por PEM).
+#
+# Instalação da Autoridade Certificadora CA no GNU/Linux, Windows e Navegadores
 #
 # Site Oficial do Projeto: https://www.openssl.org/
 # Manual do OpenSSL: https://man.openbsd.org/openssl.1
@@ -109,7 +111,7 @@ fi
 # || (operador lógico OU), 2> (redirecionar de saída de erro STDERR), && = operador lógico AND, { } = agrupa comandos em blocos
 # [ ] = testa uma expressão, retornando 0 ou 1, -ne = é diferente (NotEqual)
 echo -n "Verificando as dependências do OpenSSL, aguarde... "
-	for name in openssl libssl1.0.0 libssl1.1 apache2 bind9
+	for name in openssl apache2 bind9
 	do
   		[[ $(dpkg -s $name 2> /dev/null) ]] || { 
               echo -en "\n\nO software: $name precisa ser instalado. \nUse o comando 'apt install $name'\n";
@@ -135,6 +137,7 @@ clear
 echo
 echo -e "Configuração do OpenSSL no GNU/Linux Ubuntu Server 18.04.x\n"
 echo -e "Após a configuração do TLS/SSL no Apache2 acessar a URL: https://`hostname -I | cut -d' ' -f1`/"
+echo -e "Download da Autoridade Certificadora CA na URL: https://`hostname -I | cut -d' ' -f1`/download"
 echo -e "Confirmar o acesso com o Nome FQDN na URL: https://`hostname -A | cut -d' ' -f1`/"
 echo -e "Confirmar o acesso com o Nome Domínio na URL: https://`hostname -d | cut -d' ' -f1`/"
 echo -e "Confirmar o acesso com o Nome CNAME na URL: https://www.`hostname -d | cut -d' ' -f1`/\n"
@@ -240,7 +243,7 @@ echo -e "Editando o arquivo configuração da CA, pressione <Enter> para continu
 echo -e "Arquivo editado com sucesso!!!, continuando com o script...\n"
 sleep 5
 #
-echo -e "Criando a CA Interna, confirme as mensagens do arquivo: pti-ca.conf, aguarde..."
+echo -e "Criando a CA Interna, confirme as mensagens do arquivo: pti-ca.conf, aguarde...\n"
 	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando openssl: req (command primarily creates and processes certificate requests in PKCS#10 format),
 	#							-new (Generate a new certificate request),
@@ -262,6 +265,7 @@ echo -e "Criando a CA Interna, confirme as mensagens do arquivo: pti-ca.conf, ag
 	openssl req -new -x509 -$CRIPTO -key /etc/ssl/private/ca-ptikey.key -out \
 	/etc/ssl/newcerts/ca-ptipem.pem -days 3650 -set_serial 0 -extensions v3_ca \
 	-config /etc/ssl/pti-ca.conf
+	echo
 echo -e "CA Interna criada com sucesso!!!, continuando com o script...\n"
 sleep 5
 #
@@ -327,7 +331,7 @@ echo -e "Editando o arquivo configuração do Certificado do Apache2, pressione 
 echo -e "Arquivo editado com sucesso!!!, continuando com o script...\n"
 sleep 5
 #
-echo -e "Criando o arquivo CSR (Certificate Signing Request), confirme as mensagens do arquivo: pti-ssl.conf, aguarde..."
+echo -e "Criando o arquivo CSR (Certificate Signing Request), confirme as mensagens do arquivo: pti-ssl.conf, aguarde...\n"
 	# opção do comando openssl: req (command primarily creates and processes certificate requests in PKCS#10 format), 
 	#							-new (Generate a new certificate request),
 	#							-sha256 (The message digest to sign the request with)
@@ -346,7 +350,8 @@ echo -e "Criando o arquivo CSR (Certificate Signing Request), confirme as mensag
 	# 	Email Address: pti@pti.intra <-- pressione <Enter>
 	openssl req -new -$CRIPTO -nodes -key /etc/ssl/private/apache2-ptikey.key -out \
 	/etc/ssl/requests/apache2-pticsr.csr -extensions v3_req -config /etc/ssl/pti-ssl.conf
-echo -e "Criação do CSR feito com sucesso!!!, continuando com o script...\n"
+	echo
+echo -e "Criação do arquivo CSR feito com sucesso!!!, continuando com o script...\n"
 sleep 5
 #
 echo -e "Verificando o arquivo CSR (Certificate Signing Request) do Apache2, aguarde..."
@@ -375,7 +380,7 @@ echo -e "Criando o certificado assinado CRT (Certificate Request Trust), do Apac
 	openssl x509 -req -days 3650 -$CRIPTO -in /etc/ssl/requests/apache2-pticsr.csr -CA \
 	/etc/ssl/newcerts/ca-ptipem.pem -CAkey /etc/ssl/private/ca-ptikey.key -CAcreateserial \
 	-out /etc/ssl/newcerts/apache2-pticrt.crt -extensions v3_req -extfile /etc/ssl/pti-ssl.conf &>> $LOG
-echo -e "Criação do certificado assinado do Apache2 feito com sucesso!!!, continuando com o script...\n"
+echo -e "Criação do certificado assinado CRT do Apache2 feito com sucesso!!!, continuando com o script...\n"
 sleep 5
 #
 echo -e "Verificando o arquivo CRT (Certificate Request Trust) do Apache2, aguarde..."
@@ -391,7 +396,7 @@ echo -e "Verificando o arquivo CRT (Certificate Request Trust) do Apache2, aguar
 echo -e "Arquivo CRT do Apache2 verificado com sucesso!!!, continuando com o script...\n"
 sleep 5
 #
-echo -e "Terceira Etapa: Configurando o suporte ao HTTPS no Apache2, aguarde...\n"
+echo -e "Terceira Etapa: Configurando o suporte TLS/SSL HTTPS no Apache2, aguarde...\n"
 sleep 5
 #
 echo -e "Atualizando o arquivo de configuração do Apache2 HTTPS, aguarde..."
@@ -409,7 +414,7 @@ echo -e "Editando o arquivo de configuração do Apache2 HTTPS, pressione <Enter
 echo -e "Arquivo editado com sucesso!!!, continuando com o script...\n"
 sleep 5
 #
-echo -e "Criando o diretório de Download para baixar a Unidade Certificadora, aguarde..."
+echo -e "Criando o diretório de Download para baixar a Unidade Certificadora CA, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando mkdir: -v (verbose)
 	# opção do comando chown: -v (verbose), www-data (user), www-data (group)
@@ -420,7 +425,7 @@ echo -e "Criando o diretório de Download para baixar a Unidade Certificadora, a
 echo -e "Diretório criado com sucesso!!!, continuando com o script...\n"
 sleep 2
 #
-echo -e "Habilitando o suporte ao SSL e o Site HTTPS do Apache2, aguarde..."
+echo -e "Habilitando o suporte ao TLS/SSL e o Site HTTPS do Apache2, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	a2enmod ssl &>> $LOG
 	a2enmod headers &>> $LOG
