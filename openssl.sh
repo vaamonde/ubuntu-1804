@@ -425,6 +425,8 @@ echo -e "Criando o certificado assinado CRT (Certificate Request Trust), do Apac
 	#							-out (The output file to write to, or standard output if none is specified)
 	#							-extensions (The section to add certificate extensions from),
 	#							-extfile (File containing certificate extensions to use).
+	#openssl ca -in /etc/ssl/requests/apache2-pticsr.csr -out /etc/ssl/newcerts/apache2-pticrt.crt \
+	#-config /etc/ssl/pti-ca.conf -extensions v3_req -extfile /etc/ssl/pti-ssl.conf
 	openssl x509 -req -days 3650 -$CRIPTO -in /etc/ssl/requests/apache2-pticsr.csr -CA \
 	/etc/ssl/newcerts/ca-pticrt.crt -CAkey /etc/ssl/private/ca-ptikey.key -CAcreateserial \
 	-out /etc/ssl/newcerts/apache2-pticrt.crt -extensions v3_req -extfile /etc/ssl/pti-ssl.conf &>> $LOG
