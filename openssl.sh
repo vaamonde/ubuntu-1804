@@ -5,8 +5,8 @@
 # Facebook: facebook.com/BoraParaPratica
 # YouTube: youtube.com/BoraParaPratica
 # Data de criação: 25/05/2021
-# Data de atualização: 03/06/2021
-# Versão: 0.06
+# Data de atualização: 04/06/2021
+# Versão: 0.07
 # Testado e homologado para a versão do Ubuntu Server 18.04.x LTS x64
 # Kernel >= 4.15.x
 # Testado e homologado para a versão do OpenSSL 1.1.x
@@ -26,65 +26,39 @@
 # email, mensagens instantâneas e voz sobre IP (VoIP). Os sites podem usar o TLS para proteger todas 
 # as comunicações entre seus servidores e navegadores web.
 #
-# Codificações e Extensões Comuns (também usadas como extensões)
-#
-# *.DER = A extensão DER é usada para certificados binários codificados por DER. Esses arquivos também 
-# podem ter a extensão CER ou CRT. O uso adequado do inglês seria “Eu tenho um certificado codificado 
-# DER” e não “Eu tenho um certificado DER”.
-#
-# *.PEM = A extensão PEM é usada para diferentes tipos de arquivos X.509v3 que contêm dados blindados 
-# ASCII (Base64) prefixados com uma linha “—– BEGIN…”.
-#
-# *.CRT = A extensão CRT é usada para certificados. Os certificados podem ser codificados como DER binário 
-# ou ASCII PEM. As extensões CER e CRT são quase sinônimos. Mais comum entre os sistemas *nix.
-#
-# *.CER = forma alternativa de .crt (Convenção da Microsoft) Você pode usar o MS para converter .crt em 
-# .cer (.both DER codificado .cer ou base64 [PEM] codificado .cer) A extensão de arquivo .cer também é 
-# reconhecida pelo IE como um comando para executar um comando MS cryptoAPI (especificamente rundll32.exe 
-# cryptext.dll, CryptExtOpenCER) que exibe uma caixa de diálogo para importar e / ou visualizar o conteúdo 
-# do certificado.
-#
-# *.KEY = A extensão KEY é usada para chaves PKCS # 8 públicas e privadas. As chaves podem ser codificadas 
-# como DER binário ou ASCII PEM.
-#
-# O único momento em que CRT e CER podem ser trocados com segurança é quando o tipo de codificação pode 
-# ser idêntico. (ou seja, CRT codificado por PEM = CER codificado por PEM).
-#
-# Instalação da Autoridade Certificadora CA no GNU/Linux, Windows e Navegadores
-#
 # Instalação da Autoridade Certificadora CA no Mozilla Firefox (GNU/Linux ou Microsoft Windows)
 # Abrir menu de Aplicativo
 #	Preferências ou Opções ou Configurações
 #		Pesquisar em preferências: Ver certificados
 #			Autoridades
-#				Importar: ca-ptipem.crt
+#				Importar: ca-pticrt.crt
 #					Yes: Confiar nesta CA para identificar sites
-#					Yes: Confiar nesa autoridade certificadora para identificar usuários de email
+#					Yes: Confiar nesta autoridade certificadora para identificar usuários de email
 #				Bora para Pratica
-#					pti-intra
+#					ptispo01ws01.pti.intra
 #
 # Instalação da Autoridade Certificadora CA no Google Chrome (GNU/Linux)
 # chrome://settings/certificates
 #	Autoridades
-#		Importar: ca-ptipem.crt
+#		Importar: ca-pticrt.crt
 #			Yes: Confiar neste certificado para a identificação de websites.
 #			Yes: Confiar neste certificado para identificar usuários de e-mail
 #			Yes: Confiar neste certificado para a identificação de criadores de software
 #		org-Bora para Pratica
-#			pti-intra
+#			ptispo01ws01.pti.intra
 #	chrome://restart
 #
 # Instalação da Autoridade Certificadora CA no GNU/Linux
 # Pasta: Download
 #		Abrir como Root (Botão direito do Mouse: Abrir como root)
-#			Copiar: ca-ptipem.crt
+#			Copiar: ca-pticrt.crt
 #			Para: /usr/local/share/ca-certificates/
 #		Terminal
 #			sudo update-ca-certificates
 #
 # Instalação da Autoridade Certificadora CA no Microsoft Windows
 # Pasta: Download
-#		ca-ptipem.crt (clicar duas vezes em cima do certificado)
+#		ca-pticrt.crt (clicar duas vezes em cima do certificado)
 #			Abrir
 #				Instalar Certificado...
 #					Assistente para Importação de Certificados
@@ -103,7 +77,7 @@
 #		Autoridades de Certificação Raiz Confiáveis
 #			Certificados
 #				Emitido para:
-#					pti-intra
+#					ptispo01ws01.pti.intra
 #
 # Site Oficial do Projeto: https://www.openssl.org/
 # Manual do OpenSSL: https://man.openbsd.org/openssl.1
@@ -519,6 +493,16 @@ echo -e "Verificando as portas de conexões do Apache2, aguarde..."
 	# opção do comando grep: -i (ignore case)
 	netstat -an | grep ':80\|:443'
 echo -e "Portas verificadas com sucesso!!!, continuando com o script...\n"
+sleep 5
+#
+echo -e "Testando o Certificado do Apache2, aguarde..."
+	# opção do comando: &>> (redirecionar a saída padrão)
+	# opção do comando openssl: s_client (command implements a generic SSL/TLS client which connects to a remote host using SSL/TLS)
+	#							-connect (The host and port to connect to)
+	#							-servername (Include the TLS Server Name Indication (SNI) extension in the ClientHello message)
+	#							-showcerts (Display the whole server certificate chain: normally only the server certificate itself is displayed)
+	openssl s_client -connect localhost:443 -servername www.pti.intra -showcerts &>> $LOG
+echo -e "Certificado do Apache testando sucesso!!!, continuando com o script...\n"
 sleep 5
 #
 echo -e "Configuração do OpenSSL e TLS/SSL do Apache2 feita com Sucesso!!!."
