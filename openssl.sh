@@ -258,20 +258,18 @@ echo -e "Criando o Chave Raiz de $BITS bits da CA, senha padrão: $PASSPHRASE, a
 	#							-passout (The output file password source), 
 	#							pass: (The actual password is password), 
 	#							bits (The size of the private key to generate in bits, size key bit: 1024, 2048, 3072 or 4096)
-	openssl genrsa -aes256 -out /etc/ssl/private/ca-ptikey.key -passout pass:$PASSPHRASE $BITS &>> $LOG
+	openssl genrsa -aes256 -out /etc/ssl/private/ca-ptikey.key.old -passout pass:$PASSPHRASE $BITS &>> $LOG
 echo -e "Chave Raiz da CA criada com sucesso!!!, continuando com o script...\n"
 sleep 5
 #
 echo -e "Removendo a senha da Chave Raiz da CA, senha padrão: $PASSPHRASE, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
-	# opção do comando mv: -v (verbose)
 	# opção do comando openssl: rsa (command processes RSA keys),
 	#							-in (The input file to read from, or standard input if not specified),
 	#							-out (The output file to write to, or standard output if not specified),
 	#							-passin (The key password source),
 	#							pass: (The actual password is password)
 	# opção do comando rm: -v (verbose)
-	mv -v /etc/ssl/private/ca-ptikey.key /etc/ssl/private/ca-ptikey.key.old &>> $LOG
 	openssl rsa -in /etc/ssl/private/ca-ptikey.key.old -out /etc/ssl/private/ca-ptikey.key \
 	-passin pass:$PASSPHRASE &>> $LOG
 	rm -v /etc/ssl/private/ca-ptikey.key.old &>> $LOG
@@ -371,20 +369,18 @@ echo -e "Criando o Chave Privada de $BITS do Apache2, senha padrão: $PASSPHRASE
 	#							-passout (The output file password source), 
 	#							pass: (The actual password is password), 
 	#							bits (The size of the private key to generate in bits, size key bit: 1024, 2048, 3072 or 4096)
-	openssl genrsa -aes256 -out /etc/ssl/private/apache2-ptikey.key -passout pass:$PASSPHRASE $BITS &>> $LOG
+	openssl genrsa -aes256 -out /etc/ssl/private/apache2-ptikey.key.old -passout pass:$PASSPHRASE $BITS &>> $LOG
 echo -e "Chave Privada do Apache2 criada com sucesso!!!, continuando com o script...\n"
 sleep 5
 #
 echo -e "Removendo a senha da Chave Privada do Apache2, senha padrão: $PASSPHRASE, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
-	# opção do comando mv: -v (verbose)
 	# opção do comando openssl: rsa (command processes RSA keys),
 	#							-in (The input file to read from, or standard input if not specified),
 	#							-out (The output file to write to, or standard output if not specified),
 	#							-passin (The key password source),
 	#							pass: (The actual password is password)
 	# opção do comando rm: -v (verbose)
-	mv -v /etc/ssl/private/apache2-ptikey.key /etc/ssl/private/apache2-ptikey.key.old &>> $LOG
 	openssl rsa -in /etc/ssl/private/apache2-ptikey.key.old -out /etc/ssl/private/apache2-ptikey.key \
 	-passin pass:$PASSPHRASE &>> $LOG
 	rm -v /etc/ssl/private/apache2-ptikey.key.old &>> $LOG
@@ -435,10 +431,10 @@ sleep 5
 echo -e "Verificando o arquivo CSR (Certificate Signing Request) do Apache2, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando openssl: req (command primarily creates and processes certificate requests in PKCS#10 format), 
-	#							-text (Print the certificate request in plain text), 
 	# 							-noout (Do not output the encoded version of the request), 
+	#							-text (Print the certificate request in plain text), 
 	#							-in (The input file to read a request from, or standard input if not specified)
-	openssl req -text -noout -in /etc/ssl/requests/apache2-pticsr.csr &>> $LOG
+	openssl req -noout -text -in /etc/ssl/requests/apache2-pticsr.csr &>> $LOG
 echo -e "Arquivo CSR verificado com sucesso!!!, continuando com o script...\n"
 sleep 5
 #
@@ -456,7 +452,7 @@ echo -e "Criando o certificado assinado CRT (Certificate Request Trust), do Apac
 	#							-extensions (The section to add certificate extensions from),
 	#							-extfile (File containing certificate extensions to use).
 	openssl x509 -req -days 3650 -$CRIPTO -in /etc/ssl/requests/apache2-pticsr.csr -CA \
-	/etc/ssl/newcerts/ca-ptipem.pem -CAkey /etc/ssl/private/ca-ptikey.key -CAcreateserial \
+	/etc/ssl/newcerts/ca-pticrt.crt -CAkey /etc/ssl/private/ca-ptikey.key -CAcreateserial \
 	-out /etc/ssl/newcerts/apache2-pticrt.crt -extensions v3_req -extfile /etc/ssl/pti-ssl.conf &>> $LOG
 echo -e "Criação do certificado assinado CRT do Apache2 feito com sucesso!!!, continuando com o script...\n"
 sleep 5
@@ -470,7 +466,7 @@ echo -e "Verificando o arquivo CRT (Certificate Request Trust) do Apache2, aguar
 	#							-in (he input file to read from, or standard input if not specified), 
 	#							md5 (The message digest to use MD5 checksums)
 	openssl x509 -noout -modulus -in /etc/ssl/newcerts/apache2-pticrt.crt | openssl md5 &>> $LOG
-	openssl x509 -text -noout -in /etc/ssl/newcerts/apache2-pticrt.crt &>> $LOG
+	openssl x509 -noout -text -in /etc/ssl/newcerts/apache2-pticrt.crt &>> $LOG
 echo -e "Arquivo CRT do Apache2 verificado com sucesso!!!, continuando com o script...\n"
 sleep 5
 #
@@ -499,8 +495,7 @@ echo -e "Criando o diretório de Download para baixar a Unidade Certificadora CA
 	# opção do comando cp: -v (verbose)
 	mkdir -v /var/www/html/download/ &>> $LOG
 	chown -v www-data:www-data /var/www/html/download/ &>> $LOG
-	cp -v /etc/ssl/newcerts/ca-ptipem.pem /var/www/html/download/ &>> $LOG
-	openssl x509 -outform der -in /etc/ssl/newcerts/ca-ptipem.pem -out /var/www/html/download/ca-ptipem.crt &>> $LOG
+	cp -v /etc/ssl/newcerts/ca-pticrt.crt /var/www/html/download/ &>> $LOG
 echo -e "Diretório criado com sucesso!!!, continuando com o script...\n"
 sleep 2
 #
@@ -525,7 +520,7 @@ echo -e "Verificando as portas de conexões do Apache2, aguarde..."
 	netstat -an | grep ':80\|:443'
 echo -e "Portas verificadas com sucesso!!!, continuando com o script...\n"
 sleep 5
-#	
+#
 echo -e "Configuração do OpenSSL e TLS/SSL do Apache2 feita com Sucesso!!!."
 	# script para calcular o tempo gasto (SCRIPT MELHORADO, CORRIGIDO FALHA DE HORA:MINUTO:SEGUNDOS)
 	# opção do comando date: +%T (Time)
