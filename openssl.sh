@@ -52,9 +52,9 @@
 #
 # Instalação da Autoridade Certificadora CA no GNU/Linux, Windows e Navegadores
 #
-# Instalação da Autoridade Certificadora CA no Mozilla Firefox
+# Instalação da Autoridade Certificadora CA no Mozilla Firefox (GNU/Linux ou Microsoft Windows)
 # Abrir menu de Aplicativo
-#	Preferências ou Opções
+#	Preferências ou Opções ou Configurações
 #		Pesquisar em preferências: Ver certificados
 #			Autoridades
 #				Importar: ca-ptipem.crt
@@ -63,7 +63,7 @@
 #				Bora para Pratica
 #					pti-intra
 #
-# Instalação da Autoridade Certificadora CA no Google Chrome
+# Instalação da Autoridade Certificadora CA no Google Chrome (GNU/Linux)
 # chrome://settings/certificates
 #	Autoridades
 #		Importar: ca-ptipem.crt
