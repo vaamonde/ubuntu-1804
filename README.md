@@ -237,7 +237,9 @@ O Bind DNS Server BIND (Berkeley Internet Name Domain ou, como chamado previamen
 
 O ISC DHCP Server dhcpd (uma abreviação de "daemon DHCP") é um programa de servidor DHCP que opera como um daemon em um servidor para fornecer serviço de protocolo de configuração dinâmica de hosts (DHCP) a uma rede. Essa implementação, também conhecida como ISC DHCP, é uma das primeiras e mais conhecidas, mas agora existem várias outras implementações de software de servidor DHCP disponíveis.
 
-Link da vídeo aula: 
+[![Bind9 e ISC DHCP Server](http://img.youtube.com/vi/NvD9Vchsvbk/0.jpg)](https://www.youtube.com/watch?v=NvD9Vchsvbk "Bind9 e ISC DHCP Server")
+
+Link da vídeo aula: https://www.youtube.com/watch?v=NvD9Vchsvbk
 
 Link do script utilizado nesse vídeo: https://github.com/vaamonde/ubuntu-1804/blob/master/dnsdhcp.sh
 
