@@ -215,8 +215,7 @@ echo -e "Atualizando os arquivos de configuração da CA e dos Certificados, agu
 	# opção do comando cp: -v (verbose)
 	touch /etc/ssl/{index.txt,index.txt.attr} &>> $LOG
 	echo "1234" > /etc/ssl/serial
-	cp -v conf/pti-ca.conf /etc/ssl/pti-ca.conf &>> $LOG
-	cp -v conf/pti-ssl.conf /etc/ssl/pti-ssl.conf &>> $LOG
+	cp -v conf/pti-ca.conf conf/pti-ssl.conf /etc/ssl/ &>> $LOG
 echo -e "Arquivos atualizados com sucesso!!!, continuando com o script...\n"
 sleep 5
 #
@@ -286,7 +285,7 @@ echo -e "Criando o arquivo CSR (Certificate Signing Request), confirme as mensag
 	# 	Common Name (eg, server FQDN or YOUR name): ptispo01ws01.pti.intra <-- pressione <Enter>
 	# 	Email Address: pti@pti.intra <-- pressione <Enter>
 	openssl req -new -$CRIPTO -nodes -key /etc/ssl/private/ca-ptikey.key -out \
-	/etc/ssl/newcerts/ca-pticsr.csr -config /etc/ssl/pti-ca.conf
+	/etc/ssl/requests/ca-pticsr.csr -config /etc/ssl/pti-ca.conf
 	echo
 echo -e "Criação do arquivo CSR feito com sucesso!!!, continuando com o script...\n"
 sleep 5
@@ -312,9 +311,13 @@ echo -e "Criando o arquivo CRT (Certificate Request Trust), confirme as mensagen
 	# 	Organization Unit Name (eg, section): Procedimentos em TI <-- pressione <Enter>
 	# 	Common Name (eg, server FQDN or YOUR name): pti.intra <-- pressione <Enter>
 	# 	Email Address: pti@pti.intra <-- pressione <Enter>
-	openssl req -new -x509 -$CRIPTO -days 3650 -in /etc/ssl/newcerts/ca-pticsr.csr -key \
-	/etc/ssl/private/ca-ptikey.key -out /etc/ssl/newcerts/ca-pticrt.crt -set_serial 0 \
-	-extensions v3_ca -config /etc/ssl/pti-ca.conf
+	#
+	#openssl req -new -x509 -$CRIPTO -days 3650 -in /etc/ssl/requests/ca-pticsr.csr -key \
+	#/etc/ssl/private/ca-ptikey.key -out /etc/ssl/newcerts/ca-pticrt.crt -set_serial 0 \
+	#-extensions v3_ca -config /etc/ssl/pti-ca.conf
+	#
+	openssl req -new -x509 -$CRIPTO -days 3650 -in /etc/ssl/requests/ca-pticsr.csr -key \
+	/etc/ssl/private/ca-ptikey.key -out /etc/ssl/newcerts/ca-pticrt.crt -config /etc/ssl/pti-ca.conf
 	echo
 echo -e "Criação do arquivo CRT feito com sucesso!!!, continuando com o script...\n"
 sleep 5
@@ -330,6 +333,14 @@ echo -e "Verificando o arquivo CRT (Certificate Request Trust) da CA, aguarde...
 	openssl x509 -noout -modulus -in /etc/ssl/newcerts/ca-pticrt.crt | openssl md5 &>> $LOG
 	openssl x509 -noout -text -in /etc/ssl/newcerts/ca-pticrt.crt &>> $LOG
 echo -e "Arquivo CRT da CA verificado com sucesso!!!, continuando com o script...\n"
+sleep 5
+#
+echo -e "Habilitando o arquivo CRT (Certificate Request Trust) da CA, aguarde..."
+	# opção do comando: &>> (redirecionar a saída padrão)
+	# opção do comando cp: -v (verbose)
+	cp -v /etc/ssl/newcerts/ca-pticrt.crt /usr/local/share/ca-certificates/ &>> $LOG
+	update-ca-certificates &>> $LOG
+echo -e "Arquivo CRT da CA habilitado com sucesso!!!, continuando com o script...\n"
 sleep 5
 #
 echo -e "Segunda Etapa: Criando o Certificado de Servidor Assinado do Apache2, aguarde...\n"
@@ -425,11 +436,16 @@ echo -e "Criando o certificado assinado CRT (Certificate Request Trust), do Apac
 	#							-out (The output file to write to, or standard output if none is specified)
 	#							-extensions (The section to add certificate extensions from),
 	#							-extfile (File containing certificate extensions to use).
-	#openssl ca -in /etc/ssl/requests/apache2-pticsr.csr -out /etc/ssl/newcerts/apache2-pticrt.crt \
-	#-config /etc/ssl/pti-ca.conf -extensions v3_req -extfile /etc/ssl/pti-ssl.conf
-	openssl x509 -req -days 3650 -$CRIPTO -in /etc/ssl/requests/apache2-pticsr.csr -CA \
-	/etc/ssl/newcerts/ca-pticrt.crt -CAkey /etc/ssl/private/ca-ptikey.key -CAcreateserial \
-	-out /etc/ssl/newcerts/apache2-pticrt.crt -extensions v3_req -extfile /etc/ssl/pti-ssl.conf &>> $LOG
+	#
+	# Sign the certificate? [y/n]: y <Enter>
+	# 1 out of 1 certificate request certified, commit? [y/n]: y <Enter>
+	#
+	#openssl x509 -req -days 3650 -$CRIPTO -in /etc/ssl/requests/apache2-pticsr.csr -CA \
+	#/etc/ssl/newcerts/ca-pticrt.crt -CAkey /etc/ssl/private/ca-ptikey.key -CAcreateserial \
+	#-out /etc/ssl/newcerts/apache2-pticrt.crt -extensions v3_req -extfile /etc/ssl/pti-ssl.conf &>> $LOG
+	#
+	openssl ca -in /etc/ssl/requests/apache2-pticsr.csr -out /etc/ssl/newcerts/apache2-pticrt.crt \
+	-config /etc/ssl/pti-ca.conf -extensions v3_req -extfile /etc/ssl/pti-ssl.conf
 echo -e "Criação do certificado assinado CRT do Apache2 feito com sucesso!!!, continuando com o script...\n"
 sleep 5
 #
@@ -504,7 +520,7 @@ echo -e "Testando o Certificado do Apache2, aguarde..."
 	#							-servername (Include the TLS Server Name Indication (SNI) extension in the ClientHello message)
 	#							-showcerts (Display the whole server certificate chain: normally only the server certificate itself is displayed)
 	openssl s_client -connect localhost:443 -servername www.pti.intra -showcerts &>> $LOG
-echo -e "Certificado do Apache testando sucesso!!!, continuando com o script...\n"
+echo -e "Certificado do Apache2 testando sucesso!!!, continuando com o script...\n"
 sleep 5
 #
 echo -e "Configuração do OpenSSL e TLS/SSL do Apache2 feita com Sucesso!!!."
