@@ -5,8 +5,8 @@
 # Facebook: facebook.com/BoraParaPratica
 # YouTube: youtube.com/BoraParaPratica
 # Data de criação: 25/05/2021
-# Data de atualização: 04/06/2021
-# Versão: 0.07
+# Data de atualização: 06/06/2021
+# Versão: 0.08
 # Testado e homologado para a versão do Ubuntu Server 18.04.x LTS x64
 # Kernel >= 4.15.x
 # Testado e homologado para a versão do OpenSSL 1.1.x
@@ -48,6 +48,22 @@
 #			ptispo01ws01.pti.intra
 #	chrome://restart
 #
+# Instalação da Autoridade Certificadora CA no Microsoft Edge (GNU/Linux)
+# Abrir menu de Aplicativo
+#	Configurações
+#		Gerenciar Certificados
+#			Autoridades
+#				Importar
+#
+# Instalação da Autoridade Certificadora CA no Opera (GNU/Linux)
+# Abrir o Easy Setup
+#	Go to full browser settings
+#		Search settings: manage certificates
+#			Security
+#				Manage Certificates
+#					Authorities
+#						Imports
+
 # Instalação da Autoridade Certificadora CA no GNU/Linux
 # Pasta: Download
 #		Abrir como Root (Botão direito do Mouse: Abrir como root)
@@ -163,7 +179,6 @@ clear
 #
 echo
 echo -e "Configuração do OpenSSL no GNU/Linux Ubuntu Server 18.04.x\n"
-echo -e "Após a configuração do TLS/SSL no Apache2 acessar a URL: https://`hostname -I | cut -d' ' -f1`/"
 echo -e "Download da Autoridade Certificadora CA na URL: https://`hostname -I | cut -d' ' -f1`/download"
 echo -e "Confirmar o acesso com o Nome FQDN na URL: https://`hostname -A | cut -d' ' -f1`/"
 echo -e "Confirmar o acesso com o Nome Domínio na URL: https://`hostname -d | cut -d' ' -f1`/"
@@ -338,8 +353,10 @@ sleep 5
 echo -e "Habilitando o arquivo CRT (Certificate Request Trust) da CA, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando cp: -v (verbose)
+	# opção do comando ls: -l (list), -h (human-readable), -a (all)
 	cp -v /etc/ssl/newcerts/ca-pticrt.crt /usr/local/share/ca-certificates/ &>> $LOG
 	update-ca-certificates &>> $LOG
+	ls -lha /etc/ssl/certs/ca-pticrt* &>> $LOG
 echo -e "Arquivo CRT da CA habilitado com sucesso!!!, continuando com o script...\n"
 sleep 5
 #
@@ -423,9 +440,10 @@ echo -e "Verificando o arquivo CSR (Certificate Signing Request) do Apache2, agu
 echo -e "Arquivo CSR verificado com sucesso!!!, continuando com o script...\n"
 sleep 5
 #
-echo -e "Criando o certificado assinado CRT (Certificate Request Trust), do Apache2, aguarde..."
+echo -e "Criando o certificado assinado CRT (Certificate Request Trust), do Apache2, aguarde...\n"
 	# opção do comando: &>> (redirecionar a saída padrão
-	# opção do comando openssl: x509 (command is a multi-purpose certificate utility),  
+	# opção do comando openssl: x509 (command is a multi-purpose certificate utility),
+	#							ca (command is a minimal certificate authority (CA) application)
 	#							-req (Expect a certificate request on input instead of a certificate),
 	#							-days (The number of days to make a certificate valid for),
 	#							-sha256 (The message digest to sign the request with),							
@@ -434,18 +452,21 @@ echo -e "Criando o certificado assinado CRT (Certificate Request Trust), do Apac
 	#							-CAkey (Set the CA private key to sign a certificate with),
 	#							-CAcreatesrial (Create the CA serial number file if it does not exist instead of generating an error),
 	#							-out (The output file to write to, or standard output if none is specified)
+	#							-config (Specify an alternative configuration file)
 	#							-extensions (The section to add certificate extensions from),
 	#							-extfile (File containing certificate extensions to use).
 	#
 	# Sign the certificate? [y/n]: y <Enter>
 	# 1 out of 1 certificate request certified, commit? [y/n]: y <Enter>
 	#
+	# OPÇÃO DE ASSINATURA DO ARQUIVO CRT SEM UTILIZAR O WIZARD DO CA, CÓDIGO APENAS DE DEMONSTRAÇÃO
 	#openssl x509 -req -days 3650 -$CRIPTO -in /etc/ssl/requests/apache2-pticsr.csr -CA \
 	#/etc/ssl/newcerts/ca-pticrt.crt -CAkey /etc/ssl/private/ca-ptikey.key -CAcreateserial \
 	#-out /etc/ssl/newcerts/apache2-pticrt.crt -extensions v3_req -extfile /etc/ssl/pti-ssl.conf &>> $LOG
 	#
 	openssl ca -in /etc/ssl/requests/apache2-pticsr.csr -out /etc/ssl/newcerts/apache2-pticrt.crt \
 	-config /etc/ssl/pti-ca.conf -extensions v3_req -extfile /etc/ssl/pti-ssl.conf
+	echo
 echo -e "Criação do certificado assinado CRT do Apache2 feito com sucesso!!!, continuando com o script...\n"
 sleep 5
 #
@@ -459,6 +480,8 @@ echo -e "Verificando o arquivo CRT (Certificate Request Trust) do Apache2, aguar
 	#							md5 (The message digest to use MD5 checksums)
 	openssl x509 -noout -modulus -in /etc/ssl/newcerts/apache2-pticrt.crt | openssl md5 &>> $LOG
 	openssl x509 -noout -text -in /etc/ssl/newcerts/apache2-pticrt.crt &>> $LOG
+	cat /etc/ssl/index.txt &>> $LOG
+	cat /etc/ssl/serial &>> $LOG
 echo -e "Arquivo CRT do Apache2 verificado com sucesso!!!, continuando com o script...\n"
 sleep 5
 #
