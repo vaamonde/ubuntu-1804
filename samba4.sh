@@ -9,24 +9,20 @@
 # Versão: 0.03
 # Testado e homologado para a versão do Ubuntu Server 18.04.x LTS x64
 # Kernel >= 4.15.x
-# Testado e homologado para a versão do SAMBA-4.7.x
+# Testado e homologado para a versão do SAMBA 4.7.x
 #
-# O SAMBA-4 é uma reimplementação de software livre do protocolo de rede SMB e foi originalmente desenvolvido por
-# Andrew Tridgell. O Samba fornece serviços de arquivo e impressão para vários clientes do Microsoft Windows e 
-# pode se integrar a um domínio do Microsoft Windows Server, como um controlador de domínio (DC) ou como um 
-# membro do domínio. A partir da versão 4, ele suporta domínios do Active Directory e do Microsoft Windows NT.
+# O SAMBA 4 é uma reimplementação de software livre do protocolo de rede SMB e foi originalmente 
+# desenvolvido por Andrew Tridgell. O Samba fornece serviços de arquivo e impressão para vários 
+# clientes do Microsoft Windows e pode se integrar a um domínio do Microsoft Windows Server, como 
+# um controlador de domínio (DC) ou como um membro do domínio. A partir da versão 4, ele suporta 
+# domínios do Active Directory e do Microsoft Windows NT.
 #
-# O KERBEROS Kerberos é o nome de um Protocolo de rede, que permite comunicações individuais seguras e identificadas, 
-# em uma rede insegura. Para isso o Massachusetts Institute of Technology (MIT) disponibiliza um pacote de aplicativos que 
-# implementam esse protocolo. O protocolo Kerberos previne Eavesdropping e Replay attack, e ainda garante a integridade dos 
-# dados. Seus projetistas inicialmente o modelaram na arquitetura cliente-servidor, e é possível a autenticação mutua entre 
-# o cliente e o servidor, permitindo assim que ambos se autentiquem.
-#
-# O NTP é um protocolo para sincronização dos relógios dos computadores baseado no protocolo UDP sob a porta 123. 
-# É utilizado para sincronização do relógio de um conjunto de computadores e dispositivos em redes de dados com latência 
-# variável. O NTP permite manter o relógio de um computador sincronizado com a hora sempre certa e com grande exatidão. 
-# Foi originalmente idealizado por David L. Mills da Universidade do Delaware e ainda hoje é mantido por ele e por uma 
-# equipe de voluntários. 
+# O KERBEROS Kerberos é o nome de um Protocolo de rede, que permite comunicações individuais seguras
+# e identificadas, em uma rede insegura. Para isso o Massachusetts Institute of Technology (MIT) 
+# disponibiliza um pacote de aplicativos que implementam esse protocolo. O protocolo Kerberos previne 
+# Eavesdropping e Replay attack, e ainda garante a integridade dos dados. Seus projetistas inicialmente 
+# o modelaram na arquitetura cliente-servidor, e é possível a autenticação mutua entre o cliente e o 
+# servidor, permitindo assim que ambos se autentiquem.
 #
 # Vídeo de instalação do GNU/Linux Ubuntu Server 18.04.x LTS: https://www.youtube.com/watch?v=zDdCrqNhIXI
 # Vídeo de atualização do Sistema: 
@@ -35,7 +31,7 @@
 #
 # Variável da Data Inicial para calcular o tempo de execução do script (VARIÁVEL MELHORADA)
 # opção do comando date: +%T (Time)
-HORAINICIAL=`date +%T`
+HORAINICIAL=$(date +%T)
 #
 # Variáveis para validar o ambiente, verificando se o usuário e "root", versão do ubuntu e kernel
 # opções do comando id: -u (user)
@@ -46,9 +42,9 @@ HORAINICIAL=`date +%T`
 # opção do shell script: acento crase ` ` = Executa comandos numa subshell, retornando o resultado
 # opção do shell script: aspas simples ' ' = Protege uma string completamente (nenhum caractere é especial)
 # opção do shell script: aspas duplas " " = Protege uma string, mas reconhece $, \ e ` como especiais
-USUARIO=`id -u`
-UBUNTU=`lsb_release -rs`
-KERNEL=`uname -r | cut -d'.' -f1,2`
+USUARIO=$(id -u)
+UBUNTU=$(lsb_release -rs)
+KERNEL=$(uname -r | cut -d'.' -f1,2)
 #
 # Variável do caminho do Log dos Script utilizado nesse curso (VARIÁVEL MELHORADA)
 # opções do comando cut: -d (delimiter), -f (fields)
@@ -88,7 +84,7 @@ clear
 if [ "$USUARIO" == "0" ] && [ "$UBUNTU" == "18.04" ] && [ "$KERNEL" == "4.15" ]
 	then
 		echo -e "O usuário e Root, continuando com o script..."
-		echo -e "Distribuição e >=18.04.x, continuando com o script..."
+		echo -e "Distribuição e >= 18.04.x, continuando com o script..."
 		echo -e "Kernel e >= 4.15, continuando com o script..."
 		sleep 5
 	else
@@ -98,54 +94,49 @@ if [ "$USUARIO" == "0" ] && [ "$UBUNTU" == "18.04" ] && [ "$KERNEL" == "4.15" ]
 		exit 1
 fi
 #		
-# Script de instalação do SAMBA-4 no GNU/Linux Ubuntu Server 18.04.x
+# Script de instalação do SAMBA 4 no GNU/Linux Ubuntu Server 18.04.x
 # opção do comando echo: -e (enable interpretation of backslash escapes), \n (new line)
 # opção do comando hostname: -I (all IP address)
 # opção do comando date: + (format), %d (day), %m (month), %Y (year 1970), %H (hour 24), %M (minute 60)
 echo -e "Início do script $0 em: `date +%d/%m/%Y-"("%H:%M")"`\n" &>> $LOG
 #
-echo -e "Instalação do SAMBA4 no GNU/Linux Ubuntu Server 18.04.x\n"
+echo -e "Instalação do SAMBA 4 no GNU/Linux Ubuntu Server 18.04.x\n"
 echo -e "Aguarde, esse processo demora um pouco dependendo do seu Link de Internet...\n"
 sleep 5
 #
 echo -e "Adicionando o Repositório Universal do Apt, aguarde..."
 	# opção do comando: &>> (redirecionar a entrada padrão)
 	add-apt-repository universe &>> $LOG
-echo -e "Repositório adicionado com sucesso!!!, continuando com o script..."
+echo -e "Repositório adicionado com sucesso!!!, continuando com o script...\n"
 sleep 5
-echo
 #
 echo -e "Adicionando o Repositório Multiversão do Apt, aguarde..."
 	# opção do comando: &>> (redirecionar a entrada padrão)
 	add-apt-repository multiverse &>> $LOG
-echo -e "Repositório adicionado com sucesso!!!, continuando com o script..."
+echo -e "Repositório adicionado com sucesso!!!, continuando com o script...\n"
 sleep 5
-echo
 #
 echo -e "Atualizando as listas do Apt, aguarde..."
 	#opção do comando: &>> (redirecionar a entrada padrão)
 	apt update &>> $LOG
-echo -e "Listas atualizadas com sucesso!!!, continuando com o script..."
+echo -e "Listas atualizadas com sucesso!!!, continuando com o script...\n"
 sleep 5
-echo
 #
 echo -e "Atualizando o sistema, aguarde..."
 	# opção do comando: &>> (redirecionar a entrada padrão)
 	# opção do comando apt: -y (yes)
 	apt -y upgrade &>> $LOG
-echo -e "Sistema atualizado com sucesso!!!, continuando com o script..."
+echo -e "Sistema atualizado com sucesso!!!, continuando com o script...\n"
 sleep 5
-echo
 #
 echo -e "Removendo software desnecessários, aguarde..."
 	# opção do comando: &>> (redirecionar a entrada padrão)
 	# opção do comando apt: -y (yes)
 	apt -y autoremove &>> $LOG
-echo -e "Software removidos com sucesso!!!, continuando com o script..."
+echo -e "Software removidos com sucesso!!!, continuando com o script...\n"
 sleep 5
-clear
 #
-echo -e "Instalando o SAMBA-4, aguarde..."
+echo -e "Instalando o SAMBA 4 com suporte ao Active Directory, aguarde..."
 echo
 #
 echo -e "Instalando as dependências do SAMBA-4, aguarde..."

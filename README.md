@@ -263,9 +263,9 @@ OpenSSL é uma implementação de código aberto dos protocolos SSL e TLS. A bib
 
 O OpenSSL está disponível para a maioria dos sistemas do tipo Unix, incluindo Linux, Mac OS X, as quatro versões do BSD de código aberto e também para o Microsoft Windows. O OpenSSL é baseado no SSLeay de Eric Young e Tim Hudson. O OpenSSL é utilizado para gerar certificados de autenticação de serviços/protocolos em servidores (servers).
 
-[![OpenSSL CA](http://img.youtube.com/vi/LwDCVv4K3zs/0.jpg)](http://www.youtube.com/watch?v=LwDCVv4K3zs "OpenSSL CA")
+[![OpenSSL CA](http://img.youtube.com/vi/GXcwpJfp7eo/0.jpg)](https://www.youtube.com/watch?v=GXcwpJfp7eo "OpenSSL CA")
 
-Link da vídeo aula: 
+Link da vídeo aula: https://www.youtube.com/watch?v=GXcwpJfp7eo
 
 Link do script utilizado nesse vídeo: https://github.com/vaamonde/ubuntu-1804/blob/master/openssl.sh
 
