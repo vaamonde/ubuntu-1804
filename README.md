@@ -255,6 +255,20 @@ Link da vídeo aula: https://www.youtube.com/watch?v=6EFUu-I3u4s&t
 
 Link do script utilizado nesse vídeo: https://github.com/vaamonde/ubuntu-1804/blob/master/lamp.sh
 
+## **COMO configurar o OpenSSL para criar uma CA e Certificados no GNU/Linux Ubuntu Server 18.04.x LTS**
+
+Vídeo mostrando os procedimentos básicos para criação de uma CA e geração de certificados assinados para suportar o TLS/SSL em páginas HTTPS utilizando o Apache2 no GNU/Linux Ubuntu Server 18.04 LTS
+
+OpenSSL é uma implementação de código aberto dos protocolos SSL e TLS. A biblioteca (escrita na linguagem C) implementa as funções básicas de criptografia e disponibiliza várias funções utilitárias. Também estão disponíveis wrappers que permitem o uso desta biblioteca em várias outras linguagens.
+
+O OpenSSL está disponível para a maioria dos sistemas do tipo Unix, incluindo Linux, Mac OS X, as quatro versões do BSD de código aberto e também para o Microsoft Windows. O OpenSSL é baseado no SSLeay de Eric Young e Tim Hudson. O OpenSSL é utilizado para gerar certificados de autenticação de serviços/protocolos em servidores (servers).
+
+[![OpenSSL CA](http://img.youtube.com/vi/LwDCVv4K3zs/0.jpg)](http://www.youtube.com/watch?v=LwDCVv4K3zs "OpenSSL CA")
+
+Link da vídeo aula: 
+
+Link do script utilizado nesse vídeo: https://github.com/vaamonde/ubuntu-1804/blob/master/openssl.sh
+
 ## **COMO instalar o WORDPRESS no GNU/Linux Ubuntu Server 18.04.x LTS**
 
 Vídeo mostrando os procedimentos básicos para instalar o WORDPRESS no LAMP Server do GNU/Linux Ubuntu Server 18.04 LTS

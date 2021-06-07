@@ -5,8 +5,8 @@
 # Facebook: facebook.com/BoraParaPratica
 # YouTube: youtube.com/BoraParaPratica
 # Data de criação: 25/05/2021
-# Data de atualização: 06/06/2021
-# Versão: 0.08
+# Data de atualização: 07/06/2021
+# Versão: 0.09
 # Testado e homologado para a versão do Ubuntu Server 18.04.x LTS x64
 # Kernel >= 4.15.x
 # Testado e homologado para a versão do OpenSSL 1.1.x
@@ -127,8 +127,9 @@ LOG="/var/log/$(echo $0 | cut -d'/' -f2)"
 #
 # Declarando as variáveis utilizadas na geração da chave privada/pública e dos certificados do OpenSSL
 PASSPHRASE="vaamonde"
+CRIPTOKEY="aes256" #opções: -aes128, -aes192, -aes256 (padrão), -camellia128, -camellia192, -camellia256, -des, -des3 ou -idea)
 BITS="2048" #opções: 1024, 2048 (padrão), 3072 ou 4096)
-CRIPTO="sha256" #opções: sha224, sha256 (padrão), sha384 ou sha512)
+CRIPTOCERT="sha256" #opções: md5, -sha1, sha224, sha256 (padrão), sha384 ou sha512)
 #
 # Exportando o recurso de Noninteractive do Debconf para não solicitar telas de configuração
 export DEBIAN_FRONTEND="noninteractive"
@@ -180,9 +181,9 @@ clear
 echo
 echo -e "Configuração do OpenSSL no GNU/Linux Ubuntu Server 18.04.x\n"
 echo -e "Download da Autoridade Certificadora CA na URL: https://`hostname -I | cut -d' ' -f1`/download"
-echo -e "Confirmar o acesso com o Nome FQDN na URL: https://`hostname -A | cut -d' ' -f1`/"
+echo -e "Confirmar o acesso com o Nome CNAME na URL: https://www.`hostname -d | cut -d' ' -f1`/"
 echo -e "Confirmar o acesso com o Nome Domínio na URL: https://`hostname -d | cut -d' ' -f1`/"
-echo -e "Confirmar o acesso com o Nome CNAME na URL: https://www.`hostname -d | cut -d' ' -f1`/\n"
+echo -e "Confirmar o acesso com o Nome FQDN na URL: https://`hostname -A | cut -d' ' -f1`/\n"
 sleep 5
 #
 echo -e "Adicionando o Repositório Universal do Apt, aguarde..."
@@ -241,12 +242,12 @@ echo -e "Criando o Chave Raiz de $BITS bits da CA, senha padrão: $PASSPHRASE, a
 	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando rm: -v (verbose)
 	# opção do comando openssl: genrsa (command generates an RSA private key),
-	#							-aes256 (Encrypt private keys using AES)
+	#							-criptokey (Encrypt the private key with the AES, CAMELLIA, DES, triple DES or the IDEA ciphers)
 	#							-out (The output file to write to, or standard output if not specified), 
 	#							-passout (The output file password source), 
 	#							pass: (The actual password is password), 
-	#							bits (The size of the private key to generate in bits, size key bit: 1024, 2048, 3072 or 4096)
-	openssl genrsa -aes256 -out /etc/ssl/private/ca-ptikey.key.old -passout pass:$PASSPHRASE $BITS &>> $LOG
+	#							bits (The size of the private key to generate in bits)
+	openssl genrsa -$CRIPTOKEY -out /etc/ssl/private/ca-ptikey.key.old -passout pass:$PASSPHRASE $BITS &>> $LOG
 echo -e "Chave Raiz da CA criada com sucesso!!!, continuando com o script...\n"
 sleep 5
 #
@@ -285,7 +286,7 @@ sleep 5
 echo -e "Criando o arquivo CSR (Certificate Signing Request), confirme as mensagens do arquivo: pti-ca.conf, aguarde...\n"
 	# opção do comando openssl: req (command primarily creates and processes certificate requests in PKCS#10 format), 
 	#							-new (Generate a new certificate request),
-	#							-sha256 (The message digest to sign the request with)
+	#							-criptocert (The message digest to sign the request with)
 	#							-nodes (Do not encrypt the private key),
 	# 							-key (The file to read the private key from), 
 	#							-out (The output file to write to, or standard output if not specified),
@@ -299,7 +300,7 @@ echo -e "Criando o arquivo CSR (Certificate Signing Request), confirme as mensag
 	# 	Organization Unit Name (eg, section): Procedimentos em TI <-- pressione <Enter>
 	# 	Common Name (eg, server FQDN or YOUR name): ptispo01ws01.pti.intra <-- pressione <Enter>
 	# 	Email Address: pti@pti.intra <-- pressione <Enter>
-	openssl req -new -$CRIPTO -nodes -key /etc/ssl/private/ca-ptikey.key -out \
+	openssl req -new -$CRIPTOCERT -nodes -key /etc/ssl/private/ca-ptikey.key -out \
 	/etc/ssl/requests/ca-pticsr.csr -config /etc/ssl/pti-ca.conf
 	echo
 echo -e "Criação do arquivo CSR feito com sucesso!!!, continuando com o script...\n"
@@ -310,7 +311,7 @@ echo -e "Criando o arquivo CRT (Certificate Request Trust), confirme as mensagen
 	# opção do comando openssl: req (command primarily creates and processes certificate requests in PKCS#10 format),
 	#							-new (Generate a new certificate request),
 	#							-x509 (Output a self-signed certificate instead of a certificate request),
-	#							-sha256 (The message digest to sign the request with)
+	#							-criptocert (The message digest to sign the request with)
 	#							-days (Specify the number of days to certify the certificate for),
 	#							-in (The input file to read from, or standard input if not specified)
 	#							-key (The file to read the private key from),
@@ -327,11 +328,7 @@ echo -e "Criando o arquivo CRT (Certificate Request Trust), confirme as mensagen
 	# 	Common Name (eg, server FQDN or YOUR name): pti.intra <-- pressione <Enter>
 	# 	Email Address: pti@pti.intra <-- pressione <Enter>
 	#
-	#openssl req -new -x509 -$CRIPTO -days 3650 -in /etc/ssl/requests/ca-pticsr.csr -key \
-	#/etc/ssl/private/ca-ptikey.key -out /etc/ssl/newcerts/ca-pticrt.crt -set_serial 0 \
-	#-extensions v3_ca -config /etc/ssl/pti-ca.conf
-	#
-	openssl req -new -x509 -$CRIPTO -days 3650 -in /etc/ssl/requests/ca-pticsr.csr -key \
+	openssl req -new -x509 -$CRIPTOCERT -days 3650 -in /etc/ssl/requests/ca-pticsr.csr -key \
 	/etc/ssl/private/ca-ptikey.key -out /etc/ssl/newcerts/ca-pticrt.crt -config /etc/ssl/pti-ca.conf
 	echo
 echo -e "Criação do arquivo CRT feito com sucesso!!!, continuando com o script...\n"
@@ -366,12 +363,12 @@ sleep 5
 echo -e "Criando o Chave Privada de $BITS do Apache2, senha padrão: $PASSPHRASE, aguarde..." 
 	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando openssl: genrsa (command generates an RSA private key),
-	#							-aes256 (Encrypt private keys using AES)
+	#							-criptokey (Encrypt the private key with the AES, CAMELLIA, DES, triple DES or the IDEA ciphers)
 	#							-out (The output file to write to, or standard output if not specified), 
 	#							-passout (The output file password source), 
 	#							pass: (The actual password is password), 
-	#							bits (The size of the private key to generate in bits, size key bit: 1024, 2048, 3072 or 4096)
-	openssl genrsa -aes256 -out /etc/ssl/private/apache2-ptikey.key.old -passout pass:$PASSPHRASE $BITS &>> $LOG
+	#							bits (The size of the private key to generate in bits)
+	openssl genrsa -$CRIPTOKEY -out /etc/ssl/private/apache2-ptikey.key.old -passout pass:$PASSPHRASE $BITS &>> $LOG
 echo -e "Chave Privada do Apache2 criada com sucesso!!!, continuando com o script...\n"
 sleep 5
 #
@@ -410,7 +407,7 @@ sleep 5
 echo -e "Criando o arquivo CSR (Certificate Signing Request), confirme as mensagens do arquivo: pti-ssl.conf, aguarde...\n"
 	# opção do comando openssl: req (command primarily creates and processes certificate requests in PKCS#10 format), 
 	#							-new (Generate a new certificate request),
-	#							-sha256 (The message digest to sign the request with)
+	#							-criptocert (The message digest to sign the request with)
 	#							-nodes (Do not encrypt the private key),
 	# 							-key (The file to read the private key from), 
 	#							-out (The output file to write to, or standard output if not specified),
@@ -424,7 +421,7 @@ echo -e "Criando o arquivo CSR (Certificate Signing Request), confirme as mensag
 	# 	Organization Unit Name (eg, section): Procedimentos em TI <-- pressione <Enter>
 	# 	Common Name (eg, server FQDN or YOUR name): pti.intra <-- pressione <Enter>
 	# 	Email Address: pti@pti.intra <-- pressione <Enter>
-	openssl req -new -$CRIPTO -nodes -key /etc/ssl/private/apache2-ptikey.key -out \
+	openssl req -new -$CRIPTOCERT -nodes -key /etc/ssl/private/apache2-ptikey.key -out \
 	/etc/ssl/requests/apache2-pticsr.csr -extensions v3_req -config /etc/ssl/pti-ssl.conf
 	echo
 echo -e "Criação do arquivo CSR feito com sucesso!!!, continuando com o script...\n"
@@ -446,7 +443,7 @@ echo -e "Criando o certificado assinado CRT (Certificate Request Trust), do Apac
 	#							ca (command is a minimal certificate authority (CA) application)
 	#							-req (Expect a certificate request on input instead of a certificate),
 	#							-days (The number of days to make a certificate valid for),
-	#							-sha256 (The message digest to sign the request with),							
+	#							-criptocert (The message digest to sign the request with),							
 	#							-in (The input file to read from, or standard input if not specified),
 	#							-CA (The CA certificate to be used for signing),
 	#							-CAkey (Set the CA private key to sign a certificate with),
@@ -460,7 +457,7 @@ echo -e "Criando o certificado assinado CRT (Certificate Request Trust), do Apac
 	# 1 out of 1 certificate request certified, commit? [y/n]: y <Enter>
 	#
 	# OPÇÃO DE ASSINATURA DO ARQUIVO CRT SEM UTILIZAR O WIZARD DO CA, CÓDIGO APENAS DE DEMONSTRAÇÃO
-	#openssl x509 -req -days 3650 -$CRIPTO -in /etc/ssl/requests/apache2-pticsr.csr -CA \
+	#openssl x509 -req -days 3650 -$CRIPTOCERT -in /etc/ssl/requests/apache2-pticsr.csr -CA \
 	#/etc/ssl/newcerts/ca-pticrt.crt -CAkey /etc/ssl/private/ca-ptikey.key -CAcreateserial \
 	#-out /etc/ssl/newcerts/apache2-pticrt.crt -extensions v3_req -extfile /etc/ssl/pti-ssl.conf &>> $LOG
 	#
@@ -538,11 +535,12 @@ sleep 5
 #
 echo -e "Testando o Certificado do Apache2, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
+	# opção do comando echo: | (piper, faz a função de Enter no comando)
 	# opção do comando openssl: s_client (command implements a generic SSL/TLS client which connects to a remote host using SSL/TLS)
 	#							-connect (The host and port to connect to)
 	#							-servername (Include the TLS Server Name Indication (SNI) extension in the ClientHello message)
 	#							-showcerts (Display the whole server certificate chain: normally only the server certificate itself is displayed)
-	openssl s_client -connect localhost:443 -servername www.pti.intra -showcerts &>> $LOG
+	echo | openssl s_client -connect localhost:443 -servername www.pti.intra -showcerts &>> $LOG
 echo -e "Certificado do Apache2 testando sucesso!!!, continuando com o script...\n"
 sleep 5
 #
