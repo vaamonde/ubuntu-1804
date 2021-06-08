@@ -5,8 +5,8 @@
 # Facebook: facebook.com/BoraParaPratica
 # YouTube: youtube.com/BoraParaPratica
 # Data de criação: 16/05/2021
-# Data de atualização: 23/05/2021
-# Versão: 0.02
+# Data de atualização: 08/06/2021
+# Versão: 0.03
 # Testado e homologado para a versão do Ubuntu Server 18.04.x LTS x64
 # Kernel >= 4.15.x
 # Testado e homologado para a versão do Zimbra Collaboration Community 8.8.x, Zimbra Desktop 7.3.x
@@ -32,25 +32,27 @@
 # 13. Install zimbra-drive [Y] <Enter>
 # 14. Install zimbra-imapd (BETA - for evaluation only) [N] <Enter>
 # 15. Install zimbra-chat [Y] <Enter>
-# 16. Change domain name? [Yes] N <Enter>
-# 17. Address unconfigured (**) items  (? - help) 6 <Enter>
-#	17.1 Select, or 'r' for previous menu [r] 4 <Enter>
-#	17.2 Password for admin@ptispo01ws01.pti.intra (min 6 characters): [SC96AHIMO] pti@2018 <Enter>
-#	17.3 Select, or 'r' for previous menu [r] <Enter>
-# 18. Address unconfigured (**) items  (? - help) a <Enter>
-# 19. Save configuration data to a file? [Yes] <Enter>
-# 20. Save config in file: [/opt/zimbra/config.16728] <Enter>
-# 21. Quit without applying changes? [No] y <Enter>
-# 22. Notify Zimbra of your installation? [Yes] <Enter>
-# 23. Configuration complete - press return to exit <Enter>
+# 16. The system will be modified.  Continue? [N] Y <Enter>
+# 17. Change domain name? [Yes] Y <Enter>
+# 18. Create domain: [ptispo01ws01.pti.intra] pti.intra <Enter>
+# 19. Address unconfigured (**) items  (? - help) 6 <Enter>
+#	19.1 Select, or 'r' for previous menu [r] 4 <Enter>
+#	19.2 Password for admin@pti.intra (min 6 characters): [XXXXXX] pti@2018 <Enter>
+#	19.3 Select, or 'r' for previous menu [r] <Enter>
+# 20. Select from menu, or press 'a' to apply config (? - help) a <Enter>
+# 21. Save configuration data to a file? [Yes] <Enter>
+# 22. Save config in file: [/opt/zimbra/config.16728] <Enter>
+# 23. The system will be modified - continue? [No] Yes <Enter>
+# 24. Notify Zimbra of your installation? [Yes] <Enter>
+# 25. Configuration complete - press return to exit <Enter>
 #
 # INFORMAÇÕES QUE SERÃO SOLICITADAS VIA WEB (NAVEGADOR) DO ZIMBRA ADMIN CONSOLE:
-# 01. Acessar a URL: https://ptispo01ws01.pti.intra:7071
+# 01. Acessar a URL: https://mail.pti.intra:7071
 # 02. Nome do usuário: admin
 # 03. Senha: pti@2018 <Login>
 #
 # INFORMAÇÕES QUE SERÃO SOLICITADAS VIA WEB (NAVEGADOR) DO ZIMBRA WEBMAIL:
-# 01. Acessar a URL: https://ptispo01ws01.pti.intra
+# 01. Acessar a URL: https://mail.pti.intra
 # 02. Nome do usuário: admin
 # 03. Senha: pti@2018
 # 04. Versão: Padrão <Login>
@@ -136,8 +138,8 @@ clear
 #
 echo
 echo -e "Instalação do Zimbra Collaboration Community no GNU/Linux Ubuntu Server 18.04.x\n"
-echo -e "Após a instalação do Zimbra Admin Console acessar a URL: https://`hostname -I | cut -d' ' -f1`:7071"
-echo -e "Após a instalação do Zimbra Webmail acessar a URL: https://`hostname -I | cut -d' ' -f1`"
+echo -e "Após a instalação do Zimbra Admin Console acessar a URL: https://mail.`hostname -d | cut -d' ' -f1`:7071"
+echo -e "Após a instalação do Zimbra Webmail acessar a URL: https://mail.`hostname -d | cut -d' ' -f1`\n"
 echo -e "Aguarde, esse processo demora um pouco dependendo do seu Link de Internet...\n"
 sleep 5
 #
@@ -192,12 +194,12 @@ echo -e "Descompactando o Zimbra Collaboration Community, aguarde..."
 echo -e "Zimbra descompactado com sucesso!!!, continuando com o script...\n"
 sleep 5
 #
-echo -e "Instalando o Zimbra Collaboration Community, pressione <Enter> para instalar."
+echo -e "Instalando o Zimbra Collaboration Community, pressione <Enter> para instalar.\n"
 echo -e "CUIDADO!!! com as opções que serão solicitadas no decorrer da instalação do Zimbra."
 echo -e "Veja a documentação das opções de instalação a partir da linha: 20 do arquivo $0"
 echo -e "Existe a possibilidade da instalação automatizada utilizando o comando: ./install /root/ubuntu/conf/zimbra-install"
 	read
-	sleep 2
+	sleep 5
 	cd zcs*/
 		./install.sh
 	cd ..
@@ -219,7 +221,8 @@ sleep 5
 #
 echo -e "Verificando as portas de Conexões do Zimbra Collaboration Community, aguarde..."
 	# opção do comando netstat: -a (all), -n (numeric)
-	netstat -an | grep '0:25\|0:110\|0:143\|0:443\|0:7071'
+	# portas do Zimbra: 25 (smtp), 110 (pop3), 143 (imap4), 443 (https), 587 (smtp), 7071 (admin)
+	netstat -an | grep '0:25\|0:110\|0:143\|0:443\|0:587\|0:7071'
 echo -e "Portas de conexões verificadas com sucesso!!!, continuando com o script...\n"
 sleep 5
 #
