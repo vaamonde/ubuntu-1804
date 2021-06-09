@@ -5,8 +5,8 @@
 # Facebook: facebook.com/BoraParaPratica
 # YouTube: youtube.com/BoraParaPratica
 # Data de criação: 09/11/2018
-# Data de atualização: 24/03/2021
-# Versão: 0.10
+# Data de atualização: 09/06/2021
+# Versão: 0.11
 # Testado e homologado para a versão do Ubuntu Server 18.04.x LTS x64
 # Kernel >= 4.15.x
 # Testado e homologado para a versão do Wordpress 5.4.x
@@ -118,46 +118,41 @@ clear
 #
 echo
 echo -e "Instalação do Wordpress no GNU/Linux Ubuntu Server 18.04.x\n"
-echo -e "Após a instalação do Wordpress acessar a URL: http://`hostname -I | cut -d ' ' -f1`/wp/\n"
+echo -e "Após a instalação do Wordpress acessar a URL: http://`hostname -I | cut -d ' ' -f1`/wp/"
 echo -e "Aguarde, esse processo demora um pouco dependendo do seu Link de Internet...\n"
 sleep 5
 #
 echo -e "Adicionando o Repositório Universal do Apt, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	add-apt-repository universe &>> $LOG
-echo -e "Repositório adicionado com sucesso!!!, continuando com o script..."
+echo -e "Repositório adicionado com sucesso!!!, continuando com o script...\n"
 sleep 5
-echo
 #
 echo -e "Adicionando o Repositório Multiversão do Apt, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	add-apt-repository multiverse &>> $LOG
-echo -e "Repositório adicionado com sucesso!!!, continuando com o script..."
+echo -e "Repositório adicionado com sucesso!!!, continuando com o script...\n"
 sleep 5
-echo
 #
 echo -e "Atualizando as listas do Apt, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	apt update &>> $LOG
-echo -e "Listas atualizadas com sucesso!!!, continuando com o script..."
+echo -e "Listas atualizadas com sucesso!!!, continuando com o script...\n"
 sleep 5
-echo
 #
 echo -e "Atualizando o sistema, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando apt: -y (yes)
 	apt -y upgrade &>> $LOG
-echo -e "Sistema atualizado com sucesso!!!, continuando com o script..."
+echo -e "Sistema atualizado com sucesso!!!, continuando com o script...\n"
 sleep 5
-echo
 #
 echo -e "Removendo software desnecessários, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando apt: -y (yes)
 	apt -y autoremove &>> $LOG
-echo -e "Software removidos com sucesso!!!, continuando com o script..."
+echo -e "Software removidos com sucesso!!!, continuando com o script...\n"
 sleep 5
-echo
 #
 echo -e "Instalando o Wordpress, aguarde...\n"
 #
@@ -165,36 +160,32 @@ echo -e "Instalando as dependências do Wordpress, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando apt: -y (yes)
 	apt -y install unzip &>> $LOG
-echo -e "Dependências instaladas com sucesso!!!, continuando com o script..."
+echo -e "Dependências instaladas com sucesso!!!, continuando com o script...\n"
 sleep 5
-echo
 #
 echo -e "Fazendo o download do Wordpress do site oficial, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando rm: -v (verbose)
 	rm -v latest.zip &>> $LOG
 	wget $WORDPRESS &>> $LOG
-echo -e "Download do Wordpress feito com sucesso!!!, continuando com o script..."
+echo -e "Download do Wordpress feito com sucesso!!!, continuando com o script...\n"
 sleep 5
-echo
 #
 echo -e "Descompactando o Wordpress, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	unzip latest.zip &>> $LOG
-echo -e "Descompactação feita com sucesso!!!, continuando com o script..."
+echo -e "Descompactação feita com sucesso!!!, continuando com o script...\n"
 sleep 5
-echo
 #
-echo -e "Copiando os arquivos de configuração do Wordpress, aguarde..."
+echo -e "Copiando os arquivos do Wordpress para site padrão do Apache2, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando mv: -v (verbose)
 	# opção do comando cp: -v (verbose)
 	mv -v wordpress/ /var/www/html/wp &>> $LOG
 	cp -v conf/htaccess /var/www/html/wp/.htaccess &>> $LOG
 	cp -v conf/wp-config.php /var/www/html/wp/ &>> $LOG
-echo -e "Arquivos copiados com sucesso!!!, continuando com o script..."
+echo -e "Arquivos copiados com sucesso!!!, continuando com o script...\n"
 sleep 5
-echo
 #				 
 echo -e "Alterando as permissões dos arquivos e diretórios do Wordpress, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
@@ -202,11 +193,10 @@ echo -e "Alterando as permissões dos arquivos e diretórios do Wordpress, aguar
 	# opção do comando chown: -R (recursive), -f (silent), -v (verbose), dono.grupo (alteração do dono e grupo)
 	chmod -Rfv 755 /var/www/html/wp/ &>> $LOG
 	chown -Rfv www-data.www-data /var/www/html/wp/ &>> $LOG
-echo -e "Permissões alteradas com sucesso!!!, continuando com o script..."
+echo -e "Permissões alteradas com sucesso!!!, continuando com o script...\n"
 sleep 5
-echo
 #
-echo -e "Criando a Base de Dados do Wordpress, aguarde..."
+echo -e "Criando a Base de Dados do Wordpress no MySQL, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando mysql: -u (user), -p (password) -e (execute)
 	mysql -u $USER -p$PASSWORD -e "$DATABASE" mysql &>> $LOG
@@ -214,33 +204,22 @@ echo -e "Criando a Base de Dados do Wordpress, aguarde..."
 	mysql -u $USER -p$PASSWORD -e "$GRANTDATABASE" mysql &>> $LOG
 	mysql -u $USER -p$PASSWORD -e "$GRANTALL" mysql &>> $LOG
 	mysql -u $USER -p$PASSWORD -e "$FLUSH" mysql &>> $LOG
-echo -e "Base de Dados criada com sucesso!!!, continuando com o script..."
+echo -e "Base de Dados criada com sucesso!!!, continuando com o script...\n"
 sleep 5
-echo
 #
-echo -e "Instalação do Wordpress feita com sucesso!!! Pressione <Enter> para continuar."
-read
-sleep 3
-#
-echo -e "Editando o arquivo de configuração da Base de Dados do Wordpress, aguarde..."
-	echo -e "Pressione <Enter> para editar o arquivo: wp-config.php"
-		# opção do comando sleep: 3 (seconds)
-		read
-		sleep 3
-		vim /var/www/html/wp/wp-config.php
-echo -e "Arquivo editado com sucesso!!!, continuando com o script..."
+echo -e "Editando o arquivo de configuração da Base de Dados do Wordpress."
+echo -e "Pressione <Enter> para editar o arquivo: wp-config.php"
+	read
+	vim /var/www/html/wp/wp-config.php
+echo -e "Arquivo editado com sucesso!!!, continuando com o script...\n"
 sleep 5
-echo
 #
-echo -e "Editando o arquivo de configuração do .htaccess do Wordpress, aguarde..."
-	echo -e "Pressione <Enter> para editar o arquivo: .htaccess"
-		# opção do comando sleep: 3 (seconds)
-		read
-		sleep 3
-		vim /var/www/html/wp/.htaccess
-echo -e "Arquivo editado com sucesso!!!, continuando com o script..."
+echo -e "Editando o arquivo de configuração do .htaccess do Wordpress."
+echo -e "Pressione <Enter> para editar o arquivo: .htaccess"
+	read
+	vim /var/www/html/wp/.htaccess
+echo -e "Arquivo editado com sucesso!!!, continuando com o script...\n"
 sleep 5
-echo
 #
 echo -e "Instalação do Wordpress feito com Sucesso!!!"
 	# script para calcular o tempo gasto (SCRIPT MELHORADO, CORRIGIDO FALHA DE HORA:MINUTO:SEGUNDOS)

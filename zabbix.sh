@@ -5,8 +5,8 @@
 # Facebook: facebook.com/BoraParaPratica
 # YouTube: youtube.com/BoraParaPratica
 # Data de criação: 25/07/2020
-# Data de atualização: 10/12/2020
-# Versão: 0.03
+# Data de atualização: 09/06/2021
+# Versão: 0.04
 # Testado e homologado para a versão do Ubuntu Server 18.04.x LTS x64
 # Kernel >= 4.15.x
 # Testado e homologado para a versão do Zabbix 5.2.x 
@@ -86,8 +86,8 @@ GRANTDATABASE="GRANT USAGE ON *.* TO 'zabbix' IDENTIFIED BY 'zabbix';"
 GRANTALL="GRANT ALL PRIVILEGES ON zabbix.* TO 'zabbix' IDENTIFIED BY 'zabbix';"
 FLUSH="FLUSH PRIVILEGES;"
 #
-# Declarando as variáveis para o download do Zabbix Server (Link atualizado no dia 24/11/2020)
-ZABBIX="https://repo.zabbix.com/zabbix/5.2/ubuntu/pool/main/z/zabbix-release/zabbix-release_5.2-1%2Bubuntu18.04_all.deb"
+# Declarando as variáveis para o download do Zabbix Server (Link atualizado no dia 09/06/2021)
+ZABBIX="https://repo.zabbix.com/zabbix/5.4/ubuntu/pool/main/z/zabbix-release/zabbix-release_5.4-1%2Bubuntu18.04_all.deb"
 #
 # Exportando o recurso de Noninteractive do Debconf para não solicitar telas de configuração
 export DEBIAN_FRONTEND="noninteractive"
@@ -137,46 +137,41 @@ echo -e "Início do script $0 em: `date +%d/%m/%Y-"("%H:%M")"`\n" &>> $LOG
 clear
 echo
 echo -e "Instalação do Zabbix Server no GNU/Linux Ubuntu Server 18.04.x\n"
-echo -e "Após a instalação do Zabbix Server acesse a URL: http://`hostname -I | cut -d' ' -f1`/zabbix/\n"
+echo -e "Após a instalação do Zabbix Server acesse a URL: http://`hostname -I | cut -d' ' -f1`/zabbix/"
 echo -e "Aguarde, esse processo demora um pouco dependendo do seu Link de Internet...\n"
 sleep 5
 #
 echo -e "Adicionando o Repositório Universal do Apt, aguarde..."
 	# opção do comando: &>> (redirecionar de saída padrão)
 	add-apt-repository universe &>> $LOG
-echo -e "Repositório adicionado com sucesso!!!, continuando com o script..."
+echo -e "Repositório adicionado com sucesso!!!, continuando com o script...\n"
 sleep 5
-echo
 #
 echo -e "Adicionando o Repositório Multiversão do Apt, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	add-apt-repository multiverse &>> $LOG
-echo -e "Repositório adicionado com sucesso!!!, continuando com o script..."
+echo -e "Repositório adicionado com sucesso!!!, continuando com o script...\n"
 sleep 5
-echo
 #
 echo -e "Atualizando as listas do Apt, aguarde..."
 	#opção do comando: &>> (redirecionar a saída padrão)
 	apt update &>> $LOG
-echo -e "Listas atualizadas com sucesso!!!, continuando com o script..."
+echo -e "Listas atualizadas com sucesso!!!, continuando com o script...\n"
 sleep 5
-echo
 #
 echo -e "Atualizando o sistema, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando apt: -y (yes)
 	apt -y upgrade &>> $LOG
-echo -e "Sistema atualizado com sucesso!!!, continuando com o script..."
+echo -e "Sistema atualizado com sucesso!!!, continuando com o script...\n"
 sleep 5
-echo
 #
 echo -e "Removendo software desnecessários, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando apt: -y (yes)
 	apt -y autoremove &>> $LOG
-echo -e "Software removidos com sucesso!!!, continuando com o script..."
+echo -e "Software removidos com sucesso!!!, continuando com o script...\n"
 sleep 5
-echo
 #
 echo -e "Instalando o Zabbix Server, aguarde...\n"
 #
@@ -188,25 +183,22 @@ echo -e "Fazendo o download e instalando o Repositório do Zabbix Server, aguard
 	rm -v zabbix.deb &>> $LOG
 	wget $ZABBIX -O zabbix.deb &>> $LOG
 	dpkg -i zabbix.deb &>> $LOG
-echo -e "Repositório instalado com sucesso!!!, continuando com o script..."
+echo -e "Repositório instalado com sucesso!!!, continuando com o script...\n"
 sleep 5
-echo
 #
 echo -e "Atualizando as listas do Apt com o novo Repositório do Zabbix Server, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	apt update &>> $LOG
-echo -e "Listas atualizadas com sucesso!!!, continuando com o script..."
+echo -e "Listas atualizadas com sucesso!!!, continuando com o script...\n"
 sleep 5
-echo
 #
 echo -e "Instalando o Zabbix Server, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando apt: -y (yes)
-	apt -y install zabbix-server-mysql zabbix-frontend-php zabbix-apache-conf zabbix-agent traceroute nmap \
-    snmp snmpd snmp-mibs-downloader &>> $LOG
-echo -e "Zabbix Server instalado com sucesso!!!, continuando com o script..."
+	apt -y install zabbix-server-mysql zabbix-frontend-php zabbix-apache-conf zabbix-agent \
+	traceroute nmap snmp snmpd snmp-mibs-downloader &>> $LOG
+echo -e "Zabbix Server instalado com sucesso!!!, continuando com o script...\n"
 sleep 5
-echo
 #
 echo -e "Criando o Banco de Dados e Populando as Tabelas do Zabbix Server, aguarde esse processo demora um pouco..."
 	# opção do comando: &>> (redirecionar de saída padrão)
@@ -219,9 +211,8 @@ echo -e "Criando o Banco de Dados e Populando as Tabelas do Zabbix Server, aguar
 	mysql -u $USER -p$PASSWORD -e "$GRANTALL" mysql &>> $LOG
 	mysql -u $USER -p$PASSWORD -e "$FLUSH" mysql &>> $LOG
 	zcat -v $CREATETABLE | mysql -uzabbix -pzabbix zabbix &>> $LOG
-echo -e "Banco de Dados criado com sucesso!!!, continuando com o script..."
+echo -e "Banco de Dados criado com sucesso!!!, continuando com o script...\n"
 sleep 5
-echo
 #
 echo -e "Editando o arquivo de configuração da Base de Dados do Zabbix Server, pressione <Enter> para continuar..."
 	# opção do comando: &>> (redirecionar a saída padrão)
@@ -230,9 +221,8 @@ echo -e "Editando o arquivo de configuração da Base de Dados do Zabbix Server,
 	cp -v /etc/zabbix/zabbix_server.conf /etc/zabbix/zabbix_server.conf.bkp &>> $LOG
 	cp -v conf/zabbix_server.conf /etc/zabbix/zabbix_server.conf &>> $LOG
 	vim /etc/zabbix/zabbix_server.conf
-echo -e "Arquivo editado com sucesso!!!, continuando com o script..."
+echo -e "Arquivo editado com sucesso!!!, continuando com o script...\n"
 sleep 5
-echo
 #
 echo -e "Editando o arquivo de configuração do PHP do Zabbix Server, pressione <Enter> para continuar..."
 	# opção do comando: &>> (redirecionar a saída padrão)
@@ -241,9 +231,8 @@ echo -e "Editando o arquivo de configuração do PHP do Zabbix Server, pressione
 	cp -v /etc/zabbix/apache.conf /etc/zabbix/apache.conf.bkp &>> $LOG
 	cp -v conf/apache.conf /etc/zabbix/apache.conf &>> $LOG
 	vim /etc/zabbix/apache.conf
-echo -e "Arquivo editado com sucesso!!!, continuando com o script..."
+echo -e "Arquivo editado com sucesso!!!, continuando com o script...\n"
 sleep 5
-echo
 #
 echo -e "Editando o arquivo de configuração do Zabbix Agent, pressione <Enter> para continuar..."
 	# opção do comando: &>> (redirecionar a saída padrão)
@@ -252,25 +241,22 @@ echo -e "Editando o arquivo de configuração do Zabbix Agent, pressione <Enter>
 	cp -v /etc/zabbix/zabbix_agentd.conf /etc/zabbix/zabbix_agentd.conf.bkp &>> $LOG
 	cp -v conf/zabbix_agentd.conf /etc/zabbix/zabbix_agentd.conf &>> $LOG
 	vim /etc/zabbix/zabbix_agentd.conf
-echo -e "Arquivo editado com sucesso!!!, continuando com o script..."
+echo -e "Arquivo editado com sucesso!!!, continuando com o script...\n"
 sleep 5
-echo
 #
 echo -e "Reinicializando os serviços do Zabbix Server, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	systemctl enable zabbix-server zabbix-agent &>> $LOG
 	systemctl restart zabbix-server zabbix-agent apache2 &>> $LOG
-echo -e "Serviços reinicializados com sucesso!!!, continuando com o script..."
+echo -e "Serviços reinicializados com sucesso!!!, continuando com o script...\n"
 sleep 5
-echo
 #
 echo -e "Verificando as portas de conexões do Zabbix Server, aguarde..."
 	# opção do comando netstat: a (all), n (numeric)
 	# opção do comando grep: -i (ignore case), \| (função OU)
 	netstat -an | grep -i tcp | grep '10050\|10051'
-echo -e "Portas verificadas com sucesso!!!, continuando com o script..."
+echo -e "Portas verificadas com sucesso!!!, continuando com o script...\n"
 sleep 5
-echo
 #
 echo -e "Instalação do Zabbix Server feita com Sucesso!!!."
 	# script para calcular o tempo gasto (SCRIPT MELHORADO, CORRIGIDO FALHA DE HORA:MINUTO:SEGUNDOS)
