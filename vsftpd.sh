@@ -72,12 +72,12 @@ if [ "$USUARIO" == "0" ] && [ "$UBUNTU" == "18.04" ] && [ "$KERNEL" == "4.15" ]
 		exit 1
 fi
 #
-# Verificando se as dependências do Vsftpd estão instaladas
+# Verificando se as dependências do Vsftpd Server estão instaladas
 # opção do dpkg: -s (status), opção do echo: -e (interpretador de escapes de barra invertida), -n (permite nova linha)
 # || (operador lógico OU), 2> (redirecionar de saída de erro STDERR), && = operador lógico AND, { } = agrupa comandos em blocos
 # [ ] = testa uma expressão, retornando 0 ou 1, -ne = é diferente (NotEqual)
 echo -n "Verificando as dependências do Vsftpd Server, aguarde... "
-	for name in bind9 bind9utils apache2 
+	for name in bind9 bind9utils apache2 openssl
 	do
 		[[ $(dpkg -s $name 2> /dev/null) ]] || { 
 			echo -en "\n\nO software: $name precisa ser instalado. \nUse o comando 'apt install $name'\n";
@@ -88,6 +88,7 @@ echo -n "Verificando as dependências do Vsftpd Server, aguarde... "
 			echo -en "\nInstale as dependências acima e execute novamente este script\n";
 			echo -en "Recomendo utilizar o script: lamp.sh para resolver as dependências."
 			echo -en "Recomendo utilizar o script: dnsdhcp.sh para resolver as dependências."
+			echo -en "Recomendo utilizar o script: openssl.sh para resolver as dependências."
 			exit 1; 
 			}
 		sleep 5
@@ -183,15 +184,101 @@ echo -e "Atualizando o arquivo de configuração do Vsftpd Server, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando mv: -v (verbose)
 	# opção do comando cp: -v (verbose)
+	# opção do comand chmod: a (all user), + (bits to be added), x (execute/search only)
 	mv -v /etc/vsftpd.conf /etc/vsftpd.conf.old &>> $LOG
 	cp -v conf/vsftpd.conf /etc/vsftpd.conf &>> $LOG
+	cp -v conf/vsftpd.allowed_users /etc/vsftpd.allowed_users &>> $LOG
+	cp -v conf/vsftpd-ssl.conf /etc/ssl/vsftpd-ssl.conf &>> $LOG
+	cp -v conf/ftponly /bin/ftponly &>> $LOG
+	cp -v conf/shells /etc/shells &>> $LOG
+	chmod -v a+x /bin/ftponly &>> $LOG
 echo -e "Arquivo atualizado com sucesso!!!, continuando com o script...\n"
 sleep 5
 #
-echo -e "Editando o arquivo de configuração do Vsftpd Server, aguarde..."
+echo -e "Editando o arquivo de configuração do Vsftpd Server, pressione <Enter> para continuar."
 	read
-	/etc/vsftpd.conf
+	vim /etc/vsftpd.conf
 echo -e "Arquivo editado com sucesso!!!, continuando com o script...\n"
+sleep 5
+#
+echo -e "Editando o arquivo de liberação do Vsftpd Server, pressione <Enter> para continuar."
+	read
+	vim /etc/vsftpd.allowed_users
+echo -e "Arquivo editado com sucesso!!!, continuando com o script...\n"
+sleep 5
+#
+echo -e "Editando o arquivo de TLS/SSL do Vsftpd Server, pressione <Enter> para continuar."
+	read
+	vim /etc/ssl/vsftpd-ssl.conf
+echo -e "Arquivo editado com sucesso!!!, continuando com o script...\n"
+sleep 5
+#
+echo -e "Editando o arquivo de segurança de acesso ao Vsftpd Server, pressione <Enter> para continuar."
+	read
+	vim /etc/ssl/ftponly
+echo -e "Arquivo editado com sucesso!!!, continuando com o script...\n"
+sleep 5
+#
+echo -e "Editando o arquivo de shell válidos para o acesso ao Vsftpd Server, pressione <Enter> para continuar."
+	read
+	vim /etc/ssl/shells
+echo -e "Arquivo editado com sucesso!!!, continuando com o script...\n"
+sleep 5
+#
+echo -e "Criando o Chave Privada/Pública e Certificado Assinado do Vsftpd Server, aguarde..." 
+	# opção do comando: &>> (redirecionar a saída padrão)
+	# opção do comando rm: -v (verbose)
+	# opção do comando openssl: genrsa (command generates an RSA private key),
+	#							-aes256 (Encrypt the private key with the AES)
+	#							-out (The output file to write to, or standard output if not specified), 
+	#							-passout (The output file password source), 
+	#							pass: (The actual password is password), 
+	#							2048 (The size of the private key to generate in bits)
+	# opção do comando openssl: rsa (command processes RSA keys),
+	#							-in (The input file to read from, or standard input if not specified),
+	#							-out (The output file to write to, or standard output if not specified),
+	#							-passin (The key password source),
+	#							pass: (The actual password is password)
+	# opção do comando openssl: req (command primarily creates and processes certificate requests in PKCS#10 format), 
+	#							-new (Generate a new certificate request),
+	#							-sha256 (The message digest to sign the request with sha256)
+	#							-nodes (Do not encrypt the private key),
+	#							-key (The file to read the private key from), 
+	#							-out (The output file to write to, or standard output if not specified),
+	#							-extensions (Specify alternative sections to include certificate extensions), 
+	#							-config (Specify an alternative configuration file)
+	# Criando o arquivo CSR, mensagens que serão solicitadas na criação do CSR
+	# 	Country Name (2 letter code): BR <-- pressione <Enter>
+	# 	State or Province Name (full name): Brasil <-- pressione <Enter>
+	# 	Locality Name (eg, city): Sao Paulo <-- pressione <Enter>
+	# 	Organization Name (eg, company): Bora para Pratica <-- pressione <Enter>
+	# 	Organization Unit Name (eg, section): Procedimentos em TI <-- pressione <Enter>
+	# 	Common Name (eg, server FQDN or YOUR name): pti.intra <-- pressione <Enter>
+	# 	Email Address: pti@pti.intra <-- pressione <Enter>
+	# opção do comando openssl: x509 (command is a multi-purpose certificate utility),
+	#							ca (command is a minimal certificate authority (CA) application)							
+	#							-in (The input file to read from, or standard input if not specified),
+	#							-out (The output file to write to, or standard output if none is specified)
+	#							-config (Specify an alternative configuration file)
+	#							-extensions (The section to add certificate extensions from),
+	#							-extfile (File containing certificate extensions to use).
+	# Sign the certificate? [y/n]: y <Enter>
+	# 1 out of 1 certificate request certified, commit? [y/n]: y <Enter>
+	openssl genrsa -aes256 -out /etc/ssl/private/vsftpd-ptikey.key.old \
+	-passout pass:$PASSWORD 2048 &>> $LOG
+	echo
+	openssl rsa -in /etc/ssl/private/apache2-ptikey.key.old -out /etc/ssl/private/apache2-ptikey.key \
+	-passin pass:$PASSWORD &>> $LOG
+	echo
+	rm -v /etc/ssl/private/apache2-ptikey.key.old &>> $LOG
+	echo
+	openssl req -new -sha256 -nodes -key /etc/ssl/private/vsftpd-ptikey.key -out /etc/ssl/requests/vsftpd-pticsr.csr \
+	-extensions v3_req -config /etc/ssl/vsftpd-ssl.conf
+	echo
+	openssl ca -in /etc/ssl/requests/vsftpd-pticsr.csr -out /etc/ssl/newcerts/vsftpd-pticrt.crt \
+	-config /etc/ssl/pti-ca.conf -extensions v3_req -extfile /etc/ssl/vsftpd-ssl.conf
+	echo
+echo -e "Chave Privada/Pública e Certificado Assinado do Vsftpd Server criada com sucesso!!!, continuando com o script...\n"
 sleep 5
 #
 echo -e "Reinicializando o serviço do Vsftpd Server, aguarde..."
