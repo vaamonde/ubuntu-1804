@@ -618,3 +618,14 @@ O Baculum fornece duas aplicações web: o Baculum Web como interface web para g
 Link da vídeo aula: https://www.youtube.com/watch?v=LwDCVv4K3zs
 
 Link do script utilizado nesse vídeo: https://github.com/vaamonde/ubuntu-1804/blob/master/bacula.sh
+
+## **COMO instalar o ZIMBRA SERVER no GNU/Linux Ubuntu Server 18.04.x LTS**
+
+Vídeo mostrando os procedimentos básicos para instalar o Zimbra Server Collaboration Community no GNU/Linux Ubuntu Server 18.04 LTS
+
+O Zimbra é uma solução de e-mail, calendário e colaboração de classe empresarial desenvolvida para rede local ou nuvem (pública ou privada). Com uma interface baseada em navegador redesenhada, o Zimbra oferece a experiência de mensagens mais inovadora disponível atualmente, conectando os usuários finais às informações e atividades em suas nuvens pessoais. 
+
+[![Zimbra Server](http://img.youtube.com/vi/LwDCVv4K3zs/0.jpg)](http://www.youtube.com/watch?v=LwDCVv4K3zs "Zimbra Server")
+
+Link da vídeo aula: 
+Link do script utilizado nesse vídeo: https://github.com/vaamonde/ubuntu-1804/blob/master/zimbra.sh

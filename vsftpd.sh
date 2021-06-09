@@ -4,66 +4,25 @@
 # Facebook: facebook.com/ProcedimentosEmTI
 # Facebook: facebook.com/BoraParaPratica
 # YouTube: youtube.com/BoraParaPratica
-# Data de criação: 16/05/2021
+# Data de criação: 09/06/2021
 # Data de atualização: 09/06/2021
-# Versão: 0.04
+# Versão: 0.01
 # Testado e homologado para a versão do Ubuntu Server 18.04.x LTS x64
 # Kernel >= 4.15.x
-# Testado e homologado para a versão do Zimbra Collaboration Community 8.8.x, Zimbra Desktop 7.3.x
+# Testado e homologado para a versão do VSFTPD v3.0.x
 #
-# O Zimbra é uma solução de e-mail, calendário e colaboração de classe empresarial desenvolvida para 
-# rede local ou nuvem (pública ou privada). Com uma interface baseada em navegador redesenhada, o 
-# Zimbra oferece a experiência de mensagens mais inovadora disponível atualmente, conectando os 
-# usuários finais às informações e atividades em suas nuvens pessoais. 
+# O VSFTPd, é um servidor FTP para sistemas do tipo Unix, incluindo Linux. É o servidor FTP 
+# padrão nas distribuições Ubuntu, CentOS, Fedora, NimbleX, Slackware e RHEL Linux. Está 
+# licenciado pela GNU General Public License. Suporta IPv4, IPv6, TLS e FTPS.
 #
-# MENSAGENS QUE SERÃO SOLICITADAS NA INSTALAÇÃO DO ZIMBRA COLLABORATION COMMUNITY:
-# 01. Do you agree with the terms of the software license agreement? [N] Y <Enter>
-# 02. Use Zimbra's package repository [Y] <Enter>
-# 03. Install zimbra-ldap [Y] Y <Enter>
-# 04. Install zimbra-logger [Y] <enter>
-# 05. Install zimbra-mta [Y] <Enter>
-# 06. Install zimbra-dnscache [Y] N <Enter>
-# 07. Install zimbra-snmp [Y] <Enter>
-# 08. Install zimbra-store [Y] <Enter>
-# 09. Install zimbra-apache [Y] <Enter>
-# 10. Install zimbra-spell [Y] <Enter>
-# 11. Install zimbra-memcached [Y] <Enter>
-# 12. Install zimbra-proxy [Y] <Enter>
-# 13. Install zimbra-drive [Y] <Enter>
-# 14. Install zimbra-imapd (BETA - for evaluation only) [N] <Enter>
-# 15. Install zimbra-chat [Y] <Enter>
-# 16. The system will be modified.  Continue? [N] Y <Enter>
-# 17. Change domain name? [Yes] Y <Enter>
-# 18. Create domain: [ptispo01ws01.pti.intra] pti.intra <Enter>
-# 19. Address unconfigured (**) items  (? - help) 6 <Enter>
-#	19.1 Select, or 'r' for previous menu [r] 4 <Enter>
-#	19.2 Password for admin@pti.intra (min 6 characters): [XXXXXX] pti@2018 <Enter>
-#	19.3 Select, or 'r' for previous menu [r] <Enter>
-# 20. Select from menu, or press 'a' to apply config (? - help) a <Enter>
-# 21. Save configuration data to a file? [Yes] <Enter>
-# 22. Save config in file: [/opt/zimbra/config.16728] <Enter>
-# 23. The system will be modified - continue? [No] Yes <Enter>
-# 24. Notify Zimbra of your installation? [Yes] <Enter>
-# 25. Configuration complete - press return to exit <Enter>
-#
-# INFORMAÇÕES QUE SERÃO SOLICITADAS VIA WEB (NAVEGADOR) DO ZIMBRA ADMIN CONSOLE:
-# 01. Acessar a URL: https://mail.pti.intra:7071
-# 02. Nome do usuário: admin
-# 03. Senha: pti@2018 <Login>
-#
-# INFORMAÇÕES QUE SERÃO SOLICITADAS VIA WEB (NAVEGADOR) DO ZIMBRA WEBMAIL:
-# 01. Acessar a URL: https://mail.pti.intra
-# 02. Nome do usuário: admin
-# 03. Senha: pti@2018
-# 04. Versão: Padrão <Login>
-#
-# Site Oficial do Projeto Zimbra: https://www.zimbra.org
-# Download do Zimbra Collaboration Community: https://zimbra.org/download/zimbra-collaboration
-# Download do Zimbra Desktop: https://zimbra.org/download/zimbra-desktop
+# Site Oficial do Projeto Zimbra: https://security.appspot.com/vsftpd.html
 #
 # Vídeo de instalação do GNU/Linux Ubuntu Server 18.04.x LTS: https://www.youtube.com/watch?v=zDdCrqNhIXI
 # Vídeo de configuração do OpenSSH no GNU/Linux Ubuntu Server 18.04.x LTS: https://www.youtube.com/watch?v=ecuol8Uf1EE&t
-# Vídeo de instalação e configuração do Bind9 DNS Serer e do ISC DHCP Server no GNU/Linux Ubuntu Server 18.04.x LTS: 
+# Vídeo de instalação do LAMP Server no Ubuntu Server 18.04.x LTS: https://www.youtube.com/watch?v=6EFUu-I3u4s
+# Vídeo de instalação e configuração do Bind9 DNS e do ISC DHCP Server: https://www.youtube.com/watch?v=NvD9Vchsvbk
+# Vídeo de configuração do OpenSSL no Apache2: https://www.youtube.com/watch?v=GXcwpJfp7eo
+# Vídeo de instalação e configuração do Wordpress: https://www.youtube.com/watch?v=Fs2B7kLdlm4
 #
 # Variável da Data Inicial para calcular o tempo de execução do script (VARIÁVEL MELHORADA)
 # opção do comando date: +%T (Time)
@@ -82,13 +41,17 @@ USUARIO=$(id -u)
 UBUNTU=$(lsb_release -rs)
 KERNEL=$(uname -r | cut -d'.' -f1,2)
 #
+# Criação do Grupo dos Usuários de FTP e Usuários de Acesso ao FTP
+GROUPFTP="ftpusers"
+USERFTP1="ftpuser"
+USERFTP2="wordpress"
+PASSWORD="pti@2018"
+WORDPRESS="/var/www/html/wp"
+#
 # Variável do caminho do Log dos Script utilizado nesse curso (VARIÁVEL MELHORADA)
 # opções do comando cut: -d (delimiter), -f (fields)
 # $0 (variável de ambiente do nome do comando)
 LOG="/var/log/$(echo $0 | cut -d'/' -f2)"
-#
-# Declarando as variáveis de download do Zimbra (Link atualizado no dia 23/05/2021)
-ZIMBRA="https://files.zimbra.com/downloads/8.8.15_GA/zcs-8.8.15_GA_3869.UBUNTU18_64.20190918004220.tgz"
 #
 # Exportando o recurso de Noninteractive do Debconf para não solicitar telas de configuração
 export DEBIAN_FRONTEND="noninteractive"
@@ -109,12 +72,12 @@ if [ "$USUARIO" == "0" ] && [ "$UBUNTU" == "18.04" ] && [ "$KERNEL" == "4.15" ]
 		exit 1
 fi
 #
-# Verificando se as dependências do Zimbra estão instaladas
+# Verificando se as dependências do Vsftpd estão instaladas
 # opção do dpkg: -s (status), opção do echo: -e (interpretador de escapes de barra invertida), -n (permite nova linha)
 # || (operador lógico OU), 2> (redirecionar de saída de erro STDERR), && = operador lógico AND, { } = agrupa comandos em blocos
 # [ ] = testa uma expressão, retornando 0 ou 1, -ne = é diferente (NotEqual)
-echo -n "Verificando as dependências do Zimbra Collaboration Community, aguarde... "
-	for name in bind9 bind9utils 
+echo -n "Verificando as dependências do Vsftpd Server, aguarde... "
+	for name in bind9 bind9utils apache2 
 	do
 		[[ $(dpkg -s $name 2> /dev/null) ]] || { 
 			echo -en "\n\nO software: $name precisa ser instalado. \nUse o comando 'apt install $name'\n";
@@ -123,12 +86,13 @@ echo -n "Verificando as dependências do Zimbra Collaboration Community, aguarde
 	done
 		[[ $deps -ne 1 ]] && echo "Dependências.: OK" || { 
 			echo -en "\nInstale as dependências acima e execute novamente este script\n";
+			echo -en "Recomendo utilizar o script: lamp.sh para resolver as dependências."
 			echo -en "Recomendo utilizar o script: dnsdhcp.sh para resolver as dependências."
 			exit 1; 
 			}
 		sleep 5
 #
-# Script de instalação do Zimbra Collaboration Community no GNU/Linux Ubuntu Server 18.04.x
+# Script de instalação do Vsftpd no GNU/Linux Ubuntu Server 18.04.x
 # opção do comando echo: -e (enable interpretation of backslash escapes), \n (new line)
 # opção do comando hostname: -I (all IP address)
 # opção do comando date: + (format), %d (day), %m (month), %Y (year 1970), %H (hour 24), %M (minute 60)
@@ -137,9 +101,8 @@ echo -e "Início do script $0 em: `date +%d/%m/%Y-"("%H:%M")"`\n" &>> $LOG
 clear
 #
 echo
-echo -e "Instalação do Zimbra Collaboration Community no GNU/Linux Ubuntu Server 18.04.x\n"
-echo -e "Após a instalação do Zimbra Admin Console acessar a URL: https://mail.`hostname -d | cut -d' ' -f1`:7071"
-echo -e "Após a instalação do Zimbra Webmail acessar a URL: https://mail.`hostname -d | cut -d' ' -f1`\n"
+echo -e "Instalação do Vsftpd Server no GNU/Linux Ubuntu Server 18.04.x\n"
+echo -e "Após a instalação do Vsftpd acessar o FTP: ftp://ftp.`hostname -d | cut -d' ' -f1`"
 echo -e "Aguarde, esse processo demora um pouco dependendo do seu Link de Internet...\n"
 sleep 5
 #
@@ -175,59 +138,75 @@ echo -e "Removendo software desnecessários, aguarde..."
 echo -e "Software removidos com sucesso!!!, continuando com o script...\n"
 sleep 5
 #
-echo -e "Instalando o Zimbra Collaboration Community, aguarde...\n"
+echo -e "Instalando o Vsftpd Server e criando os usuários, aguarde...\n"
 sleep 5
 #
-echo -e "Fazendo o download do site Oficial do Zimbra Collaboration Community, aguarde..."
+echo -e "Instalando o Serviço do Vsftpd Server, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
-	# opção do comando rm: -v (verbose)
-	# opção do comando wget: -O (output document file)
-	rm -v zimbra.tgz &>> $LOG
-	wget $ZIMBRA -O zimbra.tgz &>> $LOG
-echo -e "Download do Zimbra feito com sucesso!!!, continuando com o script...\n"
+	apt -y install vsftpd &>> $LOG
+echo -e "Vsftpd Server instalado com sucesso!!!, continuando com o script...\n"
 sleep 5
 #
-echo -e "Descompactando o Zimbra Collaboration Community, aguarde..."
+echo -e "Criando o Grupo padrão dos Usuários do FTP, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
-	# opção do comando tar: -x (extract), -v (verbose), -f (file)
-	tar -xvf zimbra.tgz &>> $LOG
-echo -e "Zimbra descompactado com sucesso!!!, continuando com o script...\n"
+	groupadd ftpusers &>> $LOG
+echo -e "Grupo criado com sucesso!!!, continuando com o script...\n"
 sleep 5
 #
-echo -e "Instalando o Zimbra Collaboration Community, pressione <Enter> para instalar.\n"
-echo -e "CUIDADO!!! com as opções que serão solicitadas no decorrer da instalação do Zimbra."
-echo -e "Veja a documentação das opções de instalação a partir da linha: 19 do arquivo $0"
-echo -e "Existe a possibilidade da instalação automatizada utilizando o comando: ./install /root/ubuntu/conf/zimbra-install"
+echo -e "Criando o Usuário padrão do FTP, aguarde..."
+	# opção do comando: &>> (redirecionar a saída padrão)
+	# opção do comando useradd: -s (shell), -G (Groups)
+	# opção do comando echo: -e (enable escapes), \n (new line), 
+	# opção do redirecionar | "piper": (Conecta a saída padrão com a entrada padrão de outro comando)
+	# opção do comando mkdir: -v (verbose)
+	# opção do comando chown: -R (recursive), -v (verbose)
+	# opção do comando chmod: -R (recursive), -v (verbose), 755 (User=RWX,Group=R-X,Other=R-X)
+	useradd -s /bin/bash -G $GROUPFTP $USERFTP1 &>> $LOG
+	echo -e "$PASSWORD\n$PASSWORD" | passwd $USERFTP1 &>> $LOG
+	mkdir -v /home/$USERFTP1 &>> $LOG
+	chown -Rv $USERFTP1.$GROUPFTP /home/$USERFTP1 &>> $LOG
+	chmod -Rv 755 /home/$USERFTP1 &>> $LOG
+echo -e "Usuário padrão o FTP criado com sucesso!!!, continuando com o script...\n"
+sleep 5
+#
+echo -e "Criando o Usuário de FTP do Wordpress, aguarde..."
+	# opção do comando: &>> (redirecionar a saída padrão)
+	# opção do comando useradd: -d (home-dir), -s (shell), -G (Groups)
+	# opção do comando echo: -e (enable escapes), \n (new line), 
+	# opção do redirecionar | "piper": (Conecta a saída padrão com a entrada padrão de outro comando)
+	useradd -d $WORDPRESS -s /bin/bash -G www-data,$GROUPFTP $USERFTP2 &>> $LOG
+	echo -e "$PASSWORD\n$PASSWORD" | passwd $USERFTP2 &>> $LOG
+echo -e "Usuário de FTP do Wordpress criado com sucesso!!!, continuando com o script...\n"
+sleep 5
+#
+echo -e "Atualizando o arquivo de configuração do Vsftpd Server, aguarde..."
+	# opção do comando: &>> (redirecionar a saída padrão)
+	# opção do comando mv: -v (verbose)
+	# opção do comando cp: -v (verbose)
+	mv -v /etc/vsftpd.conf /etc/vsftpd.conf.old &>> $LOG
+	cp -v conf/vsftpd.conf /etc/vsftpd.conf &>> $LOG
+echo -e "Arquivo atualizado com sucesso!!!, continuando com o script...\n"
+sleep 5
+#
+echo -e "Editando o arquivo de configuração do Vsftpd Server, aguarde..."
 	read
-	sleep 5
-	cd zcs*/
-		./install.sh
-	cd ..
-echo -e "Instalação do Zimbra Collaboration Community feito com sucesso!!!, continuando com o script...\n"
+	/etc/vsftpd.conf
+echo -e "Arquivo editado com sucesso!!!, continuando com o script...\n"
 sleep 5
 #
-echo -e "Habilitando o Serviço do Zimbra Collaboration Community, aguarde..."
+echo -e "Reinicializando o serviço do Vsftpd Server, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
-	systemctl enable zimbra.service &>> $LOG
-	systemctl start zimbra.service &>> $LOG
-echo -e "Serviço habilitado com sucesso!!!, continuando com o script...\n"
+	systemctl restart vsftpd &>> $LOG
+echo -e "Porta de conexão verificada com sucesso!!!, continuando com o script...\n"
 sleep 5
 #
-echo -e "Verificando o Status dos Serviços do Zimbra Collaboration Community, aguarde..."
-	# opção do comando: &>> (redirecionar a saída padrão)
-	# opção do comando su: - (login), -c (command)
-	su - zimbra -c "zmcontrol status" &>> $LOG
-echo -e "Verificação do Status dos Serviços feita com sucesso!!!, continuando com o script...\n"
-sleep 5
-#
-echo -e "Verificando as portas de Conexões do Zimbra Collaboration Community, aguarde..."
+echo -e "Verificando a porta do Vsftpd Server, aguarde..."
 	# opção do comando netstat: -a (all), -n (numeric)
-	# portas do Zimbra: 25 (smtp), 110 (pop3), 143 (imap4), 443 (https), 587 (smtp), 7071 (admin)
-	netstat -an | grep '0:25\|0:110\|0:143\|0:443\|0:587\|0:7071'
-echo -e "Portas de conexões verificadas com sucesso!!!, continuando com o script...\n"
+	netstat -an | grep ':21'
+echo -e "Porta de conexão verificada com sucesso!!!, continuando com o script...\n"
 sleep 5
 #
-echo -e "Instalação do Zimbra Collaboration Community feita com Sucesso!!!."
+echo -e "Instalação do Vsftpd Server feita com Sucesso!!!"
 	# script para calcular o tempo gasto (SCRIPT MELHORADO, CORRIGIDO FALHA DE HORA:MINUTO:SEGUNDOS)
 	# opção do comando date: +%T (Time)
 	HORAFINAL=$(date +%T)
