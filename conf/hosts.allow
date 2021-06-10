@@ -10,13 +10,21 @@
 # Kernel >= 4.15.x
 #
 # Comando para verificar se o Servidor do SSHD tem suporte ao TCPWrappers: ldd /usr/sbin/sshd | grep libwrap
-# Liberando apenas um computador para o acesso remoto no SSH
 # Logando as informações de acesso no arquivo de log: /var/log/tcpwrappers-allow-ssh.log
 #
+# Permitido a Rede 172.16.1.0/24 se autenticar remotamente no Servidor de SSH
 sshd: 172.16.1. : spawn /bin/echo "$(date) Conexão Liberada - SSH - IP %a" >> /var/log/tcpwrappers-allow-ssh.log
+#
+# Permitido a Rede 172.16.1.0/24 se autenticar remotamente no Servidor de MySQL
 mysqld: 172.16.1. : spawn /bin/echo "$(date) Conexão Liberada - MySQL - IP %a" >> /var/log/tcpwrappers-allow-ssh.log
+#
+# Permitido a Rede 172.16.1.20/24 se autenticar remotamente no Servidor de Telnet
 in.telnetd: 172.16.1. : spawn /bin/echo "$(date) Conexão Liberada - Telnet - IP %a" >> /var/log/tcpwrappers-allow-ssh.log
-vsftpd: 172.16.1. : spawn /bin/echo "$(date) Conexão Liberada - Vsftpd - IP %a" >> /var/log/tcpwrappers-allow-ssh.log
+#
+# Permitido que todas as redes se autentiquem remotamente no Servidor de FTP
+vsftpd: ALL: spawn /bin/echo "$(date) Conexão Liberada - Vsftpd - IP %a" >> /var/log/tcpwrappers-allow-ssh.log
+#
+# Permitido que todas as redes acesse os serviços remotos do Servidor Bacula
 bacula-fd: ALL: spawn /bin/echo "$(date) Conexão Liberada - Bacula-FD - IP %a" >> /var/log/tcpwrappers-allow-ssh.log
 bacula-sd: ALL: spawn /bin/echo "$(date) Conexão Liberada - Bacula-SD - IP %a" >> /var/log/tcpwrappers-allow-ssh.log
 bacula-dir: ALL: spawn /bin/echo "$(date) Conexão Liberada - Bacula-DIR - IP %a" >> /var/log/tcpwrappers-allow-ssh.log

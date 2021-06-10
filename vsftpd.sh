@@ -162,7 +162,7 @@ echo -e "Criando o Usuário padrão do FTP, aguarde..."
 	# opção do comando mkdir: -v (verbose)
 	# opção do comando chown: -R (recursive), -v (verbose)
 	# opção do comando chmod: -R (recursive), -v (verbose), 755 (User=RWX,Group=R-X,Other=R-X)
-	useradd -s /bin/bash -G $GROUPFTP $USERFTP1 &>> $LOG
+	useradd -s /bin/ftponly -G $GROUPFTP $USERFTP1 &>> $LOG
 	echo -e "$PASSWORD\n$PASSWORD" | passwd $USERFTP1 &>> $LOG
 	mkdir -v /home/$USERFTP1 &>> $LOG
 	chown -Rv $USERFTP1.$GROUPFTP /home/$USERFTP1 &>> $LOG
@@ -175,7 +175,7 @@ echo -e "Criando o Usuário de FTP do Wordpress, aguarde..."
 	# opção do comando useradd: -d (home-dir), -s (shell), -G (Groups)
 	# opção do comando echo: -e (enable escapes), \n (new line), 
 	# opção do redirecionar | "piper": (Conecta a saída padrão com a entrada padrão de outro comando)
-	useradd -d $WORDPRESS -s /bin/bash -G www-data,$GROUPFTP $USERFTP2 &>> $LOG
+	useradd -d $WORDPRESS -s /bin/ftponly -G www-data,$GROUPFTP $USERFTP2 &>> $LOG
 	echo -e "$PASSWORD\n$PASSWORD" | passwd $USERFTP2 &>> $LOG
 echo -e "Usuário de FTP do Wordpress criado com sucesso!!!, continuando com o script...\n"
 sleep 5
@@ -274,9 +274,9 @@ echo -e "Criando o Chave Privada/Pública e Certificado Assinado do Vsftpd Serve
 	-passout pass:$PASSWORD 2048 &>> $LOG
 	echo -e "Chave Privada/Pública criada com sucesso!!!, continuando com o script..."
 	#
-	openssl rsa -in /etc/ssl/private/apache2-ptikey.key.old -out /etc/ssl/private/apache2-ptikey.key \
+	openssl rsa -in /etc/ssl/private/vsftpd-ptikey.key.old -out /etc/ssl/private/vsftpd-ptikey.key \
 	-passin pass:$PASSWORD &>> $LOG
-	rm -v /etc/ssl/private/apache2-ptikey.key.old &>> $LOG
+	rm -v /etc/ssl/private/vsftpd-ptikey.key &>> $LOG
 	echo -e "Senha da Chave Privada/Pública removida com sucesso!!!, continuando com o script..."
 	#
 	openssl req -new -sha256 -nodes -key /etc/ssl/private/vsftpd-ptikey.key -out /etc/ssl/requests/vsftpd-pticsr.csr \

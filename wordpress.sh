@@ -191,7 +191,7 @@ echo -e "Alterando as permissões dos arquivos e diretórios do Wordpress, aguar
 	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando chmod: -R (recursive), -f (silent), -v (verbose), 755 (Dono=RWX,Grupo=R-X,Outros=R-X)
 	# opção do comando chown: -R (recursive), -f (silent), -v (verbose), dono.grupo (alteração do dono e grupo)
-	chmod -Rfv 755 /var/www/html/wp/ &>> $LOG
+	chmod -Rfv 775 /var/www/html/wp/ &>> $LOG
 	chown -Rfv www-data.www-data /var/www/html/wp/ &>> $LOG
 echo -e "Permissões alteradas com sucesso!!!, continuando com o script...\n"
 sleep 5
