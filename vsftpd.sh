@@ -5,8 +5,8 @@
 # Facebook: facebook.com/BoraParaPratica
 # YouTube: youtube.com/BoraParaPratica
 # Data de criação: 09/06/2021
-# Data de atualização: 09/06/2021
-# Versão: 0.01
+# Data de atualização: 10/06/2021
+# Versão: 0.02
 # Testado e homologado para a versão do Ubuntu Server 18.04.x LTS x64
 # Kernel >= 4.15.x
 # Testado e homologado para a versão do VSFTPD v3.0.x
@@ -215,13 +215,19 @@ sleep 5
 #
 echo -e "Editando o arquivo de segurança de acesso ao Vsftpd Server, pressione <Enter> para continuar."
 	read
-	vim /etc/ssl/ftponly
+	vim /bin/ftponly
 echo -e "Arquivo editado com sucesso!!!, continuando com o script...\n"
 sleep 5
 #
 echo -e "Editando o arquivo de shell válidos para o acesso ao Vsftpd Server, pressione <Enter> para continuar."
 	read
-	vim /etc/ssl/shells
+	vim /etc/shells
+echo -e "Arquivo editado com sucesso!!!, continuando com o script...\n"
+sleep 5
+#
+echo -e "Editando o arquivo hosts.allow do TCPWrappers de liberação Vsftpd Server, pressione <Enter> para continuar."
+	read
+	vim /etc/hosts.allow
 echo -e "Arquivo editado com sucesso!!!, continuando com o script...\n"
 sleep 5
 #
@@ -266,19 +272,22 @@ echo -e "Criando o Chave Privada/Pública e Certificado Assinado do Vsftpd Serve
 	# 1 out of 1 certificate request certified, commit? [y/n]: y <Enter>
 	openssl genrsa -aes256 -out /etc/ssl/private/vsftpd-ptikey.key.old \
 	-passout pass:$PASSWORD 2048 &>> $LOG
-	echo
+	echo -e "Chave Privada/Pública criada com sucesso!!!, continuando com o script..."
+	#
 	openssl rsa -in /etc/ssl/private/apache2-ptikey.key.old -out /etc/ssl/private/apache2-ptikey.key \
 	-passin pass:$PASSWORD &>> $LOG
-	echo
 	rm -v /etc/ssl/private/apache2-ptikey.key.old &>> $LOG
-	echo
+	echo -e "Senha da Chave Privada/Pública removida com sucesso!!!, continuando com o script..."
+	#
 	openssl req -new -sha256 -nodes -key /etc/ssl/private/vsftpd-ptikey.key -out /etc/ssl/requests/vsftpd-pticsr.csr \
 	-extensions v3_req -config /etc/ssl/vsftpd-ssl.conf
-	echo
+	echo -e "Geração do Certificado CSR feito com sucesso!!!, continuando com o script..."
+	#
 	openssl ca -in /etc/ssl/requests/vsftpd-pticsr.csr -out /etc/ssl/newcerts/vsftpd-pticrt.crt \
 	-config /etc/ssl/pti-ca.conf -extensions v3_req -extfile /etc/ssl/vsftpd-ssl.conf
-	echo
-echo -e "Chave Privada/Pública e Certificado Assinado do Vsftpd Server criada com sucesso!!!, continuando com o script...\n"
+	echo -e "Geração do Certificado CRT feito com sucesso!!!, continuando com o script...\n"
+	#
+echo -e "Chave Privada/Pública e Certificado Assinado do Vsftpd Server configurado com sucesso!!!, continuando com o script...\n"
 sleep 5
 #
 echo -e "Reinicializando o serviço do Vsftpd Server, aguarde..."
