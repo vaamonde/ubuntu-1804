@@ -32,3 +32,4 @@ imap			IN 		CNAME 	ptispo01ws01
 imap4			IN 		CNAME 	ptispo01ws01
 smtp			IN 		CNAME 	ptispo01ws01
 ftp				IN 		CNAME 	ptispo01ws01
+pxe				IN		CNAME	ptispo01ws01

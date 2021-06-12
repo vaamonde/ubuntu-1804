@@ -154,46 +154,62 @@ echo -e "Instalando o Serviço do Syslinux e Pxelinux, aguarde..."
 echo -e "Syslinux e Pxelinux instalado com sucesso!!!, continuando com o script...\n"
 sleep 5
 #
-
-#======================== EM DESENVOLVIMENTO ========================
-
-#echo -e "Atualizando o arquivo de configuração do Tftpd-Hpa Server, aguarde..."
+echo -e "Atualizando o arquivo de configuração do Tftpd-Hpa Server, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando mv: -v (verbose)
 	# opção do comando cp: -v (verbose)
-
-#echo -e "Arquivo atualizado com sucesso!!!, continuando com o script...\n"
-#sleep 5
+	mv -v /etc/default/tftpd-hpa /etc/default/tftpd-hpa.old &>> $LOG
+	cp -v conf/tftpd-hpa /etc/default/tftpd-hpa &>> $LOG
+echo -e "Arquivo atualizado com sucesso!!!, continuando com o script...\n"
+sleep 5
 #
-#echo -e "Editando o arquivo de configuração do Tftpd-Hpa Server, pressione <Enter> para continuar."
-#	read
-#	vim /etc/default/tftpd-hpa
-#echo -e "Arquivo editado com sucesso!!!, continuando com o script...\n"
-#sleep 5
-#
-#echo -e "Editando o arquivo de configuração do ISC-DHCP Server, pressione <Enter> para continuar."
-#	read
-#	vim /etc/dhcp/dhcpd.conf
-#echo -e "Arquivo editado com sucesso!!!, continuando com o script...\n"
-#sleep 5
-#
-#echo -e "Reinicializando o serviço do Tftpd-Hpa Server, aguarde..."
+echo -e "Copiando a estrutura de arquivos e diretórios do Syslinux e Pxelinux, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
-#	systemctl restart tftpd-hpa &>> $LOG
-#echo -e Serviço reinicializado com sucesso!!!, continuando com o script...\n"
-#sleep 5
+	# opção do comando mkdir: -v (verbose)
+	# opção do comando cp: -v (verbose)
+	mkdir -v $TFTP/pxelinux.cfg &>> $LOG
+	cp -v $PXE/pxelinux.0 $TFTP &>> $LOG
+	cp -v $SYSLINUX/mendisk $TFTP &>> $LOG
+	cp -v $SYSLINUX/modules/bios/{ldlinux.c32,libcom32.c32,libutil.c32, vesamenu.c32} $TFTP &>> $LOG
+	cp -v conf/default-pxe $TFTP/pxelinux.cfg/default &>> $LOG
+echo -e "Estrutura de arquivos e diretórios copiados com sucesso!!!, continuando com o script...\n"
+sleep 5
 #
-#echo -e "Reinicializando o serviço do ISC-DHCP Server, aguarde..."
+echo -e "Editando o arquivo de configuração do Tftpd-Hpa Server, pressione <Enter> para continuar."
+	read
+	vim /etc/default/tftpd-hpa
+echo -e "Arquivo editado com sucesso!!!, continuando com o script...\n"
+sleep 5
+#
+echo -e "Editando o arquivo de configuração do ISC-DHCP Server, pressione <Enter> para continuar."
+	read
+	vim /etc/dhcp/dhcpd.conf
+echo -e "Arquivo editado com sucesso!!!, continuando com o script...\n"
+sleep 5
+#
+echo -e "Editando o arquivo de configuração do Pxelinux, pressione <Enter> para continuar."
+	read
+	vim $TFTP/pxelinux.cfg/default
+echo -e "Arquivo editado com sucesso!!!, continuando com o script...\n"
+sleep 5
+#
+echo -e "Reinicializando o serviço do Tftpd-Hpa Server, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
-#	systemctl restart isc-dhcp-server &>> $LOG
-#echo -e Serviço reinicializado com sucesso!!!, continuando com o script...\n"
-#sleep 5
+	systemctl restart tftpd-hpa &>> $LOG
+echo -e "Serviço reinicializado com sucesso!!!, continuando com o script...\n"
+sleep 5
 #
-#echo -e "Verificando as portas do ISC-DHCP Server e do Tftpd-Hpa Server, aguarde..."
+echo -e "Reinicializando o serviço do ISC-DHCP Server, aguarde..."
+	# opção do comando: &>> (redirecionar a saída padrão)
+	systemctl restart isc-dhcp-server &>> $LOG
+echo -e "Serviço reinicializado com sucesso!!!, continuando com o script...\n"
+sleep 5
+#
+echo -e "Verificando as portas do ISC-DHCP Server e do Tftpd-Hpa Server, aguarde..."
 	# opção do comando netstat: -a (all), -n (numeric)
-#	netstat -an | grep ':67\|:69'
-#echo -e "Portas de conexões verificadas com sucesso!!!, continuando com o script...\n"
-#sleep 5
+	netstat -an | grep ':67\|:69'
+echo -e "Portas de conexões verificadas com sucesso!!!, continuando com o script...\n"
+sleep 5
 #
 echo -e "Instalação do Tftpd-Hpa Server/Client e PXE/Syslinux feita com Sucesso!!!"
 	# script para calcular o tempo gasto (SCRIPT MELHORADO, CORRIGIDO FALHA DE HORA:MINUTO:SEGUNDOS)
