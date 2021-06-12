@@ -5,8 +5,8 @@
 # Facebook: facebook.com/BoraParaPratica
 # YouTube: youtube.com/BoraParaPratica
 # Data de criação: 09/06/2021
-# Data de atualização: 10/06/2021
-# Versão: 0.02
+# Data de atualização: 11/06/2021
+# Versão: 0.03
 # Testado e homologado para a versão do Ubuntu Server 18.04.x LTS x64
 # Kernel >= 4.15.x
 # Testado e homologado para a versão do VSFTPD v3.0.x
@@ -15,7 +15,7 @@
 # padrão nas distribuições Ubuntu, CentOS, Fedora, NimbleX, Slackware e RHEL Linux. Está 
 # licenciado pela GNU General Public License. Suporta IPv4, IPv6, TLS e FTPS.
 #
-# Site Oficial do Projeto Zimbra: https://security.appspot.com/vsftpd.html
+# Site Oficial do Projeto Vsftpd: https://security.appspot.com/vsftpd.html
 #
 # Vídeo de instalação do GNU/Linux Ubuntu Server 18.04.x LTS: https://www.youtube.com/watch?v=zDdCrqNhIXI
 # Vídeo de configuração do OpenSSH no GNU/Linux Ubuntu Server 18.04.x LTS: https://www.youtube.com/watch?v=ecuol8Uf1EE&t
@@ -154,7 +154,7 @@ echo -e "Criando o Grupo padrão dos Usuários do FTP, aguarde..."
 echo -e "Grupo criado com sucesso!!!, continuando com o script...\n"
 sleep 5
 #
-echo -e "Criando o Usuário padrão do FTP, aguarde..."
+echo -e "Criando o Usuário padrão de acesso ao FTP, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando useradd: -s (shell), -G (Groups)
 	# opção do comando echo: -e (enable escapes), \n (new line), 
@@ -167,7 +167,7 @@ echo -e "Criando o Usuário padrão do FTP, aguarde..."
 	mkdir -v /home/$USERFTP1 &>> $LOG
 	chown -Rv $USERFTP1.$GROUPFTP /home/$USERFTP1 &>> $LOG
 	chmod -Rv 755 /home/$USERFTP1 &>> $LOG
-echo -e "Usuário padrão o FTP criado com sucesso!!!, continuando com o script...\n"
+echo -e "Usuário padrão do FTP criado com sucesso!!!, continuando com o script...\n"
 sleep 5
 #
 echo -e "Criando o Usuário de FTP do Wordpress, aguarde..."
@@ -231,7 +231,7 @@ echo -e "Editando o arquivo hosts.allow do TCPWrappers de liberação Vsftpd Ser
 echo -e "Arquivo editado com sucesso!!!, continuando com o script...\n"
 sleep 5
 #
-echo -e "Criando o Chave Privada/Pública e Certificado Assinado do Vsftpd Server, aguarde..." 
+echo -e "Criando o Chave Privada/Pública e o Certificado Assinado do Vsftpd Server, aguarde..." 
 	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando rm: -v (verbose)
 	# opção do comando openssl: genrsa (command generates an RSA private key),
@@ -293,7 +293,7 @@ sleep 5
 echo -e "Reinicializando o serviço do Vsftpd Server, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	systemctl restart vsftpd &>> $LOG
-echo -e "Porta de conexão verificada com sucesso!!!, continuando com o script...\n"
+echo -e "Serviço reinicializado com sucesso!!!, continuando com o script...\n"
 sleep 5
 #
 echo -e "Verificando a porta do Vsftpd Server, aguarde..."
