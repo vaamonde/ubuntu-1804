@@ -169,8 +169,8 @@ echo -e "Copiando a estrutura de arquivos e diretórios do Syslinux e Pxelinux, 
 	# opção do comando cp: -v (verbose)
 	mkdir -v $TFTP/pxelinux.cfg &>> $LOG
 	cp -v $PXE/pxelinux.0 $TFTP &>> $LOG
-	cp -v $SYSLINUX/mendisk $TFTP &>> $LOG
-	cp -v $SYSLINUX/modules/bios/{ldlinux.c32,libcom32.c32,libutil.c32, vesamenu.c32} $TFTP &>> $LOG
+	cp -v $SYSLINUX/memdisk $TFTP &>> $LOG
+	cp -v $SYSLINUX/modules/bios/{ldlinux.c32,libcom32.c32,libutil.c32,vesamenu.c32} $TFTP &>> $LOG
 	cp -v conf/default-pxe $TFTP/pxelinux.cfg/default &>> $LOG
 echo -e "Estrutura de arquivos e diretórios copiados com sucesso!!!, continuando com o script...\n"
 sleep 5
