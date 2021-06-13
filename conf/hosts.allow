@@ -25,7 +25,7 @@ in.telnetd: 172.16.1. : spawn /bin/echo "$(date) Conexão Liberada - Telnet - IP
 vsftpd: ALL: spawn /bin/echo "$(date) Conexão Liberada - Vsftpd - IP %a" >> /var/log/tcpwrappers-allow-vsftpd.log
 #
 # Permitido que todas as redes se conecte remotamente no Servidor de TFTP
-tftpd: ALL: spawn /bin/echo "$(date) Conexão Liberada - Tftpd - IP %a" >> /var/log/tcpwrappers-allow-tftpd.log
+in.tftpd: ALL: spawn /bin/echo "$(date) Conexão Liberada - Tftpd - IP %a" >> /var/log/tcpwrappers-allow-tftpd.log
 #
 # Permitido que todas as redes acesse os serviços remotos do Servidor Bacula
 bacula-fd: ALL: spawn /bin/echo "$(date) Conexão Liberada - Bacula-FD - IP %a" >> /var/log/tcpwrappers-allow-bacula.log

@@ -55,6 +55,9 @@ LOG="/var/log/$(echo $0 | cut -d'/' -f2)"
 TFTP="/var/lib/tftpboot"
 PXE="/usr/lib/PXELINUX"
 SYSLINUX="/usr/lib/syslinux"
+# 
+# Link de download do Puppy Linux (Link atualizado no dia 12/06/2021)
+PUPPY="http://distro.ibiblio.org/puppylinux/puppy-fossa/fossapup64-9.5.iso"
 #
 # Exportando o recurso de Noninteractive do Debconf para não solicitar telas de configuração
 export DEBIAN_FRONTEND="noninteractive"
@@ -168,6 +171,7 @@ echo -e "Copiando a estrutura de arquivos e diretórios do Syslinux e Pxelinux, 
 	# opção do comando mkdir: -v (verbose)
 	# opção do comando cp: -v (verbose)
 	mkdir -v $TFTP/pxelinux.cfg &>> $LOG
+	mkdir -v $TFTP/puppy &>> $LOG
 	cp -v $PXE/pxelinux.0 $TFTP &>> $LOG
 	cp -v $SYSLINUX/memdisk $TFTP &>> $LOG
 	cp -v $SYSLINUX/modules/bios/{ldlinux.c32,libcom32.c32,libutil.c32,vesamenu.c32} $TFTP &>> $LOG
@@ -191,6 +195,20 @@ echo -e "Editando o arquivo de configuração do Pxelinux, pressione <Enter> par
 	read
 	vim $TFTP/pxelinux.cfg/default
 echo -e "Arquivo editado com sucesso!!!, continuando com o script...\n"
+sleep 5
+#
+echo -e "Baixando a distribuição Puppy Linux do site Oficial e criando o Boot PXE, aguarde esse processo demora um pouco..."
+	rm -v puppy.iso &>> $LOG
+	wget $PUPPY -O puppy.iso &>> $LOG
+	mount -v puppy.iso /mnt &>> $LOG
+	cp -av /mnt/vmlinuz $TFTP/puppy &>> $LOG
+	mkdir -v /tmp/puppy &>> $LOG
+	cd /tmp/puppy &>> $LOG
+	zcat /mnt/initrd.gz | cpio -i &>> $LOG
+	cp -av /mnt/*.sfs . &>> $LOG
+	find . | cpio -o -H newc | gzip -9 > $TFTP/puppy/initrd.gz &>> $LOG
+	cd - &>> $LOG
+echo -e "Criação do Boot PXE do Puppy Linux feito com sucesso!!!, continuando com o script..."
 sleep 5
 #
 echo -e "Reinicializando o serviço do Tftpd-Hpa Server, aguarde..."
