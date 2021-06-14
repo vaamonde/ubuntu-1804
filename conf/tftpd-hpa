@@ -4,8 +4,8 @@
 # Facebook: facebook.com/BoraParaPratica
 # YouTube: youtube.com/BoraParaPratica
 # Data de criação: 12/06/2021
-# Data de atualização: 12/06/2021
-# Versão: 0.01
+# Data de atualização: 14/06/2021
+# Versão: 0.02
 # Testado e homologado para a versão do Ubuntu Server 18.04.x LTS x64
 # Kernel >= 4.15.x
 # Testado e homologado para a versão do TFTP-HPA v5.2.x e PXE Syslinux v
@@ -20,4 +20,5 @@ TFTP_DIRECTORY="/var/lib/tftpboot"
 TFTP_ADDRESS=":69"
 
 # configuração das opções de segurança do TFTP
+#TFTP_OPTIONS="-l -c -s"
 TFTP_OPTIONS="--secure"

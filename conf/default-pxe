@@ -11,32 +11,11 @@
 # Testado e homologado para a versão do TFTP-HPA v5.2.x e PXE Syslinux v
 
 default vesamenu.c32
-prompt 1
-timeout 600
-display boot.msg
+prompt 0
+timeout 300
 
 label puppy
   menu label ^Live-CD do Puppy Linux via PXE
   menu label PuppyLinux
-  kernel /puppy/vmlinuz
-  append initrd=/puppy/initrd.img
-label linux
-  menu label ^Install or upgrade an existing system
-  menu default
-  kernel vmlinuz
-  append initrd=initrd.img
-label vesa
-  menu label Install system with ^basic video driver
-  kernel vmlinuz
-  append initrd=initrd.img xdriver=vesa nomodeset
-label rescue
-  menu label ^Rescue installed system
-  kernel vmlinuz
-  append initrd=initrd.img rescue
-label local
-  menu label Boot from ^local drive
-  localboot 0xffff
-label memtest86
-  menu label ^Memory test
-  kernel memtest
-  append -
+  kernel puppy/vmlinuz
+  append initrd=puppy/initrd.gz

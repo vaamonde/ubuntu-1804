@@ -5,8 +5,8 @@
 # Facebook: facebook.com/BoraParaPratica
 # YouTube: youtube.com/BoraParaPratica
 # Data de criação: 12/06/2021
-# Data de atualização: 12/06/2021
-# Versão: 0.01
+# Data de atualização: 14/06/2021
+# Versão: 0.02
 # Testado e homologado para a versão do Ubuntu Server 18.04.x LTS x64
 # Kernel >= 4.15.x
 # Testado e homologado para a versão do TFTP-HPA v5.2.x e PXE Syslinux v
@@ -191,22 +191,37 @@ echo -e "Editando o arquivo de configuração do ISC-DHCP Server, pressione <Ent
 echo -e "Arquivo editado com sucesso!!!, continuando com o script...\n"
 sleep 5
 #
+echo -e "Editando o arquivo de configuração do TCPWrappers, pressione <Enter> para continuar."
+	read
+	vim /etc/hosts.allow
+echo -e "Arquivo editado com sucesso!!!, continuando com o script...\n"
+sleep 5
+#
 echo -e "Editando o arquivo de configuração do Pxelinux, pressione <Enter> para continuar."
 	read
 	vim $TFTP/pxelinux.cfg/default
 echo -e "Arquivo editado com sucesso!!!, continuando com o script...\n"
 sleep 5
 #
-echo -e "Baixando a distribuição Puppy Linux do site Oficial e criando o Boot PXE, aguarde esse processo demora um pouco..."
+echo -e "Baixando a distribuição Puppy Linux e criando o Boot PXE, aguarde esse processo demora um pouco..."
+	# opção do comando: &>> (redirecionar a saída padrão)
+	# opção do comando rm: -v (verbose)
+	# opção do comando wget: -O (output file)
+	# opção do comando mount: -v (verbose)
+	# opção do comando cp: -a (archive), -v (verbose)
+	# opção do comando mkdir: -v (verbose)
+	# opção do comando cpio: -i (extract), -v (verbose), -o (create), -H (format), newc (SR4 portable format)
+	# opção do comando gzip: -9 (best), -v (verbose)
+	# opção do comando cd: - (rollback)
 	rm -v puppy.iso &>> $LOG
 	wget $PUPPY -O puppy.iso &>> $LOG
 	mount -v puppy.iso /mnt &>> $LOG
 	cp -av /mnt/vmlinuz $TFTP/puppy &>> $LOG
 	mkdir -v /tmp/puppy &>> $LOG
 	cd /tmp/puppy &>> $LOG
-	zcat /mnt/initrd.gz | cpio -i &>> $LOG
+	zcat /mnt/initrd.gz | cpio -i -v &>> $LOG
 	cp -av /mnt/*.sfs . &>> $LOG
-	find . | cpio -o -H newc | gzip -9 > $TFTP/puppy/initrd.gz &>> $LOG
+	find . | cpio -o -H newc | gzip -9 -v > $TFTP/puppy/initrd.gz &>> $LOG
 	cd - &>> $LOG
 echo -e "Criação do Boot PXE do Puppy Linux feito com sucesso!!!, continuando com o script..."
 sleep 5
