@@ -73,6 +73,8 @@ Link do script utilizado nesse vídeo: https://github.com/vaamonde/ubuntu-1804/b
 
 Vídeo mostrando os procedimentos básicos para manter o Servidor GNU/Linux Ubuntu Server 18.04.x LTS sempre atualizado.
 
+APT (Advanced Packaging Tool, em português Ferramenta de Empacotamento Avançada) é um conjunto de ferramentas usadas pelo GNU/Linux Debian e suas respectivas derivações, entre eles o Ubuntu, para administrar os pacotes .deb de uma forma automática, de modo que quando um programa é instalado o APT instala e/ou atualiza também todos os pacotes que são necessários para um funcionamento do programa.
+
 [![Atualização do Ubuntu](http://img.youtube.com/vi/esnu8TAepHU/0.jpg)](http://www.youtube.com/watch?v=esnu8TAepHU "Atualização do Ubuntu")
 
 Link da vídeo aula: https://www.youtube.com/watch?v=esnu8TAepHU&t
@@ -95,6 +97,8 @@ Vídeo mostrando os procedimentos básicos para configurar as interfaces (placa 
 
 Na versão 18.04.x as configurações de Placa de Rede não fica mais no arquivo /etc/network/interfaces, hoje o projeto utiliza o software Netplan para fazer as configurações de rede.
 
+Netplan é um utilitário para configurar facilmente a rede em um sistema Linux. Você simplesmente cria uma descrição YAML das interfaces de rede necessárias e o que cada uma deve ser configurada para fazer. A partir desta descrição, o Netplan irá gerar todas as configurações necessárias para a ferramenta de renderização escolhida.
+
 [![Configurando a Placa de Rede](http://img.youtube.com/vi/zSUd4k108Zk/0.jpg)](http://www.youtube.com/watch?v=zSUd4k108Zk "Configurando a Placa de Rede")
 
 Link da vídeo aula: https://www.youtube.com/watch?v=zSUd4k108Zk
@@ -104,6 +108,8 @@ Link do script utilizado nesse vídeo: https://github.com/vaamonde/ubuntu-1804/b
 ## **COMO configurar o Hostname, Hosts e TCP Wrappers no GNU/Linux Ubuntu Server 18.04.x LTS**
 
 Vídeo mostrando os procedimentos básicos para configurar os parâmetros de rede no GNU/Linux Ubuntu Server 18.04.x LTS
+
+Configuração do Hostname (Nome do Computador), Hosts (Banco de Dados de Computadores IPv4/IPv6 e Hostname), TCP Wrappers arquivos hosts.allow (serviço e computadores/redes liberados) e hosts.deny (serviço e computadores/redes bloqueadas) do Servidor GNU/Linux Ubuntu Server 18.04.x LTS.
 
 [![Configurando o Hostname](http://img.youtube.com/vi/J7eyb5ynjZA/0.jpg)](http://www.youtube.com/watch?v=J7eyb5ynjZA "Configurando o Hostname")
 
@@ -280,6 +286,18 @@ O Wordpress é um sistema livre e aberto de gestão de conteúdo para internet (
 Link da vídeo aula: https://www.youtube.com/watch?v=Fs2B7kLdlm4
 
 Link do script utilizado nesse vídeo: https://github.com/vaamonde/ubuntu-1804/blob/master/wordpress.sh
+
+## **COMO instalar o VSFTPd no GNU/Linux Ubuntu Server 18.04.x LTS**
+
+Vídeo mostrando os procedimentos básicos para instalar o VSFTPd FTP Server do GNU/Linux Ubuntu Server 18.04 LTS
+
+O VSFTPd, é um servidor FTP para sistemas do tipo Unix, incluindo Linux. É o servidor FTP padrão nas distribuições Ubuntu, CentOS, Fedora, NimbleX, Slackware e RHEL Linux. Está licenciado pela GNU General Public License. Suporta IPv4, IPv6, TLS e FTPS.
+
+[![VSFTPd](http://img.youtube.com/vi/Fs2B7kLdlm4/0.jpg)](http://www.youtube.com/watch?v=Fs2B7kLdlm4 "VSFTPd")
+
+Link da vídeo aula: 
+
+Link do script utilizado nesse vídeo: https://github.com/vaamonde/ubuntu-1804/blob/master/vsftpd.sh
 
 ## **COMO instalar o WEBMIN no GNU/Linux Ubuntu Server 18.04.x LTS**
 
@@ -625,8 +643,8 @@ Vídeo mostrando os procedimentos básicos para instalar o Zimbra Server Collabo
 
 O Zimbra é uma solução de e-mail, calendário e colaboração de classe empresarial desenvolvida para rede local ou nuvem (pública ou privada). Com uma interface baseada em navegador redesenhada, o Zimbra oferece a experiência de mensagens mais inovadora disponível atualmente, conectando os usuários finais às informações e atividades em suas nuvens pessoais. 
 
-[![Zimbra Server](http://img.youtube.com/vi/LwDCVv4K3zs/0.jpg)](http://www.youtube.com/watch?v=LwDCVv4K3zs "Zimbra Server")
+[![Zimbra Server](http://img.youtube.com/vi/Vv5HHbYWagc/0.jpg)](https://www.youtube.com/watch?v=Vv5HHbYWagc "Zimbra Server")
 
-Link da vídeo aula: 
+Link da vídeo aula: https://www.youtube.com/watch?v=Vv5HHbYWagc
 
 Link do script utilizado nesse vídeo: https://github.com/vaamonde/ubuntu-1804/blob/master/zimbra.sh
