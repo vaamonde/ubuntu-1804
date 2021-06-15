@@ -5,8 +5,8 @@
 # Facebook: facebook.com/BoraParaPratica
 # YouTube: youtube.com/BoraParaPratica
 # Data de criação: 09/06/2021
-# Data de atualização: 11/06/2021
-# Versão: 0.03
+# Data de atualização: 15/06/2021
+# Versão: 0.04
 # Testado e homologado para a versão do Ubuntu Server 18.04.x LTS x64
 # Kernel >= 4.15.x
 # Testado e homologado para a versão do VSFTPD v3.0.x
@@ -87,6 +87,7 @@ echo -n "Verificando as dependências do Vsftpd Server, aguarde... "
 		[[ $deps -ne 1 ]] && echo "Dependências.: OK" || { 
 			echo -en "\nInstale as dependências acima e execute novamente este script\n";
 			echo -en "Recomendo utilizar o script: lamp.sh para resolver as dependências."
+			echo -en "Recomendo utilizar o script: wordpress.sh para resolver as dependências"
 			echo -en "Recomendo utilizar o script: dnsdhcp.sh para resolver as dependências."
 			echo -en "Recomendo utilizar o script: openssl.sh para resolver as dependências."
 			exit 1; 

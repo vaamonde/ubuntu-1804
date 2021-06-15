@@ -628,4 +628,5 @@ O Zimbra é uma solução de e-mail, calendário e colaboração de classe empre
 [![Zimbra Server](http://img.youtube.com/vi/LwDCVv4K3zs/0.jpg)](http://www.youtube.com/watch?v=LwDCVv4K3zs "Zimbra Server")
 
 Link da vídeo aula: 
+
 Link do script utilizado nesse vídeo: https://github.com/vaamonde/ubuntu-1804/blob/master/zimbra.sh
