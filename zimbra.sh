@@ -222,8 +222,8 @@ sleep 5
 #
 echo -e "Verificando as portas de Conexões do Zimbra Collaboration Community, aguarde..."
 	# opção do comando netstat: -a (all), -n (numeric)
-	# portas do Zimbra: 25 (smtp), 110 (pop3), 143 (imap4), 443 (https), 587 (smtp), 7071 (admin)
-	netstat -an | grep '0:25\|0:110\|0:143\|0:443\|0:587\|0:7071'
+	# portas do Zimbra: 80 (http), 25 (smtp), 110 (pop3), 143 (imap4), 443 (https), 587 (smtp), 7071 (admin)
+	netstat -an | grep '0:80\|0:25\|0:110\|0:143\|0:443\|0:587\|0:7071'
 echo -e "Portas de conexões verificadas com sucesso!!!, continuando com o script...\n"
 sleep 5
 #

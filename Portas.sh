@@ -5,8 +5,8 @@
 # Facebook: facebook.com/BoraParaPratica
 # YouTube: youtube.com/BoraParaPratica
 # Data de criação: 10/02/2019
-# Data de atualização: 19/05/2021
-# Versão: 0.09
+# Data de atualização: 15/06/2021
+# Versão: 0.10
 # Testado e homologado para a versão do Ubuntu Server 18.04.x LTS x64
 # Kernel >= 4.15.x
 
@@ -40,3 +40,6 @@
 028: ocsinventory.sh:	HTTP: 80, MYSQL: 3306
 029: bacula.sh:			HTTP: 80, MYSQL: 3306, BACULA: 9101, 9102, 9103 BACULUM: 9095, 9096
 030: dnsdhcp.sh:		BIND9: 53, ISC DHCP: 67
+031: zimbra.sh:			HTTP: 80, SMTP: 25, POP3: 110, IMAP4: 143, HTTPS: 443, SMTP: 587, ADMIN ZIMBRA: 7071
+032: tftppxe.sh:		TFTP: 69
+033: vsftpd.sh:			FTP: 21, SFTP: 990
