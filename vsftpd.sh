@@ -16,6 +16,7 @@
 # licenciado pela GNU General Public License. Suporta IPv4, IPv6, TLS e FTPS.
 #
 # Site Oficial do Projeto Vsftpd: https://security.appspot.com/vsftpd.html
+# Site Oficial do Projeto FileZilla: https://filezilla-project.org/
 #
 # Vídeo de instalação do GNU/Linux Ubuntu Server 18.04.x LTS: https://www.youtube.com/watch?v=zDdCrqNhIXI
 # Vídeo de configuração do OpenSSH no GNU/Linux Ubuntu Server 18.04.x LTS: https://www.youtube.com/watch?v=ecuol8Uf1EE&t
@@ -278,11 +279,11 @@ echo -e "Criando o Chave Privada/Pública e o Certificado Assinado do Vsftpd Ser
 	openssl rsa -in /etc/ssl/private/vsftpd-ptikey.key.old -out /etc/ssl/private/vsftpd-ptikey.key \
 	-passin pass:$PASSWORD &>> $LOG
 	rm -v /etc/ssl/private/vsftpd-ptikey.key.old &>> $LOG
-	echo -e "Senha da Chave Privada/Pública removida com sucesso!!!, continuando com o script..."
+	echo -e "Senha da Chave Privada/Pública removida com sucesso!!!, continuando com o script...\n"
 	#
 	openssl req -new -sha256 -nodes -key /etc/ssl/private/vsftpd-ptikey.key -out /etc/ssl/requests/vsftpd-pticsr.csr \
 	-extensions v3_req -config /etc/ssl/vsftpd-ssl.conf
-	echo -e "Geração do Certificado CSR feito com sucesso!!!, continuando com o script..."
+	echo -e "Geração do Certificado CSR feito com sucesso!!!, continuando com o script...\n"
 	#
 	openssl ca -in /etc/ssl/requests/vsftpd-pticsr.csr -out /etc/ssl/newcerts/vsftpd-pticrt.crt \
 	-config /etc/ssl/pti-ca.conf -extensions v3_req -extfile /etc/ssl/vsftpd-ssl.conf
