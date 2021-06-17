@@ -5,8 +5,8 @@
 # Facebook: facebook.com/BoraParaPratica
 # YouTube: youtube.com/BoraParaPratica
 # Data de criação: 09/06/2021
-# Data de atualização: 15/06/2021
-# Versão: 0.04
+# Data de atualização: 17/06/2021
+# Versão: 0.05
 # Testado e homologado para a versão do Ubuntu Server 18.04.x LTS x64
 # Kernel >= 4.15.x
 # Testado e homologado para a versão do VSFTPD v3.0.x
@@ -277,7 +277,7 @@ echo -e "Criando o Chave Privada/Pública e o Certificado Assinado do Vsftpd Ser
 	#
 	openssl rsa -in /etc/ssl/private/vsftpd-ptikey.key.old -out /etc/ssl/private/vsftpd-ptikey.key \
 	-passin pass:$PASSWORD &>> $LOG
-	rm -v /etc/ssl/private/vsftpd-ptikey.key &>> $LOG
+	rm -v /etc/ssl/private/vsftpd-ptikey.key.old &>> $LOG
 	echo -e "Senha da Chave Privada/Pública removida com sucesso!!!, continuando com o script..."
 	#
 	openssl req -new -sha256 -nodes -key /etc/ssl/private/vsftpd-ptikey.key -out /etc/ssl/requests/vsftpd-pticsr.csr \
