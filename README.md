@@ -249,6 +249,20 @@ Link da vídeo aula: https://www.youtube.com/watch?v=NvD9Vchsvbk
 
 Link do script utilizado nesse vídeo: https://github.com/vaamonde/ubuntu-1804/blob/master/dnsdhcp.sh
 
+## **COMO instalar o TFTPD-HAP e PXELINUX no GNU/Linux Ubuntu Server 18.04.x LTS**
+
+Vídeo mostrando os procedimentos básicos para instalar o TFTP-HPA Server e PXELINUX do GNU/Linux Ubuntu Server 18.04 LTS
+
+Trivial File Transfer Protocol (ou apenas TFTP) é um protocolo de transferência de arquivos, muito simples, semelhante ao FTP. É geralmente utilizado para transferir pequenos arquivos entre hosts numa rede, tal como quando um terminal remoto ou um cliente inicia o seu funcionamento, a partir do servidor.
+
+O Ambiente de Pré-execução (PXE do inglês: Preboot eXecution Environment) é um ambiente para inicializar computadores usando a Interface da Placa de Rede sem a dependência da disponibilidade de dispositivos de armazenamento (como Disco Rígidos) ou algum Sistema Operacional instalado. Ou seja, o Sistema Operacional do equipamento é carregado pela interface de rede toda vez que o mesmo é ligado, evitando assim o uso de unidades de armazenamento local e ou ação de atualização para cada equipamento. Basta atualizar o sistema no servidor que disponibiliza o mesmo, que todos os equipamentos irão iniciar a nova versão a partir do próximo boot.
+
+[![TFTP e PXE](http://img.youtube.com/vi//0.jpg)]( "TFTP e PXE")
+
+Link da vídeo aula: 
+
+Link do script utilizado nesse vídeo: https://github.com/vaamonde/ubuntu-1804/blob/master/tftppxe.sh
+
 ## **COMO instalar o LAMP Server no GNU/Linux Ubuntu Server 18.04.x LTS**
 
 Vídeo mostrando os procedimentos básicos para instalar o LAMP Server GNU/Linux Ubuntu Server 18.04 LTS
@@ -293,9 +307,9 @@ Vídeo mostrando os procedimentos básicos para instalar o VSFTPd FTP Server do 
 
 O VSFTPd, é um servidor FTP para sistemas do tipo Unix, incluindo Linux. É o servidor FTP padrão nas distribuições Ubuntu, CentOS, Fedora, NimbleX, Slackware e RHEL Linux. Está licenciado pela GNU General Public License. Suporta IPv4, IPv6, TLS e FTPS.
 
-[![VSFTPd](http://img.youtube.com/vi/Fs2B7kLdlm4/0.jpg)](http://www.youtube.com/watch?v=Fs2B7kLdlm4 "VSFTPd")
+[![VSFTPd](http://img.youtube.com/vi/d8JNRedzNS0/0.jpg)](http://www.youtube.com/watch?v=d8JNRedzNS0 "VSFTPd")
 
-Link da vídeo aula: 
+Link da vídeo aula: https://www.youtube.com/watch?v=d8JNRedzNS0
 
 Link do script utilizado nesse vídeo: https://github.com/vaamonde/ubuntu-1804/blob/master/vsftpd.sh
 

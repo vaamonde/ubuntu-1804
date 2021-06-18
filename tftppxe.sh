@@ -5,22 +5,24 @@
 # Facebook: facebook.com/BoraParaPratica
 # YouTube: youtube.com/BoraParaPratica
 # Data de criação: 12/06/2021
-# Data de atualização: 14/06/2021
-# Versão: 0.02
+# Data de atualização: 18/06/2021
+# Versão: 0.04
 # Testado e homologado para a versão do Ubuntu Server 18.04.x LTS x64
 # Kernel >= 4.15.x
 # Testado e homologado para a versão do TFTP-HPA v5.2.x e PXE Syslinux v
 #
-# Trivial File Transfer Protocol (ou apenas TFTP) é um protocolo de transferência de ficheiros, muito simples, 
-# semelhante ao FTP. É geralmente utilizado para transferir pequenos ficheiros entre hosts numa rede, tal como 
-# quando um terminal remoto ou um cliente inicia o seu funcionamento, a partir do servidor.
+# Trivial File Transfer Protocol (ou apenas TFTP) é um protocolo de transferência de arquivos, 
+# muito simples, semelhante ao FTP. É geralmente utilizado para transferir pequenos arquivos 
+# entre hosts numa rede, tal como quando um terminal remoto ou um cliente inicia o seu 
+# funcionamento, a partir do servidor.
 #
-# O Ambiente de Pré-execução (PXE do inglês: Preboot eXecution Environment) é um ambiente para inicializar 
-# computadores usando a Interface da Placa de Rede sem a dependência da disponibilidade de dispositivos de 
-# armazenamento (como Disco Rígidos) ou algum Sistema Operacional instalado. Ou seja, o Sistema Operacional do 
-# equipamento é carregado pela interface de rede toda vez que o mesmo é ligado, evitando assim o uso de unidades
-# de armazenamento local e ou ação de atualização para cada equipamento. Basta atualizar o sistema no servidor 
-# que disponibiliza o mesmo, que todos os equipamentos irão iniciar a nova versão a partir do próximo boot.
+# O Ambiente de Pré-execução (PXE do inglês: Preboot eXecution Environment) é um ambiente para 
+# inicializar computadores usando a Interface da Placa de Rede sem a dependência da disponibilidade 
+# de dispositivos de armazenamento (como Disco Rígidos) ou algum Sistema Operacional instalado. 
+# Ou seja, o Sistema Operacional do equipamento é carregado pela interface de rede toda vez que o 
+# mesmo é ligado, evitando assim o uso de unidades de armazenamento local e ou ação de atualização 
+# para cada equipamento. Basta atualizar o sistema no servidor que disponibiliza o mesmo, que todos
+# os equipamentos irão iniciar a nova versão a partir do próximo boot.
 #
 # Site Oficial do Projeto Tftpd-Hpa: https://git.kernel.org/pub/scm/network/tftp/tftp-hpa.git/about/
 # Site Oficial do Projeto Syslinux: https://wiki.syslinux.org/wiki/index.php?title=The_Syslinux_Project 
@@ -212,6 +214,7 @@ echo -e "Baixando a distribuição Puppy Linux e criando o Boot PXE, aguarde ess
 	# opção do comando mkdir: -v (verbose)
 	# opção do comando cpio: -i (extract), -v (verbose), -o (create), -H (format), newc (SR4 portable format)
 	# opção do comando gzip: -9 (best), -v (verbose)
+	# opção do comando umount: -v (verbose)
 	# opção do comando cd: - (rollback)
 	rm -v puppy.iso &>> $LOG
 	wget $PUPPY -O puppy.iso &>> $LOG
@@ -219,11 +222,12 @@ echo -e "Baixando a distribuição Puppy Linux e criando o Boot PXE, aguarde ess
 	cp -av /mnt/vmlinuz $TFTP/puppy &>> $LOG
 	mkdir -v /tmp/puppy &>> $LOG
 	cd /tmp/puppy &>> $LOG
-	zcat /mnt/initrd.gz | cpio -i -v &>> $LOG
-	cp -av /mnt/*.sfs . &>> $LOG
-	find . | cpio -o -H newc | gzip -9 -v > $TFTP/puppy/initrd.gz &>> $LOG
+		zcat /mnt/initrd.gz | cpio -i -v &>> $LOG
+		cp -av /mnt/*.sfs . &>> $LOG
+		find . | cpio -o -H newc | gzip -9 -v > $TFTP/puppy/initrd.gz
+		umount -v /mnt &>> $LOG
 	cd - &>> $LOG
-echo -e "Criação do Boot PXE do Puppy Linux feito com sucesso!!!, continuando com o script..."
+echo -e "Criação do Boot PXE do Puppy Linux feito com sucesso!!!, continuando com o script...\n"
 sleep 5
 #
 echo -e "Reinicializando o serviço do Tftpd-Hpa Server, aguarde..."
