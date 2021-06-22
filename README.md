@@ -257,9 +257,9 @@ Trivial File Transfer Protocol (ou apenas TFTP) é um protocolo de transferênci
 
 O Ambiente de Pré-execução (PXE do inglês: Preboot eXecution Environment) é um ambiente para inicializar computadores usando a Interface da Placa de Rede sem a dependência da disponibilidade de dispositivos de armazenamento (como Disco Rígidos) ou algum Sistema Operacional instalado. Ou seja, o Sistema Operacional do equipamento é carregado pela interface de rede toda vez que o mesmo é ligado, evitando assim o uso de unidades de armazenamento local e ou ação de atualização para cada equipamento. Basta atualizar o sistema no servidor que disponibiliza o mesmo, que todos os equipamentos irão iniciar a nova versão a partir do próximo boot.
 
-[![TFTP e PXE](http://img.youtube.com/vi//0.jpg)]( "TFTP e PXE")
+[![TFTP e PXE](http://img.youtube.com/vi/5AEGcE1HbrQ/0.jpg)](https://www.youtube.com/watch?v=5AEGcE1HbrQ "TFTP e PXE")
 
-Link da vídeo aula: 
+Link da vídeo aula: https://www.youtube.com/watch?v=5AEGcE1HbrQ
 
 Link do script utilizado nesse vídeo: https://github.com/vaamonde/ubuntu-1804/blob/master/tftppxe.sh
 
