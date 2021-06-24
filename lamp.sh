@@ -5,8 +5,8 @@
 # Facebook: facebook.com/BoraParaPratica
 # YouTube: youtube.com/BoraParaPratica
 # Data de criação: 04/11/2018
-# Data de atualização: 10/05/2021
-# Versão: 0.14
+# Data de atualização: 24/06/2021
+# Versão: 0.15
 # Testado e homologado para a versão do Ubuntu Server 18.04.x LTS x64
 # Kernel >= 4.15.x
 # Testado e homologado para a versão do Apache2 2.4.x, MySQL 5.7.x, PHP 7.2.x, Perl 5.26.x, Python 2.x e 3.x, PhpMyAdmin 4.6.x
@@ -252,11 +252,10 @@ echo -e "Copiando os arquivos de teste do PHP phpinfo.php e do HTML teste.html, 
 echo -e "Arquivos copiados com sucesso!!!, continuando com o script...\n"
 sleep 5
 #
-echo -e "Instalação do LAMP-Server e PhpMyAdmin feito com sucesso!!! Pressione <Enter> para continuar."
-read
+echo -e "Instalação do LAMP-Server e PhpMyAdmin feito com sucesso!!!, continuando com o script..."
 sleep 5
 #
-echo -e "Atualizando e editando o arquivo de configuração do Apache2, aguarde..."
+echo -e "Atualizando e editando o arquivo de configuração do apache2.conf, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando cp: -v (verbose)
 	# opção do comando sleep: 3 (seconds)
@@ -264,12 +263,11 @@ echo -e "Atualizando e editando o arquivo de configuração do Apache2, aguarde.
 	cp -v conf/apache2.conf /etc/apache2/apache2.conf &>> $LOG
 	echo -e "Pressione <Enter> para editar o arquivo: apache2.conf"
 		read
-		sleep 3
 		vim /etc/apache2/apache2.conf
 echo -e "Arquivo atualizado com sucesso!!!, continuando com o script...\n"
 sleep 5
 #
-echo -e "Atualizando e editando o arquivo de configuração do PHP, aguarde..."
+echo -e "Atualizando e editando o arquivo de configuração do php.ini, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando cp: -v (verbose)
 	# opção do comando sleep: 3 (seconds)
@@ -277,7 +275,6 @@ echo -e "Atualizando e editando o arquivo de configuração do PHP, aguarde..."
 	cp -v conf/php.ini /etc/php/7.2/apache2/php.ini &>> $LOG
 	echo -e "Pressione <Enter> para editar o arquivo: php.ini"
 		read
-		sleep 3
 		vim /etc/php/7.2/apache2/php.ini
 echo -e "Arquivo atualizado com sucesso!!!, continuando com o script...\n"
 sleep 5
@@ -295,7 +292,7 @@ echo -e "Permitindo o Root do MySQL se autenticar remotamente, aguarde..."
 echo -e "Permissão alterada com sucesso!!!, continuando com o script...\n"
 sleep 5
 #
-echo -e "Atualizando e editando o arquivo de configuração do MySQL, aguarde..."
+echo -e "Atualizando e editando o arquivo de configuração do mysqld.cnf, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando cp: -v (verbose)
 	# opção do comando sleep: 3 (seconds)
@@ -303,7 +300,6 @@ echo -e "Atualizando e editando o arquivo de configuração do MySQL, aguarde...
 	cp -v conf/mysqld.cnf /etc/mysql/mysql.conf.d/mysqld.cnf &>> $LOG
 	echo -e "Pressione <Enter> para editar o arquivo: mysqld.cnf"
 		read
-		sleep 3
 		vim /etc/mysql/mysql.conf.d/mysqld.cnf
 echo -e "Arquivo atualizado com sucesso!!!, continuando com o script...\n"
 sleep 5
@@ -316,7 +312,7 @@ sleep 5
 echo -e "Verificando as portas de Conexão do Apache2 e do MySQL, aguarde..."
 	# opção do comando netstat: a (all), n (numeric)
 	# opção do comando grep: ' ' (aspas simples) protege uma string, \| (Escape e opção OU)
-	netstat -an | grep '80\|3306'
+	netstat -an | grep ':80\|:3306'
 echo -e "Portas verificadas com sucesso!!!, continuando com o script...\n"
 sleep 5
 #
