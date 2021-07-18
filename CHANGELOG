@@ -4,12 +4,14 @@ Facebook: facebook.com/ProcedimentosEmTI
 Facebook: facebook.com/BoraParaPratica
 YouTube: youtube.com/BoraParaPratica
 Data de criação: 29/01/2019
-Data de atualização: 12/06/2021
-Versão: 0.20
+Data de atualização: 18/07/2021
+Versão: 0.21
 Testado e homologado para a versão do Ubuntu Server 18.04.x LTS x64
 Kernel >= 4.15.x
 
 ============================================= ATUALIZAÇÕES DOS SCRIPTS =============================================
+18/07/2021 - Robson Vaamonde - Atualização do arquivo dhcpd.conf com as opções de: NTP Server e NetBIOS.
+
 12/06/2021 - Robson Vaamonde - Criação do script tftppxe.sh, melhorias nos arquivos de configuração dhcpd.conf, hosts.allow
 vsftpd.sh, vsftpd.conf e wordpress.sh.
 
