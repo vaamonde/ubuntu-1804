@@ -22,7 +22,7 @@ sudo localectl set-locale LANG=en_US.UTF-8
 #Configuração do Timezone (Fuso Horário) do Sistema
 sudo timedatectl
 sudo systemctl status systemd-timesyncd.service
-sudo timedatectl set-timezone “America/Sao_Paulo”
+sudo timedatectl set-timezone "America/Sao_Paulo"
 sudo cat /etc/timezone
 sudo cat /etc/systemd/timesyncd.conf
 sudo vim /etc/systemd/timesyncd.conf
