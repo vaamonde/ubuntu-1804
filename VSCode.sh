@@ -9,25 +9,40 @@
 #YouTUBE Bora Para Prática: https://www.youtube.com/boraparapratica
 #LinkedIn Robson Vaamonde: https://www.linkedin.com/in/robson-vaamonde-0b029028/
 #Data de criação: 23/07/2021
-#Data de atualização: 23/07/2021
-#Versão: 0.02
+#Data de atualização: 28/07/2021
+#Versão: 0.03
 #Testado e homologado no Linux Mint 20.x e VSCode 1.58.x
+
+O Visual Studio Code é um editor de código-fonte desenvolvido pela Microsoft para Windows, 
+Linux e macOS. Ele inclui suporte para depuração, controle de versionamento Git incorporado, 
+realce de sintaxe, complementação inteligente de código, snippets e refatoração de código. 
+Ele é customizável, permitindo que os usuários possam mudar o tema do editor, teclas de atalho 
+e preferências. Ele é um software livre e de código aberto, apesar do download oficial estar 
+sob uma licença proprietária.
 
 #Links Oficial do VSCode e do Marketplace
 Link do Visual Studio Code: https://code.visualstudio.com/
 Link do Marketplace: https://marketplace.visualstudio.com/VSCode
 
-#Baixando o VSCode para o GNU/Linux Mint 20.x
+#01_ Baixando o VSCode para o Linux Mint 20.x
 https://code.visualstudio.com/download
 	Versão: .deb (Debian, Ubuntu 64 Bits)
 		Salvar aquivo
 
-#Instalando o VSCode utilizando o Gdebi-Gtk do Linux Mint 20.x
-code_1.xxxx_amd64
-	Instalar Pacote
+#02_ Instalando o Vim, Git e o Python no Linux Mint 20.x
+Terminal
+	sudo apt update 
+	sudo apt install vim git python 
+	exit
+
+#03_ Instalando o VSCode utilizando o Gdebi-Gtk do Linux Mint 20.x
+Arquivos
+	Download
+		code_1.xxxx_amd64
+			Instalar Pacote
 		Fechar
 
-#Verificando as entradas dos novos repositórios no MintUpdate do Linux Mint 20.x
+#04_ Verificando o novo repositório do VSCode no MintUpdate do Linux Mint 20.x
 Menu
 	MintUpdate
 		Editar
@@ -40,7 +55,7 @@ Menu
 			Fechar
 	Fechar
 
-#Verificando o VSCode no Linux Mint 20.x
+#05_ Iniciando o VSCode no Linux Mint 20.x
 Menu
 	Busca Indexada
 		vscode
@@ -48,24 +63,18 @@ Menu
 			Notifications: Pacote PT-BR
 			Disable: Mostrar página inicial na inicialização
 
-#Instalando o Vim, Git e o Python no Linux Mint 20.x
-Terminal ou Ctrl+Shift+``
-	sudo apt update 
-	sudo apt install vim git python 
-	exit
-
-#Configurando os Aplicativos de Preferencias.
+#06_ Configurando o VSCode como Aplicativo de Preferência no Linux Mint 20.x
 Menu
 	Busca Indexada
 		Aplicativos de Preferencias
 			Texto puro: Visual Studio Code
 			Código fonte: Visual Studio Code
 
-#Instalando e Configurando as Principais Extensões que utilizo no Meu Dia a Dia
+#07_ Instalando e Configurando as Principais Extensões que utilizo no Meu Dia a Dia
 Portuguese (Brazil) Language Pack for Visual Studio Code
 	(Sem necessidade de configuração)
 
-Brazilian Portuguese - Code Spell Checker
+Brazilian Portuguese - Code Spell Checker (Corretor Ortográfico de Código)
 	F1
 		Show Spell Checker Configuration Info
 			Language
@@ -74,13 +83,15 @@ Brazilian Portuguese - Code Spell Checker
 				Portuguese - Brazil (pt-br)
 			File Types and Programming Languages
 				shellscript, python, markdown, etc...
-				
-Code Speel Checker
-	F1
-		Code Speel Checker
-			C Spell: Language: pt,pt-BR
+
+Gerenciar
+	Configurações
+		Code Spell Checker
+			C Spell: Enabled Language Ids: shellscript
+			C Spell: Language: en,pt,pt-BR
 			C Spell: Max Duplicate Problems: 5000
-			C Speell: Max Number Of Problems: 100000
+			C Spell: Max Number Of Problems: 100000
+		Editor
 			Editor: Tab Size: 4
 			Editor: Detect Indentation: False
 			Editor: Insert Spaces: False
@@ -101,6 +112,9 @@ Cisco IOS Systax
 	(Sem necessidade de configuração)
 
 Cisco IOS-XR Systax
+	(Sem necessidade de configuração)
+
+Cisco Config Highlight
 	(Sem necessidade de configuração)
 
 Pylance
