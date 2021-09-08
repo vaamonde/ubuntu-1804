@@ -662,3 +662,17 @@ O Zimbra é uma solução de e-mail, calendário e colaboração de classe empre
 Link da vídeo aula: https://www.youtube.com/watch?v=Vv5HHbYWagc
 
 Link do script utilizado nesse vídeo: https://github.com/vaamonde/ubuntu-1804/blob/master/zimbra.sh
+
+## **COMO instalar o NTP SERVER no GNU/Linux Ubuntu Server 18.04.x LTS**
+
+Vídeo mostrando os procedimentos básicos para instalar e configurar o NTP Server no GNU/Linux Ubuntu Server 18.04 LTS
+
+O NTP é um protocolo para sincronização dos relógios dos computadores baseado no protocolo UDP sob a porta 123. É utilizado para sincronização do relógio de um conjunto de computadores e dispositivos em redes de dados com latência variável.
+
+O projeto NTP.br tem por objetivo oferecer condições para que os servidores de Internet no Brasil estejam sincronizados com a Horal Legal Brasileira. Para isso foi firmado um acordo entre o Observatório Nacional (ON) e o NIC.br.
+
+[![NTP Server](http://img.youtube.com/vi//0.jpg)]( "NTP Server")
+
+Link da vídeo aula:
+
+Link do script utilizado nesse vídeo: https://github.com/vaamonde/ubuntu-1804/blob/master/ntp.sh
