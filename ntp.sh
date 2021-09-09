@@ -5,8 +5,8 @@
 # Facebook: facebook.com/BoraParaPratica
 # YouTube: youtube.com/BoraParaPratica
 # Data de criação: 06/08/2021
-# Data de atualização: 08/09/2021
-# Versão: 0.02
+# Data de atualização: 09/09/2021
+# Versão: 0.03
 # Testado e homologado para a versão do Ubuntu Server 18.04.x LTS x64
 # Kernel >= 4.15.x
 # Testado e homologado para a versão do NTP Server 
@@ -86,8 +86,8 @@ echo -e "Início do script $0 em: $(date +%d/%m/%Y-"("%H:%M")")\n" &>> $LOG
 clear
 #
 echo
-echo -e "Instalação do NTP Server no GNU/Linux Ubuntu Server 18.04.x"
-echo -e "Porta padrão utilizada pelo NTP Server: 123"
+echo -e "Instalação do NTP Server no GNU/Linux Ubuntu Server 18.04.x\n"
+echo -e "Porta padrão utilizada pelo NTP Server: 123\n"
 echo -e "Aguarde, esse processo demora um pouco dependendo do seu Link de Internet...\n"
 sleep 5
 #
@@ -133,7 +133,7 @@ echo -e "Instalando o NTP Server, aguarde..."
 echo -e "NTP Server instalado com sucesso!!!, continuando com o script...\n"
 sleep 5
 #
-echo -e "Configuração do NTP Server, aguarde..."
+echo -e "Atualizando os arquivos de configuração do NTP Server, aguarde..."
 	# opção do comando: &>> (redirecionar a saida padrão)
 	# opção do comando mv: -v (verbose)
 	# opção do comando cp: -v (verbose)
@@ -142,7 +142,7 @@ echo -e "Configuração do NTP Server, aguarde..."
 	cp -v conf/ntp.conf /etc/ &>> $LOG
 	cp -v conf/ntp.drift /var/lib/ntp/ntp.drift &>> $LOG
 	chown -v ntp.ntp /var/lib/ntp/ntp.drift &>> $LOG
-echo -e "NTP Server configurado com sucesso!!!, continuando com o script...\n"
+echo -e "Arquivos do NTP Server atualizados com sucesso!!!, continuando com o script...\n"
 sleep 5
 #
 echo -e "Editando o arquivo de configuração do NTP Server, pressione <Enter> para continuar"
@@ -151,17 +151,33 @@ echo -e "Editando o arquivo de configuração do NTP Server, pressione <Enter> p
 echo -e "NTP Server editado com sucesso!!!, continuando com o script...\n"
 sleep 5
 #
-echo -e "Atualizando a Data e Hora do NTP Server, pressione <Enter> para continuar"
+echo -e "Atualizando a Data e Hora do NTP Server, aguarde..."
+	# opção do comando: &>> (redirecionar a saida padrão)
 	# opção do comando ntpdate: d (debug), q (query), u (unprivileged), v (verbose)
+	systemctl stop ntp &>> $LOG
+	ntpdate -dquv $NTPSERVER &>> $LOG
+	systemctl start ntp &>> $LOG
+echo -e "Data e Hora do NTP Server atualizada com sucesso!!!, continuando com o script...\n"
+sleep 5
+#
+echo -e "Verificando a Data e Hora do NTP Server e do Sistema Operacional, aguarde...\n"
 	# opção do comando ntpq: p (print), n (all address)
-	systemctl stop ntp
-	ntpdate -dquv $NTPSERVER
-	ntpq -pn
-	timedatectl
-	date
-	hwclock --show
-	systemctl start ntp
-echo -e "NTP Server atualizado com sucesso!!!, continuando com o script...\n"
+	echo -e "Consultando os servidor NTP Server configurados...\n"
+		ntpq -pn
+		sleep 5
+		echo
+	echo -e "Verificando a Data e Hora do Sistema Operacional...\n"
+		timedatectl
+		sleep 5
+		echo
+		date
+		sleep 5
+		echo
+	echo -e "Verificando a Data e Hora do Hardware...\n"
+		hwclock
+		sleep 5
+		echo
+echo -e "Data e Hora do NTP Server e do Sistema Operacional verificadas com sucesso!!!, continuando com o script..."
 sleep 5
 #
 echo -e "Verificando a porta de Conexão do NTP Server, aguarde..."
@@ -170,7 +186,7 @@ echo -e "Verificando a porta de Conexão do NTP Server, aguarde..."
 echo -e "Porta de conexão verificada com sucesso!!!, continuando com o script...\n"
 sleep 5
 #
-echo -e "Instalação do NTP Server feita com Sucesso!!!."
+echo -e "Instalação do NTP Server e Client feita com Sucesso!!!."
 	# script para calcular o tempo gasto (SCRIPT MELHORADO, CORRIGIDO FALHA DE HORA:MINUTO:SEGUNDOS)
 	# opção do comando date: +%T (Time)
 	HORAFINAL=$(date +%T)
