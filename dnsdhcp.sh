@@ -5,8 +5,8 @@
 # Facebook: facebook.com/BoraParaPratica
 # YouTube: youtube.com/BoraParaPratica
 # Data de criação: 16/05/2021
-# Data de atualização: 21/05/2021
-# Versão: 0.05
+# Data de atualização: 09/09/2021
+# Versão: 0.06
 # Testado e homologado para a versão do Ubuntu Server 18.04.x LTS x64
 # Kernel >= 4.15.x
 # Testado e homologado para a versão do Bind9 v9.11.x e do ISC DHCP Server
@@ -93,11 +93,11 @@ fi
 # opção do comando hostname: -I (all IP address)
 # opção do comando date: + (format), %d (day), %m (month), %Y (year 1970), %H (hour 24), %M (minute 60)
 # opção do comando cut: -d (delimiter), -f (fields)
-echo -e "Início do script $0 em: `date +%d/%m/%Y-"("%H:%M")"`\n" &>> $LOG
+echo -e "Início do script $0 em: $(date +%d/%m/%Y-"("%H:%M")")\n" &>> $LOG
 clear
 #
 echo
-echo -e "Instalação do Bind9 DNS Server integrado com o ICS DHCP Server no GNU/Linux Ubuntu Server 18.04.x"
+echo -e "Instalação do Bind9 DNS Server integrado com o ICS DHCP Server no GNU/Linux Ubuntu Server 18.04.x\n"
 echo -e "Porta padrão utilizada pelo Bind9 DNS Server: 53"
 echo -e "Porta padrão utilizada pelo ISC DHCP Server.: 67\n"
 echo -e "Aguarde, esse processo demora um pouco dependendo do seu Link de Internet...\n"
@@ -157,10 +157,13 @@ echo -e "Editando o arquivo hosts, pressione <Enter> para continuar."
 echo -e "Arquivo editado com sucesso!!!, continuando com o script...\n"
 sleep 5
 #
-echo -e "Editando o arquivo 50-cloud-init.yaml, pressione <Enter> para continuar."
+echo -e "Editando o arquivo $(ls -lh /etc/netplan/ | cut -d' ' -f10 | sed '/^$/d'), pressione <Enter> para continuar."
 echo -e "CUIDADO!!!: o nome do arquivo de configuração da placa de rede pode mudar"
+	# opções do comando ls: -l (listing), -h (human-readable)
+	# opções do comando -d (delimiter), -f (fields)
+	# opções do comando sed: /^$/ (Start and End), d (delete)
 	read
-	vim /etc/netplan/50-cloud-init.yaml
+	vim /etc/netplan/$(ls -lh /etc/netplan/ | cut -d' ' -f10 | sed '/^$/d')
 echo -e "Arquivo editado com sucesso!!!, continuando com o script...\n"
 sleep 5
 #
@@ -296,6 +299,6 @@ echo -e "Instalação do Bind9 DNS Server integrado com o ICS DHCP Server feita 
 	echo -e "Tempo gasto para execução do script $0: $TEMPO"
 echo -e "Pressione <Enter> para concluir o processo."
 # opção do comando date: + (format), %d (day), %m (month), %Y (year 1970), %H (hour 24), %M (minute 60)
-echo -e "Fim do script $0 em: `date +%d/%m/%Y-"("%H:%M")"`\n" &>> $LOG
+echo -e "Fim do script $0 em: $(date +%d/%m/%Y-"("%H:%M")")\n" &>> $LOG
 read
 exit 1
