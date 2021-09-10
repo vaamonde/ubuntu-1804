@@ -30,6 +30,7 @@
 # Site Oficial do Projeto NTP.br: https://ntp.br/
 #
 # Vídeo de instalação do GNU/Linux Ubuntu Server 18.04.x LTS: https://www.youtube.com/watch?v=zDdCrqNhIXI
+# Vídeo de configuração da Data e Hora no Ubuntu Server 18.04.x LTS: https://www.youtube.com/watch?v=laiuH1zgg3U
 # Vídeo de configuração do OpenSSH no GNU/Linux Ubuntu Server 18.04.x LTS: https://www.youtube.com/watch?v=ecuol8Uf1EE&t
 # Vídeo de instalação e configuração do Bind DNS e do ISC DHCP Server: https://www.youtube.com/watch?v=NvD9Vchsvbk&t
 #
@@ -77,7 +78,7 @@ if [ "$USUARIO" == "0" ] && [ "$UBUNTU" == "18.04" ] && [ "$KERNEL" == "4.15" ]
 		exit 1
 fi
 #
-# Script de instalação do NTP Server no GNU/Linux Ubuntu Server 18.04.x
+# Script de instalação do NTP Server e Client no GNU/Linux Ubuntu Server 18.04.x
 # opção do comando echo: -e (enable interpretation of backslash escapes), \n (new line)
 # opção do comando hostname: -I (all IP address)
 # opção do comando date: + (format), %d (day), %m (month), %Y (year 1970), %H (hour 24), %M (minute 60)

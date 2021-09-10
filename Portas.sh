@@ -5,8 +5,8 @@
 # Facebook: facebook.com/BoraParaPratica
 # YouTube: youtube.com/BoraParaPratica
 # Data de criação: 10/02/2019
-# Data de atualização: 15/06/2021
-# Versão: 0.10
+# Data de atualização: 09/09/2021
+# Versão: 0.11
 # Testado e homologado para a versão do Ubuntu Server 18.04.x LTS x64
 # Kernel >= 4.15.x
 
@@ -43,3 +43,4 @@
 031: zimbra.sh:			HTTP: 80, SMTP: 25, POP3: 110, IMAP4: 143, HTTPS: 443, SMTP: 587, ADMIN ZIMBRA: 7071
 032: tftppxe.sh:		TFTP: 69
 033: vsftpd.sh:			FTP: 21, SFTP: 990
+034: ntp.sh:			NTP: 123
