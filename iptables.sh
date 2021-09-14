@@ -53,9 +53,12 @@ KERNEL=$(uname -r | cut -d'.' -f1,2)
 # $0 (variável de ambiente do nome do comando)
 LOG="/var/log/$(echo $0 | cut -d'/' -f2)"
 #
-# Variável de criação do diretório das regras de firewall
-PATHSBIN="/usr/bin/"
-PATHCONF="/etc/firewall/"
+# Variável de criação do diretório das regras de firewall e do script do IPTables
+PATHSBIN="/usr/bin"
+PATHCONF="/etc/firewall"
+PATHLOG="/var/log"
+RSYSLOG="/etc/rsyslog.d"
+SYSTEMD="/lib/systemd/system"
 #
 # Exportando o recurso de Noninteractive do Debconf para não solicitar telas de configuração
 export DEBIAN_FRONTEND="noninteractive"
@@ -124,47 +127,102 @@ sleep 5
 echo -e "Configurando as Regras de Firewall utilizando o IPTables, aguarde...\n"
 sleep 5
 #
-echo -e "Criando o diretório das configurações do Firewall, aguarde..."
+echo -e "Criando o diretório das Configurações do Firewall, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando mkdir: -v (verbose)
 	mkdir -v $PATHCONF &>> $LOG
 echo -e "Diretório criado com sucesso!!!, continuando o script..."
 sleep 5
 #
-echo -e "Copiando os arquivos de configurações do Firewall, aguarde..."
+echo -e "Copiando os arquivos de Configurações do Firewall, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando cp: -v (verbose)
 	# opção do comando chmod: -v (verbose), +x (all execution)
-	cp -v conf/portslibtcp $PATHCONF &>> $LOG
-	cp -v conf/portslibudp $PATHCONF &>> $LOG
-	cp -v conf/portsblo $PATHCONF &>> $LOG
-	cp -v conf/dnsserver $PATHCONF &>> $LOG
-	cp -v conf/multiportslibtcp $PATHCONF &>> $LOG
-	cp -v conf/firewall $PATHSBIN &>> $LOG
-	chmod -v +x /usr/bin/firewall &>> $LOG
+	cp -v conf/portslibtcp $PATHCONF/portslibtcp &>> $LOG
+	cp -v conf/portslibudp $PATHCONF/portslibudp &>> $LOG
+	cp -v conf/multiportslibtcp $PATHCONF/multiportslibtcp &>> $LOG
+	cp -v conf/portsblo $PATHCONF/portsblo &>> $LOG
+	cp -v conf/dnsserver $PATHCONF/dnsserver &>> $LOG
+	cp -v conf/firewall $PATHSBIN/firewall &>> $LOG
+	chmod -v +x $PATHSBIN/firewal &>> $LOG
 echo -e "Arquivos copiados com sucesso!!!, continuando o script...\n"
 sleep 5
 #
-echo -e "Copiando o arquivo de configuração do Log do Firewall, aguarde..."
+echo -e "Copiando o arquivo de Configuração do Log do Firewall, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando cp: -v (verbose)
 	# opção do comando chown: -v (verbose), syslog (user), adm (group)
-	cp -v conf/firewall.conf /etc/rsyslog.d/ &>> $LOG
-	touch /var/log/firewall.log &>> $LOG
-	chown -v syslog.adm /var/log/firewall.log &>> $LOG
+	cp -v conf/firewall.conf $RSYSLOG/firewall.conf &>> $LOG
+	touch $PATHLOG/firewall.log &>> $LOG
+	chown -v syslog.adm $PATHLOG/firewall.log &>> $LOG
 	systemctl restart rsyslog &>> $LOG
 echo -e "Arquivo copiado com sucesso!!!, continuando o script...\n"
 sleep 5
 #
-echo -e "Copiando o arquivo de serviço do Firewall, aguarde..."
+echo -e "Copiando o arquivo de Serviço do Firewall, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando cp: -v (verbose)
-	cp -v conf/firewall.service /lib/systemd/system/ &>> $LOG
+	cp -v conf/firewall.service $SYSTEMD/firewall.service &>> $LOG
 	systemctl daemon-reload &>> $LOG
 	systemctl enable firewall.service &>> $LOG
 echo -e "Arquivo copiado com sucesso!!!, continuando o script...\n"
 sleep 5
 #
+echo -e "Editando os arquivos de configuração do IPTables, aguarde...\n"
+sleep 5
+#
+	echo -e "Editando o arquivo: $PATHSBIN/firewall, pressione <Enter> para editar."
+	read
+		vim $PATHSBIN/firewall
+	echo -e "Arquivo editado com sucesso!!!, continuando com o script..."
+	sleep 5
+	#
+	echo -e "Editando o arquivo: $PATHCONF/portslibtcp, pressione <Enter> para editar."
+	read
+		vim $PATHCONF/portslibtcp
+	echo -e "Arquivo editado com sucesso!!!, continuando com o script..."
+	sleep 5
+	#
+	echo -e "Editando o arquivo: $PATHCONF/portslibudp, pressione <Enter> para editar."
+	read
+		vim $PATHCONF/portslibudp
+	echo -e "Arquivo editado com sucesso!!!, continuando com o script..."
+	sleep 5
+	#
+	echo -e "Editando o arquivo: $PATHCONF/multiportslibtcp, pressione <Enter> para editar."
+	read
+		vim $PATHCONF/multiportslibtcp
+	echo -e "Arquivo editado com sucesso!!!, continuando com o script..."
+	sleep 5
+	#
+	echo -e "Editando o arquivo: $PATHCONF/portsblo, pressione <Enter> para editar."
+	read
+		vim $PATHCONF/portsblo
+	echo -e "Arquivo editado com sucesso!!!, continuando com o script..."
+	sleep 5
+	#
+	echo -e "Editando o arquivo: $PATHCONF/dnsserver, pressione <Enter> para editar."
+	read
+		vim $PATHCONF/dnsserver
+	echo -e "Arquivo editado com sucesso!!!, continuando com o script..."
+	sleep 5
+	#
+	echo -e "Editando o arquivo: $RSYSLOG/firewall.conf, pressione <Enter> para editar."
+	read
+		vim $RSYSLOG/firewall.conf
+	echo -e "Arquivo editado com sucesso!!!, continuando com o script..."
+	sleep 5
+	#
+	echo -e "Editando o arquivo: $SYSTEMD/firewall.service, pressione <Enter> para editar."
+	read
+		vim $SYSTEMD/firewall.service
+	echo -e "Arquivo editado com sucesso!!!, continuando com o script..."
+	sleep 5
+	#
+echo -e "Todos os arquivos editados com sucesso!!!, continuando com o script...\n"
+sleep 5
+#
+
 echo -e "Configuração do IPTables feita com Sucesso!!!."
 	# script para calcular o tempo gasto (SCRIPT MELHORADO, CORRIGIDO FALHA DE HORA:MINUTO:SEGUNDOS)
 	# opção do comando date: +%T (Time)
