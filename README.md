@@ -271,9 +271,9 @@ O NTP é um protocolo para sincronização dos relógios dos computadores basead
 
 O projeto NTP.br tem por objetivo oferecer condições para que os servidores de Internet no Brasil estejam sincronizados com a Horal Legal Brasileira. Para isso foi firmado um acordo entre o Observatório Nacional (ON) e o NIC.br.
 
-[![NTP Server](http://img.youtube.com/vi//0.jpg)]( "NTP Server")
+[![NTP Server](http://img.youtube.com/vi/7cwtXNtIR3c/0.jpg)](https://www.youtube.com/watch?v=7cwtXNtIR3c "NTP Server")
 
-Link da vídeo aula:
+Link da vídeo aula: https://www.youtube.com/watch?v=7cwtXNtIR3c
 
 Link do script utilizado nesse vídeo: https://github.com/vaamonde/ubuntu-1804/blob/master/ntp.sh
 
@@ -676,3 +676,19 @@ O Zimbra é uma solução de e-mail, calendário e colaboração de classe empre
 Link da vídeo aula: https://www.youtube.com/watch?v=Vv5HHbYWagc
 
 Link do script utilizado nesse vídeo: https://github.com/vaamonde/ubuntu-1804/blob/master/zimbra.sh
+
+## **COMO configurar o NETFILTER IPTABLES no GNU/Linux Ubuntu Server 18.04.x LTS**
+
+Vídeo mostrando os procedimentos básicos para configurar as Regras de Firewall utilizando o Netfilter/IPTables no GNU/Linux Ubuntu Server 18.04 LTS
+
+O Netfilter é um módulo que fornece ao sistema operacional Linux as funções de firewall, NAT e log dos dados que trafegam por rede de computadores.
+
+O IPTables é o nome da ferramenta do espaço do usuário que permite a criação de regras de firewall e NATs. Apesar de, tecnicamente, o iptables ser apenas uma ferramenta que controla o módulo netfilter, o nome "iptables" é frequentemente utilizado como referência ao conjunto completo de funcionalidades do netfilter. O iptables é parte de todas as distribuições modernas do Linux.
+
+O Ubuntu (Server e Desktop) vem com uma ferramenta de configuração de firewall chamada UFW (Uncomplicated Firewall). É um front-end amigável para gerenciar regras de firewall iptables. Seu principal objetivo é tornar o gerenciamento do firewall mais fácil ou, como o nome diz, descomplicado.
+
+[![Netfilter Iptables](http://img.youtube.com/vi//0.jpg)]( "Netfilter Iptables")
+
+Link da vídeo aula: 
+
+Link do script utilizado nesse vídeo: https://github.com/vaamonde/ubuntu-1804/blob/master/iptables.sh

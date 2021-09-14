@@ -1,0 +1,8 @@
+Unit]
+Description=Firewall IPTables
+
+[Service]
+ExecStart=usr/bin/firewall
+
+[Install]
+WantedBy=multi-user.target
