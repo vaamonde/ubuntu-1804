@@ -5,7 +5,7 @@
 # Facebook: facebook.com/BoraParaPratica
 # YouTube: youtube.com/BoraParaPratica
 # Data de criação: 06/08/2021
-# Data de atualização: 09/09/2021
+# Data de atualização: 13/09/2021
 # Versão: 0.03
 # Testado e homologado para a versão do Ubuntu Server 18.04.x LTS x64
 # Kernel >= 4.15.x
@@ -56,7 +56,7 @@ KERNEL=$(uname -r | cut -d'.' -f1,2)
 # $0 (variável de ambiente do nome do comando)
 LOG="/var/log/$(echo $0 | cut -d'/' -f2)"
 #
-# Variável de configuração do NTP Server
+# Variável de sincronização do NTP Server com o Site ntp.br
 NTPSERVER="a.st1.ntp.br"
 #
 # Exportando o recurso de Noninteractive do Debconf para não solicitar telas de configuração
