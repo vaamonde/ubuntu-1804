@@ -131,7 +131,7 @@ echo -e "Criando o diretório das Configurações do Firewall, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando mkdir: -v (verbose)
 	mkdir -v $PATHCONF &>> $LOG
-echo -e "Diretório criado com sucesso!!!, continuando o script..."
+echo -e "Diretório criado com sucesso!!!, continuando o script...\n"
 sleep 5
 #
 echo -e "Copiando os arquivos de Configurações do Firewall, aguarde..."
@@ -144,7 +144,7 @@ echo -e "Copiando os arquivos de Configurações do Firewall, aguarde..."
 	cp -v conf/portsblo $PATHCONF/portsblo &>> $LOG
 	cp -v conf/dnsserver $PATHCONF/dnsserver &>> $LOG
 	cp -v conf/firewall $PATHSBIN/firewall &>> $LOG
-	chmod -v +x $PATHSBIN/firewal &>> $LOG
+	chmod -v +x $PATHSBIN/firewall &>> $LOG
 echo -e "Arquivos copiados com sucesso!!!, continuando o script...\n"
 sleep 5
 #
@@ -174,49 +174,49 @@ sleep 5
 	echo -e "Editando o arquivo: $PATHSBIN/firewall, pressione <Enter> para editar."
 	read
 		vim $PATHSBIN/firewall
-	echo -e "Arquivo editado com sucesso!!!, continuando com o script..."
+	echo -e "Arquivo editado com sucesso!!!, continuando com o script...\n"
 	sleep 5
 	#
 	echo -e "Editando o arquivo: $PATHCONF/portslibtcp, pressione <Enter> para editar."
 	read
 		vim $PATHCONF/portslibtcp
-	echo -e "Arquivo editado com sucesso!!!, continuando com o script..."
+	echo -e "Arquivo editado com sucesso!!!, continuando com o script...\n"
 	sleep 5
 	#
 	echo -e "Editando o arquivo: $PATHCONF/portslibudp, pressione <Enter> para editar."
 	read
 		vim $PATHCONF/portslibudp
-	echo -e "Arquivo editado com sucesso!!!, continuando com o script..."
+	echo -e "Arquivo editado com sucesso!!!, continuando com o script...\n"
 	sleep 5
 	#
 	echo -e "Editando o arquivo: $PATHCONF/multiportslibtcp, pressione <Enter> para editar."
 	read
 		vim $PATHCONF/multiportslibtcp
-	echo -e "Arquivo editado com sucesso!!!, continuando com o script..."
+	echo -e "Arquivo editado com sucesso!!!, continuando com o script...\n"
 	sleep 5
 	#
 	echo -e "Editando o arquivo: $PATHCONF/portsblo, pressione <Enter> para editar."
 	read
 		vim $PATHCONF/portsblo
-	echo -e "Arquivo editado com sucesso!!!, continuando com o script..."
+	echo -e "Arquivo editado com sucesso!!!, continuando com o script...\n"
 	sleep 5
 	#
 	echo -e "Editando o arquivo: $PATHCONF/dnsserver, pressione <Enter> para editar."
 	read
 		vim $PATHCONF/dnsserver
-	echo -e "Arquivo editado com sucesso!!!, continuando com o script..."
+	echo -e "Arquivo editado com sucesso!!!, continuando com o script...\n"
 	sleep 5
 	#
 	echo -e "Editando o arquivo: $RSYSLOG/firewall.conf, pressione <Enter> para editar."
 	read
 		vim $RSYSLOG/firewall.conf
-	echo -e "Arquivo editado com sucesso!!!, continuando com o script..."
+	echo -e "Arquivo editado com sucesso!!!, continuando com o script...\n"
 	sleep 5
 	#
 	echo -e "Editando o arquivo: $SYSTEMD/firewall.service, pressione <Enter> para editar."
 	read
 		vim $SYSTEMD/firewall.service
-	echo -e "Arquivo editado com sucesso!!!, continuando com o script..."
+	echo -e "Arquivo editado com sucesso!!!, continuando com o script...\n"
 	sleep 5
 	#
 echo -e "Todos os arquivos editados com sucesso!!!, continuando com o script...\n"
