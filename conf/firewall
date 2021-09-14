@@ -266,6 +266,7 @@ case "$1" in
 	echo "SCRIPT DE FIREWALL CRIADO POR: MARCELO MAGNO :-) - TODOS OS CRÉDITOS"
 	echo "SCRIPT DE FIREWALL MODIFICADO POR: ROBSON VAAMONDE - Procedimentos em TI ;-)"
 	;;
+	#
 	# Início do Script de Firewall IPTables, utilizando o comando case (opção: restart)
 	restart)
 	#
@@ -278,15 +279,37 @@ case "$1" in
 	$FIREWALL stop
 	$FIREWALL start
 	;;
-	# Início do Script de Firewall IPTables, utilizando o comando case (opção: *)
+	#
+	# Início do Script de Firewall IPTables, utilizando o comando case (opção: list)
+	list)
+	#
+	# Mensagem de listagem do Script de Firewall Netfilter/IPTables
+	echo "======================================================================|"
+	echo "|   :LISTANDO AS REGRAS DE FIREWALL NETFILTER ATRAVÉS DO IPTABLES:    |"
+	echo "|:PRESSIONE <ENTER> PARA LISTAR AS REGRAS DE FIREWALL E <Q> PARA SAIR |"
+	echo "======================================================================|"
+	read
+	#
+	# Listando todas as regras existente das Tabelas do IPTables
+	# opções do comando iptables: -L (list), -v (verbose), -n (numeric)
+	$FIREWALL -L -v -n | less
+	#
+	echo "======================================================================|"
+	echo ":FIM DA LISTAGEM DAS REGRAS DE FIREWALL NETFILTER ATRAVÉS DO IPTABLES:|"
+	echo "======================================================================|"
+	echo "SCRIPT DE FIREWALL CRIADO POR: MARCELO MAGNO :-) - TODOS OS CRÉDITOS"
+	echo "SCRIPT DE FIREWALL MODIFICADO POR: ROBSON VAAMONDE - Procedimentos em TI ;-)"
+	;;
+	#
+	# Início do Script de Firewall IPTables, utilizando o comando case (opção: *)	
 	*)
 	# opção do redirecionado >&2: Conecta a saída padrão na saída de erro
 	# opção do comando echo: -e (habilita interpretação dos códigos de escape após barra invertida)
 	# opção do comando echo: \033[1;31m (Vermelho Claro)
 	# opção do comando tput: sgr0 (Restaura as configurações do video para o normal)
 	# opção do comando exit: 0 (indica o térmico com êxito), 1 (indica o término sem êxito)
-	echo "Utilize as opções do Firewall: $N {start|stop|restart}" >&2
-	echo -e "\033[01;31mATENÇÃO";tput sgr0
+	echo "Utilize as opções do Firewall: $N {start|stop|restart|list}" >&2
+	echo -e "\033[01;31m!!!!!!A T E N Ç Ã O!!!!!!";tput sgr0
 	echo "Você não passou nenhum argumento para o script de Firewall, por padrão será executado a opção: restart em 5 segundo..."
 	sleep 5
 	$FIREWALL restart

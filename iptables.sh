@@ -165,6 +165,7 @@ echo -e "Copiando o arquivo de Serviço do Firewall, aguarde..."
 	cp -v conf/firewall.service $SYSTEMD/firewall.service &>> $LOG
 	systemctl daemon-reload &>> $LOG
 	systemctl enable firewall.service &>> $LOG
+	systemctl start firewall.service &>> $LOG
 echo -e "Arquivo copiado com sucesso!!!, continuando o script...\n"
 sleep 5
 #
@@ -222,7 +223,6 @@ sleep 5
 echo -e "Todos os arquivos editados com sucesso!!!, continuando com o script...\n"
 sleep 5
 #
-
 echo -e "Configuração do IPTables feita com Sucesso!!!."
 	# script para calcular o tempo gasto (SCRIPT MELHORADO, CORRIGIDO FALHA DE HORA:MINUTO:SEGUNDOS)
 	# opção do comando date: +%T (Time)
