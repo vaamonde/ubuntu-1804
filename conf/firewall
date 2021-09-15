@@ -292,7 +292,7 @@ case "$1" in
 	#
 	# Listando todas as regras existente das Tabelas do IPTables
 	# opções do comando iptables: -L (list), -v (verbose), -n (numeric)
-	$FIREWALL -L -v -n | less
+	$IPTABLES -L -v -n | less
 	#
 	echo "======================================================================|"
 	echo ":FIM DA LISTAGEM DAS REGRAS DE FIREWALL NETFILTER ATRAVÉS DO IPTABLES:|"
