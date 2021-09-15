@@ -4,12 +4,15 @@ Facebook: facebook.com/ProcedimentosEmTI
 Facebook: facebook.com/BoraParaPratica
 YouTube: youtube.com/BoraParaPratica
 Data de criação: 29/01/2019
-Data de atualização: 09/09/2021
-Versão: 0.22
+Data de atualização: 15/09/2021
+Versão: 0.23
 Testado e homologado para a versão do Ubuntu Server 18.04.x LTS x64
 Kernel >= 4.15.x
 
 ============================================= ATUALIZAÇÕES DOS SCRIPTS =============================================
+14/09/2021 - Robson Vaamonde - Criação do script: iptables.sh, atualização de vários script e correções de Bugs reportados
+na guia Issue do Github, finalizando todos os script do curso com objetivo de concluir a criação de novos scripts.
+
 09/09/2021 - Robson Vaamonde - Criação do script: ntp.sh, atualização do script dnsdhcp.sh
 
 18/07/2021 - Robson Vaamonde - Atualização do arquivo dhcpd.conf com as opções de: NTP Server e NetBIOS.

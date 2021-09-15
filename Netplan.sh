@@ -221,6 +221,8 @@ network:
 			gateway4: 172.16.1.254
 			nameservers:
 				addresses: [172.16.1.254,8.8.8.8,8.8.4.4]
+				search:
+					- pti.intra
 			parameters:
 				mode: balance-rr
 	version: 2

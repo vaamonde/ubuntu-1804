@@ -303,18 +303,6 @@ Link da vídeo aula: https://www.youtube.com/watch?v=GXcwpJfp7eo
 
 Link do script utilizado nesse vídeo: https://github.com/vaamonde/ubuntu-1804/blob/master/openssl.sh
 
-## **COMO instalar o WORDPRESS no GNU/Linux Ubuntu Server 18.04.x LTS**
-
-Vídeo mostrando os procedimentos básicos para instalar o WORDPRESS no LAMP Server do GNU/Linux Ubuntu Server 18.04 LTS
-
-O Wordpress é um sistema livre e aberto de gestão de conteúdo para internet (do inglês: Content Management System - CMS), baseado em PHP com banco de dados MySQL, executado em um servidor interpretador, voltado principalmente para a criação de páginas eletrônicas (sites) e blogs online. Criado a partir do extinto b2/cafelog, por Ryan Boren e Matthew Mullenweg, e distribuído gratuitamente sob a GNU General Public License.
-
-[![Wordpress](http://img.youtube.com/vi/Fs2B7kLdlm4/0.jpg)](http://www.youtube.com/watch?v=Fs2B7kLdlm4 "Wordpress")
-
-Link da vídeo aula: https://www.youtube.com/watch?v=Fs2B7kLdlm4
-
-Link do script utilizado nesse vídeo: https://github.com/vaamonde/ubuntu-1804/blob/master/wordpress.sh
-
 ## **COMO instalar o VSFTPd no GNU/Linux Ubuntu Server 18.04.x LTS**
 
 Vídeo mostrando os procedimentos básicos para instalar o VSFTPd FTP Server do GNU/Linux Ubuntu Server 18.04 LTS
@@ -326,6 +314,18 @@ O VSFTPd, é um servidor FTP para sistemas do tipo Unix, incluindo Linux. É o s
 Link da vídeo aula: https://www.youtube.com/watch?v=d8JNRedzNS0
 
 Link do script utilizado nesse vídeo: https://github.com/vaamonde/ubuntu-1804/blob/master/vsftpd.sh
+
+## **COMO instalar o WORDPRESS no GNU/Linux Ubuntu Server 18.04.x LTS**
+
+Vídeo mostrando os procedimentos básicos para instalar o WORDPRESS no LAMP Server do GNU/Linux Ubuntu Server 18.04 LTS
+
+O Wordpress é um sistema livre e aberto de gestão de conteúdo para internet (do inglês: Content Management System - CMS), baseado em PHP com banco de dados MySQL, executado em um servidor interpretador, voltado principalmente para a criação de páginas eletrônicas (sites) e blogs online. Criado a partir do extinto b2/cafelog, por Ryan Boren e Matthew Mullenweg, e distribuído gratuitamente sob a GNU General Public License.
+
+[![Wordpress](http://img.youtube.com/vi/Fs2B7kLdlm4/0.jpg)](http://www.youtube.com/watch?v=Fs2B7kLdlm4 "Wordpress")
+
+Link da vídeo aula: https://www.youtube.com/watch?v=Fs2B7kLdlm4
+
+Link do script utilizado nesse vídeo: https://github.com/vaamonde/ubuntu-1804/blob/master/wordpress.sh
 
 ## **COMO instalar o WEBMIN no GNU/Linux Ubuntu Server 18.04.x LTS**
 
@@ -692,3 +692,5 @@ O Ubuntu (Server e Desktop) vem com uma ferramenta de configuração de firewall
 Link da vídeo aula: 
 
 Link do script utilizado nesse vídeo: https://github.com/vaamonde/ubuntu-1804/blob/master/iptables.sh
+
+Lista das Portas dos Serviços de Rede utilizado nesse curso: https://github.com/vaamonde/ubuntu-1804/blob/master/Portas.sh
