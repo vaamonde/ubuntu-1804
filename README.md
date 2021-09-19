@@ -1,3 +1,5 @@
+# REPOSITÓRIO CONGELADO - Esse repositório não irá mais receber atualizações.
+
 # Curso GRÁTIS de GNU/Linux Ubuntu Server 18.04.x LTS DevOps
 
 ## 💰 Ajude o projeto Bora para Prática a continuar fazendo vídeos gratuitos para o Canal, acessando o link de doação do PagSeguro: https://pag.ae/bjlSJcH
