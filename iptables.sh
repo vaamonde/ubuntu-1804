@@ -30,6 +30,7 @@
 # Site Oficial do Projeto UFW: https://launchpad.net/ufw
 #
 # Vídeo de instalação do GNU/Linux Ubuntu Server 18.04.x LTS: https://www.youtube.com/watch?v=zDdCrqNhIXI
+# Lista de Portas TCP e UDP de todos os Serviços dos Scripts: https://github.com/vaamonde/ubuntu-1804/blob/master/Portas.sh
 #
 # Variável da Data Inicial para calcular o tempo de execução do script (VARIÁVEL MELHORADA)
 # opção do comando date: +%T (Time)

@@ -689,9 +689,9 @@ O IPTables é o nome da ferramenta do espaço do usuário que permite a criaçã
 
 O Ubuntu (Server e Desktop) vem com uma ferramenta de configuração de firewall chamada UFW (Uncomplicated Firewall). É um front-end amigável para gerenciar regras de firewall iptables. Seu principal objetivo é tornar o gerenciamento do firewall mais fácil ou, como o nome diz, descomplicado.
 
-[![Netfilter Iptables](http://img.youtube.com/vi//0.jpg)]( "Netfilter Iptables")
+[![Netfilter Iptables](http://img.youtube.com/vi/wwaf0yJuv04/0.jpg)](https://www.youtube.com/watch?v=wwaf0yJuv04 "Netfilter Iptables")
 
-Link da vídeo aula: 
+Link da vídeo aula: https://www.youtube.com/watch?v=wwaf0yJuv04
 
 Link do script utilizado nesse vídeo: https://github.com/vaamonde/ubuntu-1804/blob/master/iptables.sh
 
