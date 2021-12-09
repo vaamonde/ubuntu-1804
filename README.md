@@ -1,6 +1,6 @@
 # REPOSITÓRIO CONGELADO - Esse repositório não irá mais receber atualizações. Novo repositório vaamonde/ubuntu-2004
 
-# Curso GRÁTIS de GNU/Linux Ubuntu Server 18.04.x LTS DevOps
+# Curso GRÁTIS de GNU/Linux Ubuntu Server 18.04.x LTS DevOps.
 
 ## 💰 Ajude o projeto Bora para Prática a continuar fazendo vídeos e materiais gratuitos para o Canal
 ## 💰 Chave PIX do projeto: robsonvaamonde@gmail.com
